@@ -46,6 +46,8 @@ class ConformanceManifest:
     entrypoints: tuple[dict[str, Any], ...]
     taxonomy: str
     fixture_index: str
+    runner_contract: str
+    result_schema: str
     normative_sources: tuple[str, ...]
     reference_implementations: tuple[str, ...]
 
@@ -59,6 +61,8 @@ class ConformanceManifest:
             "entrypoints",
             "taxonomy",
             "fixture_index",
+            "runner_contract",
+            "result_schema",
             "normative_sources",
             "reference_implementations",
         ]
@@ -84,6 +88,8 @@ class ConformanceManifest:
             entrypoints=tuple(entrypoints),
             taxonomy=str(data["taxonomy"]),
             fixture_index=str(data["fixture_index"]),
+            runner_contract=str(data["runner_contract"]),
+            result_schema=str(data["result_schema"]),
             normative_sources=tuple(str(item) for item in normative_sources),
             reference_implementations=tuple(str(item) for item in reference_implementations),
         )
@@ -152,6 +158,8 @@ def validate_repository(repo_root: Path | None = None, manifest_path: Path | Non
 
     _require_file_exists(repo_root, manifest.taxonomy, issues, str(manifest_path))
     _require_file_exists(repo_root, manifest.fixture_index, issues, str(manifest_path))
+    _require_file_exists(repo_root, manifest.runner_contract, issues, str(manifest_path))
+    _require_file_exists(repo_root, manifest.result_schema, issues, str(manifest_path))
 
     for source in manifest.normative_sources:
         _require_file_exists(repo_root, source, issues, str(manifest_path))

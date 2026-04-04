@@ -4,6 +4,9 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from oaps_python.manifest import MANIFEST_RELATIVE_PATH, validate_repository
 
@@ -34,6 +37,8 @@ class ManifestValidationTests(unittest.TestCase):
                 "entrypoints": [{"scope": "core", "pack": "conformance/fixtures/core/index.v1.json"}],
                 "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
                 "fixture_index": "conformance/fixtures/index.v1.json",
+                "runner_contract": "conformance/runner-contract.md",
+                "result_schema": "conformance/results/result-schema.v1.json",
                 "normative_sources": ["spec/core/FOUNDATION-DRAFT.md"],
                 "reference_implementations": ["reference/oaps-monorepo/packages/core/src/index.ts"],
             }
@@ -52,4 +57,3 @@ class ManifestValidationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
