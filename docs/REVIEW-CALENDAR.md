@@ -12,6 +12,8 @@ This calendar makes review cadence explicit so the suite can move in parallel wi
 - Weekly Conformance review
 - Biweekly Governance and Outreach review
 - Monthly cross-stream synthesis review
+- Biweekly review-target matrix refresh
+- Monthly external review packet scheduling review
 
 ## Monthly Review Windows
 
@@ -29,11 +31,14 @@ This calendar makes review cadence explicit so the suite can move in parallel wi
 
 - prepare external review packets
 - collect partner feedback on one bounded artifact at a time
+- select the next packet family from `REVIEW-TARGET-MATRIX.md`
+- confirm the packet shape from `REVIEW-PACKET-INDEX.md`
 
 ### Week 4
 
 - decide what advances to OEP or draft status
 - update roadmap and public positioning if the program boundary changed
+- close or defer any outgoing review packets with explicit follow-up owners
 
 ## Quarterly Milestones
 
@@ -52,6 +57,8 @@ Any external ask should ship with:
 - the conformance status
 - the open questions
 - the follow-up owner
+- the packet type from `REVIEW-PACKET-INDEX.md`
+- the target family from `REVIEW-TARGET-MATRIX.md`
 
 ## Practical Default
 

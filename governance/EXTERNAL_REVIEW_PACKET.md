@@ -33,6 +33,11 @@ Every packet should include:
 - the deadline or desired review window
 - the contact point for follow-up
 
+The packet should also reference the target family and packet type selected from:
+
+- `docs/REVIEW-TARGET-MATRIX.md`
+- `docs/REVIEW-PACKET-INDEX.md`
+
 ## Recommended Packet Structure
 
 ### 1. One-paragraph summary
