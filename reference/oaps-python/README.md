@@ -25,10 +25,22 @@ Inventory the suite packs and scenarios:
 python3 -m oaps_python inventory
 ```
 
+Limit inventory output to one or more scopes:
+
+```bash
+python3 -m oaps_python inventory --scope profile:mcp --scope profile:x402
+```
+
 Emit a schema-shaped dry-run result:
 
 ```bash
 python3 -m oaps_python inventory --json
+```
+
+Write the inventory payload to a file:
+
+```bash
+python3 -m oaps_python inventory --json --output /tmp/oaps-inventory.json
 ```
 
 Or with an explicit starting directory:
@@ -48,3 +60,4 @@ oaps-python inventory
 
 This package is not a full protocol implementation.
 Its job is to prove that the suite-level manifest can be consumed from a second language stack and that the referenced files are structurally coherent.
+The inventory command can also narrow inspection to selected scopes and emit the payload to a file for downstream tooling.

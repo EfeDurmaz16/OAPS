@@ -64,6 +64,7 @@ class InventoryReport:
     manifest: ConformanceManifest | None
     packs: tuple[FixturePackInventory, ...]
     scenarios: tuple[FixtureScenario, ...]
+    requested_scopes: tuple[str, ...] = field(default_factory=tuple)
     issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
 
     @property
@@ -93,6 +94,7 @@ class InventoryReport:
                 "suite_version": self.manifest.suite_version,
                 "status": self.manifest.status,
             },
+            "requested_scopes": list(self.requested_scopes),
             "summary": {
                 "packs": self.total_packs,
                 "scenarios": self.total_scenarios,
@@ -141,9 +143,11 @@ class InventoryReport:
                 "metadata": {
                     "mode": "inventory",
                     "issues_present": bool(self.issues),
+                    "requested_scopes": list(self.requested_scopes),
                 },
             },
             "executed_at": executed_at,
+            "requested_scopes": list(self.requested_scopes),
             "scopes": scopes,
             "summary": {
                 "pass": 0,
@@ -339,10 +343,15 @@ def validate_repository(repo_root: Path | None = None, manifest_path: Path | Non
     return ValidationReport(manifest_path=manifest_path, repo_root=repo_root, issues=tuple(issues))
 
 
-def inventory_repository(repo_root: Path | None = None, manifest_path: Path | None = None) -> InventoryReport:
+def inventory_repository(
+    repo_root: Path | None = None,
+    manifest_path: Path | None = None,
+    requested_scopes: tuple[str, ...] | None = None,
+) -> InventoryReport:
     repo_root = (repo_root or discover_repo_root()).resolve()
     manifest_path = (manifest_path or repo_root / MANIFEST_RELATIVE_PATH).resolve()
     issues: list[ValidationIssue] = []
+    requested_scopes = tuple(requested_scopes or ())
 
     if not manifest_path.exists():
         issues.append(
@@ -357,6 +366,7 @@ def inventory_repository(repo_root: Path | None = None, manifest_path: Path | No
             manifest=None,
             packs=tuple(),
             scenarios=tuple(),
+            requested_scopes=requested_scopes,
             issues=tuple(issues),
         )
 
@@ -379,6 +389,8 @@ def inventory_repository(repo_root: Path | None = None, manifest_path: Path | No
                 continue
             scope = str(pack.get("scope", ""))
             pack_path = str(pack.get("path", ""))
+            if requested_scopes and scope not in requested_scopes:
+                continue
             pack_file = _resolve_repo_path(repo_root, pack_path)
             scenario_ids: list[str] = []
             if pack_file.exists():
@@ -403,11 +415,23 @@ def inventory_repository(repo_root: Path | None = None, manifest_path: Path | No
     validation = validate_repository(repo_root=repo_root, manifest_path=manifest_path)
     issues.extend(validation.issues)
 
+    if requested_scopes:
+        available_scopes = {pack.scope for pack in packs}
+        missing_scopes = [scope for scope in requested_scopes if scope not in available_scopes]
+        for missing_scope in missing_scopes:
+            issues.append(
+                ValidationIssue(
+                    path=str(manifest_path),
+                    message=f"requested scope not found in fixture index: {missing_scope}",
+                )
+            )
+
     return InventoryReport(
         manifest_path=manifest_path,
         repo_root=repo_root,
         manifest=manifest,
         packs=tuple(packs),
         scenarios=tuple(scenarios),
+        requested_scopes=requested_scopes,
         issues=tuple(issues),
     )

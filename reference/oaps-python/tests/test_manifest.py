@@ -62,7 +62,7 @@ class ManifestValidationTests(unittest.TestCase):
         report = inventory_repository(repo_root=repo_root)
         self.assertTrue(report.ok, report.to_dict())
         self.assertEqual(report.total_packs, 8)
-        self.assertEqual(report.total_scenarios, 39)
+        self.assertEqual(report.total_scenarios, 44)
         self.assertEqual(
             report.scopes,
             (
@@ -77,6 +77,21 @@ class ManifestValidationTests(unittest.TestCase):
             ),
         )
 
+    def test_inventory_can_filter_by_scope(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = inventory_repository(repo_root=repo_root, requested_scopes=("profile:mcp", "profile:x402"))
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertEqual(report.total_packs, 2)
+        self.assertEqual(report.total_scenarios, 8)
+        self.assertEqual(report.scopes, ("profile:mcp", "profile:x402"))
+        self.assertEqual(report.requested_scopes, ("profile:mcp", "profile:x402"))
+
+    def test_inventory_reports_missing_requested_scope(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = inventory_repository(repo_root=repo_root, requested_scopes=("profile:does-not-exist",))
+        self.assertFalse(report.ok)
+        self.assertTrue(any("requested scope not found" in issue.message for issue in report.issues))
+
     def test_inventory_json_emits_schema_shaped_result(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
         stdout = io.StringIO()
@@ -90,8 +105,46 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(payload["summary"]["pass"], 0)
         self.assertEqual(payload["summary"]["fail"], 0)
         self.assertEqual(payload["summary"]["error"], 0)
-        self.assertEqual(len(payload["scenarios"]), 39)
+        self.assertEqual(len(payload["scenarios"]), 44)
         self.assertTrue(all(scenario["outcome"] == "skip" for scenario in payload["scenarios"]))
+        self.assertEqual(payload["requested_scopes"], [])
+        self.assertEqual(
+            payload["scopes"],
+            [
+                "core",
+                "binding:http",
+                "profile:mcp",
+                "profile:a2a",
+                "profile:auth-web",
+                "profile:auth-fides-tap",
+                "profile:x402",
+                "profile:osp",
+            ],
+        )
+
+    def test_inventory_json_can_be_written_to_file(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "inventory.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "inventory",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--output",
+                    str(output_path),
+                    "--scope",
+                    "profile:mcp",
+                ])
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Wrote inventory report", stdout.getvalue())
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["summary"]["total"], 5)
+            self.assertEqual(payload["requested_scopes"], ["profile:mcp"])
+            self.assertEqual(payload["scopes"], ["profile:mcp"])
+            self.assertTrue(all(scenario["scope"] == "profile:mcp" for scenario in payload["scenarios"]))
 
     def test_inventory_text_mentions_scopes(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
@@ -106,6 +159,28 @@ class ManifestValidationTests(unittest.TestCase):
             output,
         )
         self.assertIn("inventory-only report", output)
+
+    def test_inventory_text_mentions_requested_scopes_and_writes_file(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "inventory.txt"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "inventory",
+                    "--repo-root",
+                    str(repo_root),
+                    "--output",
+                    str(output_path),
+                    "--scope",
+                    "profile:osp",
+                ])
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Wrote inventory report", stdout.getvalue())
+            written = output_path.read_text(encoding="utf-8")
+            self.assertIn("requested scopes: profile:osp", written)
+            self.assertIn("scopes: profile:osp", written)
+            self.assertIn("inventory-only report", written)
 
 
 if __name__ == "__main__":
