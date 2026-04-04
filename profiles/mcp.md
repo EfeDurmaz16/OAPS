@@ -1,178 +1,139 @@
 # oaps-mcp-v1
 
-## 1. Purpose
+## Status
 
-The OAPS MCP Profile defines how OAPS actors expose and consume MCP servers with delegation, policy, evidence, and error semantics attached.
+Draft profile for OAPS composition with MCP.
 
-This profile is intentionally incremental. It standardizes MCP **tool** interop first. Resource and prompt mappings are included as informative guidance, not normative v1 requirements.
+This is a profile document, not the full OAPS core specification.
 
-## 2. Deployment models
+## Purpose
 
-A conforming `oaps-mcp-v1` implementation MAY be deployed as:
+`oaps-mcp-v1` defines how MCP tool ecosystems participate in OAPS semantics.
 
-- a **sidecar proxy** in front of an existing MCP server
-- a **gateway** speaking OAPS HTTP on one side and MCP transport on the other
-- an **embedded library** wrapping an MCP client or host
+It standardizes how OAPS actors expose, consume, and govern MCP tool access while preserving MCP's own transport and discovery semantics.
 
-The deployment model MUST NOT change the normative behavior defined below.
+The profile is intentionally incremental:
 
-## 3. Discovery mapping
+- tool interop is normative
+- resource and prompt mappings are informative for now
+- the goal is OAPS-governed interop, not a replacement for MCP
 
-An actor exposing MCP support MUST include an endpoint like:
+## Relationship To The Suite
 
-```json
-{
-  "kind": "mcp",
-  "profile": "oaps-mcp-v1",
-  "url": "https://tools.example/mcp"
-}
-```
+`oaps-mcp-v1` sits above MCP and below the OAPS core semantics.
 
-A conforming adapter MUST support:
+It maps:
 
-- `GET /capabilities` on the OAPS side
-- `tools/list` on the MCP side
+- MCP tools to OAPS capabilities
+- OAPS intents to MCP tool calls
+- OAPS policy decisions to pre-execution gating
+- OAPS evidence events to hash-linked lineage
 
-The adapter:
-1. calls `tools/list`
-2. maps each MCP tool to a `CapabilityCard`
-3. assigns `kind = "tool"`
-4. preserves the input schema
-5. assigns or derives a risk class
+It must not introduce MCP-specific transport behavior into the OAPS core.
 
-## 4. Capability mapping
+## Deployment Models
 
-| OAPS field | MCP field | Rule |
-|---|---|---|
-| `name` | `tool.name` | MUST map directly |
-| `description` | `tool.description` | SHOULD map directly |
-| `input_schema` | `tool.inputSchema` | MUST preserve fidelity |
-| `kind` | n/a | MUST be `tool` |
-| `risk_class` | n/a | MUST be preserved or derived by adapter |
-| `output_schema` | n/a | OAPS-side metadata only unless server provides equivalent metadata |
+A conforming implementation MAY be deployed as:
 
-## 5. Invocation mapping
+- a sidecar proxy in front of an existing MCP server
+- a gateway speaking OAPS on one side and MCP on the other
+- an embedded library wrapping an MCP client or host
 
-An OAPS invoke intent:
+The deployment model MUST NOT change the normative mapping behavior defined by the profile.
 
-```json
-{
-  "intent_id": "int_1",
-  "verb": "invoke",
-  "object": "tool:read_repo",
-  "constraints": {
-    "arguments": {
-      "path": "README.md"
-    }
-  }
-}
-```
+## Discovery And Capability Mapping
 
-maps to MCP:
+A conforming adapter MUST:
 
-- method: `tools/call`
-- params:
-  - `name`: `read_repo`
-  - `arguments`: `{ "path": "README.md" }`
+1. discover MCP tools
+2. map each tool to an OAPS `Capability`
+3. preserve the MCP input schema fidelity
+4. derive or assign a risk class
+5. expose capabilities through the OAPS-facing surface
 
-For `verb = "invoke"`, `constraints.arguments` MUST be present.
+The profile should keep capability mapping stable enough for conformance tests to compare tool identity, schema fidelity, and risk assignment.
 
-## 6. Policy enforcement
+## Invocation Mapping
 
-A conforming adapter MUST evaluate OAPS policy before invoking the MCP tool.
+An OAPS invoke intent MUST be mappable to MCP `tools/call`.
+
+For invoke flows:
+
+- the target tool name must resolve from the OAPS object reference
+- arguments must be carried through without lossy schema translation
+- the adapter must reject malformed invoke intents before tool execution
+
+The profile should allow implementation-specific routing, but not implementation-specific semantic drift.
+
+## Policy And Authority
+
+A conforming `oaps-mcp-v1` adapter MUST evaluate OAPS policy before execution.
 
 The adapter MUST:
-1. resolve the target capability
-2. construct canonical `ctx`
+
+1. resolve the capability
+2. construct the canonical policy context
 3. evaluate policy
-4. stop execution and return `POLICY_DENIED` if denied
-5. proceed only if allowed or approved
+4. halt on denial
+5. proceed only when allowed or explicitly approved
 
-The adapter MUST NOT treat policy as post-hoc audit-only metadata.
+If authenticated subject binding is available, it MUST be checked before the tool call proceeds.
 
-## 7. Evidence sidecar
+## Evidence Requirements
 
-For every MCP tool call, the adapter MUST emit at least two evidence events.
+Every MCP tool call under `oaps-mcp-v1` MUST produce hash-linked evidence events.
 
-### 7.1 Start event
+At minimum, the profile should preserve:
 
-```json
-{
-  "event_id": "evt_1",
-  "interaction_id": "ix_1",
-  "event_type": "mcp.tool_call.started",
-  "actor": "urn:oaps:actor:agent:builder",
-  "timestamp": "2026-04-03T10:00:00Z",
-  "prev_event_hash": "sha256:0",
-  "event_hash": "sha256:...",
-  "input_hash": "sha256:..."
-}
-```
+- start and completion events
+- input and output hashes
+- policy decision metadata
+- approval references when relevant
+- delegation references when relevant
+- authenticated subject binding outcome
 
-### 7.2 Completion event
+For higher-risk actions, the evidence chain SHOULD be rich enough to support replay and audit without requiring the original MCP exchange to be re-created manually.
 
-```json
-{
-  "event_id": "evt_2",
-  "interaction_id": "ix_1",
-  "event_type": "mcp.tool_call.completed",
-  "actor": "urn:oaps:actor:agent:builder",
-  "timestamp": "2026-04-03T10:00:01Z",
-  "prev_event_hash": "sha256:...",
-  "event_hash": "sha256:...",
-  "output_hash": "sha256:..."
-}
-```
+## Error Mapping
 
-For `R4` and `R5`, the adapter MUST also record:
-- policy decision identifier
-- delegation reference
-- approval reference if present
-- authenticated subject binding result
+`oaps-mcp-v1` MUST translate common MCP failures into portable OAPS errors.
 
-## 8. Error mapping
+Expected mappings include:
 
-A conforming adapter MUST translate common MCP failure modes into OAPS error codes.
+- missing tool -> capability error
+- invalid arguments -> validation error
+- upstream unavailable -> transport error
+- upstream timeout -> timeout error
+- upstream auth failure -> authentication error
 
-| MCP condition | OAPS code |
-|---|---|
-| tool missing | `CAPABILITY_NOT_FOUND` |
-| invalid arguments | `VALIDATION_FAILED` |
-| upstream unavailable | `UPSTREAM_UNAVAILABLE` |
-| upstream timeout | `EXECUTION_TIMEOUT` |
-| upstream auth failure | `UPSTREAM_AUTH_FAILED` |
+Implementations may carry upstream details in error metadata, but the portable error category must remain stable.
 
-## 9. Authentication
+## Informative Extensions
 
-If the upstream MCP server requires auth, the adapter MAY use its configured auth method. Upstream auth outcome SHOULD be captured in evidence metadata.
+The following are informative in the current draft:
 
-## 10. Informative resource mapping
+- resource mapping
+- prompt mapping
+- subscription-like surfaces
 
-Resources are not normative in `oaps-mcp-v1`, but an expected future mapping would be:
+They should be documented for future profiles, but they are not normative requirements of this draft.
 
-- `CapabilityCard.kind = "resource"`
-- `name`
-- `resource_uri`
-- `mime_type`
-
-## 11. Informative prompt mapping
-
-Prompts are also not normative in `oaps-mcp-v1`, but an expected future mapping would be:
-
-- `CapabilityCard.kind = "prompt"`
-- `name`
-- `description`
-- input slots as structured schema metadata
-
-## 12. Conformance
+## Conformance
 
 A conforming `oaps-mcp-v1` implementation:
 
-- MUST map MCP tools to `CapabilityCard`
+- MUST map MCP tools to OAPS capabilities
 - MUST preserve input schema fidelity
-- MUST derive or assign `risk_class`
-- MUST enforce OAPS policy before tool execution
+- MUST derive or assign a risk class
+- MUST enforce OAPS policy before execution
 - MUST emit evidence events
-- MUST map errors into OAPS errors
+- MUST map common MCP failures to OAPS errors
 - SHOULD support sidecar, gateway, or embedded deployment
-- MAY add informative support for resources and prompts
+
+## Open Questions
+
+The draft still needs formal answers for:
+
+- how much of MCP resource/prompt semantics should eventually be normative
+- how deeply MCP auth should be bridged into the OAPS identity profiles
+- whether an MCP-native JSON-RPC binding should be a first-class binding draft or remain profile-specific

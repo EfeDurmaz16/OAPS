@@ -30,9 +30,9 @@ The missing layer is not “yet another product protocol.” It is a shared prim
 
 ## What OAPS is
 
-OAPS is an open standard for agentic primitives.
+OAPS is an open protocol suite for agentic primitives and control-plane semantics.
 
-It is deliberately designed as a **composing layer**. It does not attempt to replace MCP, A2A, ACP, AP2, x402, or MPP. Instead, it provides the common governance, accountability, and continuity layer they can share.
+It is deliberately designed as a **composing semantic layer**. It does not attempt to replace MCP, A2A, ACP, AP2, x402, MPP, OSP, or trust systems such as FIDES/TAP-family approaches. Instead, it provides the common governance, accountability, and continuity layer they can share.
 
 ## Why the timing matters
 
@@ -42,14 +42,20 @@ If autonomous systems become real economic and operational actors, open primitiv
 
 ## Long-term scope
 
-The long-term scope of OAPS is broad. It is intended to become a foundational open standard for agentic primitives across systems.
+The long-term scope of OAPS is broad. It is intended to become a foundational open protocol suite for agentic primitives across systems.
 
-The near-term wedge is narrower and more practical:
+The suite shape is:
 
-- delegation
-- policy
-- evidence
-- approval
-- accountable execution
+- core semantics
+- bindings
+- profiles
+- domain protocol families
 
-That wedge is concrete enough to implement now and broad enough to support future extension.
+The current near-term hard focus is narrower:
+
+- a semantic foundation draft
+- an HTTP-first binding path
+- MCP and A2A as first profile targets
+- replayable evidence and approval semantics
+
+That path is concrete enough to implement now and broad enough to support future extension.

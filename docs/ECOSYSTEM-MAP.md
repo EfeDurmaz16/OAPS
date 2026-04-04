@@ -9,6 +9,8 @@ The goal is to prevent two common mistakes:
 - treating OAPS as a wrapper around a single existing protocol
 - treating OAPS as if it must replace every adjacent standard
 
+For a compact reader-facing summary, see [PROTOCOL-POSITIONING.md](./PROTOCOL-POSITIONING.md).
+
 ## Internal Aligned Projects
 
 ### Sardis

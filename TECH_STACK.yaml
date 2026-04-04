@@ -1,15 +1,25 @@
-monorepo:
+suite_program:
+  positioning: protocol-suite
+  incubation: sardis-incubated-neutral-by-design
+  immediate_public_outputs:
+  - charter
+  - suite architecture
+  - core foundation draft
+  - governance process
+  - reference slice
+reference_monorepo:
   package_manager: pnpm
   language: TypeScript
   build: tsc
   workspace: pnpm-workspace.yaml
-packages:
+  role: MCP-oriented reference slice and proving ground
+reference_packages:
   '@oaps/core':
-  - schema-derived types
-  - envelope builder
-  - id generation
+  - shared contracts
+  - ids
   - canonical JSON serializer
   - version negotiation helpers
+  - auth binding checks
   '@oaps/evidence':
   - sha256 hashing
   - hash-linked chain builder
@@ -24,11 +34,30 @@ packages:
   - evidence sidecar emission
   - error translation
   '@oaps/http':
-  - canonical HTTP binding
+  - HTTP reference surface for the current slice
   - well-known discovery
   - interaction endpoints
   - approval endpoints
   - evidence endpoints
-reference_server:
-  phase_1_to_3: TypeScript
-  phase_4_plus_optional: Rust gateway
+planned_suite_tracks:
+  core:
+  - actor, capability, intent, task
+  - delegation and mandate
+  - approval and evidence
+  bindings:
+  - HTTP
+  - JSON-RPC
+  - gRPC
+  - events/webhooks
+  profiles:
+  - MCP
+  - A2A
+  - web auth
+  - FIDES/TAP-family
+  - x402
+  - MPP
+  - AP2
+  domain_families:
+  - provisioning
+  - commerce
+  - jobs
