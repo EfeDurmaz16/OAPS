@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -33,6 +34,134 @@ class ValidationReport:
             "issues": [
                 {"path": issue.path, "message": issue.message}
                 for issue in self.issues
+            ],
+        }
+
+
+@dataclass(frozen=True)
+class FixtureScenario:
+    scope: str
+    scenario_id: str
+    coverage: tuple[str, ...]
+    pack_path: str
+
+
+@dataclass(frozen=True)
+class FixturePackInventory:
+    scope: str
+    path: str
+    scenario_ids: tuple[str, ...]
+
+    @property
+    def scenario_count(self) -> int:
+        return len(self.scenario_ids)
+
+
+@dataclass(frozen=True)
+class InventoryReport:
+    manifest_path: Path
+    repo_root: Path
+    manifest: ConformanceManifest | None
+    packs: tuple[FixturePackInventory, ...]
+    scenarios: tuple[FixtureScenario, ...]
+    issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
+
+    @property
+    def ok(self) -> bool:
+        return not self.issues
+
+    @property
+    def total_packs(self) -> int:
+        return len(self.packs)
+
+    @property
+    def total_scenarios(self) -> int:
+        return len(self.scenarios)
+
+    @property
+    def scopes(self) -> tuple[str, ...]:
+        return tuple(pack.scope for pack in self.packs)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "ok": self.ok,
+            "manifest_path": str(self.manifest_path),
+            "repo_root": str(self.repo_root),
+            "manifest": None if self.manifest is None else {
+                "manifest_version": self.manifest.manifest_version,
+                "tck_id": self.manifest.tck_id,
+                "suite_version": self.manifest.suite_version,
+                "status": self.manifest.status,
+            },
+            "summary": {
+                "packs": self.total_packs,
+                "scenarios": self.total_scenarios,
+                "scopes": list(self.scopes),
+            },
+            "packs": [
+                {
+                    "scope": pack.scope,
+                    "path": pack.path,
+                    "scenario_count": pack.scenario_count,
+                    "scenario_ids": list(pack.scenario_ids),
+                }
+                for pack in self.packs
+            ],
+            "scenarios": [
+                {
+                    "scope": scenario.scope,
+                    "scenario_id": scenario.scenario_id,
+                    "coverage": list(scenario.coverage),
+                    "pack_path": scenario.pack_path,
+                }
+                for scenario in self.scenarios
+            ],
+            "issues": [
+                {"path": issue.path, "message": issue.message}
+                for issue in self.issues
+            ],
+        }
+
+    def to_result_dict(
+        self,
+        *,
+        implementation_id: str = "oaps-python",
+        implementation_version: str = "0.1.0",
+    ) -> dict[str, Any]:
+        scopes = list(self.scopes)
+        total = self.total_scenarios
+        executed_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        return {
+            "result_schema_version": "1.0",
+            "manifest_id": self.manifest.tck_id if self.manifest else "oaps-tck",
+            "runner_id": "oaps-python-inventory",
+            "implementation": {
+                "implementation_id": implementation_id,
+                "implementation_version": implementation_version,
+                "metadata": {
+                    "mode": "inventory",
+                    "issues_present": bool(self.issues),
+                },
+            },
+            "executed_at": executed_at,
+            "scopes": scopes,
+            "summary": {
+                "pass": 0,
+                "fail": 0,
+                "skip": total,
+                "error": 0,
+                "total": total,
+            },
+            "scenarios": [
+                {
+                    "scenario_id": scenario.scenario_id,
+                    "scope": scenario.scope,
+                    "outcome": "skip",
+                    "coverage": list(scenario.coverage),
+                    "notes": "inventory-only run; no implementation execution was performed",
+                    "artifacts": [scenario.pack_path],
+                }
+                for scenario in self.scenarios
             ],
         }
 
@@ -208,3 +337,77 @@ def validate_repository(repo_root: Path | None = None, manifest_path: Path | Non
                                 _require_file_exists(repo_root, value, issues, str(pack_file))
 
     return ValidationReport(manifest_path=manifest_path, repo_root=repo_root, issues=tuple(issues))
+
+
+def inventory_repository(repo_root: Path | None = None, manifest_path: Path | None = None) -> InventoryReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    manifest_path = (manifest_path or repo_root / MANIFEST_RELATIVE_PATH).resolve()
+    issues: list[ValidationIssue] = []
+
+    if not manifest_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(manifest_path),
+                message="conformance manifest does not exist",
+            )
+        )
+        return InventoryReport(
+            manifest_path=manifest_path,
+            repo_root=repo_root,
+            manifest=None,
+            packs=tuple(),
+            scenarios=tuple(),
+            issues=tuple(issues),
+        )
+
+    manifest = ConformanceManifest.from_json(load_json_file(manifest_path))
+    fixture_index_path = _resolve_repo_path(repo_root, manifest.fixture_index)
+    packs: list[FixturePackInventory] = []
+    scenarios: list[FixtureScenario] = []
+
+    if not fixture_index_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(manifest_path),
+                message=f"missing referenced file: {manifest.fixture_index}",
+            )
+        )
+    else:
+        fixture_index = load_json_file(fixture_index_path)
+        for pack in fixture_index.get("packs", []):
+            if not isinstance(pack, dict):
+                continue
+            scope = str(pack.get("scope", ""))
+            pack_path = str(pack.get("path", ""))
+            pack_file = _resolve_repo_path(repo_root, pack_path)
+            scenario_ids: list[str] = []
+            if pack_file.exists():
+                pack_json = load_json_file(pack_file)
+                for fixture in pack_json.get("fixtures", []):
+                    if not isinstance(fixture, dict):
+                        continue
+                    scenario_id = str(fixture.get("scenario_id", ""))
+                    if not scenario_id:
+                        continue
+                    scenario_ids.append(scenario_id)
+                    scenarios.append(
+                        FixtureScenario(
+                            scope=scope,
+                            scenario_id=scenario_id,
+                            coverage=tuple(str(item) for item in fixture.get("coverage", [])),
+                            pack_path=pack_path,
+                        )
+                    )
+            packs.append(FixturePackInventory(scope=scope, path=pack_path, scenario_ids=tuple(scenario_ids)))
+
+    validation = validate_repository(repo_root=repo_root, manifest_path=manifest_path)
+    issues.extend(validation.issues)
+
+    return InventoryReport(
+        manifest_path=manifest_path,
+        repo_root=repo_root,
+        manifest=manifest,
+        packs=tuple(packs),
+        scenarios=tuple(scenarios),
+        issues=tuple(issues),
+    )

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import contextlib
 import json
+import io
 import tempfile
 import unittest
 from pathlib import Path
@@ -8,7 +10,8 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from oaps_python.manifest import MANIFEST_RELATIVE_PATH, validate_repository
+from oaps_python.cli import main
+from oaps_python.manifest import MANIFEST_RELATIVE_PATH, inventory_repository, validate_repository
 
 
 class ManifestValidationTests(unittest.TestCase):
@@ -53,6 +56,53 @@ class ManifestValidationTests(unittest.TestCase):
             report = validate_repository(repo_root=repo_root)
             self.assertFalse(report.ok)
             self.assertTrue(any("missing referenced file" in issue.message for issue in report.issues))
+
+    def test_inventory_reports_scopes_and_scenarios(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = inventory_repository(repo_root=repo_root)
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertEqual(report.total_packs, 8)
+        self.assertEqual(report.total_scenarios, 39)
+        self.assertEqual(
+            report.scopes,
+            (
+                "core",
+                "binding:http",
+                "profile:mcp",
+                "profile:a2a",
+                "profile:auth-web",
+                "profile:auth-fides-tap",
+                "profile:x402",
+                "profile:osp",
+            ),
+        )
+
+    def test_inventory_json_emits_schema_shaped_result(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main(["inventory", "--repo-root", str(repo_root), "--json"])
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout.getvalue())
+        self.assertEqual(payload["result_schema_version"], "1.0")
+        self.assertEqual(payload["manifest_id"], "oaps-tck")
+        self.assertEqual(payload["summary"]["skip"], payload["summary"]["total"])
+        self.assertEqual(payload["summary"]["pass"], 0)
+        self.assertEqual(payload["summary"]["fail"], 0)
+        self.assertEqual(payload["summary"]["error"], 0)
+        self.assertEqual(len(payload["scenarios"]), 39)
+        self.assertTrue(all(scenario["outcome"] == "skip" for scenario in payload["scenarios"]))
+
+    def test_inventory_text_mentions_scopes(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main(["inventory", "--repo-root", str(repo_root)])
+        self.assertEqual(exit_code, 0)
+        output = stdout.getvalue()
+        self.assertIn("Inventory report", output)
+        self.assertIn("core, binding:http, profile:mcp, profile:a2a", output)
+        self.assertIn("inventory-only report", output)
 
 
 if __name__ == "__main__":

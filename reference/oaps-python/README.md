@@ -8,6 +8,7 @@ It is intentionally small and dependency-free:
 - resolves the referenced conformance packs, schemas, examples, and source docs
 - validates the manifest's runner contract and result schema references
 - validates that referenced files exist
+- inventories fixture scopes and scenarios
 - exposes a minimal CLI for conformance-pack inspection
 
 ## Usage
@@ -16,6 +17,18 @@ From the repository root or anywhere inside the repository:
 
 ```bash
 python3 -m oaps_python validate
+```
+
+Inventory the suite packs and scenarios:
+
+```bash
+python3 -m oaps_python inventory
+```
+
+Emit a schema-shaped dry-run result:
+
+```bash
+python3 -m oaps_python inventory --json
 ```
 
 Or with an explicit starting directory:
