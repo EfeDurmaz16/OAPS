@@ -1,0 +1,52 @@
+{
+  "$id": "https://oaps.dev/schemas/approval-request.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ApprovalRequest",
+  "type": "object",
+  "required": [
+    "approval_request_id",
+    "interaction_id",
+    "requested_by",
+    "requested_from",
+    "reason",
+    "proposed_action",
+    "expires_at"
+  ],
+  "properties": {
+    "approval_request_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "requested_by": {
+      "$ref": "common.json#/$defs/actorRef"
+    },
+    "requested_from": {
+      "$ref": "common.json#/$defs/actorRef"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "risk_class": {
+      "$ref": "common.json#/$defs/riskClass"
+    },
+    "proposed_action": {
+      "$ref": "common.json#/$defs/action"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

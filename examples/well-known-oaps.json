@@ -1,0 +1,13 @@
+{
+  "oaps_version": "0.4",
+  "actor_card_url": "https://tools.example/actor-card",
+  "capabilities_url": "https://tools.example/capabilities",
+  "interactions_url": "https://tools.example/interactions",
+  "auth_schemes": [
+    "bearer"
+  ],
+  "supported_profiles": [
+    "oaps-core",
+    "oaps-mcp-v1"
+  ]
+}

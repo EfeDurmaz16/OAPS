@@ -1,0 +1,34 @@
+monorepo:
+  package_manager: pnpm
+  language: TypeScript
+  build: tsc
+  workspace: pnpm-workspace.yaml
+packages:
+  '@oaps/core':
+  - schema-derived types
+  - envelope builder
+  - id generation
+  - canonical JSON serializer
+  - version negotiation helpers
+  '@oaps/evidence':
+  - sha256 hashing
+  - hash-linked chain builder
+  - chain verifier
+  '@oaps/policy':
+  - oaps-policy-v1 evaluator
+  - policy context builder
+  - evaluation result typing
+  '@oaps/mcp-adapter':
+  - MCP capability mapping
+  - policy enforcement before tool call
+  - evidence sidecar emission
+  - error translation
+  '@oaps/http':
+  - canonical HTTP binding
+  - well-known discovery
+  - interaction endpoints
+  - approval endpoints
+  - evidence endpoints
+reference_server:
+  phase_1_to_3: TypeScript
+  phase_4_plus_optional: Rust gateway

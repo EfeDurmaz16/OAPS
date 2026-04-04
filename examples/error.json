@@ -1,0 +1,6 @@
+{
+  "code": "POLICY_DENIED",
+  "category": "authorization",
+  "message": "Action exceeds policy limit",
+  "retryable": false
+}

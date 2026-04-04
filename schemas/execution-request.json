@@ -1,0 +1,29 @@
+{
+  "$id": "https://oaps.dev/schemas/execution-request.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ExecutionRequest",
+  "type": "object",
+  "required": [
+    "execution_id",
+    "intent_ref",
+    "capability_ref"
+  ],
+  "properties": {
+    "execution_id": {
+      "type": "string"
+    },
+    "intent_ref": {
+      "type": "string"
+    },
+    "capability_ref": {
+      "type": "string"
+    },
+    "arguments": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,83 @@
+{
+  "$id": "https://oaps.dev/schemas/actor-card.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ActorCard",
+  "type": "object",
+  "required": [
+    "actor_id",
+    "actor_type",
+    "display_name",
+    "endpoints",
+    "capabilities"
+  ],
+  "properties": {
+    "actor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent",
+        "organization",
+        "merchant",
+        "tool-provider",
+        "service",
+        "payment-provider"
+      ]
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "identity_profile": {
+      "type": "string",
+      "enum": [
+        "uri",
+        "urn",
+        "did"
+      ]
+    },
+    "auth_schemes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "bearer",
+          "oauth2",
+          "httpsig",
+          "none"
+        ]
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "common.json#/$defs/endpoint"
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supported_profiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trust_credentials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

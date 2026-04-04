@@ -1,0 +1,35 @@
+{
+  "$id": "https://oaps.dev/schemas/execution-result.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ExecutionResult",
+  "type": "object",
+  "required": [
+    "execution_id",
+    "status",
+    "timestamp"
+  ],
+  "properties": {
+    "execution_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failure",
+        "partial"
+      ]
+    },
+    "result": {
+      "type": "object"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

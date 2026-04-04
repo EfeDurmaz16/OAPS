@@ -1,0 +1,9 @@
+{
+  "interaction_id": "ix_1",
+  "state": "approved",
+  "state_detail": "Human approver confirmed the action",
+  "timestamp": "2026-04-04T10:01:00Z",
+  "metadata": {
+    "approval_request_id": "apr_1"
+  }
+}

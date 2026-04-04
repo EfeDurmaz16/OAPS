@@ -1,0 +1,65 @@
+{
+  "$id": "https://oaps.dev/schemas/approval-decision.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ApprovalDecision",
+  "type": "object",
+  "required": [
+    "approval_request_id",
+    "interaction_id",
+    "decided_by",
+    "decision",
+    "timestamp"
+  ],
+  "properties": {
+    "approval_request_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "decided_by": {
+      "$ref": "common.json#/$defs/actorRef"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "approve",
+        "reject",
+        "modify"
+      ]
+    },
+    "modified_action": {
+      "$ref": "common.json#/$defs/action"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": {
+            "const": "modify"
+          }
+        },
+        "required": [
+          "decision"
+        ]
+      },
+      "then": {
+        "required": [
+          "modified_action"
+        ]
+      }
+    }
+  ]
+}

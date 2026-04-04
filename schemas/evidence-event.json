@@ -1,0 +1,53 @@
+{
+  "$id": "https://oaps.dev/schemas/evidence-event.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS EvidenceEvent",
+  "type": "object",
+  "required": [
+    "event_id",
+    "interaction_id",
+    "event_type",
+    "actor",
+    "timestamp",
+    "prev_event_hash",
+    "event_hash"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "prev_event_hash": {
+      "type": "string",
+      "pattern": "^sha256:.+$"
+    },
+    "event_hash": {
+      "type": "string",
+      "pattern": "^sha256:.+$"
+    },
+    "input_hash": {
+      "type": "string",
+      "pattern": "^sha256:.+$"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^sha256:.+$"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

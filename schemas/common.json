@@ -1,0 +1,158 @@
+{
+  "$id": "https://oaps.dev/schemas/common.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Common Types",
+  "type": "object",
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "required": [
+        "actor_id"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "endpoint_hint": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endpoint": {
+      "type": "object",
+      "required": [
+        "kind",
+        "url"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "interaction",
+            "discovery",
+            "events",
+            "evidence",
+            "approval",
+            "mcp",
+            "a2a",
+            "acp",
+            "commerce",
+            "payment"
+          ]
+        },
+        "profile": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "riskClass": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "money": {
+      "type": "object",
+      "required": [
+        "value",
+        "currency"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]{1,8})?$"
+        },
+        "currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "proof": {
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "alg": {
+          "type": "string"
+        },
+        "key_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "verb",
+        "target"
+      ],
+      "properties": {
+        "verb": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "amount": {
+          "$ref": "common.json#/$defs/money"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "authenticated",
+        "verified",
+        "intent_received",
+        "quoted",
+        "delegated",
+        "pending_approval",
+        "approved",
+        "executing",
+        "partially_completed",
+        "challenged",
+        "failed",
+        "compensated",
+        "completed",
+        "revoked",
+        "settled",
+        "archived"
+      ]
+    }
+  }
+}

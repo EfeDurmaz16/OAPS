@@ -1,0 +1,26 @@
+{
+  "actor_id": "urn:oaps:actor:agent:builder",
+  "actor_type": "agent",
+  "display_name": "Builder Agent",
+  "identity_profile": "urn",
+  "auth_schemes": [
+    "bearer"
+  ],
+  "endpoints": [
+    {
+      "kind": "mcp",
+      "profile": "oaps-mcp-v1",
+      "url": "https://tools.example/mcp"
+    },
+    {
+      "kind": "interaction",
+      "url": "https://tools.example/interactions"
+    }
+  ],
+  "capabilities": [
+    "cap_read_repo"
+  ],
+  "supported_profiles": [
+    "oaps-mcp-v1"
+  ]
+}

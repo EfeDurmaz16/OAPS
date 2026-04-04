@@ -1,0 +1,328 @@
+{
+  "$id": "https://oaps.dev/schemas/envelope.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Envelope",
+  "type": "object",
+  "required": [
+    "spec_version",
+    "message_id",
+    "interaction_id",
+    "from",
+    "to",
+    "channel",
+    "message_type",
+    "timestamp",
+    "payload"
+  ],
+  "properties": {
+    "spec_version": {
+      "type": "string",
+      "pattern": "^0\\.[0-9]+(?:\\.[0-9]+)?(?:-draft)?$"
+    },
+    "min_supported_version": {
+      "type": "string"
+    },
+    "max_supported_version": {
+      "type": "string"
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": "string"
+    },
+    "parent_message_id": {
+      "type": "string"
+    },
+    "from": {
+      "$ref": "common.json#/$defs/actorRef"
+    },
+    "to": {
+      "$ref": "common.json#/$defs/actorRef"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "oaps-http",
+        "mcp",
+        "a2a",
+        "acp",
+        "commerce",
+        "payment",
+        "human-approval"
+      ]
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "intent.request",
+        "intent.response",
+        "interaction.created",
+        "interaction.updated",
+        "approval.request",
+        "approval.decision",
+        "execution.request",
+        "execution.result",
+        "error",
+        "evidence.event"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payload": {
+      "oneOf": [
+        {
+          "$ref": "intent.json"
+        },
+        {
+          "$ref": "approval-request.json"
+        },
+        {
+          "$ref": "approval-decision.json"
+        },
+        {
+          "$ref": "interaction-created.json"
+        },
+        {
+          "$ref": "interaction-updated.json"
+        },
+        {
+          "$ref": "execution-request.json"
+        },
+        {
+          "$ref": "execution-result.json"
+        },
+        {
+          "$ref": "error.json"
+        },
+        {
+          "$ref": "evidence-event.json"
+        }
+      ]
+    },
+    "proofs": {
+      "type": "array",
+      "items": {
+        "$ref": "common.json#/$defs/proof"
+      }
+    },
+    "refs": {
+      "type": "object",
+      "properties": {
+        "delegation_id": {
+          "type": "string"
+        },
+        "policy_id": {
+          "type": "string"
+        },
+        "execution_id": {
+          "type": "string"
+        },
+        "approval_request_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "intent.request"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "intent.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "intent.response"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "intent.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "approval.request"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "approval-request.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "approval.decision"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "approval-decision.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "interaction.created"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "interaction-created.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "interaction.updated"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "interaction-updated.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "execution.request"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "execution-request.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "execution.result"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "execution-result.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "error"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "error.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "message_type": {
+            "const": "evidence.event"
+          }
+        },
+        "required": [
+          "message_type"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "$ref": "evidence-event.json"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "approval_request_id": "apr_1",
+  "interaction_id": "ix_1",
+  "decided_by": {
+    "actor_id": "urn:oaps:actor:user:efe"
+  },
+  "decision": "approve",
+  "timestamp": "2026-04-03T10:10:00Z"
+}

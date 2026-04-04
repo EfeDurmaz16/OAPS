@@ -1,0 +1,17 @@
+{
+  "approval_request_id": "apr_1",
+  "interaction_id": "ix_1",
+  "decided_by": {
+    "actor_id": "urn:oaps:actor:user:efe"
+  },
+  "decision": "modify",
+  "modified_action": {
+    "verb": "purchase",
+    "target": "book:123",
+    "amount": {
+      "value": "30.00",
+      "currency": "USD"
+    }
+  },
+  "timestamp": "2026-04-03T10:10:00Z"
+}

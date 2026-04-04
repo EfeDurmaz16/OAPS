@@ -1,0 +1,44 @@
+{
+  "$id": "https://oaps.dev/schemas/error.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS ErrorObject",
+  "type": "object",
+  "required": [
+    "code",
+    "category",
+    "message",
+    "retryable"
+  ],
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "authentication",
+        "authorization",
+        "validation",
+        "capability",
+        "discovery",
+        "transport",
+        "execution",
+        "economic",
+        "settlement",
+        "timeout",
+        "versioning",
+        "internal"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "details": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

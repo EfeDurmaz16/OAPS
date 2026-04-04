@@ -1,0 +1,72 @@
+{
+  "$id": "https://oaps.dev/schemas/intent.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Intent",
+  "type": "object",
+  "required": [
+    "intent_id",
+    "verb",
+    "object"
+  ],
+  "properties": {
+    "intent_id": {
+      "type": "string"
+    },
+    "verb": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string"
+    },
+    "constraints": {
+      "type": "object"
+    },
+    "requested_outcome": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verb": {
+            "const": "invoke"
+          }
+        },
+        "required": [
+          "verb"
+        ]
+      },
+      "then": {
+        "required": [
+          "constraints"
+        ],
+        "properties": {
+          "constraints": {
+            "type": "object",
+            "required": [
+              "arguments"
+            ],
+            "properties": {
+              "arguments": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  ]
+}

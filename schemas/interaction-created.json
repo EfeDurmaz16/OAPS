@@ -1,0 +1,30 @@
+{
+  "$id": "https://oaps.dev/schemas/interaction-created.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS InteractionCreated",
+  "type": "object",
+  "required": [
+    "interaction_id",
+    "state",
+    "timestamp"
+  ],
+  "properties": {
+    "interaction_id": {
+      "type": "string"
+    },
+    "state": {
+      "$ref": "common.json#/$defs/state"
+    },
+    "state_detail": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

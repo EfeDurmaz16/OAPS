@@ -1,0 +1,57 @@
+{
+  "$id": "https://oaps.dev/schemas/capability-card.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS CapabilityCard",
+  "type": "object",
+  "required": [
+    "capability_id",
+    "kind",
+    "name",
+    "input_schema",
+    "risk_class"
+  ],
+  "properties": {
+    "capability_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "tool",
+        "resource",
+        "prompt",
+        "commerce.checkout",
+        "payment.authorization",
+        "approval",
+        "browser_action",
+        "message",
+        "query"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "input_schema": {
+      "type": "object"
+    },
+    "output_schema": {
+      "type": "object"
+    },
+    "risk_class": {
+      "$ref": "common.json#/$defs/riskClass"
+    },
+    "required_permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

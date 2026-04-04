@@ -1,0 +1,10 @@
+{
+  "event_id": "evt_1",
+  "interaction_id": "ix_1",
+  "event_type": "mcp.tool_call.started",
+  "actor": "urn:oaps:actor:agent:builder",
+  "timestamp": "2026-04-03T10:00:00Z",
+  "prev_event_hash": "sha256:0",
+  "event_hash": "sha256:111",
+  "input_hash": "sha256:222"
+}
