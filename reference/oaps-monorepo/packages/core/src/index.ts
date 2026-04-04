@@ -368,7 +368,24 @@ export function assertAuthenticatedActor(
   delegation?: DelegationToken,
 ): void {
   if (authenticatedActorId === sender.actor_id) return;
-  if (delegation && delegation.delegatee.actor_id === sender.actor_id && delegation.delegator.actor_id === authenticatedActorId) {
+  if (
+    delegation
+    && delegation.delegatee.actor_id === sender.actor_id
+    && delegation.delegator.actor_id === authenticatedActorId
+  ) {
+    if (new Date(delegation.expires_at).getTime() <= Date.now()) {
+      throw new OapsError({
+        code: 'DELEGATION_EXPIRED',
+        category: 'authorization',
+        message: 'Delegation token has expired',
+        retryable: false,
+        details: {
+          delegation_id: delegation.delegation_id,
+          expires_at: delegation.expires_at,
+        },
+      });
+    }
+
     return;
   }
 
