@@ -2,6 +2,19 @@
 
 This is the reference TypeScript implementation workspace for the OAPS `v0.4-draft` stack.
 
+At the repository level, OAPS is now being repositioned as a broader protocol suite. This workspace should therefore be read as:
+
+- a real MCP-oriented reference slice
+- a proving ground for the suite's core, evidence, policy, and HTTP ideas
+- not the full implementation of the long-term OAPS suite
+
+For the suite-level direction, see the repo root documents:
+
+- `CHARTER.md`
+- `docs/SUITE-ARCHITECTURE.md`
+- `spec/core/FOUNDATION-DRAFT.md`
+- `spec/bindings/http-binding-draft.md`
+
 The workspace is intentionally centered on one real vertical slice first:
 
 1. discover MCP tools
@@ -33,7 +46,7 @@ pnpm test
 `pnpm test` does three things:
 
 1. checks that schema-derived core constants are up to date
-2. validates the top-level spec pack examples against `schemas/`
+2. validates the spec pack examples, including the new foundation draft schema pack, against `schemas/`
 3. runs the reference package tests
 
 ## Running The Server
