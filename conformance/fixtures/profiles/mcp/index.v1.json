@@ -1,0 +1,66 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:mcp",
+  "status": "active",
+  "normative_sources": [
+    "profiles/mcp.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "mcp.actor-card.mapping",
+      "dimension": "capability-mapping",
+      "schema": "schemas/actor-card.json",
+      "example": "examples/actor-card-mcp.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "mcp.capability-card.mapping",
+      "dimension": "capability-mapping",
+      "schema": "schemas/capability-card.json",
+      "example": "examples/capability-card-tool.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "mcp.intent.execution",
+      "dimension": "intent-to-tool-call",
+      "schema": "schemas/intent.json",
+      "example": "examples/intent-invoke.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "mcp.policy.denial",
+      "dimension": "policy-gating",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "mcp.evidence.emission",
+      "dimension": "evidence-emission",
+      "schema": "schemas/evidence-event.json",
+      "example": "examples/evidence-event.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:a2a",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/a2a-draft.md",
+    "spec/core/FOUNDATION-DRAFT.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "a2a.task.lifecycle.mapping",
+      "dimension": "task-mapping",
+      "schema": "schemas/foundation/task.json",
+      "example": "examples/foundation/task.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "a2a.delegation.carryover",
+      "dimension": "delegation",
+      "schema": "schemas/foundation/delegation.json",
+      "example": "examples/foundation/delegation.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "a2a.approval.interposition",
+      "dimension": "approval",
+      "schema": "schemas/foundation/approval-request.json",
+      "example": "examples/foundation/approval-request.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "a2a.evidence.lineage",
+      "dimension": "evidence-lineage",
+      "schema": "schemas/foundation/evidence-event.json",
+      "example": "examples/foundation/evidence-event.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "pack_version": "1.0",
+  "scope": "binding:http",
+  "status": "active",
+  "normative_sources": [
+    "spec/bindings/http-binding-draft.md",
+    "SPEC.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "http.discovery.well-known",
+      "dimension": "discovery",
+      "example": "examples/well-known-oaps.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.interaction.created",
+      "dimension": "interaction-lifecycle",
+      "schema": "schemas/interaction-created.json",
+      "example": "examples/interaction-created.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.interaction.updated",
+      "dimension": "interaction-lifecycle",
+      "schema": "schemas/interaction-updated.json",
+      "example": "examples/interaction-updated.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.approval.decision",
+      "dimension": "approval-flow",
+      "schema": "schemas/approval-decision.json",
+      "example": "examples/approval-decision.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.idempotency.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.version.negotiation",
+      "dimension": "version-negotiation",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    }
+  ]
+}

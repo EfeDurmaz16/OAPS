@@ -119,7 +119,9 @@ The target repository shape is:
 - `profiles/` for profile documents
 - `governance/` for process and policy
 - `reference/` for implementations
-- `conformance/` in a later phase for TCK and fixtures
+- `conformance/` for the suite-level TCK, taxonomy, and fixture indexes
+
+The repository now includes the first machine-readable conformance manifest and fixture index alongside the narrative suite documents.
 
 ## Operating Principle
 

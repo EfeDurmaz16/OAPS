@@ -1,0 +1,130 @@
+{
+  "pack_version": "1.0",
+  "scope": "core",
+  "status": "active",
+  "normative_sources": [
+    "spec/core/FOUNDATION-DRAFT.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "core.actor.valid",
+      "dimension": "identity",
+      "schema": "schemas/foundation/actor.json",
+      "example": "examples/foundation/actor.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.capability.valid",
+      "dimension": "intent",
+      "schema": "schemas/foundation/capability.json",
+      "example": "examples/foundation/capability.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.intent.valid",
+      "dimension": "intent",
+      "schema": "schemas/foundation/intent.json",
+      "example": "examples/foundation/intent.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.task.valid",
+      "dimension": "task",
+      "schema": "schemas/foundation/task.json",
+      "example": "examples/foundation/task.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.delegation.valid",
+      "dimension": "delegation",
+      "schema": "schemas/foundation/delegation.json",
+      "example": "examples/foundation/delegation.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.mandate.valid",
+      "dimension": "mandate",
+      "schema": "schemas/foundation/mandate.json",
+      "example": "examples/foundation/mandate.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.approval-request.valid",
+      "dimension": "approval",
+      "schema": "schemas/foundation/approval-request.json",
+      "example": "examples/foundation/approval-request.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.approval-decision.valid",
+      "dimension": "approval",
+      "schema": "schemas/foundation/approval-decision.json",
+      "example": "examples/foundation/approval-decision.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.execution-result.valid",
+      "dimension": "execution",
+      "schema": "schemas/foundation/execution-result.json",
+      "example": "examples/foundation/execution-result.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.evidence-event.valid",
+      "dimension": "evidence",
+      "schema": "schemas/foundation/evidence-event.json",
+      "example": "examples/foundation/evidence-event.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.error-object.valid",
+      "dimension": "error",
+      "schema": "schemas/foundation/error-object.json",
+      "example": "examples/foundation/error-object.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.extension-descriptor.valid",
+      "dimension": "extension",
+      "schema": "schemas/foundation/extension-descriptor.json",
+      "example": "examples/foundation/extension-descriptor.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "index_version": "1.0",
+  "packs": [
+    {
+      "scope": "core",
+      "path": "conformance/fixtures/core/index.v1.json"
+    },
+    {
+      "scope": "binding:http",
+      "path": "conformance/fixtures/bindings/http/index.v1.json"
+    },
+    {
+      "scope": "profile:mcp",
+      "path": "conformance/fixtures/profiles/mcp/index.v1.json"
+    },
+    {
+      "scope": "profile:a2a",
+      "path": "conformance/fixtures/profiles/a2a/index.v1.json"
+    }
+  ]
+}

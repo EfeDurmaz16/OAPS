@@ -52,6 +52,7 @@ It includes:
 - a foundation draft for the hard semantic core
 - JSON Schemas
 - examples
+- a machine-readable conformance manifest and fixture index
 - the `oaps-mcp-v1` profile
 - governance and roadmap docs
 - a working TypeScript reference implementation for the MCP wedge
@@ -98,7 +99,7 @@ This is the smallest real working system in the repo today, and it should be und
 - suite-level HTTP/JSON-RPC/gRPC/events binding family
 - hard-normative A2A and payment profiles
 - domain protocol families for provisioning, jobs, and commerce
-- registry and conformance infrastructure at suite scale
+- registry infrastructure and broader cross-implementation conformance at suite scale
 - broader external governance and cosigner structure
 
 ## Repository layout
@@ -114,6 +115,7 @@ This is the smallest real working system in the repo today, and it should be und
 - `examples/` — example payloads
 - `profiles/` — adapter profiles
 - `governance/` — contribution and governance docs
+- `conformance/` — suite-level TCK manifest, taxonomy, and fixture indexes
 - `reference/` — implementation scaffold
 
 ## Reference Implementation
@@ -131,6 +133,7 @@ The most relevant packages are:
 The reference workspace also includes:
 
 - `scripts/validate-spec-pack.mjs` — validates examples against the JSON Schemas
+- `scripts/validate-conformance-pack.mjs` — validates the suite-level TCK manifest and fixture indexes
 - `scripts/generate-core-schema-constants.mjs` — derives core constants from the schema pack and fails tests if stale
 
 ## Relationship to Sardis

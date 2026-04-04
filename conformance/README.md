@@ -2,22 +2,36 @@
 
 ## Purpose
 
-This directory will hold the protocol conformance material for OAPS.
+This directory is the suite-level home for OAPS conformance definitions, fixture indexes, and TCK coordination.
 
 The goal is to make it possible for an implementation to answer a concrete question:
 
-> Does this implementation actually conform to the OAPS core, binding, and profile behavior it claims?
+> Does this implementation conform to the OAPS core, binding, and profile behavior it claims?
+
+## Current Layout
+
+- `manifest/oaps-tck.manifest.v1.json` - machine-readable entry point for the suite-level TCK
+- `taxonomy/scenario-taxonomy.v1.json` - normalized scenario vocabulary and coverage dimensions
+- `fixtures/index.v1.json` - top-level map of fixture packs
+- `fixtures/core/index.v1.json` - core semantics fixture pack
+- `fixtures/bindings/http/index.v1.json` - HTTP binding fixture pack
+- `fixtures/profiles/mcp/index.v1.json` - MCP profile fixture pack
+- `fixtures/profiles/a2a/index.v1.json` - A2A profile fixture pack
+
+These files now exist in-repo and are validated by the reference workspace.
 
 ## Conformance Layers
 
-Planned conformance layers:
+The first-pass suite-level TCK structure covers:
 
 - core semantics
 - HTTP binding
-- profile mappings
-- domain protocol families
+- MCP profile mapping
+- A2A profile mapping
 
-## What Conformance Must Check
+The suite can expand into payment, provisioning, commerce, and jobs profiles once those drafts are ready for fixture-backed coverage.
+
+## What Conformance Checks
 
 At minimum, conformance should verify:
 
@@ -30,40 +44,24 @@ At minimum, conformance should verify:
 - error translation
 - binding-to-core equivalence
 
-## Expected Artifact Types
-
-This directory is expected to grow into:
-
-- fixture packs
-- TCK-style runners
-- negative-path examples
-- profile mapping tests
-- binding equivalence tests
-- evidence replay vectors
-- implementation badges or status markers
-
 ## Initial Conformance Scope
 
-The first practical conformance target should track the current reference slice:
+The current fixture packs are centered on the reference slice already present in the repository:
 
-- HTTP discovery
-- interaction creation
-- approval and rejection flows
-- evidence retrieval
-- policy gating
-- idempotency
-
-As the suite grows, the conformance surface should expand to include the new binding and profile drafts without breaking older fixtures unnecessarily.
+- foundation actor, capability, intent, task, delegation, mandate, approval, execution, evidence, error, and extension schemas
+- HTTP discovery and interaction lifecycle behavior
+- MCP capability mapping, policy gating, evidence emission, and error translation
+- A2A task mapping, lifecycle preservation, and evidence lineage
 
 ## Conformance Rules
 
-- Every normative spec change should have a corresponding test update.
-- Every new binding should ship with fixtures before it claims support.
-- Every profile should define how it translates or preserves OAPS core semantics.
-- Every error code that becomes normative should have a stable conformance expectation.
+- Every normative spec change must have a corresponding fixture or scenario update.
+- Every new binding must ship with fixture coverage before it claims support.
+- Every profile must define how it translates or preserves OAPS core semantics.
+- Every error code that becomes normative must have a stable conformance expectation.
 
 ## Status
 
-This is a scaffold, not the final conformance system.
+This is the first concrete TCK structure, not the final conformance system.
 
-The current repository already has reference tests in the TypeScript workspace. This directory is intended to become the suite-level home for shared fixtures and conformance definitions over time.
+The repository already has a reference implementation and a foundation example pack. This directory now provides the suite-level registry that future runners and CI can consume directly.

@@ -1,0 +1,40 @@
+{
+  "manifest_version": "1.0",
+  "tck_id": "oaps-tck",
+  "suite_version": "foundation-draft",
+  "status": "draft",
+  "entrypoints": [
+    {
+      "scope": "core",
+      "pack": "conformance/fixtures/core/index.v1.json"
+    },
+    {
+      "scope": "binding:http",
+      "pack": "conformance/fixtures/bindings/http/index.v1.json"
+    },
+    {
+      "scope": "profile:mcp",
+      "pack": "conformance/fixtures/profiles/mcp/index.v1.json"
+    },
+    {
+      "scope": "profile:a2a",
+      "pack": "conformance/fixtures/profiles/a2a/index.v1.json"
+    }
+  ],
+  "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
+  "fixture_index": "conformance/fixtures/index.v1.json",
+  "normative_sources": [
+    "spec/core/FOUNDATION-DRAFT.md",
+    "spec/bindings/http-binding-draft.md",
+    "profiles/mcp.md",
+    "profiles/a2a-draft.md",
+    "profiles/auth-web.md"
+  ],
+  "reference_implementations": [
+    "reference/oaps-monorepo/packages/core/src/index.ts",
+    "reference/oaps-monorepo/packages/evidence/src/index.ts",
+    "reference/oaps-monorepo/packages/policy/src/index.ts",
+    "reference/oaps-monorepo/packages/mcp-adapter/src/index.ts",
+    "reference/oaps-monorepo/packages/http/src/index.ts"
+  ]
+}

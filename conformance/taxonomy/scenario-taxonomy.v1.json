@@ -1,0 +1,60 @@
+{
+  "taxonomy_version": "1.0",
+  "families": [
+    {
+      "id": "core",
+      "dimensions": [
+        "identity",
+        "intent",
+        "task",
+        "delegation",
+        "mandate",
+        "approval",
+        "execution",
+        "evidence",
+        "error",
+        "extension"
+      ]
+    },
+    {
+      "id": "binding:http",
+      "dimensions": [
+        "discovery",
+        "version-negotiation",
+        "idempotency",
+        "interaction-lifecycle",
+        "approval-flow",
+        "revocation",
+        "event-stream",
+        "error-mapping"
+      ]
+    },
+    {
+      "id": "profile:mcp",
+      "dimensions": [
+        "capability-mapping",
+        "intent-to-tool-call",
+        "policy-gating",
+        "approval-insertion",
+        "evidence-emission",
+        "error-translation"
+      ]
+    },
+    {
+      "id": "profile:a2a",
+      "dimensions": [
+        "task-mapping",
+        "lifecycle-preservation",
+        "delegation",
+        "approval",
+        "evidence-lineage"
+      ]
+    }
+  ],
+  "coverage_levels": [
+    "schema",
+    "fixture",
+    "reference-runtime",
+    "cross-implementation"
+  ]
+}
