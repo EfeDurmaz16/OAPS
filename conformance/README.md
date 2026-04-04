@@ -17,6 +17,10 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `fixtures/bindings/http/index.v1.json` - HTTP binding fixture pack
 - `fixtures/profiles/mcp/index.v1.json` - MCP profile fixture pack
 - `fixtures/profiles/a2a/index.v1.json` - A2A profile fixture pack
+- `fixtures/profiles/auth-web/index.v1.json` - web auth baseline fixture pack
+- `fixtures/profiles/auth-fides-tap/index.v1.json` - high-assurance trust fixture pack
+- `fixtures/profiles/x402/index.v1.json` - x402 payment coordination fixture pack
+- `fixtures/profiles/osp/index.v1.json` - provisioning fixture pack
 - `runner-contract.md` - minimum behavior required from any TCK runner
 - `results/result-schema.v1.json` - machine-readable result format for compatibility claims
 
@@ -30,6 +34,10 @@ The first-pass suite-level TCK structure covers:
 - HTTP binding
 - MCP profile mapping
 - A2A profile mapping
+- auth-web baseline profile mapping
+- auth-fides-tap high-assurance trust mapping
+- x402 payment coordination mapping
+- osp provisioning mapping
 
 The suite can expand into payment, provisioning, commerce, and jobs profiles once those drafts are ready for fixture-backed coverage.
 

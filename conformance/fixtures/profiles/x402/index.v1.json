@@ -1,0 +1,40 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:x402",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/x402-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "x402.payment.discovery",
+      "dimension": "payment-discovery",
+      "example": "examples/well-known-oaps.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "x402.payment.authorization.intent",
+      "dimension": "payment-authorization",
+      "example": "examples/intent-invoke.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "x402.settlement.execution-result",
+      "dimension": "settlement",
+      "example": "examples/execution-result.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    }
+  ]
+}

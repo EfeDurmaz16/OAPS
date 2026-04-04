@@ -16,6 +16,22 @@
     {
       "scope": "profile:a2a",
       "path": "conformance/fixtures/profiles/a2a/index.v1.json"
+    },
+    {
+      "scope": "profile:auth-web",
+      "path": "conformance/fixtures/profiles/auth-web/index.v1.json"
+    },
+    {
+      "scope": "profile:auth-fides-tap",
+      "path": "conformance/fixtures/profiles/auth-fides-tap/index.v1.json"
+    },
+    {
+      "scope": "profile:x402",
+      "path": "conformance/fixtures/profiles/x402/index.v1.json"
+    },
+    {
+      "scope": "profile:osp",
+      "path": "conformance/fixtures/profiles/osp/index.v1.json"
     }
   ]
 }

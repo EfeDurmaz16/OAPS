@@ -19,6 +19,22 @@
     {
       "scope": "profile:a2a",
       "pack": "conformance/fixtures/profiles/a2a/index.v1.json"
+    },
+    {
+      "scope": "profile:auth-web",
+      "pack": "conformance/fixtures/profiles/auth-web/index.v1.json"
+    },
+    {
+      "scope": "profile:auth-fides-tap",
+      "pack": "conformance/fixtures/profiles/auth-fides-tap/index.v1.json"
+    },
+    {
+      "scope": "profile:x402",
+      "pack": "conformance/fixtures/profiles/x402/index.v1.json"
+    },
+    {
+      "scope": "profile:osp",
+      "pack": "conformance/fixtures/profiles/osp/index.v1.json"
     }
   ],
   "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
@@ -30,7 +46,10 @@
     "spec/bindings/http-binding-draft.md",
     "profiles/mcp.md",
     "profiles/a2a-draft.md",
-    "profiles/auth-web.md"
+    "profiles/auth-web.md",
+    "profiles/auth-fides-tap-draft.md",
+    "profiles/x402-draft.md",
+    "profiles/osp-draft.md"
   ],
   "reference_implementations": [
     "reference/oaps-monorepo/packages/core/src/index.ts",

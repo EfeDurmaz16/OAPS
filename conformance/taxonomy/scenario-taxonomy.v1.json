@@ -49,6 +49,42 @@
         "approval",
         "evidence-lineage"
       ]
+    },
+    {
+      "id": "profile:auth-web",
+      "dimensions": [
+        "identity",
+        "subject-binding",
+        "delegation",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:auth-fides-tap",
+      "dimensions": [
+        "attestation",
+        "trust-upgrade",
+        "delegation",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:x402",
+      "dimensions": [
+        "payment-discovery",
+        "payment-authorization",
+        "settlement",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:osp",
+      "dimensions": [
+        "provisioning",
+        "approval",
+        "credential-delivery",
+        "evidence"
+      ]
     }
   ],
   "coverage_levels": [

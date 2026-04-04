@@ -1,0 +1,40 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:osp",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/osp-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "osp.provisioning.actor-card",
+      "dimension": "provisioning",
+      "example": "examples/actor-card-mcp.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "osp.provisioning.approval-request",
+      "dimension": "approval",
+      "example": "examples/approval-request.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "osp.lifecycle.execution-result",
+      "dimension": "credential-delivery",
+      "example": "examples/execution-result.json",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    }
+  ]
+}
