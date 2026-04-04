@@ -1,0 +1,51 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/actor.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Actor",
+  "type": "object",
+  "required": [
+    "actor_id",
+    "actor_type",
+    "display_name"
+  ],
+  "properties": {
+    "actor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "service",
+        "human",
+        "approver",
+        "provider",
+        "merchant",
+        "facilitator",
+        "system"
+      ]
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity_profile": {
+      "type": "string"
+    },
+    "auth_schemes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "endpoint_hint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

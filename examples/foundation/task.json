@@ -1,0 +1,13 @@
+{
+  "task_id": "task_foundation_1",
+  "intent_ref": "int_foundation_1",
+  "requester": {
+    "actor_id": "https://agents.example.com/actors/planner"
+  },
+  "assignee": {
+    "actor_id": "https://tools.example.com/actors/repo-reader"
+  },
+  "state": "running",
+  "created_at": "2026-04-04T18:00:00Z",
+  "updated_at": "2026-04-04T18:00:05Z"
+}

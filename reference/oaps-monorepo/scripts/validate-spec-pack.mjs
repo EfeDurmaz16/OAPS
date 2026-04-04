@@ -22,6 +22,18 @@ const exampleSchemaMap = new Map([
   ['intent-invoke.json', 'intent.json'],
   ['interaction-created.json', 'interaction-created.json'],
   ['interaction-updated.json', 'interaction-updated.json'],
+  ['foundation/actor.json', 'foundation/actor.json'],
+  ['foundation/capability.json', 'foundation/capability.json'],
+  ['foundation/intent.json', 'foundation/intent.json'],
+  ['foundation/task.json', 'foundation/task.json'],
+  ['foundation/delegation.json', 'foundation/delegation.json'],
+  ['foundation/mandate.json', 'foundation/mandate.json'],
+  ['foundation/approval-request.json', 'foundation/approval-request.json'],
+  ['foundation/approval-decision.json', 'foundation/approval-decision.json'],
+  ['foundation/execution-result.json', 'foundation/execution-result.json'],
+  ['foundation/evidence-event.json', 'foundation/evidence-event.json'],
+  ['foundation/error-object.json', 'foundation/error-object.json'],
+  ['foundation/extension-descriptor.json', 'foundation/extension-descriptor.json'],
 ]);
 
 const wellKnownRequiredKeys = [
@@ -218,15 +230,26 @@ class SchemaValidator {
   }
 }
 
-async function loadJsonDirectory(directoryPath) {
-  const fileNames = (await readdir(directoryPath)).filter((name) => name.endsWith('.json')).sort();
-  const entries = await Promise.all(
-    fileNames.map(async (fileName) => {
-      const raw = await readFile(path.join(directoryPath, fileName), 'utf8');
-      return [fileName, JSON.parse(raw)];
-    }),
-  );
-  return new Map(entries);
+async function loadJsonDirectory(directoryPath, relativePrefix = '') {
+  const entries = await readdir(directoryPath, { withFileTypes: true });
+  const collected = [];
+
+  for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name))) {
+    const nextRelative = relativePrefix ? `${relativePrefix}/${entry.name}` : entry.name;
+    const fullPath = path.join(directoryPath, entry.name);
+    if (entry.isDirectory()) {
+      const nested = await loadJsonDirectory(fullPath, nextRelative);
+      for (const nestedEntry of nested.entries()) {
+        collected.push(nestedEntry);
+      }
+      continue;
+    }
+    if (!entry.name.endsWith('.json')) continue;
+    const raw = await readFile(fullPath, 'utf8');
+    collected.push([nextRelative, JSON.parse(raw)]);
+  }
+
+  return new Map(collected);
 }
 
 function validateWellKnownExample(example) {
@@ -281,7 +304,7 @@ async function main() {
   }
 
   for (const schemaName of schemas.keys()) {
-    if (schemaName === 'common.json') continue;
+    if (schemaName === 'common.json' || schemaName === 'foundation/common.json') continue;
     if (![...exampleSchemaMap.values()].includes(schemaName)) {
       warnings.push(`${schemaName}: no example file currently mapped`);
     }

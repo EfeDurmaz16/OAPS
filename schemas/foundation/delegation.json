@@ -1,0 +1,49 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/delegation.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Delegation",
+  "type": "object",
+  "required": [
+    "delegation_id",
+    "delegator",
+    "delegatee",
+    "scope",
+    "expires_at"
+  ],
+  "properties": {
+    "delegation_id": {
+      "type": "string"
+    },
+    "delegator": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "delegatee": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "limits": {
+      "type": "object"
+    },
+    "approval_policy_id": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "revocation_endpoint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

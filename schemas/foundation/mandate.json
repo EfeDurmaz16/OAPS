@@ -1,0 +1,44 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/mandate.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Mandate",
+  "type": "object",
+  "required": [
+    "mandate_id",
+    "principal",
+    "delegatee",
+    "action",
+    "expires_at"
+  ],
+  "properties": {
+    "mandate_id": {
+      "type": "string"
+    },
+    "principal": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "delegatee": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "action": {
+      "$ref": "foundation/common.json#/$defs/action"
+    },
+    "scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "delegation_ref": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

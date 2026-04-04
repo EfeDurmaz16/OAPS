@@ -1,0 +1,91 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/common.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Common Types",
+  "type": "object",
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "required": [
+        "actor_id"
+      ],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "endpoint_hint": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "riskClass": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "taskState": {
+      "type": "string",
+      "enum": [
+        "created",
+        "queued",
+        "running",
+        "pending_approval",
+        "challenged",
+        "blocked",
+        "partially_completed",
+        "completed",
+        "failed",
+        "compensated",
+        "revoked",
+        "cancelled"
+      ]
+    },
+    "executionStatus": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "in_progress",
+        "partially_completed",
+        "completed",
+        "failed",
+        "challenged",
+        "revoked",
+        "compensated"
+      ]
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "verb",
+        "target"
+      ],
+      "properties": {
+        "verb": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

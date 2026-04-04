@@ -1,0 +1,45 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/approval-request.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation ApprovalRequest",
+  "type": "object",
+  "required": [
+    "approval_request_id",
+    "requested_by",
+    "requested_from",
+    "reason",
+    "proposed_action",
+    "expires_at"
+  ],
+  "properties": {
+    "approval_request_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "requested_by": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "requested_from": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "risk_class": {
+      "$ref": "foundation/common.json#/$defs/riskClass"
+    },
+    "proposed_action": {
+      "$ref": "foundation/common.json#/$defs/action"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

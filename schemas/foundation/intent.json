@@ -1,0 +1,65 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/intent.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Intent",
+  "type": "object",
+  "required": [
+    "intent_id",
+    "verb",
+    "object"
+  ],
+  "properties": {
+    "intent_id": {
+      "type": "string"
+    },
+    "verb": {
+      "type": "string"
+    },
+    "object": {
+      "type": "string"
+    },
+    "constraints": {
+      "type": "object"
+    },
+    "requested_outcome": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verb": {
+            "const": "invoke"
+          }
+        },
+        "required": [
+          "verb"
+        ]
+      },
+      "then": {
+        "required": [
+          "constraints"
+        ],
+        "properties": {
+          "constraints": {
+            "type": "object",
+            "required": [
+              "arguments"
+            ],
+            "properties": {
+              "arguments": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  ]
+}

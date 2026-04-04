@@ -1,0 +1,20 @@
+{
+  "approval_request_id": "apr_foundation_1",
+  "task_id": "task_foundation_1",
+  "requested_by": {
+    "actor_id": "https://agents.example.com/actors/planner"
+  },
+  "requested_from": {
+    "actor_id": "https://humans.example.com/actors/approver"
+  },
+  "reason": "This action exceeds the default risk threshold",
+  "risk_class": "R4",
+  "proposed_action": {
+    "verb": "purchase",
+    "target": "service:cloud-compute",
+    "arguments": {
+      "sku": "gpu-cluster-small"
+    }
+  },
+  "expires_at": "2026-04-04T19:00:00Z"
+}

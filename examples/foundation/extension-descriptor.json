@@ -1,0 +1,9 @@
+{
+  "extension_id": "oaps.profile.mcp",
+  "kind": "profile",
+  "title": "OAPS MCP Profile",
+  "summary": "Maps OAPS semantics into MCP tool ecosystems",
+  "status": "draft",
+  "owner": "OAPS Working Group",
+  "uri": "https://oaps.dev/profiles/mcp"
+}

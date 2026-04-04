@@ -1,0 +1,14 @@
+{
+  "delegation_id": "dlg_foundation_1",
+  "delegator": {
+    "actor_id": "https://company.example.com/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/planner"
+  },
+  "scope": [
+    "repo:read",
+    "task:create"
+  ],
+  "expires_at": "2026-05-01T00:00:00Z"
+}

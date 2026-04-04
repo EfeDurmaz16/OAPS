@@ -1,0 +1,6 @@
+{
+  "code": "POLICY_DENIED",
+  "category": "authorization",
+  "message": "Policy denied the requested action",
+  "retryable": false
+}

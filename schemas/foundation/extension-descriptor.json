@@ -1,0 +1,54 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/extension-descriptor.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation ExtensionDescriptor",
+  "type": "object",
+  "required": [
+    "extension_id",
+    "kind",
+    "title",
+    "summary",
+    "status"
+  ],
+  "properties": {
+    "extension_id": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "core",
+        "binding",
+        "profile",
+        "domain",
+        "companion"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "experimental",
+        "draft",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,46 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/task.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Task",
+  "type": "object",
+  "required": [
+    "task_id",
+    "state",
+    "created_at"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "intent_ref": {
+      "type": "string"
+    },
+    "parent_task_id": {
+      "type": "string"
+    },
+    "requester": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "assignee": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "state": {
+      "$ref": "foundation/common.json#/$defs/taskState"
+    },
+    "state_detail": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

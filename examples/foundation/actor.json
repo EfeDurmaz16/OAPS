@@ -1,0 +1,11 @@
+{
+  "actor_id": "https://agents.example.com/actors/planner",
+  "actor_type": "agent",
+  "display_name": "Planner Agent",
+  "identity_profile": "https-jwks-v1",
+  "auth_schemes": [
+    "bearer",
+    "signature"
+  ],
+  "endpoint_hint": "https://agents.example.com/oaps"
+}

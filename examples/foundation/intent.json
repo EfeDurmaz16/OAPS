@@ -1,0 +1,11 @@
+{
+  "intent_id": "int_foundation_1",
+  "verb": "invoke",
+  "object": "tool:read_repo",
+  "constraints": {
+    "arguments": {
+      "path": "README.md"
+    }
+  },
+  "requested_outcome": "Inspect the repository readme"
+}

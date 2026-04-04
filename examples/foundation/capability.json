@@ -1,0 +1,18 @@
+{
+  "capability_id": "cap_read_repo",
+  "kind": "tool",
+  "name": "read_repo",
+  "description": "Read repository files",
+  "input_schema": {
+    "type": "object",
+    "required": [
+      "path"
+    ],
+    "properties": {
+      "path": {
+        "type": "string"
+      }
+    }
+  },
+  "risk_class": "R1"
+}

@@ -1,0 +1,12 @@
+{
+  "event_id": "evt_foundation_1",
+  "task_id": "task_foundation_1",
+  "interaction_id": "ix_foundation_1",
+  "event_type": "task.completed",
+  "actor": "https://agents.example.com/actors/planner",
+  "timestamp": "2026-04-04T18:15:00Z",
+  "prev_event_hash": "sha256:abc123",
+  "event_hash": "sha256:def456",
+  "input_hash": "sha256:input123",
+  "output_hash": "sha256:output123"
+}

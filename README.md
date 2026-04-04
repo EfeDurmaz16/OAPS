@@ -77,6 +77,8 @@ This is the smallest real working system in the repo today, and it should be und
 - `docs/ECOSYSTEM-MAP.md` — how OAPS relates to internal and external protocol ecosystems
 - `docs/PARALLEL-AGENT-WORKSTREAMS.md` — founder-led, agent-amplified execution model
 - `spec/core/FOUNDATION-DRAFT.md` — narrow hard-normative semantic core draft
+- `schemas/foundation/` — machine-readable contracts for the foundation draft
+- `examples/foundation/` — examples for the foundation draft schemas
 - `governance/OEP_PROCESS.md` — spec change process
 - `governance/RF_PATENT_PLEDGE.md` — draft royalty-free standardization posture
 

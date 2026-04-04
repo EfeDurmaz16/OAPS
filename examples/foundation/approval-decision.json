@@ -1,0 +1,10 @@
+{
+  "approval_request_id": "apr_foundation_1",
+  "task_id": "task_foundation_1",
+  "decided_by": {
+    "actor_id": "https://humans.example.com/actors/approver"
+  },
+  "decision": "approve",
+  "reason": "Within project budget",
+  "timestamp": "2026-04-04T18:10:00Z"
+}
