@@ -29,6 +29,25 @@ const requestEnvelope = {
   },
 };
 
+const messageEnvelope = {
+  spec_version: '0.4-draft',
+  min_supported_version: '0.4',
+  max_supported_version: '0.4',
+  message_id: 'msg_2',
+  interaction_id: 'ix_1',
+  from: { actor_id: 'urn:oaps:actor:agent:builder' },
+  to: { actor_id: 'urn:oaps:actor:server:reference' },
+  channel: 'oaps-http',
+  message_type: 'intent.response',
+  timestamp: '2026-04-03T10:01:00Z',
+  payload: {
+    intent_id: 'int_1',
+    verb: 'invoke',
+    object: 'tool:read_repo',
+    requested_outcome: 'Report completion',
+  },
+};
+
 function createTestApp(overrides?: Parameters<typeof createReferenceApp>[0]) {
   return createReferenceApp({
     stateStore: new MemoryReferenceStateStore(),
@@ -131,6 +150,34 @@ test('idempotency returns the original response for repeated requests', async ()
   assert.equal(secondBody.interaction_id, firstBody.interaction_id);
 });
 
+test('POST /interactions/:id/messages appends envelopes to interaction history', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const messageResponse = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(messageEnvelope),
+  });
+
+  assert.equal(messageResponse.status, 200);
+  const body = await messageResponse.json();
+  assert.equal(body.payload.metadata.message_id, 'msg_2');
+  assert.equal(body.payload.metadata.message_count, 2);
+
+  const fetchResponse = await app.request('/interactions/ix_1');
+  assert.equal(fetchResponse.status, 200);
+  const interaction = await fetchResponse.json();
+  assert.equal(interaction.messages.length, 2);
+  assert.equal(interaction.messages[1].message_id, 'msg_2');
+});
+
 test('POST /interactions requires bearer authentication', async () => {
   const app = createTestApp();
 
@@ -140,6 +187,30 @@ test('POST /interactions requires bearer authentication', async () => {
       'content-type': 'application/json',
     },
     body: JSON.stringify(requestEnvelope),
+  });
+
+  assert.equal(response.status, 401);
+  const body = await response.json();
+  assert.equal(body.code, 'AUTHENTICATION_REQUIRED');
+  assert.equal(body.category, 'authentication');
+});
+
+test('POST /interactions/:id/messages requires bearer authentication', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const response = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(messageEnvelope),
   });
 
   assert.equal(response.status, 401);

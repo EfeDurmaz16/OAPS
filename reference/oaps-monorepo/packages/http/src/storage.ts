@@ -18,6 +18,7 @@ export interface StoredInteraction {
   created_at: string;
   updated_at: string;
   request: Envelope;
+  messages?: Envelope[];
   actor: ActorRef;
   evidence: EvidenceChain;
   approval_request?: ApprovalRequest;

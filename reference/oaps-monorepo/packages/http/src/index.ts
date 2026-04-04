@@ -88,6 +88,7 @@ function interactionSnapshot(record: StoredInteraction) {
     created_at: record.created_at,
     updated_at: record.updated_at,
     request: record.request,
+    messages: record.messages ?? [record.request],
     approval_request: record.approval_request,
     approval_decision: record.approval_decision,
     execution: record.execution,
@@ -241,6 +242,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       request: requestEnvelope,
+      messages: [requestEnvelope],
       actor: requestEnvelope.from,
       evidence,
     };
@@ -361,6 +363,56 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       }, 404);
     }
     return c.json(interaction.evidence.events);
+  });
+
+  app.post('/interactions/:id/messages', async (c) => {
+    const authenticatedActor = extractAuthenticatedActor(c, bearerTokens);
+    if (authenticatedActor instanceof Response) return authenticatedActor;
+
+    const interaction = await stateStore.getInteraction(c.req.param('id'));
+    if (!interaction) {
+      return jsonError(c, {
+        code: 'INTERACTION_NOT_FOUND',
+        category: 'discovery',
+        message: 'Interaction not found',
+        retryable: false,
+      }, 404);
+    }
+
+    const messageEnvelope = await c.req.json<Envelope>();
+    if (messageEnvelope.interaction_id !== interaction.interaction_id) {
+      return jsonError(c, {
+        code: 'VALIDATION_FAILED',
+        category: 'validation',
+        message: 'Message envelope interaction_id must match the path parameter',
+        retryable: false,
+      }, 400);
+    }
+
+    const messages = interaction.messages ?? [interaction.request];
+    interaction.messages = messages;
+    messages.push(messageEnvelope);
+    interaction.updated_at = new Date().toISOString();
+
+    appendEvidenceEvent(interaction.evidence, {
+      interaction_id: interaction.interaction_id,
+      event_type: 'interaction.message.appended',
+      actor: authenticatedActor,
+      input_hash: sha256Prefixed(messageEnvelope),
+      metadata: {
+        message_id: messageEnvelope.message_id,
+        message_type: messageEnvelope.message_type,
+        thread_id: messageEnvelope.thread_id,
+        parent_message_id: messageEnvelope.parent_message_id,
+      },
+    });
+    await stateStore.putInteraction(interaction);
+
+    return c.json(buildStateEnvelope(interaction.interaction_id, interaction.request.from, interaction.state, {
+      message_id: messageEnvelope.message_id,
+      message_type: messageEnvelope.message_type,
+      message_count: messages.length,
+    }));
   });
 
   app.post('/interactions/:id/approve', async (c) => {
