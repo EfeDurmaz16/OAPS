@@ -101,7 +101,10 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         output = stdout.getvalue()
         self.assertIn("Inventory report", output)
-        self.assertIn("core, binding:http, profile:mcp, profile:a2a", output)
+        self.assertIn(
+            "core, binding:http, profile:mcp, profile:a2a, profile:auth-web, profile:auth-fides-tap, profile:x402, profile:osp",
+            output,
+        )
         self.assertIn("inventory-only report", output)
 
 

@@ -41,6 +41,7 @@ If installed, the console script is:
 
 ```bash
 oaps-python validate
+oaps-python inventory
 ```
 
 ## Scope
