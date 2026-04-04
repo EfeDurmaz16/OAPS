@@ -1,0 +1,27 @@
+{
+  "name": "oaps-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev:http": "pnpm --filter @oaps/http dev",
+    "generate:core-contracts": "node scripts/generate-core-schema-constants.mjs",
+    "check:core-contracts": "node scripts/generate-core-schema-constants.mjs --check",
+    "validate:spec-pack": "node scripts/validate-spec-pack.mjs",
+    "test": "node scripts/generate-core-schema-constants.mjs --check && node scripts/validate-spec-pack.mjs && pnpm -r build && find dist -name '*.test.js' -print0 | xargs -0 node --test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "dependencies": {
+    "@oaps/core": "workspace:*",
+    "@oaps/evidence": "workspace:*",
+    "@oaps/http": "workspace:*",
+    "@oaps/mcp-adapter": "workspace:*",
+    "@oaps/policy": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  }
+}

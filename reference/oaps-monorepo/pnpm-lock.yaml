@@ -1,0 +1,106 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:packages/core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:packages/evidence
+      '@oaps/http':
+        specifier: workspace:*
+        version: link:packages/http
+      '@oaps/mcp-adapter':
+        specifier: workspace:*
+        version: link:packages/mcp-adapter
+      '@oaps/policy':
+        specifier: workspace:*
+        version: link:packages/policy
+    devDependencies:
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.17
+      typescript:
+        specifier: ^5.8.3
+        version: 5.9.3
+
+  packages/core: {}
+
+  packages/evidence:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+
+  packages/hono: {}
+
+  packages/hono-node-server: {}
+
+  packages/http:
+    dependencies:
+      '@hono/node-server':
+        specifier: workspace:*
+        version: link:../hono-node-server
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+      '@oaps/mcp-adapter':
+        specifier: workspace:*
+        version: link:../mcp-adapter
+      '@oaps/policy':
+        specifier: workspace:*
+        version: link:../policy
+      hono:
+        specifier: workspace:*
+        version: link:../hono
+
+  packages/mcp-adapter:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+      '@oaps/policy':
+        specifier: workspace:*
+        version: link:../policy
+
+  packages/policy:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+
+packages:
+
+  '@types/node@22.19.17':
+    resolution: {integrity: sha512-wGdMcf+vPYM6jikpS/qhg6WiqSV/OhG+jeeHT/KlVqxYfD40iYJf9/AE1uQxVWFvU7MipKRkRv8NSHiCGgPr8Q==}
+
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  undici-types@6.21.0:
+    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+
+snapshots:
+
+  '@types/node@22.19.17':
+    dependencies:
+      undici-types: 6.21.0
+
+  typescript@5.9.3: {}
+
+  undici-types@6.21.0: {}

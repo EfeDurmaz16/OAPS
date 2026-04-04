@@ -1,0 +1,21 @@
+{
+  "name": "@oaps/http",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "dev": "node --watch dist/index.js",
+    "test": "node --test dist"
+  },
+  "dependencies": {
+    "@oaps/core": "workspace:*",
+    "@oaps/evidence": "workspace:*",
+    "@oaps/mcp-adapter": "workspace:*",
+    "@oaps/policy": "workspace:*",
+    "hono": "workspace:*",
+    "@hono/node-server": "workspace:*"
+  }
+}
