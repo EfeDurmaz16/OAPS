@@ -9,10 +9,12 @@ from .manifest import (
     MANIFEST_RELATIVE_PATH,
     FixtureCheckReport,
     InventoryReport,
+    ResultValidationReport,
     ValidationReport,
     discover_repo_root,
     fixture_check_repository,
     inventory_repository,
+    validate_result_file,
     validate_repository,
 )
 
@@ -72,6 +74,20 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="write the check payload to a file instead of only stdout",
     )
+
+    result = subparsers.add_parser(
+        "validate-result",
+        aliases=["result-validate"],
+        help="validate a conformance result file against the suite result shape",
+    )
+    result.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    result.add_argument(
+        "--result",
+        type=Path,
+        required=True,
+        help="conformance result JSON file to validate",
+    )
+    result.add_argument("--json", action="store_true", help="emit machine-readable output")
     return parser
 
 
@@ -175,6 +191,30 @@ def _print_check(report: FixtureCheckReport, as_json: bool, output_path: Path | 
     return 0 if report.ok else 1
 
 
+def _render_result_validation(report: ResultValidationReport, as_json: bool) -> str:
+    if as_json:
+        return json.dumps(report.to_dict(), indent=2, sort_keys=True)
+
+    lines = [
+        f"Result validation report for {report.result_path}",
+        f"- repo root: {report.repo_root}",
+        f"- result schema: {report.result_schema_path}",
+        f"- status: {'ok' if report.ok else 'failed'}",
+    ]
+    if report.issues:
+        lines.append("- issues:")
+        for issue in report.issues:
+            lines.append(f"  - {issue.path}: {issue.message}")
+    else:
+        lines.append("- note: result file matches the suite's pragmatic result shape")
+    return "\n".join(lines)
+
+
+def _print_result_validation(report: ResultValidationReport, as_json: bool) -> int:
+    print(_render_result_validation(report, as_json))
+    return 0 if report.ok else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -205,6 +245,11 @@ def main(argv: list[str] | None = None) -> int:
             requested_scenarios=tuple(args.scenarios or ()),
         )
         return _print_check(report, args.json, args.output)
+
+    if args.command in {"validate-result", "result-validate"}:
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        report = validate_result_file(repo_root=repo_root, result_path=args.result)
+        return _print_result_validation(report, args.json)
 
     parser.error("unknown command")
     return 2

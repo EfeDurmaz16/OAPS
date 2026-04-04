@@ -62,6 +62,18 @@ Write the fixture-check payload to a file:
 python3 -m oaps_python check --json --output /tmp/oaps-fixture-check.json
 ```
 
+Validate a result file emitted by `check`:
+
+```bash
+python3 -m oaps_python validate-result --result /tmp/oaps-fixture-check.json
+```
+
+Use JSON output for machine-readable validation reports:
+
+```bash
+python3 -m oaps_python validate-result --result /tmp/oaps-fixture-check.json --json
+```
+
 Or with an explicit starting directory:
 
 ```bash
@@ -73,6 +85,8 @@ If installed, the console script is:
 ```bash
 oaps-python validate
 oaps-python inventory
+oaps-python check
+oaps-python validate-result
 ```
 
 ## Scope
@@ -81,3 +95,4 @@ This package is not a full protocol implementation.
 Its job is to prove that the suite-level manifest can be consumed from a second language stack and that the referenced files are structurally coherent.
 The inventory command can also narrow inspection to selected scopes and emit the payload to a file for downstream tooling.
 The `check` command performs honest static fixture checks, including manifest consistency and JSON fixture file parsing where applicable, and emits a conformance-result-shaped payload without pretending to execute runtime scenarios.
+The `validate-result` command checks a conformance result file against the suite's pragmatic result shape and is intended for outputs emitted by `check`.

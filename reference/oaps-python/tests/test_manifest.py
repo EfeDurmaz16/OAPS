@@ -15,6 +15,7 @@ from oaps_python.manifest import (
     MANIFEST_RELATIVE_PATH,
     fixture_check_repository,
     inventory_repository,
+    validate_result_file,
     validate_repository,
 )
 
@@ -330,6 +331,86 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(payload["implementation"]["metadata"]["requested_scopes"], ["profile:mcp"])
             self.assertEqual(payload["implementation"]["metadata"]["requested_scenarios"], ["mcp.intent.execution"])
             self.assertTrue(all(scenario["scope"] == "profile:mcp" for scenario in payload["scenarios"]))
+
+    def test_validate_result_accepts_fixture_check_output(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "fixture-check.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "check",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--scope",
+                    "profile:mcp",
+                    "--scenario",
+                    "mcp.intent.execution",
+                    "--output",
+                    str(output_path),
+                ])
+            self.assertEqual(exit_code, 0)
+            report = validate_result_file(repo_root=repo_root, result_path=output_path)
+            self.assertTrue(report.ok, report.to_dict())
+            self.assertEqual(report.result_path.resolve(), output_path.resolve())
+
+    def test_validate_result_reports_shape_errors(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = Path(tmpdir)
+            (repo_root / "conformance/manifest").mkdir(parents=True)
+            (repo_root / "conformance/taxonomy").mkdir(parents=True)
+            (repo_root / "conformance/fixtures").mkdir(parents=True)
+            (repo_root / "conformance/results").mkdir(parents=True)
+            (repo_root / "spec/core").mkdir(parents=True)
+            (repo_root / "profiles").mkdir(parents=True)
+            (repo_root / "reference/oaps-monorepo/packages/core/src").mkdir(parents=True)
+
+            (repo_root / MANIFEST_RELATIVE_PATH).write_text(
+                json.dumps(
+                    {
+                        "manifest_version": "1.0",
+                        "tck_id": "oaps-tck",
+                        "suite_version": "foundation-draft",
+                        "status": "draft",
+                        "entrypoints": [],
+                        "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
+                        "fixture_index": "conformance/fixtures/index.v1.json",
+                        "runner_contract": "conformance/runner-contract.md",
+                        "result_schema": "conformance/results/result-schema.v1.json",
+                        "normative_sources": ["spec/core/FOUNDATION-DRAFT.md"],
+                        "reference_implementations": ["reference/oaps-monorepo/packages/core/src/index.ts"],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (repo_root / "conformance/taxonomy/scenario-taxonomy.v1.json").write_text(
+                json.dumps({"taxonomy_version": "1.0", "families": [], "coverage_levels": []}),
+                encoding="utf-8",
+            )
+            (repo_root / "conformance/fixtures/index.v1.json").write_text(json.dumps({"index_version": "1.0", "packs": []}), encoding="utf-8")
+            (repo_root / "conformance/runner-contract.md").write_text("# contract", encoding="utf-8")
+            (repo_root / "conformance/results/result-schema.v1.json").write_text("{}", encoding="utf-8")
+            (repo_root / "spec/core/FOUNDATION-DRAFT.md").write_text("# draft", encoding="utf-8")
+            (repo_root / "reference/oaps-monorepo/packages/core/src/index.ts").write_text("export {};\n", encoding="utf-8")
+            bad_result = repo_root / "conformance/results/bad-result.json"
+            bad_result.write_text(json.dumps({"result_schema_version": "1.0", "manifest_id": "oaps-tck"}), encoding="utf-8")
+
+            report = validate_result_file(repo_root=repo_root, result_path=bad_result)
+            self.assertFalse(report.ok)
+            self.assertTrue(any("missing required key" in issue.message for issue in report.issues))
+
+    def test_validate_result_reports_manifest_mismatch(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result_path = Path(tmpdir) / "mismatch.json"
+            payload = json.loads((repo_root / "conformance/results/example-result.v1.json").read_text(encoding="utf-8"))
+            payload["manifest_id"] = "different-manifest"
+            result_path.write_text(json.dumps(payload), encoding="utf-8")
+
+            report = validate_result_file(repo_root=repo_root, result_path=result_path)
+            self.assertFalse(report.ok)
+            self.assertTrue(any("manifest_id must match" in issue.message for issue in report.issues))
 
 
 if __name__ == "__main__":

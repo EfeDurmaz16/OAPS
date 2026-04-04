@@ -8,6 +8,7 @@ from typing import Any, Iterable
 
 
 MANIFEST_RELATIVE_PATH = Path("conformance/manifest/oaps-tck.manifest.v1.json")
+RESULT_SCHEMA_RELATIVE_PATH = Path("conformance/results/result-schema.v1.json")
 
 
 @dataclass(frozen=True)
@@ -304,6 +305,30 @@ class FixtureCheckReport:
 
 
 @dataclass(frozen=True)
+class ResultValidationReport:
+    result_path: Path
+    repo_root: Path
+    result_schema_path: Path
+    issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
+
+    @property
+    def ok(self) -> bool:
+        return not self.issues
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            'ok': self.ok,
+            'result_path': str(self.result_path),
+            'repo_root': str(self.repo_root),
+            'result_schema_path': str(self.result_schema_path),
+            'issues': [
+                {'path': issue.path, 'message': issue.message}
+                for issue in self.issues
+            ],
+        }
+
+
+@dataclass(frozen=True)
 class ConformanceManifest:
     manifest_version: str
     tck_id: str
@@ -403,6 +428,72 @@ def _unique_preserve_order(values: Iterable[str]) -> tuple[str, ...]:
         seen.add(value)
         ordered.append(value)
     return tuple(ordered)
+
+
+def _validate_date_time(value: Any) -> bool:
+    if not isinstance(value, str) or not value:
+        return False
+    try:
+        datetime.fromisoformat(value.replace('Z', '+00:00'))
+    except ValueError:
+        return False
+    return True
+
+
+def _validate_non_empty_string_list(value: Any) -> bool:
+    return isinstance(value, list) and all(isinstance(item, str) and item for item in value)
+
+
+def _validate_result_scenario(scenario: Any, issues: list[ValidationIssue], source: str) -> None:
+    if not isinstance(scenario, dict):
+        issues.append(
+            ValidationIssue(
+                path=source,
+                message='result scenarios must be JSON objects',
+            )
+        )
+        return
+
+    for key in ('scenario_id', 'scope', 'outcome', 'coverage'):
+        if key not in scenario:
+            issues.append(
+                ValidationIssue(
+                    path=source,
+                    message=f'result scenario is missing required key: {key}',
+                )
+            )
+            return
+
+    if not isinstance(scenario['scenario_id'], str) or not scenario['scenario_id']:
+        issues.append(ValidationIssue(path=source, message='result scenario scenario_id must be a non-empty string'))
+    if not isinstance(scenario['scope'], str) or not scenario['scope']:
+        issues.append(ValidationIssue(path=source, message='result scenario scope must be a non-empty string'))
+    if scenario['outcome'] not in {'pass', 'fail', 'skip', 'error'}:
+        issues.append(
+            ValidationIssue(
+                path=source,
+                message='result scenario outcome must be one of pass, fail, skip, error',
+            )
+        )
+    if not _validate_non_empty_string_list(scenario['coverage']):
+        issues.append(ValidationIssue(path=source, message='result scenario coverage must be a non-empty list of strings'))
+
+    if 'duration_ms' in scenario and (not isinstance(scenario['duration_ms'], int) or scenario['duration_ms'] < 0):
+        issues.append(ValidationIssue(path=source, message='result scenario duration_ms must be a non-negative integer'))
+    if 'notes' in scenario and not isinstance(scenario['notes'], str):
+        issues.append(ValidationIssue(path=source, message='result scenario notes must be a string'))
+    if 'artifacts' in scenario and not _validate_non_empty_string_list(scenario['artifacts']):
+        issues.append(ValidationIssue(path=source, message='result scenario artifacts must be a list of non-empty strings'))
+
+    allowed_keys = {'scenario_id', 'scope', 'outcome', 'coverage', 'duration_ms', 'notes', 'artifacts'}
+    extra_keys = sorted(set(scenario) - allowed_keys)
+    if extra_keys:
+        issues.append(
+            ValidationIssue(
+                path=source,
+                message=f'result scenario contains unsupported keys: {", ".join(extra_keys)}',
+            )
+        )
 
 
 def _load_taxonomy_dimensions(repo_root: Path, taxonomy_path: str, issues: list[ValidationIssue], source: str) -> dict[str, set[str]]:
@@ -696,6 +787,214 @@ def fixture_check_repository(
         requested_scenarios=requested_scenarios,
         scopes=selected_scopes,
         scenarios=tuple(check_scenarios),
+        issues=tuple(issues),
+    )
+
+
+def validate_result_file(
+    repo_root: Path | None = None,
+    result_path: Path | None = None,
+    result_schema_path: Path | None = None,
+) -> ResultValidationReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    result_schema_path = (result_schema_path or repo_root / RESULT_SCHEMA_RELATIVE_PATH).resolve()
+    result_path = (result_path or repo_root / 'conformance/results/example-result.v1.json').resolve()
+    issues: list[ValidationIssue] = []
+    manifest_path = (repo_root / MANIFEST_RELATIVE_PATH).resolve()
+    manifest: ConformanceManifest | None = None
+
+    if not manifest_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(manifest_path),
+                message='conformance manifest does not exist',
+            )
+        )
+    else:
+        try:
+            manifest = ConformanceManifest.from_json(load_json_file(manifest_path))
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            issues.append(
+                ValidationIssue(
+                    path=str(manifest_path),
+                    message=f'invalid conformance manifest: {error}',
+                )
+            )
+
+    if not result_schema_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(result_schema_path),
+                message='result schema does not exist',
+            )
+        )
+
+    if not result_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(result_path),
+                message='conformance result file does not exist',
+            )
+        )
+        return ResultValidationReport(
+            result_path=result_path,
+            repo_root=repo_root,
+            result_schema_path=result_schema_path,
+            issues=tuple(issues),
+        )
+
+    try:
+        payload = load_json_file(result_path)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        issues.append(
+            ValidationIssue(
+                path=str(result_path),
+                message=f'invalid JSON result file: {error}',
+            )
+        )
+        return ResultValidationReport(
+            result_path=result_path,
+            repo_root=repo_root,
+            result_schema_path=result_schema_path,
+            issues=tuple(issues),
+        )
+
+    required_keys = (
+        'result_schema_version',
+        'manifest_id',
+        'runner_id',
+        'implementation',
+        'executed_at',
+        'scopes',
+        'summary',
+        'scenarios',
+    )
+    for key in required_keys:
+        if key not in payload:
+            issues.append(
+                ValidationIssue(
+                    path=str(result_path),
+                    message=f'result file is missing required key: {key}',
+                )
+            )
+
+    extra_top_level_keys = sorted(set(payload) - set(required_keys))
+    if extra_top_level_keys:
+        issues.append(
+            ValidationIssue(
+                path=str(result_path),
+                message=f'result file contains unsupported keys: {", ".join(extra_top_level_keys)}',
+            )
+        )
+
+    if payload.get('result_schema_version') != '1.0':
+        issues.append(ValidationIssue(path=str(result_path), message='result_schema_version must be 1.0'))
+    if not isinstance(payload.get('manifest_id'), str) or not payload['manifest_id']:
+        issues.append(ValidationIssue(path=str(result_path), message='manifest_id must be a non-empty string'))
+    if not isinstance(payload.get('runner_id'), str) or not payload['runner_id']:
+        issues.append(ValidationIssue(path=str(result_path), message='runner_id must be a non-empty string'))
+    if manifest is not None and payload.get('manifest_id') != manifest.tck_id:
+        issues.append(
+            ValidationIssue(
+                path=str(result_path),
+                message=f'manifest_id must match the suite manifest tck_id: {manifest.tck_id}',
+            )
+        )
+
+    implementation = payload.get('implementation')
+    if not isinstance(implementation, dict):
+        issues.append(ValidationIssue(path=str(result_path), message='implementation must be a JSON object'))
+    else:
+        for key in ('implementation_id', 'implementation_version'):
+            if key not in implementation:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'implementation is missing required key: {key}',
+                    )
+                )
+        if not isinstance(implementation.get('implementation_id'), str) or not implementation['implementation_id']:
+            issues.append(ValidationIssue(path=str(result_path), message='implementation_id must be a non-empty string'))
+        if not isinstance(implementation.get('implementation_version'), str) or not implementation['implementation_version']:
+            issues.append(ValidationIssue(path=str(result_path), message='implementation_version must be a non-empty string'))
+        metadata = implementation.get('metadata')
+        if metadata is not None and not isinstance(metadata, dict):
+            issues.append(ValidationIssue(path=str(result_path), message='implementation metadata must be a JSON object'))
+        extra_impl_keys = sorted(set(implementation) - {'implementation_id', 'implementation_version', 'metadata'})
+        if extra_impl_keys:
+            issues.append(
+                ValidationIssue(
+                    path=str(result_path),
+                    message=f'implementation contains unsupported keys: {", ".join(extra_impl_keys)}',
+                )
+            )
+
+    if not _validate_date_time(payload.get('executed_at')):
+        issues.append(ValidationIssue(path=str(result_path), message='executed_at must be an RFC3339 date-time string'))
+
+    scopes = payload.get('scopes')
+    if not _validate_non_empty_string_list(scopes):
+        issues.append(ValidationIssue(path=str(result_path), message='scopes must be a non-empty list of strings'))
+
+    summary = payload.get('summary')
+    if not isinstance(summary, dict):
+        issues.append(ValidationIssue(path=str(result_path), message='summary must be a JSON object'))
+    else:
+        for key in ('pass', 'fail', 'skip', 'error', 'total'):
+            if key not in summary:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'summary is missing required key: {key}',
+                    )
+                )
+            elif not isinstance(summary[key], int) or summary[key] < 0:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'summary {key} must be a non-negative integer',
+                    )
+                )
+        extra_summary_keys = sorted(set(summary) - {'pass', 'fail', 'skip', 'error', 'total'})
+        if extra_summary_keys:
+            issues.append(
+                ValidationIssue(
+                    path=str(result_path),
+                    message=f'summary contains unsupported keys: {", ".join(extra_summary_keys)}',
+                )
+            )
+
+    scenarios = payload.get('scenarios')
+    if not isinstance(scenarios, list):
+        issues.append(ValidationIssue(path=str(result_path), message='scenarios must be a list'))
+    else:
+        for scenario in scenarios:
+            _validate_result_scenario(scenario, issues, str(result_path))
+
+    if isinstance(summary, dict) and isinstance(scenarios, list):
+        total = summary.get('total')
+        if isinstance(total, int) and total != len(scenarios):
+            issues.append(
+                ValidationIssue(
+                    path=str(result_path),
+                    message='summary total must match number of scenarios',
+                )
+            )
+        counted_keys = ('pass', 'fail', 'skip', 'error')
+        if all(isinstance(summary.get(key), int) for key in counted_keys) and isinstance(total, int):
+            counted_total = sum(summary[key] for key in counted_keys)
+            if counted_total != total:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message='summary counts must add up to summary total',
+                    )
+                )
+
+    return ResultValidationReport(
+        result_path=result_path,
+        repo_root=repo_root,
+        result_schema_path=result_schema_path,
         issues=tuple(issues),
     )
 
