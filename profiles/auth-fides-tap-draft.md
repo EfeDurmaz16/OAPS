@@ -60,6 +60,8 @@ A conforming `oaps-auth-fides-tap-v1` implementation:
 - SHOULD preserve trust outcomes in evidence when they affect execution
 - SHOULD be usable as a drop-in upgrade from `oaps-auth-web-v1`
 
+The current conformance pack treats this profile as a grouped static trust track: attestation, trust-upgrade, and approval-boundary fixtures are all present, but there is not yet a dedicated FIDES/TAP runtime verifier in the reference line.
+
 ## Implementation Notes
 
 Implementations should treat this profile as the first option when:

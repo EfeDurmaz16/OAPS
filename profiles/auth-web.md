@@ -107,6 +107,9 @@ A conforming `oaps-auth-web-v1` implementation:
 - SHOULD interoperate with HTTP binding surfaces and profile mappings
 - SHOULD preserve auth decisions in evidence when relevant
 
+The current conformance pack groups this profile into discovery, subject-binding, and delegation anchors.
+Only the discovery and actor-card shapes are currently tied to a shared runtime surface; delegation fail-closed remains a static fixture anchor until a dedicated negative test lands.
+
 ## Open Questions
 
 This draft still needs formal answers for:

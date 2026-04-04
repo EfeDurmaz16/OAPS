@@ -14,6 +14,16 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Provisioning begins with actor bootstrap and discovery. The runtime reference is the shared HTTP actor-card surface, not a vendor-specific provisioning API.",
+      "runtime_cases": [
+        "http.discovery.well-known",
+        "http.authentication.required"
+      ],
+      "related_examples": [
+        "examples/actor-card-mcp.json",
+        "examples/well-known-oaps.json",
+        "examples/envelope-intent-request.json"
       ]
     },
     {
@@ -24,6 +34,16 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Provisioning often needs an approval gate before mutation. This fixture uses the shared HTTP approval flow as the observable runtime seam.",
+      "runtime_cases": [
+        "http.approval.decision",
+        "http.approval.not-pending"
+      ],
+      "related_examples": [
+        "examples/approval-request.json",
+        "examples/approval-decision.json",
+        "examples/approval-decision-modify.json"
       ]
     },
     {
@@ -34,6 +54,17 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Credential delivery and lifecycle completion are anchored on the shared execution-result shape, not a vendor-specific provisioning transport.",
+      "runtime_cases": [
+        "core.execution-result.valid",
+        "http.interaction.created",
+        "http.interaction.updated"
+      ],
+      "related_examples": [
+        "examples/execution-result.json",
+        "examples/evidence-event.json",
+        "examples/error-object.json"
       ]
     }
   ]

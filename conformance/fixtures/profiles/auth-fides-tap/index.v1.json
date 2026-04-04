@@ -12,8 +12,13 @@
       "example": "examples/actor-card-mcp.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
-        "fixture",
-        "reference-runtime"
+        "fixture"
+      ],
+      "notes": "High-assurance attestation begins with the same actor-card shape, but the trust meaning is stronger than the baseline web profile. This is a static fixture anchor, not a dedicated FIDES/TAP verifier.",
+      "related_examples": [
+        "examples/actor-card-mcp.json",
+        "examples/evidence-event.json",
+        "examples/delegation-token.json"
       ]
     },
     {
@@ -22,8 +27,13 @@
       "example": "examples/delegation-token.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
-        "fixture",
-        "reference-runtime"
+        "fixture"
+      ],
+      "notes": "This fixture groups stronger trust semantics around delegation and authority chaining. The suite does not yet claim a dedicated trust-verifier runtime for the FIDES/TAP path.",
+      "related_examples": [
+        "examples/delegation-token.json",
+        "examples/approval-request.json",
+        "examples/approval-decision.json"
       ]
     },
     {
@@ -34,6 +44,17 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "The approval boundary is the observable seam where a trust upgrade would affect execution. Runtime support here is the shared HTTP approval path, not a FIDES/TAP-specific verifier.",
+      "runtime_cases": [
+        "http.approval.decision",
+        "http.approval.not-pending"
+      ],
+      "related_examples": [
+        "examples/approval-request.json",
+        "examples/approval-decision.json",
+        "examples/approval-decision-modify.json",
+        "examples/evidence-event.json"
       ]
     }
   ]

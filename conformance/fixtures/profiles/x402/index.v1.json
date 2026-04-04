@@ -14,6 +14,15 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Payment discovery is modeled through the shared HTTP discovery surface. This pack does not claim a dedicated x402 facilitator runtime.",
+      "runtime_cases": [
+        "http.discovery.well-known"
+      ],
+      "related_examples": [
+        "examples/well-known-oaps.json",
+        "examples/actor-card-mcp.json",
+        "examples/envelope-intent-request.json"
       ]
     },
     {
@@ -24,6 +33,18 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Payment authorization is represented as an intent that can be gated before execution. The runtime link is the existing MCP invoke path and its approval handling, not a payment rail implementation.",
+      "runtime_cases": [
+        "mcp.intent.execution",
+        "mcp.policy.gating",
+        "mcp.evidence.emission"
+      ],
+      "related_examples": [
+        "examples/intent-invoke.json",
+        "examples/approval-request.json",
+        "examples/approval-decision.json",
+        "examples/approval-decision-modify.json"
       ]
     },
     {
@@ -34,6 +55,16 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Settlement is represented by the completion/result shape in the reference slice. No dedicated x402 settlement rail is claimed; this is the portable OAPS completion anchor.",
+      "runtime_cases": [
+        "http.interaction.created",
+        "http.interaction.updated"
+      ],
+      "related_examples": [
+        "examples/execution-result.json",
+        "examples/evidence-event.json",
+        "examples/error.json"
       ]
     }
   ]

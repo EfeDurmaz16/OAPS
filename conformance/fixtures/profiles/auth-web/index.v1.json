@@ -14,6 +14,17 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Static anchor for web-native discovery and identity document shape. The current reference runtime exercises the shared HTTP discovery and auth boundary behavior, but this pack is not claiming a dedicated auth-web server.",
+      "runtime_cases": [
+        "http.discovery.well-known",
+        "http.authentication.required",
+        "http.authentication.failed"
+      ],
+      "related_examples": [
+        "examples/well-known-oaps.json",
+        "examples/actor-card-mcp.json",
+        "examples/envelope-intent-request.json"
       ]
     },
     {
@@ -24,6 +35,16 @@
       "coverage": [
         "fixture",
         "reference-runtime"
+      ],
+      "notes": "Actor-card subject binding is the transport-facing anchor for who is calling and which actor identity is being claimed. The profile uses the actor-card shape because the same reference server already exposes actor discovery on HTTP.",
+      "runtime_cases": [
+        "http.authentication.required",
+        "http.authentication.failed"
+      ],
+      "related_examples": [
+        "examples/actor-card-mcp.json",
+        "examples/envelope-intent-request.json",
+        "examples/approval-request.json"
       ]
     },
     {
@@ -32,8 +53,13 @@
       "example": "examples/delegation-token.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
-        "fixture",
-        "reference-runtime"
+        "fixture"
+      ],
+      "notes": "Static delegation anchor for fail-closed subject binding. The reference slice proves the delegated sender path, but this fixture does not claim a dedicated negative delegation runtime test yet.",
+      "related_examples": [
+        "examples/delegation-token.json",
+        "examples/error.json",
+        "examples/envelope-intent-request.json"
       ]
     }
   ]

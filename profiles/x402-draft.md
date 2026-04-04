@@ -61,6 +61,9 @@ A conforming `oaps-x402-v1` implementation:
 - SHOULD support paid execution for agent-to-tool and agent-to-agent flows
 - SHOULD remain rail-neutral at the OAPS semantic layer
 
+The current conformance pack groups this profile as static payment discovery, authorization intent, settlement, and evidence anchors.
+The runtime references are adjacent HTTP and MCP surfaces that already exist in the reference suite; they are not a claim of full x402 facilitator coverage.
+
 ## Implementation Notes
 
 Implementations should treat this profile as the default payment coordination bridge when:

@@ -61,6 +61,9 @@ A conforming `oaps-osp-v1` implementation:
 - SHOULD support credential delivery and rotation as first-class outcomes
 - SHOULD preserve the distinction between provisioning semantics and vendor API details
 
+The current conformance pack treats this profile as grouped provisioning anchors: actor bootstrap, approval gating, and lifecycle completion.
+Runtime references are the shared HTTP approval and actor-card surfaces plus the core execution result shape, not a dedicated provisioning runtime.
+
 ## Implementation Notes
 
 Implementations should treat this profile as the preferred bridge when:
