@@ -8,6 +8,22 @@
   ],
   "fixtures": [
     {
+      "scenario_id": "http.authentication.required",
+      "dimension": "authentication",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.authentication.failed",
+      "dimension": "authentication",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.discovery.well-known",
       "dimension": "discovery",
       "example": "examples/well-known-oaps.json",
@@ -31,6 +47,14 @@
       ]
     },
     {
+      "scenario_id": "http.interaction.not-found",
+      "dimension": "discovery",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.interaction.updated",
       "dimension": "interaction-lifecycle",
       "schema": "schemas/interaction-updated.json",
@@ -39,6 +63,14 @@
       "coverage": [
         "schema",
         "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.messages.append",
+      "dimension": "message-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
         "reference-runtime"
       ]
     },
@@ -65,6 +97,14 @@
     {
       "scenario_id": "http.version.negotiation",
       "dimension": "version-negotiation",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.approval.not-pending",
+      "dimension": "approval-flow",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "reference-runtime"

@@ -16,6 +16,7 @@ It is intended to support:
 - interaction exchange
 - long-running task progression
 - approval and rejection flows
+- message append/progress flows
 - evidence retrieval
 - idempotent mutation behavior
 - version negotiation
@@ -47,6 +48,27 @@ The canonical HTTP surface should expose:
 - `GET /interactions/{id}/events`
 
 These endpoints are the current reference shape for the suite. Later bindings may use different wire shapes while preserving the same semantics.
+
+## Messages
+
+`POST /interactions/{id}/messages` is the canonical HTTP mutation for appending a new message or progress update to an existing interaction.
+
+The endpoint should be treated as an append-only lifecycle step, not as a replacement for `POST /interactions`.
+
+A conforming implementation should:
+
+- require the target interaction to exist
+- preserve the authenticated actor context
+- append the incoming message to the interaction history
+- update `updated_at`
+- emit a corresponding evidence event
+- return the updated interaction state in a stable response shape
+
+The endpoint may accept an OAPS envelope or a binding-specific message wrapper, but it must not collapse the interaction history into an ad hoc transport payload.
+
+If the interaction does not exist, the endpoint must fail with a stable OAPS discovery error rather than inventing a new interaction.
+
+If an implementation does not yet support message append flows, it should not claim conformance to this portion of the binding.
 
 ## Discovery
 
@@ -169,10 +191,13 @@ A conforming HTTP binding implementation should:
 - expose actor and capability surfaces
 - support interaction creation and retrieval
 - support approval, rejection, and revoke flows
+- support message append/progress flows
 - expose evidence and event retrieval
 - enforce idempotency
 - honor version negotiation
 - preserve OAPS error semantics
+
+The current reference conformance pack treats the messages endpoint as a lifecycle extension that is expected to be exercised by the reference runtime when implemented. Negative-path coverage already present in the reference runtime includes authentication failure, version negotiation failure, missing interactions, idempotency conflict, and approval-not-pending.
 
 ## Open Questions
 

@@ -19,10 +19,12 @@
     {
       "id": "binding:http",
       "dimensions": [
+        "authentication",
         "discovery",
         "version-negotiation",
         "idempotency",
         "interaction-lifecycle",
+        "message-lifecycle",
         "approval-flow",
         "revocation",
         "event-stream",
