@@ -82,6 +82,39 @@ test('invoke succeeds for allowed low-risk tool calls', async () => {
   assert.equal(chain.events.length, 2);
 });
 
+test('invoke rejects when the capability cannot be found', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_nf',
+        verb: 'invoke',
+        object: 'tool:missing_tool',
+        constraints: { arguments: { path: 'README.md' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_nf',
+      chain,
+    }),
+    (error: unknown) => error instanceof Error && (error as { error?: { code?: string } }).error?.code === 'CAPABILITY_NOT_FOUND',
+  );
+
+  assert.equal(chain.events.at(-1)?.event_type, 'mcp.tool_call.denied');
+});
+
 test('invoke requests approval for high-risk calls', async () => {
   const adapter = new OapsMcpAdapter({
     async listTools() {
@@ -116,4 +149,254 @@ test('invoke requests approval for high-risk calls', async () => {
     }),
     (error: unknown) => error instanceof ApprovalRequiredError,
   );
+});
+
+test('invoke emits approval request evidence when approval is required but no decision is provided', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'pay_invoice',
+          description: 'Pay an invoice',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_3',
+        verb: 'invoke',
+        object: 'tool:pay_invoice',
+        constraints: { arguments: { amount: '25.00' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_3',
+      chain,
+      riskClassResolver: () => 'R4',
+    }),
+    (error: unknown) => error instanceof ApprovalRequiredError,
+  );
+
+  assert.equal(chain.events.length, 1);
+  assert.equal(chain.events[0]?.event_type, 'approval.requested');
+});
+
+test('invoke rejects modified approvals that target a different capability', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'pay_invoice',
+          description: 'Pay an invoice',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_4',
+        verb: 'invoke',
+        object: 'tool:pay_invoice',
+        constraints: { arguments: { amount: '25.00' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_4',
+      chain,
+      approvalDecision: {
+        approval_request_id: 'apr_1',
+        interaction_id: 'ix_4',
+        decided_by: { actor_id: 'urn:oaps:actor:human:approver' },
+        decision: 'modify',
+        modified_action: {
+          verb: 'invoke',
+          target: 'tool:send_invoice',
+          arguments: { amount: '25.00' },
+        },
+        timestamp: '2026-04-03T10:02:00Z',
+      },
+      riskClassResolver: () => 'R4',
+    }),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string } }).error?.code === 'APPROVAL_MODIFICATION_TARGET_MISMATCH',
+  );
+
+  assert.equal(chain.events.length, 0);
+});
+
+test('invoke rejects authenticated subject mismatches before tool execution', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'read_repo',
+          description: 'Read repository files',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_5',
+        verb: 'invoke',
+        object: 'tool:read_repo',
+        constraints: { arguments: { path: 'README.md' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:other',
+      interactionId: 'ix_5',
+      chain,
+    }),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string } }).error?.code === 'AUTHENTICATED_SUBJECT_MISMATCH',
+  );
+
+  assert.equal(chain.events.length, 0);
+});
+
+test('invoke translates upstream MCP failures into stable OAPS errors', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'read_repo',
+          description: 'Read repository files',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool(_name, _args) {
+      throw new Error('upstream timeout while reading tool response');
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_6',
+        verb: 'invoke',
+        object: 'tool:read_repo',
+        constraints: { arguments: { path: 'README.md' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_6',
+      chain,
+    }),
+    (error: unknown) => {
+      if (!(error instanceof Error)) return false;
+      const oapsError = error as { error?: { code?: string; category?: string } };
+      return oapsError.error?.code === 'EXECUTION_TIMEOUT' && oapsError.error?.category === 'timeout';
+    },
+  );
+
+  assert.equal(chain.events.at(-1)?.event_type, 'mcp.tool_call.failed');
+});
+
+test('invoke translates upstream auth and validation failures into stable OAPS errors', async () => {
+  const authAdapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'read_repo',
+          description: 'Read repository files',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      throw new Error('auth denied by upstream service');
+    },
+  });
+  const validationAdapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'read_repo',
+          description: 'Read repository files',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      throw new Error('invalid arguments supplied to tool');
+    },
+  });
+
+  const authChain = createEvidenceChain();
+  await assert.rejects(
+    authAdapter.invoke({
+      intent: {
+        intent_id: 'int_7',
+        verb: 'invoke',
+        object: 'tool:read_repo',
+        constraints: { arguments: { path: 'README.md' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_7',
+      chain: authChain,
+    }),
+    (error: unknown) => error instanceof Error && (error as { error?: { code?: string; category?: string } }).error?.code === 'UPSTREAM_AUTH_FAILED',
+  );
+  assert.equal(authChain.events.at(-1)?.event_type, 'mcp.tool_call.failed');
+
+  const validationChain = createEvidenceChain();
+  await assert.rejects(
+    validationAdapter.invoke({
+      intent: {
+        intent_id: 'int_8',
+        verb: 'invoke',
+        object: 'tool:read_repo',
+        constraints: { arguments: { path: 'README.md' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_8',
+      chain: validationChain,
+    }),
+    (error: unknown) => error instanceof Error && (error as { error?: { code?: string; category?: string } }).error?.code === 'VALIDATION_FAILED',
+  );
+  assert.equal(validationChain.events.at(-1)?.event_type, 'mcp.tool_call.failed');
 });
