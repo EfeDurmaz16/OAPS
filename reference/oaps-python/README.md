@@ -43,6 +43,25 @@ Write the inventory payload to a file:
 python3 -m oaps_python inventory --json --output /tmp/oaps-inventory.json
 ```
 
+Run a static fixture check over selected scopes or scenarios:
+
+```bash
+python3 -m oaps_python check --scope profile:mcp --scope profile:a2a
+python3 -m oaps_python check --scenario mcp.intent.execution
+```
+
+Emit a schema-shaped conformance result:
+
+```bash
+python3 -m oaps_python check --json
+```
+
+Write the fixture-check payload to a file:
+
+```bash
+python3 -m oaps_python check --json --output /tmp/oaps-fixture-check.json
+```
+
 Or with an explicit starting directory:
 
 ```bash
@@ -61,3 +80,4 @@ oaps-python inventory
 This package is not a full protocol implementation.
 Its job is to prove that the suite-level manifest can be consumed from a second language stack and that the referenced files are structurally coherent.
 The inventory command can also narrow inspection to selected scopes and emit the payload to a file for downstream tooling.
+The `check` command performs honest static fixture checks, including manifest consistency and JSON fixture file parsing where applicable, and emits a conformance-result-shaped payload without pretending to execute runtime scenarios.

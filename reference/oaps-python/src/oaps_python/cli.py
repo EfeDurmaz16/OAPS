@@ -7,9 +7,11 @@ from pathlib import Path
 
 from .manifest import (
     MANIFEST_RELATIVE_PATH,
+    FixtureCheckReport,
     InventoryReport,
     ValidationReport,
     discover_repo_root,
+    fixture_check_repository,
     inventory_repository,
     validate_repository,
 )
@@ -40,6 +42,35 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=None,
         help="write the inventory payload to a file instead of only stdout",
+    )
+
+    check = subparsers.add_parser(
+        "check",
+        aliases=["fixture-check"],
+        help="run static fixture checks over selected scopes and scenarios",
+    )
+    check.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    check.add_argument("--manifest", type=Path, default=None, help="override conformance manifest path")
+    check.add_argument(
+        "--scope",
+        action="append",
+        dest="scopes",
+        default=None,
+        help="limit checks to a specific fixture scope; can be repeated",
+    )
+    check.add_argument(
+        "--scenario",
+        action="append",
+        dest="scenarios",
+        default=None,
+        help="limit checks to specific fixture scenario ids; can be repeated",
+    )
+    check.add_argument("--json", action="store_true", help="emit a schema-shaped conformance result")
+    check.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="write the check payload to a file instead of only stdout",
     )
     return parser
 
@@ -99,6 +130,51 @@ def _print_inventory(report: InventoryReport, as_json: bool, output_path: Path |
     return 0
 
 
+def _render_check(report: FixtureCheckReport, as_json: bool) -> str:
+    if as_json:
+        return json.dumps(report.to_result_dict(), indent=2, sort_keys=True)
+
+    lines = [
+        f"Fixture check report for {report.manifest_path}",
+        f"- repo root: {report.repo_root}",
+    ]
+    if report.manifest is None:
+        lines.append("- manifest: missing")
+    else:
+        lines.append(f"- manifest: {report.manifest.tck_id} ({report.manifest.suite_version})")
+    if report.requested_scopes:
+        lines.append(f"- requested scopes: {', '.join(report.requested_scopes)}")
+    if report.requested_scenarios:
+        lines.append(f"- requested scenarios: {', '.join(report.requested_scenarios)}")
+    lines.extend(
+        [
+            f"- checked scopes: {', '.join(report.scopes) if report.scopes else 'none'}",
+            f"- scenarios: {report.total_scenarios}",
+            f"- pass: {report.total_pass}",
+            f"- fail: {report.total_fail}",
+            f"- error: {report.total_error}",
+        ]
+    )
+    if report.issues:
+        lines.append("- issues:")
+        for issue in report.issues:
+            lines.append(f"  - {issue.path}: {issue.message}")
+    lines.append("- note: static fixture check; no runtime execution was performed")
+    return "\n".join(lines)
+
+
+def _print_check(report: FixtureCheckReport, as_json: bool, output_path: Path | None = None) -> int:
+    payload = _render_check(report, as_json)
+    if output_path is not None:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(payload + "\n", encoding="utf-8")
+        print(f"Wrote fixture check report to {output_path}")
+        return 0 if report.ok else 1
+
+    print(payload)
+    return 0 if report.ok else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -118,6 +194,17 @@ def main(argv: list[str] | None = None) -> int:
             requested_scopes=tuple(args.scopes or ()),
         )
         return _print_inventory(report, args.json, args.output)
+
+    if args.command in {"check", "fixture-check"}:
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        manifest_path = args.manifest or (repo_root / MANIFEST_RELATIVE_PATH)
+        report = fixture_check_repository(
+            repo_root=repo_root,
+            manifest_path=manifest_path,
+            requested_scopes=tuple(args.scopes or ()),
+            requested_scenarios=tuple(args.scenarios or ()),
+        )
+        return _print_check(report, args.json, args.output)
 
     parser.error("unknown command")
     return 2

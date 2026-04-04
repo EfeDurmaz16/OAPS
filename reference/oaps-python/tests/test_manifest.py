@@ -11,7 +11,12 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from oaps_python.cli import main
-from oaps_python.manifest import MANIFEST_RELATIVE_PATH, inventory_repository, validate_repository
+from oaps_python.manifest import (
+    MANIFEST_RELATIVE_PATH,
+    fixture_check_repository,
+    inventory_repository,
+    validate_repository,
+)
 
 
 class ManifestValidationTests(unittest.TestCase):
@@ -181,6 +186,150 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertIn("requested scopes: profile:osp", written)
             self.assertIn("scopes: profile:osp", written)
             self.assertIn("inventory-only report", written)
+
+    def test_fixture_check_reports_static_passes(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = fixture_check_repository(repo_root=repo_root)
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertEqual(report.total_scenarios, 44)
+        self.assertEqual(report.total_pass, 44)
+        self.assertEqual(report.total_fail, 0)
+        self.assertEqual(
+            report.scopes,
+            (
+                "core",
+                "binding:http",
+                "profile:mcp",
+                "profile:a2a",
+                "profile:auth-web",
+                "profile:auth-fides-tap",
+                "profile:x402",
+                "profile:osp",
+            ),
+        )
+
+    def test_fixture_check_can_filter_scopes_and_scenarios(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = fixture_check_repository(
+            repo_root=repo_root,
+            requested_scopes=("profile:mcp",),
+            requested_scenarios=("mcp.intent.execution",),
+        )
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertEqual(report.total_scenarios, 1)
+        self.assertEqual(report.total_pass, 1)
+        self.assertEqual(report.scopes, ("profile:mcp",))
+        self.assertEqual(report.requested_scopes, ("profile:mcp",))
+        self.assertEqual(report.requested_scenarios, ("mcp.intent.execution",))
+
+    def test_fixture_check_reports_missing_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = Path(tmpdir)
+            (repo_root / "conformance/manifest").mkdir(parents=True)
+            (repo_root / "conformance/taxonomy").mkdir(parents=True)
+            (repo_root / "conformance/fixtures/core").mkdir(parents=True)
+            (repo_root / "conformance/results").mkdir(parents=True)
+            (repo_root / "spec/core").mkdir(parents=True)
+            (repo_root / "profiles").mkdir(parents=True)
+            (repo_root / "reference/oaps-monorepo/packages/core/src").mkdir(parents=True)
+
+            manifest = {
+                "manifest_version": "1.0",
+                "tck_id": "oaps-tck",
+                "suite_version": "foundation-draft",
+                "status": "draft",
+                "entrypoints": [{"scope": "core", "pack": "conformance/fixtures/core/index.v1.json"}],
+                "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
+                "fixture_index": "conformance/fixtures/index.v1.json",
+                "runner_contract": "conformance/runner-contract.md",
+                "result_schema": "conformance/results/result-schema.v1.json",
+                "normative_sources": ["spec/core/FOUNDATION-DRAFT.md"],
+                "reference_implementations": ["reference/oaps-monorepo/packages/core/src/index.ts"],
+            }
+            (repo_root / MANIFEST_RELATIVE_PATH).write_text(json.dumps(manifest), encoding="utf-8")
+            (repo_root / "conformance/taxonomy/scenario-taxonomy.v1.json").write_text(
+                json.dumps({"taxonomy_version": "1.0", "families": [{"id": "core", "dimensions": ["intent"]}], "coverage_levels": ["schema", "fixture", "reference-runtime", "cross-implementation"]}),
+                encoding="utf-8",
+            )
+            (repo_root / "conformance/fixtures/index.v1.json").write_text(
+                json.dumps({"index_version": "1.0", "packs": [{"scope": "core", "path": "conformance/fixtures/core/index.v1.json"}]}),
+                encoding="utf-8",
+            )
+            (repo_root / "conformance/fixtures/core/index.v1.json").write_text(
+                json.dumps(
+                    {
+                        "pack_version": "1.0",
+                        "scope": "core",
+                        "status": "active",
+                        "normative_sources": ["spec/core/FOUNDATION-DRAFT.md"],
+                        "fixtures": [
+                            {
+                                "scenario_id": "core.intent.basic",
+                                "dimension": "intent",
+                                "schema": "spec/core/FOUNDATION-DRAFT.md",
+                                "example": "examples/does-not-exist.json",
+                                "reference_test": "reference/oaps-monorepo/packages/core/src/index.ts",
+                                "coverage": ["schema", "fixture", "reference-runtime"],
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (repo_root / "spec/core/FOUNDATION-DRAFT.md").write_text("# draft", encoding="utf-8")
+            (repo_root / "conformance/results/result-schema.v1.json").write_text("{}", encoding="utf-8")
+            (repo_root / "conformance/runner-contract.md").write_text("# contract", encoding="utf-8")
+            (repo_root / "reference/oaps-monorepo/packages/core/src/index.ts").write_text("export {};\n", encoding="utf-8")
+
+            report = fixture_check_repository(repo_root=repo_root)
+            self.assertFalse(report.ok)
+            self.assertEqual(report.total_fail, 1)
+            self.assertTrue(any("missing referenced file" in issue.message for issue in report.issues))
+
+    def test_fixture_check_json_emits_schema_shaped_result(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main(["check", "--repo-root", str(repo_root), "--json"])
+        self.assertEqual(exit_code, 0)
+        payload = json.loads(stdout.getvalue())
+        self.assertEqual(payload["result_schema_version"], "1.0")
+        self.assertEqual(payload["runner_id"], "oaps-python-fixture-check")
+        self.assertEqual(payload["summary"]["pass"], 44)
+        self.assertEqual(payload["summary"]["fail"], 0)
+        self.assertEqual(payload["summary"]["total"], 44)
+        self.assertNotIn("requested_scopes", payload)
+        self.assertEqual(payload["implementation"]["metadata"]["requested_scopes"], [])
+        self.assertEqual(payload["implementation"]["metadata"]["requested_scenarios"], [])
+
+    def test_fixture_check_json_can_be_written_to_file(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_path = Path(tmpdir) / "fixture-check.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "check",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--scope",
+                    "profile:mcp",
+                    "--scenario",
+                    "mcp.intent.execution",
+                    "--output",
+                    str(output_path),
+                ])
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Wrote fixture check report", stdout.getvalue())
+            payload = json.loads(output_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["summary"]["total"], 1)
+            self.assertEqual(payload["summary"]["pass"], 1)
+            self.assertEqual(payload["summary"]["fail"], 0)
+            self.assertEqual(payload["scopes"], ["profile:mcp"])
+            self.assertEqual(payload["implementation"]["metadata"]["requested_scopes"], ["profile:mcp"])
+            self.assertEqual(payload["implementation"]["metadata"]["requested_scenarios"], ["mcp.intent.execution"])
+            self.assertTrue(all(scenario["scope"] == "profile:mcp" for scenario in payload["scenarios"]))
 
 
 if __name__ == "__main__":
