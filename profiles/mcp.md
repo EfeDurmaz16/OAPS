@@ -18,6 +18,21 @@ The profile is intentionally incremental:
 - resource and prompt mappings are informative for now
 - the goal is OAPS-governed interop, not a replacement for MCP
 
+## Normative Scope
+
+This profile is normative for:
+
+- mapping MCP tools to OAPS capabilities
+- mapping OAPS intents to MCP tool calls
+- policy gating before execution
+- evidence emission for MCP-driven execution
+
+This profile remains informative for:
+
+- resource mappings
+- prompt mappings
+- subscription-like surfaces
+
 ## Relationship To The Suite
 
 `oaps-mcp-v1` sits above MCP and below the OAPS core semantics.
@@ -77,7 +92,7 @@ The adapter MUST:
 4. halt on denial
 5. proceed only when allowed or explicitly approved
 
-If authenticated subject binding is available, it MUST be checked before the tool call proceeds.
+If authenticated subject binding is available through `oaps-auth-web-v1` or a stronger trust profile, it MUST be checked before the tool call proceeds.
 
 ## Evidence Requirements
 

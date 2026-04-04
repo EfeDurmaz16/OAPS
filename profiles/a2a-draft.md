@@ -18,6 +18,21 @@ It should let A2A systems preserve their own transport and discovery semantics w
 - evidence and lineage semantics
 - policy-aware execution boundaries
 
+## Normative Scope
+
+This profile is normative for:
+
+- mapping A2A tasks to OAPS tasks or interactions
+- preserving lifecycle semantics across the mapping
+- attaching OAPS approval and delegation semantics where needed
+- preserving evidence and lineage across task progression
+
+This profile remains informative for:
+
+- A2A-native discovery and routing behavior
+- A2A-specific transport details
+- future payment subprofile decisions
+
 ## Relationship To The Suite
 
 A2A is the closest external ecosystem to the OAPS task model.
@@ -80,11 +95,11 @@ At minimum, the profile should attach evidence for:
 
 ## Identity And Trust
 
-The profile should remain compatible with the suite's generic web auth baseline and higher-assurance trust profiles.
+The profile should remain compatible with `oaps-auth-web-v1` and higher-assurance trust profiles such as FIDES/TAP-family deployments.
 
 It should not force a single identity technology into the A2A mapping.
 
-## Conformance Direction
+## Conformance
 
 `oaps-a2a-v1` will eventually need a TCK that checks:
 

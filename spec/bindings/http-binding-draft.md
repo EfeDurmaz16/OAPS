@@ -117,8 +117,8 @@ The HTTP binding must support at least one authentication family.
 
 The default suite posture is:
 
-- generic web auth baseline
-- FIDES/TAP-family as a high-assurance profile
+- `oaps-auth-web-v1` as the baseline profile
+- `oaps-fides-tap-v1` as a high-assurance profile
 
 Authentication must remain compatible with profile-based identity upgrades.
 
