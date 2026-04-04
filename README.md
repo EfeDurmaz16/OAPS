@@ -75,9 +75,13 @@ This is the smallest real working system in the repo today, and it should be und
 
 - `CHARTER.md` — mission, boundaries, neutrality, and governance posture
 - `docs/SUITE-ARCHITECTURE.md` — protocol suite layering and long-term structure
+- `docs/STANDARDS-LANDSCAPE.md` — adjacent protocol and standards-body landscape
 - `docs/ECOSYSTEM-MAP.md` — how OAPS relates to internal and external protocol ecosystems
+- `docs/REVIEW-CALENDAR.md` — external review and outreach sequencing
 - `docs/PARALLEL-AGENT-WORKSTREAMS.md` — founder-led, agent-amplified execution model
 - `spec/core/FOUNDATION-DRAFT.md` — narrow hard-normative semantic core draft
+- `spec/INDEX.md` — spec tree entry point
+- `schemas/INDEX.md` — schema tree entry point
 - `schemas/foundation/` — machine-readable contracts for the foundation draft
 - `examples/foundation/` — examples for the foundation draft schemas
 - `governance/OEP_PROCESS.md` — spec change process
@@ -112,6 +116,7 @@ This is the smallest real working system in the repo today, and it should be und
 - `ROADMAP.md` — phased implementation and ecosystem plan
 - `TECH_STACK.yaml` — reference implementation stack
 - `schemas/` — JSON Schemas
+- `schemas/INDEX.md` — schema tree index
 - `examples/` — example payloads
 - `profiles/` — adapter profiles
 - `governance/` — contribution and governance docs
@@ -135,6 +140,8 @@ The reference workspace also includes:
 - `scripts/validate-spec-pack.mjs` — validates examples against the JSON Schemas
 - `scripts/validate-conformance-pack.mjs` — validates the suite-level TCK manifest and fixture indexes
 - `scripts/generate-core-schema-constants.mjs` — derives core constants from the schema pack and fails tests if stale
+
+A second implementation line now exists under `reference/oaps-python` as a minimal Python interoperability starter for the suite conformance manifest.
 
 ## Relationship to Sardis
 

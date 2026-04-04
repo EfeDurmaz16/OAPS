@@ -6,6 +6,7 @@ It is intentionally small and dependency-free:
 
 - loads the suite conformance manifest from the repo root
 - resolves the referenced conformance packs, schemas, examples, and source docs
+- validates the manifest's runner contract and result schema references
 - validates that referenced files exist
 - exposes a minimal CLI for conformance-pack inspection
 
