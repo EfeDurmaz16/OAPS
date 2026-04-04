@@ -8,13 +8,19 @@
   ],
   "fixtures": [
     {
-      "scenario_id": "a2a.task.lifecycle.mapping",
+      "scenario_id": "a2a.task.lifecycle.preservation",
       "dimension": "task-mapping",
       "schema": "schemas/foundation/task.json",
       "example": "examples/foundation/task.json",
       "coverage": [
         "schema",
         "fixture"
+      ],
+      "notes": "This fixture anchors lifecycle preservation, including partial completion and compensation semantics represented by the companion execution-result and error-object examples.",
+      "related_examples": [
+        "examples/foundation/task.json",
+        "examples/foundation/execution-result.json",
+        "examples/foundation/error-object.json"
       ]
     },
     {
@@ -25,6 +31,11 @@
       "coverage": [
         "schema",
         "fixture"
+      ],
+      "notes": "This fixture keeps delegation and mandate continuity visible across an A2A task handoff.",
+      "related_examples": [
+        "examples/foundation/delegation.json",
+        "examples/foundation/mandate.json"
       ]
     },
     {
@@ -35,16 +46,27 @@
       "coverage": [
         "schema",
         "fixture"
+      ],
+      "notes": "This fixture covers approval interposition and the transition from request to decision during a long-running task.",
+      "related_examples": [
+        "examples/foundation/approval-request.json",
+        "examples/foundation/approval-decision.json"
       ]
     },
     {
-      "scenario_id": "a2a.evidence.lineage",
+      "scenario_id": "a2a.message.evidence.carryover",
       "dimension": "evidence-lineage",
       "schema": "schemas/foundation/evidence-event.json",
       "example": "examples/foundation/evidence-event.json",
       "coverage": [
         "schema",
         "fixture"
+      ],
+      "notes": "This fixture keeps message and evidence carryover visible across task progression so lineage can be replayed.",
+      "related_examples": [
+        "examples/foundation/evidence-event.json",
+        "examples/foundation/task.json",
+        "examples/foundation/execution-result.json"
       ]
     }
   ]

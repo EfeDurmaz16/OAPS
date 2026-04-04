@@ -111,6 +111,8 @@ It should not force a single identity technology into the A2A mapping.
 
 The draft is intentionally not yet a full normative profile, but it should be detailed enough to guide implementation work now.
 
+The current fixture pack is intentionally foundation-backed: it uses the core task, delegation, approval, execution-result, and evidence examples to model lifecycle preservation, partial completion, compensation, approval interposition, and message/evidence carryover. That keeps the profile honest without claiming runtime-backed interop that does not exist yet.
+
 ## Open Questions
 
 The draft still needs decisions on:
