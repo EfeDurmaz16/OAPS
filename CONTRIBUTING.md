@@ -10,6 +10,8 @@ Thank you for your interest in OAPS.
 4. If the change affects schemas, update both schemas and examples.
 5. If the change affects a profile, include adapter-facing mapping notes.
 6. Prefer small, reviewable PRs.
+7. Follow the contribution lifecycle in `governance/CONTRIBUTION_LIFECYCLE.md` for material changes.
+8. If you are asking for outside review, package the ask using `governance/EXTERNAL_REVIEW_PACKET.md`.
 
 ## Priority contribution areas
 
@@ -20,3 +22,4 @@ Thank you for your interest in OAPS.
 - MCP adapter implementation
 - A2A profile drafting
 - economic profile drafting
+- working group formation and review notes

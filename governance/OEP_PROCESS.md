@@ -81,3 +81,19 @@ Until the governance body expands, review can be maintained by:
 - invited external profile or ecosystem reviewers
 
 The long-term goal is a broader technical steering structure, but the process should still be public and disciplined from the start.
+
+## Working Group Integration
+
+Working groups may produce draft language, compatibility notes, and review findings, but they should route material normative changes through an OEP.
+
+Relevant group review should be attached when the change touches:
+
+- core semantics
+- bindings
+- profiles
+- conformance
+- governance
+
+## External Review Packaging
+
+If an OEP is intended for outside review or cosigner outreach, package it using `governance/EXTERNAL_REVIEW_PACKET.md` so the ask is specific and bounded.
