@@ -7,8 +7,11 @@ They are not the core specification and should not push ecosystem-specific trans
 Current profile set:
 
 - `auth-web.md` — draft web auth and trust baseline profile
+- `auth-fides-tap-draft.md` — draft high-assurance trust profile
 - `mcp.md` — draft MCP profile
 - `a2a-draft.md` — draft A2A profile
+- `x402-draft.md` — draft payment coordination profile
+- `osp-draft.md` — draft provisioning profile
 
 Planned profile families include:
 
@@ -29,3 +32,10 @@ Every profile should eventually define:
 - evidence minimums
 - error translation
 - conformance expectations
+
+Profile drafts should stay readable on their own and make clear whether they are:
+
+- baseline
+- high-assurance upgrade
+- ecosystem mapping
+- domain alignment
