@@ -17,6 +17,8 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `fixtures/bindings/http/index.v1.json` - HTTP binding fixture pack
 - `fixtures/profiles/mcp/index.v1.json` - MCP profile fixture pack
 - `fixtures/profiles/a2a/index.v1.json` - A2A profile fixture pack
+- `runner-contract.md` - minimum behavior required from any TCK runner
+- `results/result-schema.v1.json` - machine-readable result format for compatibility claims
 
 These files now exist in-repo and are validated by the reference workspace.
 

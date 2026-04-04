@@ -18,6 +18,10 @@ function assert(condition, message) {
   }
 }
 
+function validateDateTime(value) {
+  return typeof value === 'string' && !Number.isNaN(Date.parse(value));
+}
+
 function normalizePackPath(relativePath) {
   return relativePath.startsWith('conformance/') ? relativePath : path.posix.join('conformance', relativePath);
 }
@@ -34,9 +38,13 @@ async function main() {
   assert(Array.isArray(manifest.entrypoints) && manifest.entrypoints.length > 0, 'Conformance manifest must list at least one entrypoint');
   assert(typeof manifest.taxonomy === 'string', 'Conformance manifest must include taxonomy path');
   assert(typeof manifest.fixture_index === 'string', 'Conformance manifest must include fixture_index path');
+  assert(typeof manifest.runner_contract === 'string', 'Conformance manifest must include runner_contract path');
+  assert(typeof manifest.result_schema === 'string', 'Conformance manifest must include result_schema path');
 
   await verifyFile(manifest.taxonomy);
   await verifyFile(manifest.fixture_index);
+  await verifyFile(manifest.runner_contract);
+  await verifyFile(manifest.result_schema);
   for (const source of manifest.normative_sources ?? []) {
     await verifyFile(source);
   }
@@ -48,6 +56,8 @@ async function main() {
   assert(Array.isArray(taxonomy.families) && taxonomy.families.length > 0, 'Scenario taxonomy must define families');
   const knownScopes = new Set(taxonomy.families.map((family) => family.id));
   const knownCoverageLevels = new Set(taxonomy.coverage_levels ?? []);
+  const resultSchema = await readJson(manifest.result_schema);
+  assert(resultSchema.result_schema_version === undefined, 'Result schema must be a schema document, not an example payload');
 
   const topLevelIndex = await readJson(manifest.fixture_index);
   assert(Array.isArray(topLevelIndex.packs) && topLevelIndex.packs.length > 0, 'Conformance fixture index must list packs');
@@ -99,6 +109,29 @@ async function main() {
       if (fixture.reference_test) await verifyFile(fixture.reference_test);
     }
   }
+
+  const exampleResult = await readJson('conformance/results/example-result.v1.json');
+  assert(exampleResult.result_schema_version === '1.0', 'Example result must declare result_schema_version 1.0');
+  assert(exampleResult.manifest_id === manifest.tck_id, 'Example result manifest_id must match manifest tck_id');
+  assert(Array.isArray(exampleResult.scopes) && exampleResult.scopes.length > 0, 'Example result must list scopes');
+  for (const scope of exampleResult.scopes) {
+    assert(knownScopes.has(scope), `Example result uses unknown scope: ${scope}`);
+  }
+  assert(validateDateTime(exampleResult.executed_at), 'Example result must include valid executed_at');
+  const scenarioOutcomes = new Set(['pass', 'fail', 'skip', 'error']);
+  assert(Array.isArray(exampleResult.scenarios) && exampleResult.scenarios.length > 0, 'Example result must list scenarios');
+  for (const scenario of exampleResult.scenarios) {
+    assert(typeof scenario.scenario_id === 'string' && scenario.scenario_id.length > 0, 'Example result scenario must include scenario_id');
+    assert(knownScopes.has(scenario.scope), `Example result scenario uses unknown scope: ${scenario.scope}`);
+    assert(scenarioOutcomes.has(scenario.outcome), `Example result scenario uses unknown outcome: ${scenario.outcome}`);
+    assert(Array.isArray(scenario.coverage) && scenario.coverage.length > 0, `Example result scenario ${scenario.scenario_id} must declare coverage`);
+    for (const coverageLevel of scenario.coverage) {
+      assert(knownCoverageLevels.has(coverageLevel), `Example result scenario ${scenario.scenario_id} uses unknown coverage level: ${coverageLevel}`);
+    }
+  }
+  const total = exampleResult.summary?.total;
+  assert(typeof total === 'number', 'Example result summary must include numeric total');
+  assert(total === exampleResult.scenarios.length, 'Example result summary total must match scenario count');
 
   console.log(`Validated conformance pack with ${topLevelIndex.packs.length} packs and ${fixtureCount} scenarios.`);
 }

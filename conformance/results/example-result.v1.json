@@ -1,0 +1,57 @@
+{
+  "result_schema_version": "1.0",
+  "manifest_id": "oaps-tck",
+  "runner_id": "reference-ts-runner",
+  "implementation": {
+    "implementation_id": "reference-ts",
+    "implementation_version": "0.1.0",
+    "metadata": {
+      "language": "typescript"
+    }
+  },
+  "executed_at": "2026-04-05T12:00:00Z",
+  "scopes": [
+    "core",
+    "binding:http",
+    "profile:mcp"
+  ],
+  "summary": {
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "error": 0,
+    "total": 3
+  },
+  "scenarios": [
+    {
+      "scenario_id": "core.actor.valid",
+      "scope": "core",
+      "outcome": "pass",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "duration_ms": 3
+    },
+    {
+      "scenario_id": "http.discovery.well-known",
+      "scope": "binding:http",
+      "outcome": "pass",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "duration_ms": 5
+    },
+    {
+      "scenario_id": "mcp.intent.execution",
+      "scope": "profile:mcp",
+      "outcome": "pass",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "duration_ms": 9
+    }
+  ]
+}

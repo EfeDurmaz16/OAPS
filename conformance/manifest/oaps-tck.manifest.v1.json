@@ -23,6 +23,8 @@
   ],
   "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
   "fixture_index": "conformance/fixtures/index.v1.json",
+  "runner_contract": "conformance/runner-contract.md",
+  "result_schema": "conformance/results/result-schema.v1.json",
   "normative_sources": [
     "spec/core/FOUNDATION-DRAFT.md",
     "spec/bindings/http-binding-draft.md",
