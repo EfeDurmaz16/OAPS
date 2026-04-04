@@ -43,11 +43,12 @@ pnpm build
 pnpm test
 ```
 
-`pnpm test` does three things:
+`pnpm test` does four things:
 
 1. checks that schema-derived core constants are up to date
 2. validates the spec pack examples, including the new foundation draft schema pack, against `schemas/`
-3. runs the reference package tests
+3. validates the suite-level conformance manifest and fixture indexes
+4. runs the reference package tests
 
 ## Running The Server
 

@@ -5,13 +5,15 @@
   "type": "module",
   "packageManager": "pnpm@10.0.0",
   "scripts": {
+    "clean": "rm -rf dist packages/*/dist",
     "build": "pnpm -r build",
     "dev:http": "pnpm --filter @oaps/http dev",
     "generate:core-contracts": "node scripts/generate-core-schema-constants.mjs",
     "check:core-contracts": "node scripts/generate-core-schema-constants.mjs --check",
     "validate:spec-pack": "node scripts/validate-spec-pack.mjs",
-    "test": "node scripts/generate-core-schema-constants.mjs --check && node scripts/validate-spec-pack.mjs && pnpm -r build && find dist -name '*.test.js' -print0 | xargs -0 node --test",
-    "typecheck": "pnpm -r typecheck"
+    "validate:conformance-pack": "node scripts/validate-conformance-pack.mjs",
+    "test": "node scripts/generate-core-schema-constants.mjs --check && node scripts/validate-spec-pack.mjs && node scripts/validate-conformance-pack.mjs && pnpm clean && pnpm build && pnpm -r test",
+    "typecheck": "pnpm build && pnpm -r typecheck"
   },
   "dependencies": {
     "@oaps/core": "workspace:*",
