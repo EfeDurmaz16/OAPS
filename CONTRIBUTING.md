@@ -5,13 +5,15 @@ Thank you for your interest in OAPS.
 ## How to contribute
 
 1. Open an issue describing the gap, ambiguity, or proposal.
-2. If the change affects wire compatibility, include migration notes.
-3. If the change affects schemas, update both schemas and examples.
-4. If the change affects a profile, include adapter-facing mapping notes.
-5. Prefer small, reviewable PRs.
+2. For material spec changes, open or reference an OEP as described in `governance/OEP_PROCESS.md`.
+3. If the change affects wire compatibility, include migration notes.
+4. If the change affects schemas, update both schemas and examples.
+5. If the change affects a profile, include adapter-facing mapping notes.
+6. Prefer small, reviewable PRs.
 
 ## Priority contribution areas
 
+- core foundation draft review
 - core schema review
 - conformance tests
 - policy evaluator implementation

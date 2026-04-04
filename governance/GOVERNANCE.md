@@ -2,9 +2,16 @@
 
 OAPS is intended to be developed as an open standard.
 
+The current governance surface is anchored by:
+
+- `CHARTER.md`
+- `governance/OEP_PROCESS.md`
+- `governance/RF_PATENT_PLEDGE.md`
+
 ## Principles
 
 - specification work should be grounded in implementation
+- the suite should remain neutral by design even when incubated alongside aligned projects
 - profiles should compose with existing ecosystems rather than attempt hostile replacement
 - breaking changes should be conservative and explicit
 - schema rigor matters
@@ -15,6 +22,7 @@ OAPS is intended to be developed as an open standard.
 Contributors are encouraged to open:
 - issues
 - design notes
+- OEPs
 - schema PRs
 - adapter PRs
 - conformance tests

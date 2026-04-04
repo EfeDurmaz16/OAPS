@@ -2,9 +2,9 @@
 
 **Open Agentic Primitive Standard**
 
-OAPS is an open standard for agentic primitives across protocol boundaries.
+OAPS is an open protocol suite for agentic primitives and control-plane semantics across protocol boundaries.
 
-It is designed to compose with existing systems such as MCP, A2A, ACP, agentic commerce flows, AP2, x402, and MPP rather than replace them. OAPS focuses on the horizontal primitive layer that these systems do not standardize consistently today: **delegation, policy, evidence, approval, and accountable execution**.
+It is designed to compose with systems such as MCP, A2A, ACP, UCP, AP2, x402, MPP, OSP, and higher-assurance trust systems rather than replace them. OAPS focuses on the horizontal primitive layer that these ecosystems do not standardize consistently today: **identity references, delegation, mandates, intents, tasks, approvals, execution outcomes, evidence, and payment coordination**.
 
 ## Core thesis
 
@@ -15,21 +15,19 @@ As autonomous agents begin to call tools, speak to merchants, move money, delega
 - were those limits actually checked before the side effect happened?
 - what tamper-evident proof exists afterward?
 
-OAPS standardizes those primitives.
+OAPS standardizes those primitives as a **semantic super-protocol**, not as a transport replacement or framework product.
 
 ## What OAPS does differently
 
 OAPS is not another isolated protocol silo. It provides:
 
-- a common **interaction envelope**
-- scoped **delegation**
-- deterministic **policy evaluation**
-- first-class **approval** primitives
-- hash-linked **evidence**
-- a canonical **HTTP binding**
-- adapter profiles for existing ecosystems, starting with **MCP**
+- a shared **semantic core**
+- multiple **bindings**
+- interop **profiles** for existing ecosystems
+- long-term **domain protocol families**
+- replayable, hash-linked **evidence**
 
-This means an implementation can add governance and accountability **without rewriting the underlying protocol**.
+This means an implementation can add governance and accountability **without rewriting the underlying ecosystem protocol**.
 
 ## Design principles
 
@@ -42,18 +40,25 @@ This means an implementation can add governance and accountability **without rew
 
 ## Status
 
-This repository contains the consolidated **v0.4-draft** spec pack. It includes:
+This repository now contains two overlapping things:
 
-- the core specification
+- the original consolidated **v0.4-draft** spec pack and MCP-backed reference slice
+- the new suite-level charter, architecture, and foundation draft documents
+
+It includes:
+
+- a suite charter
+- a suite architecture document
+- a foundation draft for the hard semantic core
 - JSON Schemas
 - examples
 - the `oaps-mcp-v1` profile
 - governance and roadmap docs
 - a working TypeScript reference implementation for the MCP wedge
 
-## Current MVP
+## Current Reference Slice
 
-The current implementation focus is one concrete path, not the whole long-term protocol vision:
+The current code implementation focus is one concrete path, not the whole long-term protocol suite:
 
 1. discover MCP tools and map them to `CapabilityCard`
 2. receive an OAPS `intent.request`
@@ -63,7 +68,17 @@ The current implementation focus is one concrete path, not the whole long-term p
 6. emit hash-linked evidence for the lifecycle
 7. expose the flow through the reference HTTP binding
 
-This is the smallest real working system in the repo today.
+This is the smallest real working system in the repo today, and it should be understood as a reference profile slice rather than the entire standard.
+
+## New Document Set
+
+- `CHARTER.md` — mission, boundaries, neutrality, and governance posture
+- `docs/SUITE-ARCHITECTURE.md` — protocol suite layering and long-term structure
+- `docs/ECOSYSTEM-MAP.md` — how OAPS relates to internal and external protocol ecosystems
+- `docs/PARALLEL-AGENT-WORKSTREAMS.md` — founder-led, agent-amplified execution model
+- `spec/core/FOUNDATION-DRAFT.md` — narrow hard-normative semantic core draft
+- `governance/OEP_PROCESS.md` — spec change process
+- `governance/RF_PATENT_PLEDGE.md` — draft royalty-free standardization posture
 
 ## What Is Working Now
 
@@ -78,16 +93,18 @@ This is the smallest real working system in the repo today.
 
 ## What Is Not Built Yet
 
-- A2A profile support
-- economic authorization profile support
-- registry/governance workflows
-- production gateway hardening
-- Rust gateway
-- multi-profile adapters
+- suite-level HTTP/JSON-RPC/gRPC/events binding family
+- hard-normative A2A and payment profiles
+- domain protocol families for provisioning, jobs, and commerce
+- registry and conformance infrastructure at suite scale
+- broader external governance and cosigner structure
 
 ## Repository layout
 
-- `SPEC.md` — consolidated core specification
+- `CHARTER.md` — suite charter
+- `SPEC.md` — consolidated legacy draft spec pack, still useful for the current reference slice
+- `docs/SUITE-ARCHITECTURE.md` — suite architecture
+- `spec/core/FOUNDATION-DRAFT.md` — hard-core semantic draft
 - `VISION.md` — motivation, framing, long-term scope
 - `ROADMAP.md` — phased implementation and ecosystem plan
 - `TECH_STACK.yaml` — reference implementation stack
@@ -116,7 +133,21 @@ The reference workspace also includes:
 
 ## Relationship to Sardis
 
-Sardis is an implementation of the OAPS vision in the commerce and payments domain. In OAPS terms, Sardis is an opinionated implementation of the **delegation, policy, approval, execution, evidence, and economic authorization** layers.
+Sardis is an aligned system and proving ground for the OAPS vision in the commerce and payments domain. In OAPS terms, Sardis is an opinionated implementation of **payment governance, mandate enforcement, approval, execution, evidence, and economic coordination**.
+
+OAPS is intended to remain neutral by design even while being incubated alongside Sardis.
+
+## Parallel Agent Teams
+
+The intended operating model is founder-led and agent-amplified.
+
+Parallel agent lanes should be treated as part of the founding team across:
+
+- spec writing
+- standards research
+- reference implementation
+- conformance and fixtures
+- outreach and cosigner preparation
 
 ## Current implementation priorities
 
@@ -128,9 +159,9 @@ Sardis is an implementation of the OAPS vision in the commerce and payments doma
 
 ## Immediate Next Work
 
-- document and tighten the reference HTTP binding behavior
-- add deeper conformance-style tests beyond the current vertical slice
-- keep schema-to-code generation expanding so drift is harder to reintroduce
+- turn the new foundation draft into schema-backed semantic contracts
+- split the current reference slice clearly into core, binding, and profile claims
+- build the suite-level document and governance surface without pretending the entire suite is already implemented
 
 ## Reference Server Note
 

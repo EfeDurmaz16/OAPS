@@ -3,6 +3,8 @@
 **Version:** v0.4-draft  
 **Status:** consolidated draft for implementation
 
+> Note: this document remains the original consolidated draft spec pack that backs the current MCP-oriented reference slice. The suite-level direction now lives alongside it in [CHARTER.md](/Users/efebarandurmaz/OAPS/CHARTER.md), [docs/SUITE-ARCHITECTURE.md](/Users/efebarandurmaz/OAPS/docs/SUITE-ARCHITECTURE.md), and [spec/core/FOUNDATION-DRAFT.md](/Users/efebarandurmaz/OAPS/spec/core/FOUNDATION-DRAFT.md).
+
 ## 1. Scope
 
 OAPS defines a standard set of primitives for autonomous agent interactions across protocol boundaries. It specifies:
