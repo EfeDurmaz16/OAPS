@@ -1,0 +1,10 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_events_list_1",
+  "method": "oaps.interactions.events.list",
+  "params": {
+    "interaction_id": "ix_jsonrpc_1",
+    "after": "evt_jsonrpc_2",
+    "limit": 2
+  }
+}

@@ -143,15 +143,15 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 3. JSON-RPC Binding Draft
 
-- [ ] Add `spec/bindings/jsonrpc-binding-draft.md`
-- [ ] Define method families for discovery, interactions, messages, approvals, revoke, evidence, events
-- [ ] Map OAPS errors into JSON-RPC errors and transport-neutral error objects
-- [ ] Define correlation and idempotency semantics for JSON-RPC
-- [ ] Define notification vs request/response boundaries
-- [ ] Add first JSON-RPC example messages
-- [ ] Add first JSON-RPC schema and fixture stubs under `conformance/fixtures/bindings/jsonrpc/`
-- [ ] Add a draft compatibility scope for `binding:jsonrpc`
-- [ ] Add Python inventory/check support for the new binding scope
+- [x] Add `spec/bindings/jsonrpc-binding-draft.md`
+- [x] Define method families for discovery, interactions, messages, approvals, revoke, evidence, events
+- [x] Map OAPS errors into JSON-RPC errors and transport-neutral error objects
+- [x] Define correlation and idempotency semantics for JSON-RPC
+- [x] Define notification vs request/response boundaries
+- [x] Add first JSON-RPC example messages
+- [x] Add first JSON-RPC schema and fixture stubs under `conformance/fixtures/bindings/jsonrpc/`
+- [x] Add a draft compatibility scope for `binding:jsonrpc`
+- [x] Add Python inventory/check support for the new binding scope
 
 ### 4. gRPC Binding Draft
 

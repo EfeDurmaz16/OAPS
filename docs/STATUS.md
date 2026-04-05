@@ -55,6 +55,35 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: JSON-RPC binding draft bootstrap
+- tranche status:
+  - drafted:
+    - added `spec/bindings/jsonrpc-binding-draft.md` covering canonical method families, error mapping, correlation/idempotency, replay methods, and notification boundaries
+    - added the first JSON-RPC example pack under `examples/jsonrpc/`
+  - implemented:
+    - extended the suite manifest/index/taxonomy wiring so `binding:jsonrpc` is now a first-class draft scope in the repo tooling
+  - conformance-backed:
+    - added `conformance/fixtures/bindings/jsonrpc/index.v1.json` as the first fixture-only JSON-RPC binding pack
+    - updated the Python manifest tests so inventory/check flows now include `binding:jsonrpc`
+    - marked the full JSON-RPC binding tranche complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - drafted the first non-HTTP binding document for OAPS
+  - added request/response, replay, notification, and error examples for the JSON-RPC track
+  - wired the new binding scope into manifest/index/taxonomy/docs so the repo now treats JSON-RPC as a real draft surface rather than a pure roadmap placeholder
+- validation:
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python inventory --repo-root . --scope binding:jsonrpc --json`
+- commits:
+  - `spec: add jsonrpc binding draft`
+- next unfinished work:
+  - start V2 tranche 4 by drafting the gRPC binding and its first fixture pack
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: HTTP conformance and ordering hardening
 - tranche status:
   - drafted:

@@ -1,0 +1,6 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_discovery_1",
+  "method": "oaps.discover",
+  "params": {}
+}

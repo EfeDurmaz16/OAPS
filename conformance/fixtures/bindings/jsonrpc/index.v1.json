@@ -1,0 +1,106 @@
+{
+  "pack_version": "1.0",
+  "scope": "binding:jsonrpc",
+  "status": "draft",
+  "normative_sources": [
+    "spec/bindings/jsonrpc-binding-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "jsonrpc.discovery.request-response",
+      "dimension": "discovery",
+      "example": "examples/jsonrpc/discovery.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.discovery.response-shape",
+      "dimension": "discovery",
+      "example": "examples/jsonrpc/discovery.response.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.interactions.create",
+      "dimension": "interaction-lifecycle",
+      "example": "examples/jsonrpc/interactions.create.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.messages.append",
+      "dimension": "message-lifecycle",
+      "example": "examples/jsonrpc/messages.append.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.approval.approve",
+      "dimension": "approval-flow",
+      "example": "examples/jsonrpc/approve.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.approval.reject",
+      "dimension": "approval-flow",
+      "example": "examples/jsonrpc/reject.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.revocation.request",
+      "dimension": "revocation",
+      "example": "examples/jsonrpc/revoke.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.events.list",
+      "dimension": "event-stream",
+      "example": "examples/jsonrpc/events.list.response.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.error.mapping",
+      "dimension": "error-mapping",
+      "example": "examples/jsonrpc/errors/approval-not-pending.response.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.idempotency.keyed-mutations",
+      "dimension": "idempotency",
+      "example": "examples/jsonrpc/interactions.create.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.correlation.ids",
+      "dimension": "correlation",
+      "example": "examples/jsonrpc/interactions.create.response.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "jsonrpc.notifications.progress-update",
+      "dimension": "notification-behavior",
+      "example": "examples/jsonrpc/notification.progress.json",
+      "coverage": [
+        "fixture"
+      ]
+    }
+  ]
+}

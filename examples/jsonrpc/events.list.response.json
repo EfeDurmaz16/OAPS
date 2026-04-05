@@ -1,0 +1,24 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_events_list_1",
+  "result": {
+    "interaction_id": "ix_jsonrpc_1",
+    "events": [
+      {
+        "event_id": "evt_jsonrpc_3",
+        "event_type": "mcp.tool_call.completed"
+      },
+      {
+        "event_id": "evt_jsonrpc_4",
+        "event_type": "interaction.completed"
+      }
+    ],
+    "replay": {
+      "after": "evt_jsonrpc_2",
+      "returned": 2,
+      "total_events": 4,
+      "has_more": false,
+      "next_after": "evt_jsonrpc_4"
+    }
+  }
+}

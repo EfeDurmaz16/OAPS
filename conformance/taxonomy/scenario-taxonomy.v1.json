@@ -34,6 +34,21 @@
       ]
     },
     {
+      "id": "binding:jsonrpc",
+      "dimensions": [
+        "discovery",
+        "interaction-lifecycle",
+        "message-lifecycle",
+        "approval-flow",
+        "revocation",
+        "event-stream",
+        "error-mapping",
+        "idempotency",
+        "correlation",
+        "notification-behavior"
+      ]
+    },
+    {
       "id": "profile:mcp",
       "dimensions": [
         "capability-mapping",

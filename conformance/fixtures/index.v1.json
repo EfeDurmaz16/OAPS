@@ -10,6 +10,10 @@
       "path": "conformance/fixtures/bindings/http/index.v1.json"
     },
     {
+      "scope": "binding:jsonrpc",
+      "path": "conformance/fixtures/bindings/jsonrpc/index.v1.json"
+    },
+    {
       "scope": "profile:mcp",
       "path": "conformance/fixtures/profiles/mcp/index.v1.json"
     },

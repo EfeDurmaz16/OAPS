@@ -1,0 +1,9 @@
+{
+  "jsonrpc": "2.0",
+  "method": "oaps.interactions.updated",
+  "params": {
+    "interaction_id": "ix_jsonrpc_1",
+    "state": "executing",
+    "timestamp": "2026-04-05T13:00:30Z"
+  }
+}

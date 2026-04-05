@@ -16,5 +16,6 @@ Current entry points:
 - `core/FOUNDATION-DRAFT.md` — first hard semantic core draft
 - `core/STATE-MACHINE-DRAFT.md` — canonical task and lifecycle semantics draft
 - `bindings/http-binding-draft.md` — first binding-track draft
+- `bindings/jsonrpc-binding-draft.md` — first JSON-RPC binding-track draft
 
 The older consolidated `../SPEC.md` still exists because it backs the current MCP-oriented reference slice, but it should no longer be treated as the entire future shape of OAPS.

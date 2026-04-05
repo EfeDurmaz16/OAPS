@@ -1,0 +1,10 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_reject_1",
+  "method": "oaps.interactions.reject",
+  "params": {
+    "interaction_id": "ix_jsonrpc_pending_1",
+    "idempotency_key": "idem-jsonrpc-reject-1",
+    "reason": "denied for test"
+  }
+}

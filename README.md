@@ -71,7 +71,7 @@ Use the following shorthand when reading the repo:
 | Repository execution contract (`AGENTS.md`, `PLANS.md`, `docs/STATUS.md`, Codex harness scripts) | Stable | This is the repo's active operating contract for long-horizon execution and durable progress tracking. |
 | Current implementation-backed MCP/HTTP reference slice (`reference/oaps-monorepo`, exercised conformance fixtures, Python manifest consumer) | Stable | The behavior exists, is validated in-repo, and is the most credible implementation baseline today. |
 | Suite/spec documents (`SPEC.md`, `spec/`, `profiles/`, `schemas/`, `examples/`, `conformance/`) | Draft | These are the active standardization surfaces: real enough to implement and review, but still expected to change with evidence. |
-| Broader binding families beyond HTTP, larger domain families beyond the current drafts, and future external governance/cosigner structures | Concept | These remain directional roadmap items and should not yet be treated as implemented or frozen standard surfaces. |
+| JSON-RPC binding draft, larger domain families beyond the current drafts, and future external governance/cosigner structures | Draft / Concept | JSON-RPC now has a first draft spec and fixture stubs; the broader remaining non-HTTP binding/domain/governance work is still directional rather than implementation-backed. |
 
 ## Current Reference Slice
 

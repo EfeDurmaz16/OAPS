@@ -1,0 +1,34 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_interaction_create_1",
+  "method": "oaps.interactions.create",
+  "params": {
+    "idempotency_key": "idem-jsonrpc-create-1",
+    "envelope": {
+      "spec_version": "0.4-draft",
+      "min_supported_version": "0.4",
+      "max_supported_version": "0.4",
+      "message_id": "msg_jsonrpc_request_1",
+      "interaction_id": "ix_jsonrpc_1",
+      "from": {
+        "actor_id": "urn:oaps:actor:agent:builder"
+      },
+      "to": {
+        "actor_id": "urn:oaps:actor:server:reference"
+      },
+      "channel": "oaps-http",
+      "message_type": "intent.request",
+      "timestamp": "2026-04-05T13:00:00Z",
+      "payload": {
+        "intent_id": "int_jsonrpc_1",
+        "verb": "invoke",
+        "object": "tool:read_repo",
+        "constraints": {
+          "arguments": {
+            "path": "README.md"
+          }
+        }
+      }
+    }
+  }
+}

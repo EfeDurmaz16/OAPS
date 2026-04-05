@@ -1,0 +1,16 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_discovery_1",
+  "result": {
+    "oaps_version": "0.4-draft",
+    "actor_card_method": "oaps.actor.get",
+    "capabilities_method": "oaps.capabilities.list",
+    "interactions_create_method": "oaps.interactions.create",
+    "supported_auth_schemes": [
+      "bearer"
+    ],
+    "supported_profiles": [
+      "oaps-mcp-v1"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "jsonrpc": "2.0",
+  "id": "req_approve_1",
+  "error": {
+    "code": -32040,
+    "message": "OAPS approval is not pending",
+    "data": {
+      "oaps_error": {
+        "code": "APPROVAL_NOT_PENDING",
+        "category": "validation",
+        "message": "Interaction is not awaiting approval",
+        "retryable": false
+      }
+    }
+  }
+}

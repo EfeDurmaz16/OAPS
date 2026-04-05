@@ -15,6 +15,7 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `fixtures/index.v1.json` - top-level map of fixture packs
 - `fixtures/core/index.v1.json` - core semantics fixture pack
 - `fixtures/bindings/http/index.v1.json` - HTTP binding fixture pack
+- `fixtures/bindings/jsonrpc/index.v1.json` - JSON-RPC binding fixture pack
 - `fixtures/profiles/mcp/index.v1.json` - MCP profile fixture pack
 - `fixtures/profiles/a2a/index.v1.json` - A2A profile fixture pack
 - `fixtures/profiles/auth-web/index.v1.json` - web auth baseline fixture pack
@@ -34,6 +35,7 @@ The first-pass suite-level TCK structure covers:
 
 - core semantics
 - HTTP binding
+- JSON-RPC binding
 - MCP profile mapping
 - A2A profile mapping
 - auth-web baseline profile mapping
@@ -65,6 +67,7 @@ The current fixture packs are centered on the reference slice already present in
 - runtime-backed core checks for delegation expiry, evidence tamper detection, replay-chain mismatch detection, and stable evidence hashing
 - runtime-backed core lifecycle checks for intent-to-task promotion and reject-versus-revoke distinction
 - runtime-backed HTTP discovery, interaction/message lifecycle, fail-closed message subject binding, idempotent retry behavior across create/message/approve/reject/revoke mutations, approval/rejection/revocation, and evidence/event retrieval behavior, including incremental replay windows
+- fixture-backed JSON-RPC discovery, interaction/mutation, replay, correlation, idempotency, notification-boundary, and error-mapping stubs for the draft binding track
 - runtime-backed MCP capability mapping, policy gating, approval insertion, evidence emission, and error translation
 - shared auth-web runtime anchors for discovery, interaction/message subject binding, and delegation fail-closed behavior
 - A2A task mapping, lifecycle preservation, and evidence lineage

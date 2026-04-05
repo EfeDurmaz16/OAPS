@@ -26,6 +26,7 @@ def _all_scopes() -> tuple[str, ...]:
     return (
         "core",
         "binding:http",
+        "binding:jsonrpc",
         "profile:mcp",
         "profile:a2a",
         "profile:auth-web",
@@ -95,7 +96,7 @@ class ManifestValidationTests(unittest.TestCase):
         repo_root = Path(__file__).resolve().parents[3]
         report = inventory_repository(repo_root=repo_root)
         self.assertTrue(report.ok, report.to_dict())
-        self.assertEqual(report.total_packs, 8)
+        self.assertEqual(report.total_packs, 9)
         self.assertEqual(report.total_scenarios, _fixture_count(repo_root))
         self.assertEqual(report.scopes, _all_scopes())
 
@@ -165,7 +166,7 @@ class ManifestValidationTests(unittest.TestCase):
         output = stdout.getvalue()
         self.assertIn("Inventory report", output)
         self.assertIn(
-            "core, binding:http, profile:mcp, profile:a2a, profile:auth-web, profile:auth-fides-tap, profile:x402, profile:osp",
+            "core, binding:http, binding:jsonrpc, profile:mcp, profile:a2a, profile:auth-web, profile:auth-fides-tap, profile:x402, profile:osp",
             output,
         )
         self.assertIn("inventory-only report", output)
@@ -421,7 +422,7 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             report = build_compatibility_declaration(repo_root=repo_root, result_path=result_path)
             self.assertTrue(report.ok, report.to_dict())
-            self.assertEqual(report.compatible_count, 8)
+            self.assertEqual(report.compatible_count, 9)
             self.assertEqual(report.partial_count, 0)
             self.assertEqual(report.incompatible_count, 0)
             self.assertEqual(report.not_evaluated_count, 0)
@@ -454,7 +455,7 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(by_scope["profile:mcp"].evaluated_scenario_count, 1)
             self.assertEqual(by_scope["core"].status, "not_evaluated")
             self.assertEqual(report.partial_count, 1)
-            self.assertEqual(report.not_evaluated_count, 7)
+            self.assertEqual(report.not_evaluated_count, 8)
 
     def test_compatibility_cli_json_emits_machine_readable_declaration(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
@@ -495,7 +496,7 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(payload["declaration_schema_version"], "1.0")
             self.assertEqual(payload["summary"]["compatible"], 0)
             self.assertEqual(payload["summary"]["partial"], 1)
-            self.assertEqual(payload["summary"]["not_evaluated"], 7)
+            self.assertEqual(payload["summary"]["not_evaluated"], 8)
             mcp_scope = next(scope for scope in payload["scope_declarations"] if scope["scope"] == "profile:mcp")
             self.assertEqual(mcp_scope["status"], "partial")
             self.assertEqual(mcp_scope["evaluated_scenarios"], 1)

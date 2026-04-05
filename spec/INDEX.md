@@ -7,6 +7,7 @@ This is the entry point for the suite-level specification tree.
 - `core/FOUNDATION-DRAFT.md` - first hard semantic core draft
 - `core/STATE-MACHINE-DRAFT.md` - canonical task and lifecycle semantics draft
 - `bindings/http-binding-draft.md` - first binding-track draft
+- `bindings/jsonrpc-binding-draft.md` - first JSON-RPC binding-track draft
 
 ## Current Reading Order
 
@@ -16,6 +17,7 @@ This is the entry point for the suite-level specification tree.
 4. `core/FOUNDATION-DRAFT.md`
 5. `core/STATE-MACHINE-DRAFT.md`
 6. `bindings/http-binding-draft.md`
+7. `bindings/jsonrpc-binding-draft.md`
 
 ## Status Notes
 
