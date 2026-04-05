@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T01:23:24.897557Z",
+  "generated_at": "2026-04-05T02:05:35.627975Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -18,7 +18,8 @@
     {
       "coverage_observed": [
         "schema",
-        "fixture"
+        "fixture",
+        "reference-runtime"
       ],
       "error": 0,
       "evaluated_scenario_ids": [
@@ -27,15 +28,20 @@
         "core.intent.valid",
         "core.task.valid",
         "core.delegation.valid",
+        "core.delegation.expired",
         "core.mandate.valid",
         "core.approval-request.valid",
         "core.approval-decision.valid",
         "core.execution-result.valid",
         "core.evidence-event.valid",
+        "core.evidence.chain.verifiable",
+        "core.evidence.tamper-detected",
+        "core.evidence.prev-hash-mismatch",
+        "core.evidence.hash-stable",
         "core.error-object.valid",
         "core.extension-descriptor.valid"
       ],
-      "evaluated_scenarios": 12,
+      "evaluated_scenarios": 17,
       "fail": 0,
       "known_scenario_ids": [
         "core.actor.valid",
@@ -43,16 +49,21 @@
         "core.intent.valid",
         "core.task.valid",
         "core.delegation.valid",
+        "core.delegation.expired",
         "core.mandate.valid",
         "core.approval-request.valid",
         "core.approval-decision.valid",
         "core.execution-result.valid",
         "core.evidence-event.valid",
+        "core.evidence.chain.verifiable",
+        "core.evidence.tamper-detected",
+        "core.evidence.prev-hash-mismatch",
+        "core.evidence.hash-stable",
         "core.error-object.valid",
         "core.extension-descriptor.valid"
       ],
-      "known_scenarios": 12,
-      "pass": 12,
+      "known_scenarios": 17,
+      "pass": 17,
       "scope": "core",
       "selected_in_result": true,
       "skip": 0,
@@ -73,12 +84,17 @@
         "http.interaction.not-found",
         "http.interaction.updated",
         "http.messages.append",
+        "http.messages.interaction-id-mismatch",
+        "http.evidence.retrieval",
+        "http.events.retrieval",
         "http.approval.decision",
+        "http.approval.not-pending",
+        "http.approval.rejection",
         "http.idempotency.reuse",
         "http.version.negotiation",
-        "http.approval.not-pending"
+        "http.revocation.request"
       ],
-      "evaluated_scenarios": 11,
+      "evaluated_scenarios": 16,
       "fail": 0,
       "known_scenario_ids": [
         "http.authentication.required",
@@ -88,13 +104,18 @@
         "http.interaction.not-found",
         "http.interaction.updated",
         "http.messages.append",
+        "http.messages.interaction-id-mismatch",
+        "http.evidence.retrieval",
+        "http.events.retrieval",
         "http.approval.decision",
+        "http.approval.not-pending",
+        "http.approval.rejection",
         "http.idempotency.reuse",
         "http.version.negotiation",
-        "http.approval.not-pending"
+        "http.revocation.request"
       ],
-      "known_scenarios": 11,
-      "pass": 11,
+      "known_scenarios": 16,
+      "pass": 16,
       "scope": "binding:http",
       "selected_in_result": true,
       "skip": 0,
@@ -112,19 +133,23 @@
         "mcp.capability-card.mapping",
         "mcp.intent.execution",
         "mcp.policy.gating",
+        "mcp.approval.insertion",
+        "mcp.error.translation",
         "mcp.evidence.emission"
       ],
-      "evaluated_scenarios": 5,
+      "evaluated_scenarios": 7,
       "fail": 0,
       "known_scenario_ids": [
         "mcp.actor-card.mapping",
         "mcp.capability-card.mapping",
         "mcp.intent.execution",
         "mcp.policy.gating",
+        "mcp.approval.insertion",
+        "mcp.error.translation",
         "mcp.evidence.emission"
       ],
-      "known_scenarios": 5,
-      "pass": 5,
+      "known_scenarios": 7,
+      "pass": 7,
       "scope": "profile:mcp",
       "selected_in_result": true,
       "skip": 0,
@@ -269,8 +294,8 @@
     "profile:osp"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T01:23:24.787095Z",
-    "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/examples/fixture-check-all-scopes.v1.json",
+    "executed_at": "2026-04-05T02:05:35.482142Z",
+    "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/example-result.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },
   "suite_version": "foundation-draft",

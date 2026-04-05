@@ -109,6 +109,17 @@ At minimum, the profile should preserve:
 
 For higher-risk actions, the evidence chain SHOULD be rich enough to support replay and audit without requiring the original MCP exchange to be re-created manually.
 
+## Current Reference Slice Compatibility Notes
+
+The current reference-backed slice supports the following profile-specific compatibility claims:
+
+- policy denial happens before MCP tool execution and is surfaced as an OAPS authorization failure
+- high-risk denial and approval-request paths carry an evaluated policy-context hash in emitted evidence
+- approval rejection is preserved as an explicit OAPS authorization failure plus `approval.rejected` evidence
+- capability lookup failure, authenticated-subject mismatch, approval-modification mismatch, upstream timeout, upstream auth failure, and validation failure are translated into stable OAPS error categories
+
+The current slice does **not** yet claim runtime-backed interop for MCP resources, prompts, subscriptions, or MCP-native transport bindings outside the existing adapter path.
+
 ## Error Mapping
 
 `oaps-mcp-v1` MUST translate common MCP failures into portable OAPS errors.

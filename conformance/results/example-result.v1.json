@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T01:22:35.325200Z",
+  "executed_at": "2026-04-05T02:05:35.482142Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -93,6 +93,19 @@
     {
       "artifacts": [
         "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.delegation.expired",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
         "schemas/foundation/mandate.json",
         "examples/foundation/mandate.json"
       ],
@@ -163,6 +176,58 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "core.evidence-event.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.evidence.chain.verifiable",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.evidence.tamper-detected",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.evidence.prev-hash-mismatch",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.evidence.hash-stable",
       "scope": "core"
     },
     {
@@ -300,6 +365,45 @@
     {
       "artifacts": [
         "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.messages.interaction-id-mismatch",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.evidence.retrieval",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.retrieval",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
         "schemas/approval-decision.json",
         "examples/approval-decision.json",
         "reference/oaps-monorepo/packages/http/src/index.test.ts"
@@ -312,6 +416,32 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "http.approval.decision",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.approval.not-pending",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.approval.rejection",
       "scope": "binding:http"
     },
     {
@@ -350,7 +480,7 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "http.approval.not-pending",
+      "scenario_id": "http.revocation.request",
       "scope": "binding:http"
     },
     {
@@ -406,7 +536,8 @@
     },
     {
       "artifacts": [
-        "conformance/fixtures/profiles/mcp/index.v1.json"
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
       ],
       "coverage": [
         "reference-runtime"
@@ -414,6 +545,32 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "mcp.policy.gating",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.approval.insertion",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.error.translation",
       "scope": "profile:mcp"
     },
     {
@@ -530,7 +687,8 @@
         "reference/oaps-monorepo/packages/core/src/index.test.ts"
       ],
       "coverage": [
-        "fixture"
+        "fixture",
+        "reference-runtime"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
@@ -684,8 +842,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 44,
+    "pass": 56,
     "skip": 0,
-    "total": 44
+    "total": 56
   }
 }

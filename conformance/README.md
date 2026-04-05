@@ -62,8 +62,9 @@ The current fixture packs are centered on the reference slice already present in
 
 - foundation actor, capability, intent, task, delegation, mandate, approval, execution, evidence, error, and extension schemas
 - runtime-backed core checks for delegation expiry, evidence tamper detection, replay-chain mismatch detection, and stable evidence hashing
-- HTTP discovery and interaction lifecycle behavior
-- MCP capability mapping, policy gating, evidence emission, and error translation
+- runtime-backed HTTP discovery, interaction/message lifecycle, approval/rejection/revocation, and evidence/event retrieval behavior
+- runtime-backed MCP capability mapping, policy gating, approval insertion, evidence emission, and error translation
+- shared auth-web runtime anchors for discovery, subject binding, and delegation fail-closed behavior
 - A2A task mapping, lifecycle preservation, and evidence lineage
 
 ## Conformance Rules

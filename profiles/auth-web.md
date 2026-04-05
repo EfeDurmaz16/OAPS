@@ -97,6 +97,19 @@ At minimum, evidence should be able to record:
 - whether a trust upgrade was applied
 - whether the request was accepted or rejected on trust grounds
 
+## Current Reference Mapping Notes
+
+The current suite only claims the following baseline auth-web mappings from the shared runtime slice:
+
+| Baseline auth-web concern | OAPS anchor | Current runtime or fixture anchor | Claim boundary |
+| --- | --- | --- | --- |
+| web discovery of actor identity | discovery document plus actor-facing metadata | `auth-web.discovery.identity` via shared HTTP discovery runtime | runtime-backed through shared HTTP surface |
+| subject binding between caller and actor | authenticated subject compared with `Envelope.from.actor_id` | `auth-web.subject-binding.actor-card` via shared HTTP auth boundary | runtime-backed through shared HTTP surface |
+| delegation-aware subject binding | explicit delegation checked before allowing actor mismatch | `auth-web.delegation.fail-closed` via expired-delegation core runtime | runtime-backed for fail-closed expiry only |
+| evidence of trust decisions | evidence metadata on execution boundaries | shared HTTP and MCP evidence surfaces | partial, because no dedicated auth-web evidence emitter exists yet |
+
+This profile does **not** yet claim a full web-native verifier matrix across bearer, signatures, OIDC, or JWKS discovery combinations. The current reference line proves subject binding and fail-closed delegation semantics first.
+
 ## Conformance
 
 A conforming `oaps-auth-web-v1` implementation:
