@@ -80,7 +80,11 @@ Append one entry per tranche:
   - marked the remaining runtime-backed conformance and profile-mapping plan items complete in `PLANS.md`
   - advanced `docs/NEXT-STEPS.md` to the next unfinished priorities after the runtime-backed and profile-mapping tranche
 - validation:
-  - `pnpm --dir reference/oaps-monorepo test`
+  - `pnpm --dir reference/oaps-monorepo build`
+  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/mcp-adapter test`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
   - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
   - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --output conformance/results/example-result.v1.json`
   - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --output conformance/results/examples/fixture-check-all-scopes.v1.json`
@@ -100,4 +104,25 @@ Append one entry per tranche:
   - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
   - add a public-facing “how to review OAPS” short packet
   - decide whether to formalize event replay semantics further in the HTTP binding draft
+- status: `DONE`
+
+
+### 2026-04-05
+
+- tranche: profile mapping note hardening
+- changes:
+  - added an explicit A2A mapping matrix and lifecycle mapping notes without claiming end-to-end A2A runtime support
+  - added a FIDES/TAP trust-upgrade mapping matrix that distinguishes reusable runtime seams from non-claimed verifier behavior
+  - added x402 challenge/retry and OSP provisioning lifecycle mapping matrices tied to current shared runtime anchors and explicit non-claim boundaries
+  - confirmed the A2A, trust-upgrade, and payment/provisioning profile-mapping tranches are now marked complete in `PLANS.md`
+  - advanced `docs/NEXT-STEPS.md` to the harness-execution priority after profile-note completion
+- validation:
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 - <<'PY' ... verify referenced profile scenario ids exist in the conformance packs ... PY`
+- commits:
+  - `docs: harden profile mapping notes`
+- next unfinished work:
+  - exercise the local Codex harness on a real unattended multi-tranche run and record the behavior
+  - add a clearer stable versus draft versus concept matrix to top-level docs
+  - add a public-facing how-to-review packet
 - status: `DONE`
