@@ -19,6 +19,7 @@ Current foundation object set:
 - evidence-event
 - error-object
 - extension-descriptor
+- interaction-transition
 - task-transition
 
 These schemas should evolve with `spec/core/FOUNDATION-DRAFT.md` rather than with the older consolidated draft spec.

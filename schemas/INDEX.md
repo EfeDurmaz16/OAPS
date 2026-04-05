@@ -22,6 +22,7 @@ Current foundation entry points:
 - `foundation/evidence-event.json`
 - `foundation/error-object.json`
 - `foundation/extension-descriptor.json`
+- `foundation/interaction-transition.json`
 - `foundation/task-transition.json`
 
 Current reference-slice entry points:

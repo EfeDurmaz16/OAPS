@@ -1,0 +1,11 @@
+{
+  "delegation_id": "del_invalid_1",
+  "delegator": {
+    "actor_id": "https://company.example.com/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/builder"
+  },
+  "scope": [],
+  "expires_at": "2026-04-30T23:59:59Z"
+}

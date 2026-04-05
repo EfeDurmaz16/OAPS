@@ -1,0 +1,11 @@
+{
+  "transition_id": "ix_tx_invalid_1",
+  "interaction_id": "ix_invalid_1",
+  "from_state": "completed",
+  "to_state": "executing",
+  "triggered_by": {
+    "actor_id": "https://agents.example.com/actors/operator"
+  },
+  "reason": "invalid replay regression",
+  "timestamp": "2026-04-05T12:10:00Z"
+}

@@ -364,6 +364,31 @@ A business principal authorizes a purchasing agent to spend up to a bounded
 amount on compute capacity for production workloads. The key semantics are the
 authorization chain, action boundary, and stronger review/evidence posture.
 
+## Replay And Evidence Reconstruction
+
+Replayable evidence is the durable way to reconstruct lifecycle state after the
+fact.
+
+Core replay guidance:
+
+- evidence SHOULD preserve ordered lifecycle progression rather than isolated
+  audit fragments
+- replay consumers SHOULD reconstruct the latest known interaction or task
+  state by applying events and transition records in append order
+- explicit transition records such as `TaskTransition` and
+  `InteractionTransition` SHOULD be preferred when a binding or profile needs to
+  serialize lifecycle movement directly
+- if a runtime does not emit dedicated transition objects, it SHOULD still emit
+  enough ordered evidence metadata to reconstruct equivalent state movement
+- replay consumers MUST fail closed when the evidence chain is tampered with,
+  truncated in the middle of a claimed transition sequence, or implies an
+  illegal canonical transition
+
+The current reference slice already proves append-order evidence replay,
+tamper detection, and previous-hash mismatch detection. It does not yet expose
+dedicated task replay endpoints, so task-state reconstruction remains a
+core-level semantic rule rather than a binding-level API guarantee.
+
 ## Conformance Notes
 
 This state-machine draft is intended to drive:

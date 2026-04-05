@@ -38,6 +38,15 @@
       ]
     },
     {
+      "scenario_id": "core.intent.invalid.invoke-missing-arguments",
+      "dimension": "intent",
+      "example": "conformance/fixtures/core/invalid/intent-invoke-missing-arguments.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: invoke intents without constraints.arguments must fail validation."
+    },
+    {
       "scenario_id": "core.task.valid",
       "dimension": "task",
       "schema": "schemas/foundation/task.json",
@@ -101,6 +110,16 @@
       "dimension": "challenge",
       "schema": "schemas/foundation/challenge.json",
       "example": "examples/foundation/challenge.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.interaction-transition.valid",
+      "dimension": "lifecycle",
+      "schema": "schemas/foundation/interaction-transition.json",
+      "example": "examples/foundation/interaction-transition.json",
       "coverage": [
         "schema",
         "fixture"
@@ -184,13 +203,49 @@
     },
     {
       "scenario_id": "core.task-transition.valid",
-      "dimension": "task",
+      "dimension": "lifecycle",
       "schema": "schemas/foundation/task-transition.json",
       "example": "examples/foundation/task-transition.json",
       "coverage": [
         "schema",
         "fixture"
       ]
+    },
+    {
+      "scenario_id": "core.interaction-transition.invalid.completed-to-executing",
+      "dimension": "lifecycle",
+      "example": "conformance/fixtures/core/invalid/interaction-transition-completed-to-executing.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: completed interactions must not regress back into executing."
+    },
+    {
+      "scenario_id": "core.task-transition.invalid.completed-to-running",
+      "dimension": "lifecycle",
+      "example": "conformance/fixtures/core/invalid/task-transition-completed-to-running.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: completed tasks must not regress back into running."
+    },
+    {
+      "scenario_id": "core.intent.task-promotion",
+      "dimension": "lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Confirms the reference core helper can promote an intent into a durable task while preserving the originating intent reference."
+    },
+    {
+      "scenario_id": "core.reject-vs-revoke.distinct",
+      "dimension": "lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Confirms the core lifecycle helper distinguishes approval rejection from revocation and fails closed on illegal regressions."
     }
   ]
 }

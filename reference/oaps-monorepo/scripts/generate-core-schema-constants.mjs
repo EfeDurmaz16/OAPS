@@ -17,6 +17,7 @@ function renderConst(name, value) {
 
 async function main() {
   const common = await readJson(path.join(schemaDir, 'common.json'));
+  const foundationCommon = await readJson(path.join(schemaDir, 'foundation', 'common.json'));
   const actorCard = await readJson(path.join(schemaDir, 'actor-card.json'));
   const capabilityCard = await readJson(path.join(schemaDir, 'capability-card.json'));
   const envelope = await readJson(path.join(schemaDir, 'envelope.json'));
@@ -33,6 +34,7 @@ async function main() {
     renderConst('EXECUTION_STATUSES', executionResult.properties.status.enum),
     renderConst('MESSAGE_TYPES', envelope.properties.message_type.enum),
     renderConst('INTERACTION_STATES', common.$defs.state.enum),
+    renderConst('TASK_STATES', foundationCommon.$defs.taskState.enum),
     renderConst('SCHEMA_VERSION_PATTERN', envelope.properties.spec_version.pattern),
     renderConst('MONEY_VALUE_PATTERN', common.$defs.money.properties.value.pattern),
     renderConst('ISO_CURRENCY_PATTERN', common.$defs.money.properties.currency.pattern),

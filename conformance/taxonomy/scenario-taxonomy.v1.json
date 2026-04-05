@@ -6,6 +6,7 @@
       "dimensions": [
         "identity",
         "intent",
+        "lifecycle",
         "task",
         "challenge",
         "delegation",

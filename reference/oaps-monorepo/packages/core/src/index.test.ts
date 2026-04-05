@@ -3,10 +3,15 @@ import assert from 'node:assert/strict';
 
 import {
   OapsError,
+  assertInteractionTransition,
+  assertTaskTransition,
   assertAuthenticatedActor,
   assertInvokeIntent,
   canonicalJson,
+  canTransitionInteractionState,
+  canTransitionTaskState,
   negotiateVersion,
+  promoteIntentToTask,
   sha256Prefixed,
   riskClassRequiresApproval,
 } from './index.js';
@@ -90,4 +95,56 @@ test('assertAuthenticatedActor fails closed on expired delegations', () => {
       expires_at: new Date(Date.now() - 1000).toISOString(),
     },
   ), (error: unknown) => error instanceof OapsError && error.error.code === 'DELEGATION_EXPIRED');
+});
+
+test('promoteIntentToTask materializes a task that preserves the originating intent reference', () => {
+  const task = promoteIntentToTask(
+    {
+      intent_id: 'int_promote',
+      verb: 'invoke',
+      object: 'tool:read_repo',
+      constraints: {
+        arguments: {
+          path: 'README.md',
+        },
+      },
+    },
+    {
+      task_id: 'task_promote',
+      requester: { actor_id: 'urn:oaps:actor:agent:planner' },
+      assignee: { actor_id: 'urn:oaps:actor:agent:worker' },
+      state: 'queued',
+      created_at: '2026-04-05T12:00:00Z',
+      metadata: {
+        source_interaction_id: 'ix_promote',
+      },
+    },
+  );
+
+  assert.equal(task.task_id, 'task_promote');
+  assert.equal(task.intent_ref, 'int_promote');
+  assert.equal(task.state, 'queued');
+  assert.equal(task.requester?.actor_id, 'urn:oaps:actor:agent:planner');
+  assert.equal(task.assignee?.actor_id, 'urn:oaps:actor:agent:worker');
+  assert.equal(task.metadata?.source_interaction_id, 'ix_promote');
+});
+
+test('interaction lifecycle distinguishes approval rejection from revocation', () => {
+  assert.equal(canTransitionInteractionState('pending_approval', 'failed'), true);
+  assert.equal(canTransitionInteractionState('pending_approval', 'revoked'), true);
+  assert.equal(canTransitionInteractionState('revoked', 'failed'), false);
+  assert.doesNotThrow(() => assertInteractionTransition('pending_approval', 'failed'));
+  assert.doesNotThrow(() => assertInteractionTransition('pending_approval', 'revoked'));
+  assert.throws(
+    () => assertInteractionTransition('revoked', 'failed'),
+    (error: unknown) => error instanceof OapsError && error.error.code === 'ILLEGAL_STATE_TRANSITION',
+  );
+});
+
+test('task lifecycle rejects illegal terminal-state regressions', () => {
+  assert.equal(canTransitionTaskState('completed', 'running'), false);
+  assert.throws(
+    () => assertTaskTransition('completed', 'running'),
+    (error: unknown) => error instanceof OapsError && error.error.code === 'ILLEGAL_STATE_TRANSITION',
+  );
 });

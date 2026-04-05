@@ -1,0 +1,10 @@
+{
+  "transition_id": "tx_invalid_1",
+  "task_id": "task_foundation_1",
+  "from_state": "completed",
+  "to_state": "running",
+  "triggered_by": {
+    "actor_id": "https://merchant.example.com/actors/operator"
+  },
+  "timestamp": "2026-04-05T12:10:00Z"
+}

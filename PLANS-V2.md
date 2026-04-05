@@ -119,11 +119,11 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 - [x] Define revoke vs reject vs cancel vs fail semantics explicitly
 - [x] Define mandate vs delegation boundaries with examples
 - [x] Add core schemas for any still-prose-only objects needed by the foundation draft
-- [ ] Add invalid example fixtures for core negative-path testing
-- [ ] Add runtime-backed core scenarios for intent-to-task promotion
-- [ ] Add runtime-backed core scenarios for revoke / reject distinction
-- [ ] Add replay semantics notes for evidence chain reconstruction from core events
-- [ ] Add a core error taxonomy appendix that aligns schema, docs, and runtime terminology
+- [x] Add invalid example fixtures for core negative-path testing
+- [x] Add runtime-backed core scenarios for intent-to-task promotion
+- [x] Add runtime-backed core scenarios for revoke / reject distinction
+- [x] Add replay semantics notes for evidence chain reconstruction from core events
+- [x] Add a core error taxonomy appendix that aligns schema, docs, and runtime terminology
 
 ### 2. HTTP Binding Candidate Hardening
 

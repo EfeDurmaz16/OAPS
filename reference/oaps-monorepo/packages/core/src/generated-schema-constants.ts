@@ -107,6 +107,21 @@ export const INTERACTION_STATES = [
   "archived"
 ] as const;
 
+export const TASK_STATES = [
+  "created",
+  "queued",
+  "running",
+  "pending_approval",
+  "challenged",
+  "blocked",
+  "partially_completed",
+  "completed",
+  "failed",
+  "compensated",
+  "revoked",
+  "cancelled"
+] as const;
+
 export const SCHEMA_VERSION_PATTERN = "^0\\.[0-9]+(?:\\.[0-9]+)?(?:-draft)?$" as const;
 
 export const MONEY_VALUE_PATTERN = "^[0-9]+(\\.[0-9]{1,8})?$" as const;

@@ -35,7 +35,16 @@ const exampleSchemaMap = new Map([
   ['foundation/evidence-event.json', 'foundation/evidence-event.json'],
   ['foundation/error-object.json', 'foundation/error-object.json'],
   ['foundation/extension-descriptor.json', 'foundation/extension-descriptor.json'],
+  ['foundation/interaction-transition.json', 'foundation/interaction-transition.json'],
   ['foundation/task-transition.json', 'foundation/task-transition.json'],
+]);
+
+const invalidExampleSchemaMap = new Map([
+  ['foundation/invalid/intent-invoke-missing-arguments.json', 'foundation/intent.json'],
+  ['foundation/invalid/delegation-empty-scope.json', 'foundation/delegation.json'],
+  ['foundation/invalid/task-missing-created-at.json', 'foundation/task.json'],
+  ['foundation/invalid/interaction-transition-pending-approval-to-completed.json', 'foundation/interaction-transition.json'],
+  ['foundation/invalid/task-transition-completed-to-running.json', 'foundation/task-transition.json'],
 ]);
 
 const wellKnownRequiredKeys = [
@@ -281,6 +290,38 @@ function validateWellKnownExample(example) {
   return errors;
 }
 
+function validateSemanticRules(schemaName, example) {
+  const errors = [];
+
+  if (schemaName === 'foundation/task-transition.json') {
+    const pair = `${example?.from_state ?? ''}->${example?.to_state ?? ''}`;
+    if (new Set([
+      'completed->running',
+      'cancelled->running',
+      'revoked->queued',
+      'failed->running',
+    ]).has(pair)) {
+      errors.push(`$: illegal task transition ${example.from_state} -> ${example.to_state}`);
+    }
+  }
+
+  if (schemaName === 'foundation/interaction-transition.json') {
+    const pair = `${example?.from_state ?? ''}->${example?.to_state ?? ''}`;
+    if (new Set([
+      'completed->executing',
+      'failed->approved',
+      'revoked->executing',
+      'pending_approval->completed',
+      'discovered->completed',
+      'archived->executing',
+    ]).has(pair)) {
+      errors.push(`$: illegal interaction transition ${example.from_state} -> ${example.to_state}`);
+    }
+  }
+
+  return errors;
+}
+
 async function main() {
   const schemas = await loadJsonDirectory(schemaDir);
   const examples = await loadJsonDirectory(exampleDir);
@@ -295,7 +336,26 @@ async function main() {
       errors.push(`${exampleName}: example file is missing`);
       continue;
     }
-    errors.push(...validator.validateAgainstSchema(schemaName, example).map((message) => `${exampleName}: ${message}`));
+    const validationErrors = [
+      ...validator.validateAgainstSchema(schemaName, example),
+      ...validateSemanticRules(schemaName, example),
+    ];
+    errors.push(...validationErrors.map((message) => `${exampleName}: ${message}`));
+  }
+
+  for (const [exampleName, schemaName] of invalidExampleSchemaMap.entries()) {
+    const example = examples.get(exampleName);
+    if (!example) {
+      errors.push(`${exampleName}: example file is missing`);
+      continue;
+    }
+    const validationErrors = [
+      ...validator.validateAgainstSchema(schemaName, example),
+      ...validateSemanticRules(schemaName, example),
+    ];
+    if (validationErrors.length === 0) {
+      errors.push(`${exampleName}: expected invalid example to fail validation`);
+    }
   }
 
   const wellKnownExample = examples.get('well-known-oaps.json');
@@ -307,7 +367,7 @@ async function main() {
 
   for (const schemaName of schemas.keys()) {
     if (schemaName === 'common.json' || schemaName === 'foundation/common.json') continue;
-    if (![...exampleSchemaMap.values()].includes(schemaName)) {
+    if (![...exampleSchemaMap.values(), ...invalidExampleSchemaMap.values()].includes(schemaName)) {
       warnings.push(`${schemaName}: no example file currently mapped`);
     }
   }
@@ -328,7 +388,9 @@ async function main() {
     return;
   }
 
-  console.log(`Validated ${exampleSchemaMap.size + 1} examples against the OAPS spec pack.`);
+  console.log(
+    `Validated ${exampleSchemaMap.size + 1} positive examples and ${invalidExampleSchemaMap.size} invalid examples against the OAPS spec pack.`,
+  );
 }
 
 await main();

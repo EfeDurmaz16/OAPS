@@ -1,0 +1,10 @@
+{
+  "transition_id": "ix_tx_invalid_1",
+  "interaction_id": "ix_foundation_1",
+  "from_state": "pending_approval",
+  "to_state": "completed",
+  "triggered_by": {
+    "actor_id": "https://merchant.example.com/actors/operator"
+  },
+  "timestamp": "2026-04-05T12:08:00Z"
+}

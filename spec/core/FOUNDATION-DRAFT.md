@@ -41,6 +41,7 @@ available when an implementation needs to serialize challenge state or explicit
 task progression directly:
 
 - `Challenge`
+- `InteractionTransition`
 - `TaskTransition`
 
 ## Core Semantic Rules
@@ -198,3 +199,40 @@ The expected next hard-normative documents after this foundation draft are:
 - A2A profile draft
 
 Payment, provisioning, and commerce should continue as structured draft tracks without overloading the first core draft.
+
+## Appendix A: Core Error Taxonomy Alignment
+
+The `ErrorObject` category field is the durable cross-binding anchor. Concrete
+error codes refine those categories.
+
+The current core/runtime/docs alignment is:
+
+| Error code | Category | Current role |
+| --- | --- | --- |
+| `VALIDATION_FAILED` | `validation` | malformed intents, illegal transitions, or structurally invalid input |
+| `AUTHENTICATED_SUBJECT_MISMATCH` | `authentication` | authenticated caller does not match the acting subject |
+| `DELEGATION_EXPIRED` | `authorization` | scoped delegated authority exists but is no longer valid |
+| `POLICY_DENIED` | `authorization` | deterministic policy rejected the requested action |
+| `APPROVAL_REQUIRED` | `authorization` | execution is blocked pending an explicit approval decision |
+| `APPROVAL_REJECTED` | `authorization` | an approval gate denied the requested action |
+| `APPROVAL_MODIFICATION_TARGET_MISMATCH` | `validation` | a modified approval changed the target incompatibly |
+| `CAPABILITY_NOT_FOUND` | `capability` | the requested action surface could not be resolved |
+| `EXECUTION_TIMEOUT` | `timeout` | execution did not complete within the expected bound |
+| `VERSION_NEGOTIATION_FAILED` | `versioning` | sender and receiver could not agree on a protocol version |
+| `ILLEGAL_STATE_TRANSITION` | `validation` | a lifecycle move contradicted the canonical core state machine |
+
+Alignment rules:
+
+- specs SHOULD describe portable categories first, then refine them with stable
+  error codes where behavior matters for conformance
+- schemas SHOULD continue to anchor the portable `category` vocabulary
+- reference runtimes SHOULD emit stable codes whenever the core now defines one
+  explicitly
+- bindings and profiles MAY add narrower codes, but SHOULD map them back to one
+  of the portable categories above
+
+Binding-specific codes such as `AUTHENTICATION_REQUIRED`,
+`INTERACTION_NOT_FOUND`, `APPROVAL_NOT_PENDING`, `REPLAY_CURSOR_NOT_FOUND`, and
+`IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD` remain valid, but they should be
+understood as binding-layer refinements built on top of the portable core
+categories.

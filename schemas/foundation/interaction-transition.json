@@ -1,0 +1,48 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/interaction-transition.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Interaction Transition",
+  "type": "object",
+  "required": [
+    "transition_id",
+    "interaction_id",
+    "from_state",
+    "to_state",
+    "triggered_by",
+    "timestamp"
+  ],
+  "properties": {
+    "transition_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "from_state": {
+      "$ref": "foundation/common.json#/$defs/interactionState"
+    },
+    "to_state": {
+      "$ref": "foundation/common.json#/$defs/interactionState"
+    },
+    "triggered_by": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "approval_request_id": {
+      "type": "string"
+    },
+    "challenge_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

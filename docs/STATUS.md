@@ -55,6 +55,38 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: core lifecycle conformance follow-through
+- tranche status:
+  - drafted:
+    - added `schemas/foundation/interaction-transition.json` and `examples/foundation/interaction-transition.json` so interaction lifecycle movement is no longer prose-only
+    - added core negative fixtures for invalid invoke intents and illegal completed-to-active lifecycle regressions
+    - added replay-reconstruction notes to `spec/core/STATE-MACHINE-DRAFT.md` and a core error-taxonomy appendix to `spec/core/FOUNDATION-DRAFT.md`
+  - implemented:
+    - added reference-core lifecycle helpers for task promotion plus task/interaction transition validation in `@oaps/core`
+  - conformance-backed:
+    - expanded the core conformance taxonomy and fixture pack to cover interaction transitions, invalid negative fixtures, intent-to-task promotion, and reject-versus-revoke distinction
+    - marked the remaining Core Semantics Deepening items complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - added the missing interaction-transition schema/example and wired them into schema-pack validation
+  - added negative-path core fixtures and runtime-backed lifecycle tests for promotion and terminal-state distinction
+  - aligned core lifecycle docs, conformance metadata, and runtime terminology around replay reconstruction and error-code/category mapping
+- validation:
+  - `pnpm --dir reference/oaps-monorepo generate:core-contracts`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/core test`
+  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope core --output /tmp/oaps-core-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-core-fixture-check-v2.json --json`
+- commits:
+  - `core: add lifecycle transition helpers`
+- next unfinished work:
+  - begin V2 tranche 2: add explicit HTTP discovery and endpoint response examples
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: core lifecycle support schemas
 - tranche status:
   - drafted:

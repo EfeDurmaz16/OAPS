@@ -1,0 +1,15 @@
+{
+  "transition_id": "ix_tx_foundation_1",
+  "interaction_id": "ix_foundation_1",
+  "from_state": "pending_approval",
+  "to_state": "failed",
+  "triggered_by": {
+    "actor_id": "https://merchant.example.com/actors/approver"
+  },
+  "reason": "Approval rejected for production checkout",
+  "approval_request_id": "apr_foundation_1",
+  "timestamp": "2026-04-05T12:07:00Z",
+  "metadata": {
+    "error_code": "APPROVAL_REJECTED"
+  }
+}

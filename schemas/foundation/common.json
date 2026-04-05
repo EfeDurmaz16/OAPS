@@ -35,6 +35,28 @@
         "R5"
       ]
     },
+    "interactionState": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "authenticated",
+        "verified",
+        "intent_received",
+        "quoted",
+        "delegated",
+        "pending_approval",
+        "approved",
+        "executing",
+        "partially_completed",
+        "challenged",
+        "failed",
+        "compensated",
+        "completed",
+        "revoked",
+        "settled",
+        "archived"
+      ]
+    },
     "taskState": {
       "type": "string",
       "enum": [

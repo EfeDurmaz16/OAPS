@@ -61,7 +61,9 @@ At minimum, conformance should verify:
 The current fixture packs are centered on the reference slice already present in the repository:
 
 - foundation actor, capability, intent, task, delegation, mandate, approval, execution, evidence, error, and extension schemas
+- lifecycle companion objects for challenge, interaction-transition, and task-transition semantics
 - runtime-backed core checks for delegation expiry, evidence tamper detection, replay-chain mismatch detection, and stable evidence hashing
+- runtime-backed core lifecycle checks for intent-to-task promotion and reject-versus-revoke distinction
 - runtime-backed HTTP discovery, interaction/message lifecycle, fail-closed message subject binding, idempotent retry behavior across create/message/approve/reject/revoke mutations, approval/rejection/revocation, and evidence/event retrieval behavior, including incremental replay windows
 - runtime-backed MCP capability mapping, policy gating, approval insertion, evidence emission, and error translation
 - shared auth-web runtime anchors for discovery, interaction/message subject binding, and delegation fail-closed behavior

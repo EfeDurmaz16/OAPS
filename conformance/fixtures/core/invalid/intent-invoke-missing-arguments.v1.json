@@ -1,0 +1,8 @@
+{
+  "intent_id": "int_invalid_invoke_1",
+  "verb": "invoke",
+  "object": "tool:read_repo",
+  "constraints": {
+    "path": "README.md"
+  }
+}

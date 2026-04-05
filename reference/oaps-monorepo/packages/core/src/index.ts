@@ -13,6 +13,7 @@ import {
   ISO_CURRENCY_PATTERN,
   RISK_CLASS_ORDER,
   SCHEMA_VERSION_PATTERN,
+  TASK_STATES,
 } from './generated-schema-constants.js';
 
 export const OAPS_SPEC_VERSION = '0.4-draft';
@@ -30,6 +31,7 @@ export type IdentityProfile = (typeof IDENTITY_PROFILES)[number];
 export type ExecutionStatus = (typeof EXECUTION_STATUSES)[number];
 export type MessageType = (typeof MESSAGE_TYPES)[number];
 export type InteractionState = (typeof INTERACTION_STATES)[number];
+export type TaskState = (typeof TASK_STATES)[number];
 
 export interface ActorRef {
   actor_id: string;
@@ -99,6 +101,19 @@ export interface Intent {
   metadata?: Record<string, unknown>;
 }
 
+export interface Task {
+  task_id: string;
+  intent_ref?: string;
+  parent_task_id?: string;
+  requester?: ActorRef;
+  assignee?: ActorRef;
+  state: TaskState;
+  state_detail?: string;
+  created_at: string;
+  updated_at?: string;
+  metadata?: Record<string, unknown>;
+}
+
 export interface DelegationToken {
   delegation_id: string;
   delegator: ActorRef;
@@ -109,6 +124,17 @@ export interface DelegationToken {
   issued_at?: string;
   expires_at: string;
   revocation_endpoint?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface Mandate {
+  mandate_id: string;
+  principal: ActorRef;
+  delegatee: ActorRef;
+  action: Action;
+  scope?: string[];
+  expires_at: string;
+  delegation_ref?: string;
   metadata?: Record<string, unknown>;
 }
 
@@ -133,6 +159,20 @@ export interface ApprovalDecision {
   modified_action?: Action;
   reason?: string;
   timestamp: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface Challenge {
+  challenge_id: string;
+  task_id?: string;
+  interaction_id?: string;
+  challenge_type: string;
+  status: 'open' | 'satisfied' | 'expired' | 'failed';
+  challenged_by: ActorRef;
+  instructions?: Record<string, unknown>;
+  expires_at?: string;
+  resolved_at?: string;
+  created_at: string;
   metadata?: Record<string, unknown>;
 }
 
@@ -168,6 +208,34 @@ export interface InteractionUpdated {
   metadata?: Record<string, unknown>;
 }
 
+export interface InteractionTransition {
+  transition_id: string;
+  interaction_id: string;
+  from_state: InteractionState;
+  to_state: InteractionState;
+  triggered_by: ActorRef;
+  reason?: string;
+  approval_request_id?: string;
+  challenge_id?: string;
+  timestamp: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface TaskTransition {
+  transition_id: string;
+  task_id: string;
+  interaction_id?: string;
+  intent_ref?: string;
+  from_state: TaskState;
+  to_state: TaskState;
+  triggered_by: ActorRef;
+  reason?: string;
+  approval_request_id?: string;
+  challenge_id?: string;
+  timestamp: string;
+  metadata?: Record<string, unknown>;
+}
+
 export type ErrorCategory =
   | 'authentication'
   | 'authorization'
@@ -188,6 +256,17 @@ export interface ErrorObject {
   message: string;
   retryable: boolean;
   details?: Record<string, unknown>;
+}
+
+export interface ExtensionDescriptor {
+  extension_id: string;
+  kind: 'core' | 'binding' | 'profile' | 'domain' | 'companion';
+  title: string;
+  summary: string;
+  status: 'experimental' | 'draft' | 'stable' | 'deprecated';
+  owner?: string;
+  uri?: string;
+  metadata?: Record<string, unknown>;
 }
 
 export interface EvidenceEvent {
@@ -240,6 +319,41 @@ export interface VersionNegotiationResult {
   error?: ErrorObject;
 }
 
+const INTERACTION_TRANSITIONS: Record<InteractionState, readonly InteractionState[]> = {
+  discovered: ['authenticated'],
+  authenticated: ['verified', 'intent_received'],
+  verified: ['intent_received'],
+  intent_received: ['quoted', 'delegated', 'pending_approval', 'approved', 'executing', 'completed', 'failed'],
+  quoted: ['pending_approval', 'approved', 'executing', 'failed'],
+  delegated: ['pending_approval', 'approved', 'executing', 'failed'],
+  pending_approval: ['approved', 'failed', 'revoked'],
+  approved: ['executing', 'completed', 'failed', 'revoked'],
+  executing: ['partially_completed', 'challenged', 'failed', 'completed', 'revoked'],
+  partially_completed: ['executing', 'challenged', 'compensated', 'completed', 'failed', 'revoked'],
+  challenged: ['pending_approval', 'approved', 'executing', 'failed', 'revoked'],
+  failed: ['archived'],
+  compensated: ['archived'],
+  completed: ['settled', 'archived'],
+  revoked: ['archived'],
+  settled: ['archived'],
+  archived: [],
+};
+
+const TASK_TRANSITIONS: Record<TaskState, readonly TaskState[]> = {
+  created: ['queued', 'pending_approval', 'running', 'revoked'],
+  queued: ['running', 'pending_approval', 'cancelled', 'revoked', 'failed'],
+  running: ['blocked', 'pending_approval', 'challenged', 'partially_completed', 'completed', 'failed', 'revoked', 'cancelled'],
+  pending_approval: ['queued', 'running', 'failed', 'revoked'],
+  challenged: ['pending_approval', 'queued', 'running', 'failed', 'revoked'],
+  blocked: ['queued', 'running', 'challenged', 'failed', 'revoked', 'cancelled'],
+  partially_completed: ['running', 'challenged', 'compensated', 'completed', 'failed', 'revoked'],
+  completed: ['compensated'],
+  failed: [],
+  compensated: [],
+  revoked: [],
+  cancelled: [],
+};
+
 export class OapsError extends Error {
   constructor(public readonly error: ErrorObject) {
     super(error.message);
@@ -249,6 +363,74 @@ export class OapsError extends Error {
 
 export function generateId(prefix: string): string {
   return `${prefix}_${randomUUID().replace(/-/g, '')}`;
+}
+
+export function canTransitionInteractionState(from: InteractionState, to: InteractionState): boolean {
+  return INTERACTION_TRANSITIONS[from].includes(to);
+}
+
+export function assertInteractionTransition(from: InteractionState, to: InteractionState): void {
+  if (canTransitionInteractionState(from, to)) return;
+
+  throw new OapsError({
+    code: 'ILLEGAL_STATE_TRANSITION',
+    category: 'validation',
+    message: `Illegal interaction transition: ${from} -> ${to}`,
+    retryable: false,
+    details: {
+      state_kind: 'interaction',
+      from_state: from,
+      to_state: to,
+      allowed_to_states: [...INTERACTION_TRANSITIONS[from]],
+    },
+  });
+}
+
+export function canTransitionTaskState(from: TaskState, to: TaskState): boolean {
+  return TASK_TRANSITIONS[from].includes(to);
+}
+
+export function assertTaskTransition(from: TaskState, to: TaskState): void {
+  if (canTransitionTaskState(from, to)) return;
+
+  throw new OapsError({
+    code: 'ILLEGAL_STATE_TRANSITION',
+    category: 'validation',
+    message: `Illegal task transition: ${from} -> ${to}`,
+    retryable: false,
+    details: {
+      state_kind: 'task',
+      from_state: from,
+      to_state: to,
+      allowed_to_states: [...TASK_TRANSITIONS[from]],
+    },
+  });
+}
+
+export function promoteIntentToTask(
+  intent: Intent,
+  options: {
+    task_id?: string;
+    parent_task_id?: string;
+    requester?: ActorRef;
+    assignee?: ActorRef;
+    state?: TaskState;
+    created_at?: string;
+    metadata?: Record<string, unknown>;
+  } = {},
+): Task {
+  const createdAt = options.created_at ?? new Date().toISOString();
+  return {
+    task_id: options.task_id ?? generateId('task'),
+    intent_ref: intent.intent_id,
+    parent_task_id: options.parent_task_id,
+    requester: options.requester,
+    assignee: options.assignee,
+    state: options.state ?? 'created',
+    created_at: createdAt,
+    updated_at: createdAt,
+    metadata: options.metadata,
+  };
 }
 
 function sortValue(value: unknown): unknown {
