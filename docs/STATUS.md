@@ -36,7 +36,7 @@ Append one entry per tranche:
 - validation:
   - `git diff --check`
 - commits:
-  - pending in current tranche
+  - `a67456a` `docs: add OAPS v2 execution program`
 - next unfinished work:
   - begin the first unfinished V2 tranche from `PLANS-V2.md`
 - status: `DONE`
