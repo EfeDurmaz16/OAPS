@@ -17,10 +17,12 @@ Current foundation entry points:
 - `foundation/mandate.json`
 - `foundation/approval-request.json`
 - `foundation/approval-decision.json`
+- `foundation/challenge.json`
 - `foundation/execution-result.json`
 - `foundation/evidence-event.json`
 - `foundation/error-object.json`
 - `foundation/extension-descriptor.json`
+- `foundation/task-transition.json`
 
 Current reference-slice entry points:
 

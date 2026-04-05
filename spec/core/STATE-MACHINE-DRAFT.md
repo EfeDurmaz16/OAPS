@@ -2,40 +2,166 @@
 
 ## Status
 
-Draft normative companion to the OAPS core foundation draft.
+Draft normative companion to the core foundation draft.
 
-This document sharpens lifecycle semantics that were previously spread across
-`SPEC.md`, `spec/core/FOUNDATION-DRAFT.md`, schemas, examples, and reference
-runtime behavior.
+This document sharpens lifecycle behavior that was previously spread across
+`SPEC.md`, the foundation draft, and the current HTTP reference slice.
 
 ## Purpose
 
-The OAPS core distinguishes:
+The OAPS core needs a shared lifecycle model so bindings and profiles can:
 
-- compact requested work (`Intent`)
-- longer-lived execution (`Task`)
-- approval gates
-- challenge flows
-- terminal failure and authority-withdrawal outcomes
+- preserve the same meaning for long-running work
+- distinguish approval gating from later challenge handling
+- distinguish rejection, revocation, cancellation, and failure
+- map intent-oriented requests into task-oriented execution without inventing
+  incompatible local states
 
-This draft defines the canonical lifecycle model for those distinctions so
-bindings and profiles can map them without inventing incompatible semantics.
+This draft defines the canonical lifecycle vocabulary and the minimum transition
+rules that bindings and profiles should preserve.
 
-## 1. Object-Level Lifecycle Rule
+## Lifecycle Model
 
-The core keeps `Intent` and `Task` separate:
+OAPS has two closely related but distinct lifecycle surfaces:
 
-- an `Intent` is the semantic request for an action or outcome
-- a `Task` is the tracked execution unit once lifecycle progression matters
+1. **Interaction lifecycle** — the cross-boundary conversation or execution
+   lineage anchored by `interaction_id`
+2. **Task lifecycle** — the durable work object that may be promoted from an
+   intent when execution becomes longer-lived, delegated, queued, or otherwise
+   needs explicit task semantics
 
-An implementation MAY execute an intent immediately without materializing a
-task object, but it MUST preserve task-equivalent lifecycle semantics whenever
-the work becomes long-running, approval-gated, challenged, delegated, revoked,
-or otherwise replay-relevant.
+An implementation may expose one or both surfaces, but it MUST NOT collapse
+their meanings completely:
 
-## 2. Canonical Task States
+- an **Interaction** is the durable protocol envelope for exchange, approval,
+  replay, and evidence
+- a **Task** is the durable work instance for scheduling, assignment,
+  progression, compensation, and cancellation semantics
 
-The canonical core task states are:
+The current reference slice is primarily interaction-backed. It already proves
+`intent_received`, `pending_approval`, `completed`, `failed`, and `revoked`
+interaction behavior. It does **not** yet expose a dedicated standalone task
+runtime API, so task semantics remain draft-track but still normatively useful.
+
+## Canonical Interaction States
+
+The canonical interaction state set is:
+
+- `discovered`
+- `authenticated`
+- `verified`
+- `intent_received`
+- `quoted`
+- `delegated`
+- `pending_approval`
+- `approved`
+- `executing`
+- `partially_completed`
+- `challenged`
+- `failed`
+- `compensated`
+- `completed`
+- `revoked`
+- `settled`
+- `archived`
+
+Bindings and profiles MAY expose narrower subsets, but they SHOULD preserve the
+same state meanings when they reuse these labels.
+
+### Interaction State Meanings
+
+| State | Meaning |
+| --- | --- |
+| `discovered` | The peer and capability surface are known, but no authenticated action has started. |
+| `authenticated` | The caller identity has been bound to the session or request surface. |
+| `verified` | Additional trust, attestation, delegation, or policy preconditions have been verified. |
+| `intent_received` | A concrete OAPS request has been accepted into the interaction lineage. |
+| `quoted` | The responder has returned terms, cost, or bounded execution conditions that may require confirmation. |
+| `delegated` | Authority has been handed to another actor while preserving the same interaction lineage. |
+| `pending_approval` | Execution is blocked on an explicit approval decision. |
+| `approved` | Approval was granted, but execution has not necessarily begun yet. |
+| `executing` | Concrete work is in progress. |
+| `partially_completed` | Some work completed successfully, but additional work or compensation remains. |
+| `challenged` | Progress is blocked on a new requirement discovered after the original request, such as stronger auth, payment authorization, or missing input. |
+| `failed` | The requested work did not succeed for execution, validation, policy, or approval-rejection reasons. |
+| `compensated` | Previously completed work required compensating action. |
+| `completed` | The requested work reached its successful terminal outcome. |
+| `revoked` | Authority or permission for the interaction was withdrawn. |
+| `settled` | Economic or ledger-side finalization has been completed. |
+| `archived` | The interaction is retained for replay and audit but no longer active. |
+
+### Interaction Transition Rules
+
+The following transitions are canonical:
+
+- `discovered -> authenticated`
+- `authenticated -> verified`
+- `authenticated -> intent_received`
+- `verified -> intent_received`
+- `intent_received -> quoted`
+- `intent_received -> delegated`
+- `intent_received -> pending_approval`
+- `intent_received -> approved`
+- `intent_received -> executing`
+- `intent_received -> completed`
+- `intent_received -> failed`
+- `quoted -> pending_approval`
+- `quoted -> approved`
+- `quoted -> executing`
+- `quoted -> failed`
+- `delegated -> pending_approval`
+- `delegated -> approved`
+- `delegated -> executing`
+- `delegated -> failed`
+- `pending_approval -> approved`
+- `pending_approval -> failed`
+- `pending_approval -> revoked`
+- `approved -> executing`
+- `approved -> completed`
+- `approved -> failed`
+- `approved -> revoked`
+- `executing -> partially_completed`
+- `executing -> challenged`
+- `executing -> failed`
+- `executing -> completed`
+- `executing -> revoked`
+- `partially_completed -> executing`
+- `partially_completed -> challenged`
+- `partially_completed -> compensated`
+- `partially_completed -> completed`
+- `partially_completed -> failed`
+- `partially_completed -> revoked`
+- `challenged -> pending_approval`
+- `challenged -> approved`
+- `challenged -> executing`
+- `challenged -> failed`
+- `challenged -> revoked`
+- `completed -> settled`
+- `completed -> archived`
+- `failed -> archived`
+- `revoked -> archived`
+- `compensated -> archived`
+- `settled -> archived`
+
+### Illegal Interaction Transitions
+
+Implementations SHOULD fail closed on obviously incompatible transitions.
+Examples include:
+
+- any transition from `completed` back to `executing`
+- any transition from `failed` back to `approved`
+- any transition from `revoked` back to `executing`
+- `pending_approval -> completed` without an approval decision or equivalent
+  profile-defined approval bypass
+- `discovered -> completed` without at least an accepted request lineage
+- `archived` transitioning back into any active state
+
+Bindings MAY omit intermediate states, but they MUST NOT claim a transition
+whose meaning contradicts these rules.
+
+## Canonical Task States
+
+The canonical task state set is:
 
 - `created`
 - `queued`
@@ -50,163 +176,203 @@ The canonical core task states are:
 - `revoked`
 - `cancelled`
 
-These states align with `schemas/foundation/common.json#/$defs/taskState`.
+These states are already reflected in the current foundation task schema.
 
-## 3. State Meanings
+### Task Transition Rules
 
-| State | Meaning |
-| --- | --- |
-| `created` | A task has been materialized from an intent or external mapping, but execution has not started. |
-| `queued` | The task is accepted for future work and is waiting for scheduling or resource allocation. |
-| `running` | Work is actively executing. |
-| `pending_approval` | Work is paused until an explicit approval decision arrives. |
-| `challenged` | Execution cannot continue until an external challenge is satisfied, such as stronger auth, payment authorization, or proof refresh. |
-| `blocked` | Execution cannot currently continue for operational reasons that are not an approval or challenge. |
-| `partially_completed` | Some intended work has succeeded, but more execution remains or compensating follow-up is still required. |
-| `completed` | The task reached its intended terminal success condition. |
-| `failed` | The task reached a terminal error condition without completing its intended outcome. |
-| `compensated` | A prior side effect occurred and a compensating action was completed afterward. |
-| `revoked` | Authority to continue the task was withdrawn after the task existed. |
-| `cancelled` | The task was intentionally stopped before terminal success, without necessarily implying authority withdrawal or execution failure. |
+The following transitions are canonical:
 
-## 4. Canonical Transition Rules
-
-Permitted forward transitions are:
-
-- `created -> queued | running | pending_approval | challenged | blocked | revoked | cancelled | failed`
-- `queued -> running | pending_approval | challenged | blocked | revoked | cancelled | failed`
-- `running -> pending_approval | challenged | blocked | partially_completed | completed | failed | compensated | revoked | cancelled`
-- `pending_approval -> running | revoked | cancelled | failed`
-- `challenged -> running | revoked | cancelled | failed`
-- `blocked -> queued | running | revoked | cancelled | failed`
-- `partially_completed -> running | pending_approval | challenged | blocked | completed | compensated | failed | revoked | cancelled`
+- `created -> queued`
+- `created -> pending_approval`
+- `created -> running`
+- `created -> revoked`
+- `queued -> running`
+- `queued -> pending_approval`
+- `queued -> cancelled`
+- `queued -> revoked`
+- `queued -> failed`
+- `running -> blocked`
+- `running -> pending_approval`
+- `running -> challenged`
+- `running -> partially_completed`
+- `running -> completed`
+- `running -> failed`
+- `running -> revoked`
+- `running -> cancelled`
+- `blocked -> queued`
+- `blocked -> running`
+- `blocked -> challenged`
+- `blocked -> failed`
+- `blocked -> revoked`
+- `blocked -> cancelled`
+- `pending_approval -> queued`
+- `pending_approval -> running`
+- `pending_approval -> failed`
+- `pending_approval -> revoked`
+- `challenged -> pending_approval`
+- `challenged -> queued`
+- `challenged -> running`
+- `challenged -> failed`
+- `challenged -> revoked`
+- `partially_completed -> running`
+- `partially_completed -> challenged`
+- `partially_completed -> compensated`
+- `partially_completed -> completed`
+- `partially_completed -> failed`
+- `partially_completed -> revoked`
 - `completed -> compensated`
-- `failed -> compensated`
 
-States not listed as valid successors MUST be treated as illegal transitions.
+### Illegal Task Transitions
 
-Terminal states are:
-
-- `completed`
-- `failed`
-- `compensated`
-- `revoked`
-- `cancelled`
-
-Except for the explicit `completed -> compensated` and `failed -> compensated`
-repair path, a terminal state MUST NOT transition to another state.
-
-## 5. Illegal Transition Guidance
-
-The following are canonical examples of illegal transitions:
+Examples of illegal task transitions include:
 
 - `completed -> running`
-- `revoked -> running`
-- `cancelled -> completed`
-- `pending_approval -> completed` without an intervening approval or an equivalent profile-mapped approval result
-- `challenged -> completed` without challenge satisfaction and resumed execution
+- `cancelled -> running`
+- `revoked -> queued`
+- `failed -> running`
+- `created -> completed` without any execution or profile-defined no-op
+  completion path
 
-Bindings and profiles MAY expose different wire-level event shapes, but they
-MUST preserve these semantic constraints.
+## Intent-To-Task Promotion
 
-## 6. Intent-To-Task Promotion
+An `Intent` is the compact semantic request. A `Task` is the durable work
+instance that may arise from that request.
 
-An implementation SHOULD promote an `Intent` into a tracked `Task` when any of
-the following becomes true:
+### Promotion Rule
 
-- execution is not immediate
-- an approval gate is introduced
-- a challenge must be satisfied before continuation
-- delegated or reassigned work needs durable tracking
-- partial completion or resumable replay matters
-- revoke or cancel behavior must be expressed explicitly
+An implementation SHOULD promote an intent into a task when any of the
+following becomes true:
 
-Once promoted:
+- the work becomes asynchronous or long-running
+- the work must be queued, reassigned, or retried over time
+- a separate assignee, worker, or delegated executor must carry the work
+- the work needs explicit partial-completion, cancellation, or compensation
+  semantics
 
-- the task MUST keep a stable `task_id`
-- the originating intent SHOULD remain referenced via `intent_ref`
-- evidence SHOULD preserve both the original request semantics and later task progression
+### Promotion Requirements
 
-If an implementation keeps the task implicit internally, it MUST still expose a
-task-equivalent lifecycle through interaction state, evidence, or profile-level
-mapping artifacts.
+When an implementation promotes an intent into a task:
 
-## 7. Approval Versus Challenge
+- the original `intent_id` MUST remain stable
+- the resulting task MUST reference the originating intent through `intent_ref`
+- the task MUST get its own `task_id`
+- the interaction lineage SHOULD continue to use the same `interaction_id`
+- evidence SHOULD let a reviewer reconstruct that the task was promoted from a
+  specific intent
+- when serialized directly, task progression SHOULD use a `TaskTransition`
+  object rather than an ad hoc state delta
 
-`pending_approval` and `challenged` are not interchangeable.
+The current reference slice does not yet emit a dedicated `Task` object. The
+interaction record therefore remains the runtime anchor today. This is an
+implementation limitation, not a reason to erase the distinction in the core.
 
-Use `pending_approval` when:
+## Approval Versus Challenge
 
-- a human or policy-authorized approver must explicitly accept, reject, or modify the proposed action
+Approval and challenge are not interchangeable.
 
-Use `challenged` when:
+### Approval
 
-- continuation depends on satisfying an external requirement rather than receiving discretionary approval
-- examples include authentication step-up, payment challenge completion, proof refresh, or additional verification material
+Use approval when:
 
-An approval decision answers **whether** the action may proceed.
-A challenge answers **what extra condition** must be satisfied before it can proceed.
+- an action is known in advance
+- an approver can decide whether the action may proceed
+- the gate exists before the next sensitive side effect
 
-## 8. Revoke Versus Reject Versus Cancel Versus Fail
+Typical approval path:
 
-These outcomes remain distinct:
+`intent_received -> pending_approval -> approved -> executing`
 
-| Term | When to use it |
-| --- | --- |
-| `reject` | An approval request was denied before the gated action was allowed to proceed. |
-| `revoked` | Previously granted or still-live authority was withdrawn after the task or delegation already existed. |
-| `cancelled` | Work was intentionally stopped, but the stop does not by itself mean authority was withdrawn or execution failed. |
-| `failed` | Execution attempted the work and ended in an error condition. |
+### Challenge
 
-Guidance:
+Use challenge when:
 
-- rejection is primarily an approval outcome
-- revocation is primarily an authority/lifecycle outcome
-- cancellation is primarily an operator/requester stop outcome
-- failure is primarily an execution outcome
+- execution cannot continue with the current inputs or authorization
+- a new payment, trust, policy, or operator response is required
+- the system needs additional information after work has already advanced
 
-Profiles and bindings SHOULD preserve these distinctions even if their native
-surfaces collapse some of them into fewer API methods.
+Typical challenge path:
 
-## 9. Mandate Versus Delegation
+`executing -> challenged -> pending_approval|approved|executing`
 
-`Delegation` and `Mandate` are also distinct.
+A challenge is therefore a **new blocking condition discovered during or after
+execution progress**, not merely an approval that has not yet been granted.
 
-Use `Delegation` for:
+When serialized directly, an open challenge SHOULD be carried as a `Challenge`
+object plus the corresponding `TaskTransition` into `challenged`.
 
-- scoped authority transfer
-- bounded actor-to-actor permission handoff
-- optional limits, expiry, and revocation hooks
+The current reference slice has approval behavior, but no dedicated challenge
+runtime endpoint yet. Challenge semantics are therefore defined here
+normatively before they are runtime-backed.
 
-Use `Mandate` for:
+## Reject Versus Revoke Versus Cancel Versus Fail
 
-- stronger authorization over sensitive or economic actions
-- explicit principal authorization for a concrete action family
-- cases where approval, payment, or higher-assurance evidence chains matter
+These outcomes must remain distinct:
 
-In short:
+| Term | Meaning | Typical state result |
+| --- | --- | --- |
+| Reject | An approval gate denied the proposed action before that gated action was allowed to proceed. | `failed` |
+| Revoke | Previously granted authority, delegation, or interaction permission was withdrawn. | `revoked` |
+| Cancel | A requester, operator, or orchestrator intentionally stopped work that no longer needs to continue, without claiming execution failure. | `cancelled` |
+| Fail | The work could not complete because of execution, validation, policy, transport, or similar non-cancellation error conditions. | `failed` |
 
-- delegation answers **who may act on whose behalf within a scope**
-- mandate answers **what stronger authority exists for a sensitive action and under which principal authorization**
+### Additional Rules
 
-### Example Boundary
+- approval rejection SHOULD preserve the approval decision in evidence and
+  SHOULD map to a failure reason such as `APPROVAL_REJECTED`
+- revocation MUST remain distinguishable from ordinary failure because it
+  withdraws authority rather than reporting an execution defect
+- cancellation SHOULD be reserved for operator/requester stop semantics and
+  SHOULD NOT be silently rewritten into revocation or failure unless the
+  implementation genuinely cannot preserve the distinction
 
-1. a merchant owner delegates repo-maintenance actions to an internal agent
-2. the same merchant separately issues a mandate for a capped purchase action
+The current HTTP reference slice already distinguishes:
 
-The first is ordinary delegated capability use.
-The second is a stronger authorization object suitable for payment or other
-high-risk side effects.
+- approval rejection -> `failed`
+- revoke endpoint -> `revoked`
 
-## 10. Binding And Profile Mapping Rule
+It does not yet expose a dedicated cancellation surface.
 
-Bindings and profiles MAY add transport-specific or ecosystem-specific state
-details, but they SHOULD map them back to the canonical task states above.
+## Mandate Versus Delegation
 
-They MUST NOT claim compatibility if they erase the distinction between:
+Delegation and mandate are related but not interchangeable.
 
-- approval and challenge
-- reject and revoke
-- cancel and fail
-- delegation and mandate
-- intent and task when lifecycle tracking is required
+| Primitive | Use when | Typical strength |
+| --- | --- | --- |
+| Delegation | A delegator grants bounded authority to another actor to act within a scoped capability set. | general scoped authority |
+| Mandate | A principal or authorizing party grants stronger authorization for sensitive, economic, or compliance-relevant action. | stronger authorization chain |
+
+### Boundary Rules
+
+- a delegation is about **who may act within a scope**
+- a mandate is about **what stronger authorization chain justifies the act**
+- mandates MAY reference delegations, but MUST NOT be treated as mere aliases
+  for them
+- profiles SHOULD require mandates before or alongside delegation for
+  high-risk economic action when a plain delegation would be insufficient
+
+### Examples
+
+#### Delegation Example
+
+A merchant owner delegates a repository-maintenance agent to rotate a staging
+credential before a deadline. The key semantics are delegatee identity, scope,
+and expiry.
+
+#### Mandate Example
+
+A business principal authorizes a purchasing agent to spend up to a bounded
+amount on compute capacity for production workloads. The key semantics are the
+authorization chain, action boundary, and stronger review/evidence posture.
+
+## Conformance Notes
+
+This state-machine draft is intended to drive:
+
+- stronger core schemas and examples for task-oriented semantics
+- invalid fixtures for illegal transitions
+- runtime-backed reference assertions for promotion, rejection, and revocation
+  distinctions
+
+Until dedicated task and challenge runtimes exist, implementations SHOULD make
+non-claim boundaries explicit rather than pretending every state is equally
+backed by code today.

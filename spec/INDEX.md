@@ -22,5 +22,7 @@ This is the entry point for the suite-level specification tree.
 - `core/` is the main hard-normative area currently being expanded
 - `bindings/` currently starts with HTTP and can grow into other transports later
 - `schemas/` and `conformance/` are the machine-readable companions to this spec tree
+- the lifecycle companion draft is backed by `challenge` and `task-transition`
+  foundation schemas
 
 The legacy consolidated `../SPEC.md` still exists for the current reference slice, but it is no longer the best starting point for the suite program.

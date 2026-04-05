@@ -118,7 +118,7 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 - [x] Define challenge vs approval semantics explicitly
 - [x] Define revoke vs reject vs cancel vs fail semantics explicitly
 - [x] Define mandate vs delegation boundaries with examples
-- [ ] Add core schemas for any still-prose-only objects needed by the foundation draft
+- [x] Add core schemas for any still-prose-only objects needed by the foundation draft
 - [ ] Add invalid example fixtures for core negative-path testing
 - [ ] Add runtime-backed core scenarios for intent-to-task promotion
 - [ ] Add runtime-backed core scenarios for revoke / reject distinction

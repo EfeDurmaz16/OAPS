@@ -14,9 +14,11 @@ Current foundation object set:
 - mandate
 - approval-request
 - approval-decision
+- challenge
 - execution-result
 - evidence-event
 - error-object
 - extension-descriptor
+- task-transition
 
 These schemas should evolve with `spec/core/FOUNDATION-DRAFT.md` rather than with the older consolidated draft spec.

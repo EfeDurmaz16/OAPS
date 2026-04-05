@@ -1,0 +1,58 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/challenge.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Challenge",
+  "type": "object",
+  "required": [
+    "challenge_id",
+    "challenge_type",
+    "status",
+    "challenged_by",
+    "created_at"
+  ],
+  "properties": {
+    "challenge_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "challenge_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "satisfied",
+        "expired",
+        "failed"
+      ]
+    },
+    "challenged_by": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "instructions": {
+      "type": "object"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+{
+  "transition_id": "tx_foundation_1",
+  "task_id": "task_foundation_1",
+  "interaction_id": "ix_foundation_1",
+  "intent_ref": "int_foundation_1",
+  "from_state": "pending_approval",
+  "to_state": "running",
+  "triggered_by": {
+    "actor_id": "https://merchant.example.com/actors/approver"
+  },
+  "reason": "Approval received; execution resumed",
+  "approval_request_id": "apr_foundation_1",
+  "timestamp": "2026-04-05T12:05:00Z"
+}

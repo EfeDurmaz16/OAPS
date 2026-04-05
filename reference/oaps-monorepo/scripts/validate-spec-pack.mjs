@@ -30,10 +30,12 @@ const exampleSchemaMap = new Map([
   ['foundation/mandate.json', 'foundation/mandate.json'],
   ['foundation/approval-request.json', 'foundation/approval-request.json'],
   ['foundation/approval-decision.json', 'foundation/approval-decision.json'],
+  ['foundation/challenge.json', 'foundation/challenge.json'],
   ['foundation/execution-result.json', 'foundation/execution-result.json'],
   ['foundation/evidence-event.json', 'foundation/evidence-event.json'],
   ['foundation/error-object.json', 'foundation/error-object.json'],
   ['foundation/extension-descriptor.json', 'foundation/extension-descriptor.json'],
+  ['foundation/task-transition.json', 'foundation/task-transition.json'],
 ]);
 
 const wellKnownRequiredKeys = [

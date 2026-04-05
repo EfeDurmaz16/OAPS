@@ -97,6 +97,16 @@
       ]
     },
     {
+      "scenario_id": "core.challenge.valid",
+      "dimension": "challenge",
+      "schema": "schemas/foundation/challenge.json",
+      "example": "examples/foundation/challenge.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
       "scenario_id": "core.execution-result.valid",
       "dimension": "execution",
       "schema": "schemas/foundation/execution-result.json",
@@ -167,6 +177,16 @@
       "dimension": "extension",
       "schema": "schemas/foundation/extension-descriptor.json",
       "example": "examples/foundation/extension-descriptor.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.task-transition.valid",
+      "dimension": "task",
+      "schema": "schemas/foundation/task-transition.json",
+      "example": "examples/foundation/task-transition.json",
       "coverage": [
         "schema",
         "fixture"

@@ -55,6 +55,38 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: core lifecycle support schemas
+- tranche status:
+  - drafted:
+    - added foundation schemas and examples for `Challenge` and `TaskTransition` so the lifecycle draft no longer depends on prose alone for those support objects
+    - updated the foundation/core spec text to describe the new lifecycle support objects and how they relate to task promotion and challenge handling
+  - implemented:
+    - extended the spec-pack validator mapping so the new lifecycle examples are schema-validated with the rest of the foundation examples
+  - conformance-backed:
+    - extended the core taxonomy and fixture pack with `core.challenge.valid` and `core.task-transition.valid`
+    - marked the schema-growth item complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - added `schemas/foundation/challenge.json` and `schemas/foundation/task-transition.json`
+  - added `examples/foundation/challenge.json` and `examples/foundation/task-transition.json`
+  - aligned the schema indexes, foundation draft, state-machine draft, spec index, conformance taxonomy, and core fixture pack with the new lifecycle support objects
+- validation:
+  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope core --output /tmp/oaps-core-schema-growth-check.json`
+- commits:
+  - `spec: add core lifecycle support schemas`
+- next unfinished work:
+  - add invalid example fixtures for core negative-path testing
+  - add runtime-backed core scenarios for intent-to-task promotion
+  - add runtime-backed core scenarios for revoke / reject distinction
+  - add replay semantics notes for evidence chain reconstruction from core events
+  - add a core error taxonomy appendix that aligns schema, docs, and runtime terminology
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: core lifecycle state-machine draft
 - tranche status:
   - drafted:

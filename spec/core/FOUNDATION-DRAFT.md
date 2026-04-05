@@ -36,6 +36,13 @@ The recommended first hard-normative core object set is:
 11. `ErrorObject`
 12. `ExtensionDescriptor`
 
+The lifecycle companion draft also introduces supporting objects that SHOULD be
+available when an implementation needs to serialize challenge state or explicit
+task progression directly:
+
+- `Challenge`
+- `TaskTransition`
+
 ## Core Semantic Rules
 
 ### Actor

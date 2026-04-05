@@ -1,0 +1,54 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/task-transition.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Task Transition",
+  "type": "object",
+  "required": [
+    "transition_id",
+    "task_id",
+    "from_state",
+    "to_state",
+    "triggered_by",
+    "timestamp"
+  ],
+  "properties": {
+    "transition_id": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "intent_ref": {
+      "type": "string"
+    },
+    "from_state": {
+      "$ref": "foundation/common.json#/$defs/taskState"
+    },
+    "to_state": {
+      "$ref": "foundation/common.json#/$defs/taskState"
+    },
+    "triggered_by": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "approval_request_id": {
+      "type": "string"
+    },
+    "challenge_id": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}
