@@ -18,3 +18,11 @@ Suggested reading order:
 12. `PARALLEL-AGENT-WORKSTREAMS.md`
 
 Use these documents to understand the intended shape of the protocol suite before reading the narrower normative drafts under `spec/`.
+
+## Maturity Shorthand
+
+Use the top-level matrix in `README.md` when deciding how seriously to treat a surface today:
+
+- **Stable** = repo-operational or implementation-backed baseline for this repository
+- **Draft** = active spec/profile/conformance material that is still expected to evolve
+- **Concept** = directional future work, not yet claimed as implemented

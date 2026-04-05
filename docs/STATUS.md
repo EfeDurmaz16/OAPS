@@ -154,15 +154,13 @@ Append one entry per tranche:
   - added `docs/MATURITY-MATRIX.md` to distinguish stable, draft, and concept surfaces across the suite
   - linked the new maturity matrix from the top-level `README.md` and `docs/README.md`
   - marked the top-level maturity-matrix tranche complete in `PLANS.md`
-  - advanced `docs/NEXT-STEPS.md` to the remaining review-packet and binding/harness follow-up work
 - validation:
   - `rg -n "MATURITY-MATRIX" README.md docs/README.md docs/MATURITY-MATRIX.md`
 - commits:
-  - `docs: add maturity matrix and harness fallback`
+  - `docs: add top-level maturity matrix`
 - next unfinished work:
   - add a public-facing how-to-review packet
-  - decide whether to formalize event replay semantics further in the HTTP binding draft
-  - add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
+  - exercise the local Codex harness on a real unattended multi-tranche run and record the behavior
 - status: `DONE`
 
 ### 2026-04-05
@@ -172,88 +170,31 @@ Append one entry per tranche:
   - added `docs/HOW-TO-REVIEW-OAPS.md` as the short public-facing review packet
   - linked the new entry packet from `README.md`, `docs/README.md`, and `docs/REVIEW-PACKET-INDEX.md`
   - marked the public review-packet tranche complete in `PLANS.md`
-  - advanced `docs/NEXT-STEPS.md` to the remaining HTTP binding and harness follow-on work
 - validation:
   - `rg -n "HOW-TO-REVIEW-OAPS" README.md docs/README.md docs/REVIEW-PACKET-INDEX.md docs/HOW-TO-REVIEW-OAPS.md`
 - commits:
   - `docs: add public OAPS review packet`
 - next unfinished work:
-  - decide whether to formalize event replay semantics further in the HTTP binding draft
-  - add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
+  - exercise the local Codex harness on a real unattended multi-tranche run and record the behavior
 - status: `DONE`
 
 ### 2026-04-05
 
-- tranche: unattended harness exercise attempt
+- tranche: harness exercise and supervisor fallback
 - changes:
   - ran `scripts/codex-tranche-loop.sh` as a real unattended local harness exercise with a prompt that explicitly avoided recursive harness invocation
-  - confirmed the nested `codex exec` process loaded the required OAPS context and began tranche selection
-  - captured the concrete failure mode in `.codex/state/last-message.txt`: nested Codex could not create `/Users/efebarandurmaz/OAPS/.git/index.lock`, so it could not satisfy the required atomic-commit rule
-  - updated `docs/RUNBOOK.md` with the observed limitation and the recommended operator workaround
+  - confirmed the nested `codex exec` process loaded the required OAPS context and began tranche selection before failing on `.git/index.lock` writes inside the nested session
+  - documented the observed nested-Codex Git-write limitation and the `CODEX_HARNESS_BYPASS_SANDBOX=1` workaround in `README.md` and `docs/RUNBOOK.md`
+  - aligned both harness scripts on explicit sandbox flag plumbing and added `scripts/codex-supervisor.sh` as a detached top-level supervisor workaround, with `.codex/supervisor-runs/` ignored in `.gitignore`
+  - marked the harness exercise and supervisor-variant tranches complete in `PLANS.md`
+  - advanced `docs/NEXT-STEPS.md` to indicate there is no short-horizon override while `PLANS.md` remains fully complete
 - validation:
-  - `MAX_ROUNDS=4 scripts/codex-tranche-loop.sh "<non-recursive harness exercise prompt>"`
+  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh scripts/codex-supervisor.sh`
+  - `MAX_ROUNDS=3 scripts/codex-tranche-loop.sh "<non-recursive harness exercise prompt>"`
   - `tail -n 40 .codex/state/last-message.txt`
   - `git status --short --branch`
 - commits:
-  - `docs: record harness execution blocker`
+  - `fix: add codex harness bypass and supervisor fallback`
 - next unfinished work:
-  - run the harness from a top-level shell or supervisor that allows the nested `codex exec` process to create `.git/index.lock`
-  - once that blocker is cleared, resume the stable-vs-draft-vs-concept docs matrix tranche
-- status: `BLOCKED`
-
-
-### 2026-04-05
-
-- tranche: harness sandbox flag alignment
-- changes:
-  - added explicit sandbox-argument plumbing to `scripts/codex-harness.sh` so the single-tranche runner matches the tranche-loop runner
-  - kept `CODEX_HARNESS_BYPASS_SANDBOX=1` as the documented workaround when nested Codex still blocks `.git/index.lock`
-- validation:
-  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh`
-- commits:
-  - `docs: add maturity matrix and harness fallback`
-- next unfinished work:
-  - rerun the harness from a top-level shell once account usage resets or with the documented bypass if the CLI still blocks Git writes
-  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
-  - add a public-facing how-to-review packet
-- status: `DONE`
-
-
-### 2026-04-05
-
-- tranche: detached top-level Codex supervisor
-- changes:
-  - added `scripts/codex-supervisor.sh` as a detached host-shell supervisor entry point for tranche-loop runs
-  - made the supervisor fail fast inside an existing Codex thread so the known nested `.git/index.lock` limitation is surfaced immediately
-  - documented the supervisor workflow in `README.md` and `docs/RUNBOOK.md`, ignored `.codex/supervisor-runs/`, and marked the execution-harness follow-up complete in `PLANS.md`
-  - advanced `docs/NEXT-STEPS.md` back to the remaining protocol-document priorities after landing the supervisor workaround
-- validation:
-  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh scripts/codex-supervisor.sh`
-  - `scripts/codex-supervisor.sh`
-  - `git diff --check`
-- commits:
-  - `feat: add codex detached supervisor`
-- next unfinished work:
-  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
-  - add a public-facing how-to-review packet
-  - decide whether to formalize event replay semantics further in the HTTP binding draft
-- status: `DONE`
-
-
-### 2026-04-05
-
-- tranche: HTTP event replay semantics decision
-- changes:
-  - formalized the current HTTP binding posture as replay-first and pull-based for event/evidence retrieval
-  - clarified that `GET /interactions/{id}/events` and `GET /interactions/{id}/evidence` are the canonical replay surfaces for the current draft
-  - replaced the older open question with a narrower follow-up on future pagination/cursor semantics and marked the replay-semantics plan item complete in `PLANS.md`
-- validation:
-  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
-  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
-  - `git diff --check`
-- commits:
-  - `docs: formalize http event replay semantics`
-- next unfinished work:
-  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
-  - add a public-facing how-to-review packet
+  - none currently queued in `PLANS.md`
 - status: `DONE`

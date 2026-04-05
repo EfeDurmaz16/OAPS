@@ -58,6 +58,21 @@ It includes:
 - governance and roadmap docs
 - a working TypeScript reference implementation for the MCP wedge
 
+## Maturity Matrix
+
+Use the following shorthand when reading the repo:
+
+- **Stable** means the repository currently depends on the surface operationally or validates it regularly in the reference slice. It does **not** mean the protocol is governance-frozen.
+- **Draft** means the surface is intended to be implementable and reviewable now, but it is still expected to evolve.
+- **Concept** means the surface is directional only and should not yet be treated as implemented or frozen.
+
+| Surface | Status | What that means right now |
+| --- | --- | --- |
+| Repository execution contract (`AGENTS.md`, `PLANS.md`, `docs/STATUS.md`, Codex harness scripts) | Stable | This is the repo's active operating contract for long-horizon execution and durable progress tracking. |
+| Current implementation-backed MCP/HTTP reference slice (`reference/oaps-monorepo`, exercised conformance fixtures, Python manifest consumer) | Stable | The behavior exists, is validated in-repo, and is the most credible implementation baseline today. |
+| Suite/spec documents (`SPEC.md`, `spec/`, `profiles/`, `schemas/`, `examples/`, `conformance/`) | Draft | These are the active standardization surfaces: real enough to implement and review, but still expected to change with evidence. |
+| Broader binding families beyond HTTP, larger domain families beyond the current drafts, and future external governance/cosigner structures | Concept | These remain directional roadmap items and should not yet be treated as implemented or frozen standard surfaces. |
+
 ## Current Reference Slice
 
 The current code implementation focus is one concrete path, not the whole long-term protocol suite:
