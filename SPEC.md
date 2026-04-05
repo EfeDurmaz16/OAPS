@@ -345,6 +345,17 @@ Recommended baseline endpoints:
 - `GET /interactions/{id}/evidence`
 - `GET /interactions/{id}/events`
 
+### 17.4 Replay windows
+
+HTTP replay endpoints MAY support incremental replay windows using query parameters.
+
+When supported:
+
+- `after` MUST identify the last seen `event_id` and replay begins strictly after that event
+- `limit` MUST be a positive integer when present
+- invalid `after` or `limit` inputs MUST fail with a stable validation error
+- returned order MUST preserve the append order of the interaction's event lineage
+
 ## 18. Money encoding
 
 To avoid floating-point ambiguity, `money.value` is encoded as a **string decimal**, not a JSON number.

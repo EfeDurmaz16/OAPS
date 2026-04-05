@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T02:05:35.534316Z",
+  "executed_at": "2026-04-05T11:26:28.488069Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -372,6 +372,19 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
+      "scenario_id": "http.messages.subject-binding",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
       "scenario_id": "http.messages.interaction-id-mismatch",
       "scope": "binding:http"
     },
@@ -398,7 +411,46 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
+      "scenario_id": "http.evidence.replay-window",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
       "scenario_id": "http.events.retrieval",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.replay-window",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.replay-cursor-invalid",
       "scope": "binding:http"
     },
     {
@@ -455,6 +507,71 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "http.idempotency.reuse",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.idempotency.messages.reuse",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.idempotency.messages.conflict",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.idempotency.approval.reuse",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.idempotency.rejection.reuse",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.idempotency.revocation.reuse",
       "scope": "binding:http"
     },
     {
@@ -683,6 +800,21 @@
     {
       "artifacts": [
         "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/envelope-intent-request.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.message-append",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
         "examples/delegation-token.json",
         "reference/oaps-monorepo/packages/core/src/index.test.ts"
       ],
@@ -842,8 +974,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 56,
+    "pass": 66,
     "skip": 0,
-    "total": 56
+    "total": 66
   }
 }

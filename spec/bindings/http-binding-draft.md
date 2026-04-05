@@ -59,6 +59,7 @@ A conforming implementation should:
 
 - require the target interaction to exist
 - preserve the authenticated actor context
+- fail closed if the authenticated subject does not match the message envelope sender for direct subject-bound append flows
 - append the incoming message to the interaction history
 - update `updated_at`
 - emit a corresponding evidence event
@@ -180,6 +181,27 @@ That means:
 
 Push delivery, webhooks, or streaming subscriptions may be added later, but they are not required for the current draft and must not replace the pull-based replay semantics that the reference slice already implements.
 
+## Replay Windows
+
+The current HTTP draft now defines a minimal replay-window contract for both replay endpoints:
+
+- `after=<event_id>` means replay starts strictly **after** the identified event
+- `limit=<positive integer>` bounds the number of returned events in the ordered replay window
+
+These parameters apply to both:
+
+- `GET /interactions/{id}/events`
+- `GET /interactions/{id}/evidence`
+
+A conforming implementation that supports replay windows MUST:
+
+- preserve append order when slicing the replay stream
+- treat `after` as interaction-local rather than global across interactions
+- fail with a stable validation error if `after` does not match any event in the addressed interaction
+- fail with a stable validation error if `limit` is not a positive integer
+
+Repeated replay with the same `after` and `limit` inputs SHOULD return the same ordered window unless newer events have been appended ahead of the requested suffix. Clients can resume incremental replay by using the last returned `event_id` as the next `after` cursor.
+
 ## Error Handling
 
 The HTTP binding should preserve stable OAPS error objects.
@@ -220,7 +242,7 @@ A conforming HTTP binding implementation should:
 - honor version negotiation
 - preserve OAPS error semantics
 
-The current reference conformance pack exercises discovery, interaction creation, message append, message interaction-id mismatch rejection, approval completion, approval rejection, revocation, evidence retrieval, event retrieval, idempotent replay for create/message/approve/reject/revoke mutations, idempotency conflict handling for create and message-append retries, authentication failure, version negotiation failure, missing interactions, and approval-not-pending behavior against the reference runtime.
+The current reference conformance pack exercises discovery, interaction creation, message append, message subject-binding rejection, message interaction-id mismatch rejection, approval completion, approval rejection, revocation, evidence retrieval, event retrieval, idempotent replay for create/message/approve/reject/revoke mutations, idempotency conflict handling for create and message-append retries, authentication failure, version negotiation failure, missing interactions, and approval-not-pending behavior against the reference runtime.
 
 ## Open Questions
 
@@ -229,4 +251,4 @@ The next binding revision should decide:
 - whether gRPC is intended as normative or optional binding family
 - how much transport-specific metadata can appear in binding envelopes before it becomes profile-specific
 - whether the canonical HTTP media type should be required for all responses or only normative endpoints
-- whether replay endpoints should eventually define pagination, cursors, or resumption tokens
+- whether replay windows should eventually grow from simple `after`/`limit` semantics into opaque cursors or resumption tokens

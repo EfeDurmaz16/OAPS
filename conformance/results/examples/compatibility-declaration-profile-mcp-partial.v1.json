@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T02:05:35.667525Z",
+  "generated_at": "2026-04-05T11:26:28.702555Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -65,17 +65,26 @@
         "http.interaction.not-found",
         "http.interaction.updated",
         "http.messages.append",
+        "http.messages.subject-binding",
         "http.messages.interaction-id-mismatch",
         "http.evidence.retrieval",
+        "http.evidence.replay-window",
         "http.events.retrieval",
+        "http.events.replay-window",
+        "http.events.replay-cursor-invalid",
         "http.approval.decision",
         "http.approval.not-pending",
         "http.approval.rejection",
         "http.idempotency.reuse",
+        "http.idempotency.messages.reuse",
+        "http.idempotency.messages.conflict",
+        "http.idempotency.approval.reuse",
+        "http.idempotency.rejection.reuse",
+        "http.idempotency.revocation.reuse",
         "http.version.negotiation",
         "http.revocation.request"
       ],
-      "known_scenarios": 16,
+      "known_scenarios": 25,
       "pass": 0,
       "scope": "binding:http",
       "selected_in_result": false,
@@ -138,9 +147,10 @@
       "known_scenario_ids": [
         "auth-web.discovery.identity",
         "auth-web.subject-binding.actor-card",
+        "auth-web.subject-binding.message-append",
         "auth-web.delegation.fail-closed"
       ],
-      "known_scenarios": 3,
+      "known_scenarios": 4,
       "pass": 0,
       "scope": "profile:auth-web",
       "selected_in_result": false,
@@ -206,7 +216,7 @@
     "profile:mcp"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T02:05:35.581354Z",
+    "executed_at": "2026-04-05T11:26:28.525489Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/examples/fixture-check-profile-mcp-partial.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },

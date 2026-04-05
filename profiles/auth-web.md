@@ -104,11 +104,12 @@ The current suite only claims the following baseline auth-web mappings from the 
 | Baseline auth-web concern | OAPS anchor | Current runtime or fixture anchor | Claim boundary |
 | --- | --- | --- | --- |
 | web discovery of actor identity | discovery document plus actor-facing metadata | `auth-web.discovery.identity` via shared HTTP discovery runtime | runtime-backed through shared HTTP surface |
-| subject binding between caller and actor | authenticated subject compared with `Envelope.from.actor_id` | `auth-web.subject-binding.actor-card` via shared HTTP auth boundary | runtime-backed through shared HTTP surface |
+| subject binding between caller and actor | authenticated subject compared with `Envelope.from.actor_id` on interaction-creation boundaries | `auth-web.subject-binding.actor-card` via shared HTTP auth boundary | runtime-backed through shared HTTP surface |
+| subject binding on follow-on message mutation | authenticated subject compared with `Envelope.from.actor_id` before append-only message progression is accepted | `auth-web.subject-binding.message-append` via shared HTTP message runtime | runtime-backed through shared HTTP mutation surface |
 | delegation-aware subject binding | explicit delegation checked before allowing actor mismatch | `auth-web.delegation.fail-closed` via expired-delegation core runtime | runtime-backed for fail-closed expiry only |
-| evidence of trust decisions | evidence metadata on execution boundaries | shared HTTP and MCP evidence surfaces | partial, because no dedicated auth-web evidence emitter exists yet |
+| evidence of trust decisions | evidence metadata on execution boundaries | shared HTTP and MCP evidence surfaces, including incremental replay via binding-level `after`/`limit` windows | partial, because no dedicated auth-web evidence emitter exists yet |
 
-This profile does **not** yet claim a full web-native verifier matrix across bearer, signatures, OIDC, or JWKS discovery combinations. The current reference line proves subject binding and fail-closed delegation semantics first.
+This profile does **not** yet claim a full web-native verifier matrix across bearer, signatures, OIDC, or JWKS discovery combinations. The current reference line proves direct subject binding on interaction creation and message append flows plus fail-closed delegation semantics first.
 
 ## Conformance
 
@@ -121,7 +122,7 @@ A conforming `oaps-auth-web-v1` implementation:
 - SHOULD preserve auth decisions in evidence when relevant
 
 The current conformance pack groups this profile into discovery, subject-binding, and delegation anchors.
-Discovery and actor-card subject binding continue to use the shared HTTP runtime surface, and delegation fail-closed is now also tied to the reference core runtime's expired-delegation path. That keeps the pack honest about the current implementation slice without pretending a full auth-web verifier stack already exists.
+Discovery plus both interaction-creation and message-append subject binding use the shared HTTP runtime surface, and delegation fail-closed is now also tied to the reference core runtime's expired-delegation path. The shared HTTP evidence surface now also has explicit incremental replay-window semantics for audit retrieval, but that still does not pretend a full auth-web verifier stack already exists.
 
 ## Open Questions
 

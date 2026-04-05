@@ -75,6 +75,15 @@
       ]
     },
     {
+      "scenario_id": "http.messages.subject-binding",
+      "dimension": "message-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises the fail-closed message path when the authenticated caller does not match the message envelope sender."
+    },
+    {
       "scenario_id": "http.messages.interaction-id-mismatch",
       "dimension": "message-lifecycle",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
@@ -93,6 +102,15 @@
       "notes": "Exercises GET /interactions/{id}/evidence against a completed interaction."
     },
     {
+      "scenario_id": "http.evidence.replay-window",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises incremental GET /interactions/{id}/evidence retrieval using after/limit replay-window parameters."
+    },
+    {
       "scenario_id": "http.events.retrieval",
       "dimension": "event-stream",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
@@ -100,6 +118,24 @@
         "reference-runtime"
       ],
       "notes": "Exercises GET /interactions/{id}/events against a completed interaction."
+    },
+    {
+      "scenario_id": "http.events.replay-window",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises incremental GET /interactions/{id}/events retrieval using after/limit replay-window parameters."
+    },
+    {
+      "scenario_id": "http.events.replay-cursor-invalid",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises the fail-closed replay path when an after cursor does not match any event in the addressed interaction or the limit parameter is invalid."
     },
     {
       "scenario_id": "http.approval.decision",

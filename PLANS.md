@@ -104,6 +104,13 @@ Execution rule:
 - [x] Add a clearer “what is stable vs draft vs concept” matrix to top-level docs
 - [x] Add a public-facing “how to review OAPS” short packet
 
+### 10. Binding Hardening Follow-ons
+
+- [x] Extend HTTP mutation idempotency coverage across message, approve, reject, and revoke routes
+- [x] Add HTTP replay-window conformance metadata and compatibility artifact refresh
+- [x] Add follow-on message subject-binding conformance coverage for the auth-web / HTTP slice
+- [x] Formalize HTTP replay-window and canonical media-type behavior across the reference slice, conformance pack, and docs
+
 ## Stop Conditions
 
 The loop should stop only with:

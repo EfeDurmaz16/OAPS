@@ -48,6 +48,25 @@
       ]
     },
     {
+      "scenario_id": "auth-web.subject-binding.message-append",
+      "dimension": "subject-binding",
+      "example": "examples/envelope-intent-request.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "Message-append subject binding keeps follow-on interaction mutation fail-closed: a caller cannot append a message while claiming a different envelope sender.",
+      "runtime_cases": [
+        "http.messages.subject-binding"
+      ],
+      "related_examples": [
+        "examples/envelope-intent-request.json",
+        "examples/interaction-updated.json",
+        "examples/error.json"
+      ]
+    },
+    {
       "scenario_id": "auth-web.delegation.fail-closed",
       "dimension": "delegation",
       "example": "examples/delegation-token.json",

@@ -113,7 +113,7 @@ This is the smallest real working system in the repo today, and it should be und
 - `oaps-policy-v1` evaluation with fail-closed behavior
 - MCP capability discovery and invocation through `@oaps/mcp-adapter`
 - approval gating for high-risk actions
-- reference HTTP server with interaction, approval, revoke, evidence, and events endpoints
+- reference HTTP server with interaction, approval, revoke, evidence, and events endpoints, including incremental `after`/`limit` replay windows
 - durable file-backed state for interaction and idempotency records in the reference server
 
 ## What Is Not Built Yet

@@ -33,6 +33,8 @@ Every profile should eventually define:
 - error translation
 - conformance expectations
 
+Profiles that reuse the shared HTTP reference surface should also say whether they depend on the binding's pull-based replay semantics for evidence and event retrieval, including incremental replay windows when those are part of the current binding slice.
+
 Profile drafts should stay readable on their own and make clear whether they are:
 
 - baseline

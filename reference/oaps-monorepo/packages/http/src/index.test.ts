@@ -111,6 +111,7 @@ test('POST /interactions completes low-risk invocations', async () => {
   assert.equal(body.payload.state, 'completed');
 });
 
+
 test('approval flow moves interaction from pending_approval to completed', async () => {
   const app = createTestApp();
 
@@ -302,7 +303,7 @@ test('POST /interactions/:id/messages replays the original response for idempote
 
   const eventsResponse = await app.request('/interactions/ix_1/events');
   const events = await eventsResponse.json();
-  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.message.appended').length, 1);
+  assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'interaction.message.appended').length, 1);
 });
 
 test('POST /interactions/:id/messages rejects idempotency key reuse with a different payload', async () => {
@@ -725,7 +726,7 @@ test('POST /interactions/:id/approve replays the original response for idempoten
 
   const eventsResponse = await app.request('/interactions/ix_approve_idem/events');
   const events = await eventsResponse.json();
-  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.completed').length, 1);
+  assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'interaction.completed').length, 1);
 });
 
 test('POST /interactions/:id/reject replays the original response for idempotent retries', async () => {
@@ -767,7 +768,7 @@ test('POST /interactions/:id/reject replays the original response for idempotent
 
   const eventsResponse = await app.request('/interactions/ix_reject_idem/events');
   const events = await eventsResponse.json();
-  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'approval.rejected').length, 1);
+  assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'approval.rejected').length, 1);
 });
 
 test('POST /interactions/:id/revoke moves the interaction into revoked state', async () => {
@@ -835,7 +836,7 @@ test('POST /interactions/:id/revoke replays the original response for idempotent
 
   const eventsResponse = await app.request('/interactions/ix_revoke_idem/events');
   const events = await eventsResponse.json();
-  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.revoked').length, 1);
+  assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'interaction.revoked').length, 1);
 });
 
 test('file-backed store persists interactions across app instances', async () => {
