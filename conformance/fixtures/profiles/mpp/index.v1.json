@@ -1,0 +1,65 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:mpp",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/mpp-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "mpp.session.discovery",
+      "dimension": "payment-session",
+      "schema": "schemas/payment/payment-session.json",
+      "example": "examples/mpp/payment-session.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors the draft machine payment session object mapping.",
+      "related_examples": [
+        "examples/mpp/payment-session.v1.json",
+        "examples/mpp/profile-support.partial.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "mpp.session.authorization",
+      "dimension": "authorization",
+      "schema": "schemas/payment/mandate-chain.json",
+      "example": "examples/mpp/mandate-linked-session.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture maps mandate-linked approval and authorization into a portable payment session.",
+      "related_examples": [
+        "examples/mpp/mandate-linked-session.v1.json",
+        "examples/approval-request.json"
+      ]
+    },
+    {
+      "scenario_id": "mpp.session.settlement-reference",
+      "dimension": "settlement",
+      "example": "examples/mpp/payment-session.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture keeps settlement references aligned with the same payment session lineage.",
+      "related_examples": [
+        "examples/mpp/payment-session.v1.json",
+        "examples/execution-result.json"
+      ]
+    },
+    {
+      "scenario_id": "mpp.compatibility.partial-support",
+      "dimension": "compatibility",
+      "example": "examples/mpp/profile-support.partial.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern when only the draft semantic session layer is present.",
+      "related_examples": [
+        "examples/mpp/profile-support.partial.v1.json",
+        "examples/mpp/profile-support.compatible.v1.json"
+      ]
+    }
+  ]
+}

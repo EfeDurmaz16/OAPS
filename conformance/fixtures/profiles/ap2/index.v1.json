@@ -1,0 +1,65 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:ap2",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/ap2-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "ap2.mandate-chain.mapping",
+      "dimension": "mandate-chain",
+      "schema": "schemas/payment/mandate-chain.json",
+      "example": "examples/ap2/mandate-chain.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors mandate-chain mapping for AP2-style authorization flows.",
+      "related_examples": [
+        "examples/ap2/mandate-chain.v1.json",
+        "examples/foundation/mandate.json"
+      ]
+    },
+    {
+      "scenario_id": "ap2.approval.handoff",
+      "dimension": "approval-handoff",
+      "example": "examples/ap2/approval-handoff.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture preserves the approval boundary when payment authorization is handed off.",
+      "related_examples": [
+        "examples/ap2/approval-handoff.v1.json",
+        "examples/approval-decision.json"
+      ]
+    },
+    {
+      "scenario_id": "ap2.payment.authorization-reference",
+      "dimension": "payment-authorization",
+      "schema": "schemas/payment/payment-authorization.json",
+      "example": "examples/ap2/payment-authorization.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture carries the AP2-like payment authorization result in portable OAPS form.",
+      "related_examples": [
+        "examples/ap2/payment-authorization.v1.json",
+        "examples/execution-result.json"
+      ]
+    },
+    {
+      "scenario_id": "ap2.compatibility.partial-support",
+      "dimension": "compatibility",
+      "example": "examples/ap2/profile-support.partial.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern for draft-only AP2 support.",
+      "related_examples": [
+        "examples/ap2/profile-support.partial.v1.json"
+      ]
+    }
+  ]
+}

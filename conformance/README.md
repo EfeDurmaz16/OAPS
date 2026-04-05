@@ -25,6 +25,11 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `fixtures/profiles/auth-fides-tap/index.v1.json` - high-assurance trust fixture pack
 - `fixtures/profiles/x402/index.v1.json` - x402 payment coordination fixture pack
 - `fixtures/profiles/osp/index.v1.json` - provisioning fixture pack
+- `fixtures/profiles/mpp/index.v1.json` - machine payment profile fixture pack
+- `fixtures/profiles/ap2/index.v1.json` - mandate and payment authorization profile fixture pack
+- `fixtures/profiles/acp/index.v1.json` - commerce alignment ACP fixture pack
+- `fixtures/profiles/ucp/index.v1.json` - commerce alignment UCP fixture pack
+- `fixtures/domains/commerce/index.v1.json` - commerce domain draft fixture pack
 - `runner-contract.md` - minimum behavior required from any TCK runner
 - `results/result-schema.v1.json` - machine-readable result format for compatibility claims
 - `results/compatibility-declaration-schema.v1.json` - machine-readable scope-level compatibility summary format
@@ -48,6 +53,11 @@ The first-pass suite-level TCK structure covers:
 - auth-fides-tap high-assurance trust mapping
 - x402 payment coordination mapping
 - osp provisioning mapping
+- mpp payment-session mapping
+- ap2 mandate and payment-authorization mapping
+- acp commerce alignment mapping
+- ucp commerce alignment mapping
+- commerce domain-family mapping
 
 The suite can expand into payment, provisioning, commerce, and jobs profiles once those drafts are ready for fixture-backed coverage.
 
@@ -80,6 +90,7 @@ The current fixture packs are centered on the reference slice already present in
 - runtime-backed MCP capability mapping, policy gating, approval insertion, evidence emission, and error translation
 - shared auth-web runtime anchors for discovery, interaction/message subject binding, and delegation fail-closed behavior
 - A2A task mapping, lifecycle preservation, and evidence lineage
+- fixture-backed MPP payment-session, AP2 mandate/approval, ACP/UCP commerce-alignment, and commerce-domain draft scopes
 
 ## Conformance Rules
 

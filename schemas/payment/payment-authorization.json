@@ -1,0 +1,37 @@
+{
+  "$id": "https://oaps.dev/schemas/payment/payment-authorization.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Payment Authorization",
+  "type": "object",
+  "required": [
+    "payment_authorization_id",
+    "status"
+  ],
+  "properties": {
+    "payment_authorization_id": {
+      "type": "string"
+    },
+    "mandate_ref": {
+      "type": "string"
+    },
+    "authorized_by": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "status": {
+      "type": "string"
+    },
+    "settlement_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

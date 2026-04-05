@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T13:16:53.320972Z",
+  "executed_at": "2026-04-05T17:04:58.813267Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -17,358 +17,237 @@
   "scenarios": [
     {
       "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/actor.json",
-        "examples/foundation/actor.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.actor.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/capability.json",
-        "examples/foundation/capability.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.capability.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/intent.json",
-        "examples/foundation/intent.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.intent.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "conformance/fixtures/core/invalid/intent-invoke-missing-arguments.v1.json"
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/interaction.updated.webhook.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "core.intent.invalid.invoke-missing-arguments",
-      "scope": "core"
+      "scenario_id": "events.push.interaction-envelope",
+      "scope": "binding:events"
     },
     {
       "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/task.json",
-        "examples/foundation/task.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.task.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/delegation.json",
-        "examples/foundation/delegation.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.delegation.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
-      ],
-      "coverage": [
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.delegation.expired",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/mandate.json",
-        "examples/foundation/mandate.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.mandate.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/approval-request.json",
-        "examples/foundation/approval-request.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.approval-request.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/approval-decision.json",
-        "examples/foundation/approval-decision.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.approval-decision.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/challenge.json",
-        "examples/foundation/challenge.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.challenge.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/interaction-transition.json",
-        "examples/foundation/interaction-transition.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.interaction-transition.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/execution-result.json",
-        "examples/foundation/execution-result.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.execution-result.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/evidence-event.json",
-        "examples/foundation/evidence-event.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.evidence-event.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
-      ],
-      "coverage": [
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.evidence.chain.verifiable",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
-      ],
-      "coverage": [
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.evidence.tamper-detected",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
-      ],
-      "coverage": [
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.evidence.prev-hash-mismatch",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
-      ],
-      "coverage": [
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.evidence.hash-stable",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/error-object.json",
-        "examples/foundation/error-object.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.error-object.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/extension-descriptor.json",
-        "examples/foundation/extension-descriptor.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.extension-descriptor.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "schemas/foundation/task-transition.json",
-        "examples/foundation/task-transition.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "core.task-transition.valid",
-      "scope": "core"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "conformance/fixtures/core/invalid/interaction-transition-completed-to-executing.v1.json"
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/approval.requested.webhook.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "core.interaction-transition.invalid.completed-to-executing",
-      "scope": "core"
+      "scenario_id": "events.push.approval-envelope",
+      "scope": "binding:events"
     },
     {
       "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "conformance/fixtures/core/invalid/task-transition-completed-to-running.v1.json"
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/replay.resumption.v1.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "core.task-transition.invalid.completed-to-running",
-      "scope": "core"
+      "scenario_id": "events.replay-first.relationship",
+      "scope": "binding:events"
     },
     {
       "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/delivery.retry.webhook.json"
       ],
       "coverage": [
-        "reference-runtime"
+        "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "core.intent.task-promotion",
-      "scope": "core"
+      "scenario_id": "events.delivery.at-least-once",
+      "scope": "binding:events"
     },
     {
       "artifacts": [
-        "conformance/fixtures/core/index.v1.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/delivery.retry.webhook.json"
       ],
       "coverage": [
-        "reference-runtime"
+        "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "core.reject-vs-revoke.distinct",
-      "scope": "core"
+      "scenario_id": "events.retry.dedupe-key",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/replay.resumption.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.resume.replay-checkpoint",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/discovery.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.discovery.request-response",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/interactions.create.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.interactions.create.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/messages.append.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.messages.append.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/approve.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.approval.approve.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/reject.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.approval.reject.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/revoke.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.revocation.revoke.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/events.list.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.events.list.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/evidence.list.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.evidence.list.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/events.stream.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.events.stream.server",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/evidence.stream.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.evidence.stream.server",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/errors/approval-not-pending.status.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.error.mapping.status",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/metadata.request-headers.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.metadata.headers",
+      "scope": "binding:grpc"
     },
     {
       "artifacts": [
@@ -1051,237 +930,599 @@
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/discovery.response.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/actor.json",
+        "examples/foundation/actor.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.discovery.request-response",
-      "scope": "binding:grpc"
+      "scenario_id": "core.actor.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/interactions.create.request.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/capability.json",
+        "examples/foundation/capability.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.interactions.create.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.capability.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/messages.append.request.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/intent.json",
+        "examples/foundation/intent.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.messages.append.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.intent.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/approve.request.json"
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/intent-invoke-missing-arguments.v1.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.approval.approve.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.intent.invalid.invoke-missing-arguments",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/reject.request.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/task.json",
+        "examples/foundation/task.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.approval.reject.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.task.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/revoke.request.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/delegation.json",
+        "examples/foundation/delegation.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.revocation.revoke.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.delegation.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/events.list.response.json"
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
       ],
       "coverage": [
-        "fixture"
+        "reference-runtime"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.events.list.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.delegation.expired",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/evidence.list.response.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/mandate.json",
+        "examples/foundation/mandate.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.evidence.list.unary",
-      "scope": "binding:grpc"
+      "scenario_id": "core.mandate.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/events.stream.response.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/approval-request.json",
+        "examples/foundation/approval-request.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.events.stream.server",
-      "scope": "binding:grpc"
+      "scenario_id": "core.approval-request.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/evidence.stream.response.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/approval-decision.json",
+        "examples/foundation/approval-decision.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.evidence.stream.server",
-      "scope": "binding:grpc"
+      "scenario_id": "core.approval-decision.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/errors/approval-not-pending.status.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/challenge.json",
+        "examples/foundation/challenge.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.error.mapping.status",
-      "scope": "binding:grpc"
+      "scenario_id": "core.challenge.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/grpc/index.v1.json",
-        "examples/grpc/metadata.request-headers.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/interaction-transition.json",
+        "examples/foundation/interaction-transition.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "grpc.metadata.headers",
-      "scope": "binding:grpc"
+      "scenario_id": "core.interaction-transition.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/interaction.updated.webhook.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/execution-result.json",
+        "examples/foundation/execution-result.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.push.interaction-envelope",
-      "scope": "binding:events"
+      "scenario_id": "core.execution-result.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/approval.requested.webhook.json"
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/evidence-event.json",
+        "examples/foundation/evidence-event.json"
       ],
       "coverage": [
+        "schema",
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.push.approval-envelope",
-      "scope": "binding:events"
+      "scenario_id": "core.evidence-event.valid",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/replay.resumption.v1.json"
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
       ],
       "coverage": [
-        "fixture"
+        "reference-runtime"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.replay-first.relationship",
-      "scope": "binding:events"
+      "scenario_id": "core.evidence.chain.verifiable",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/delivery.retry.webhook.json"
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
       ],
       "coverage": [
-        "fixture"
+        "reference-runtime"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.delivery.at-least-once",
-      "scope": "binding:events"
+      "scenario_id": "core.evidence.tamper-detected",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/delivery.retry.webhook.json"
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
       ],
       "coverage": [
-        "fixture"
+        "reference-runtime"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.retry.dedupe-key",
-      "scope": "binding:events"
+      "scenario_id": "core.evidence.prev-hash-mismatch",
+      "scope": "core"
     },
     {
       "artifacts": [
-        "conformance/fixtures/bindings/events/index.v1.json",
-        "examples/events/replay.resumption.v1.json"
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/evidence/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.evidence.hash-stable",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/error-object.json",
+        "examples/foundation/error-object.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.error-object.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/extension-descriptor.json",
+        "examples/foundation/extension-descriptor.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.extension-descriptor.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/task-transition.json",
+        "examples/foundation/task-transition.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.task-transition.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/interaction-transition-completed-to-executing.v1.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "events.resume.replay-checkpoint",
-      "scope": "binding:events"
+      "scenario_id": "core.interaction-transition.invalid.completed-to-executing",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/task-transition-completed-to-running.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.task-transition.invalid.completed-to-running",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.intent.task-promotion",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.reject-vs-revoke.distinct",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/domains/commerce/index.v1.json",
+        "schemas/domain/order-intent.json",
+        "examples/commerce/order-intent.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "commerce.order-intent.core",
+      "scope": "domain:commerce"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/domains/commerce/index.v1.json",
+        "schemas/domain/merchant-authorization.json",
+        "examples/commerce/merchant-authorization.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "commerce.merchant-authorization.boundary",
+      "scope": "domain:commerce"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/domains/commerce/index.v1.json",
+        "examples/commerce/delegated-checkout.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "commerce.payment-handoff.reference",
+      "scope": "domain:commerce"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/domains/commerce/index.v1.json",
+        "schemas/domain/fulfillment-commitment.json",
+        "examples/commerce/fulfillment-outcome.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "commerce.fulfillment.commitment",
+      "scope": "domain:commerce"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/domains/commerce/index.v1.json",
+        "schemas/domain/commercial-evidence.json",
+        "examples/commerce/commercial-evidence.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "commerce.commercial-evidence.replay",
+      "scope": "domain:commerce"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "schemas/foundation/task.json",
+        "examples/foundation/task.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.task.lifecycle.preservation",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "examples/a2a/message.threading.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.message.threading.state-propagation",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "schemas/foundation/delegation.json",
+        "examples/foundation/delegation.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.delegation.carryover",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "schemas/foundation/approval-request.json",
+        "examples/foundation/approval-request.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.approval.interposition",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "schemas/foundation/evidence-event.json",
+        "examples/foundation/evidence-event.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.message.evidence.carryover",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "examples/a2a/partial-update.replay.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.task.long-running.partial-update",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "examples/a2a/cancellation.revocation.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.task.cancellation.revocation-mapping",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/a2a/index.v1.json",
+        "examples/a2a/profile-support.partial.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "a2a.compatibility.partial-declaration",
+      "scope": "profile:a2a"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/acp/index.v1.json",
+        "schemas/domain/order-intent.json",
+        "examples/commerce/order-intent.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "acp.order-intent.mapping",
+      "scope": "profile:acp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/acp/index.v1.json",
+        "examples/commerce/delegated-checkout.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "acp.delegated-checkout.mapping",
+      "scope": "profile:acp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/acp/index.v1.json",
+        "schemas/domain/fulfillment-commitment.json",
+        "examples/commerce/fulfillment-outcome.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "acp.fulfillment.outcome",
+      "scope": "profile:acp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/acp/index.v1.json",
+        "examples/commerce/profile-support.partial.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "acp.compatibility.partial-support",
+      "scope": "profile:acp"
     },
     {
       "artifacts": [
@@ -1350,6 +1591,256 @@
     },
     {
       "artifacts": [
+        "conformance/fixtures/profiles/ap2/index.v1.json",
+        "schemas/payment/mandate-chain.json",
+        "examples/ap2/mandate-chain.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ap2.mandate-chain.mapping",
+      "scope": "profile:ap2"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ap2/index.v1.json",
+        "examples/ap2/approval-handoff.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ap2.approval.handoff",
+      "scope": "profile:ap2"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ap2/index.v1.json",
+        "schemas/payment/payment-authorization.json",
+        "examples/ap2/payment-authorization.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ap2.payment.authorization-reference",
+      "scope": "profile:ap2"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ap2/index.v1.json",
+        "examples/ap2/profile-support.partial.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ap2.compatibility.partial-support",
+      "scope": "profile:ap2"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
+        "examples/auth-fides-tap/attested-actor.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-fides-tap.attestation.actor-card",
+      "scope": "profile:auth-fides-tap"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
+        "examples/auth-fides-tap/trust-tier.required.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-fides-tap.trust-tier.required",
+      "scope": "profile:auth-fides-tap"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
+        "examples/auth-fides-tap/delegation.attested-chain.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-fides-tap.trust-upgrade.delegation",
+      "scope": "profile:auth-fides-tap"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
+        "examples/auth-fides-tap/approval.high-assurance-boundary.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-fides-tap.approval.high-assurance-boundary",
+      "scope": "profile:auth-fides-tap"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
+        "examples/auth-fides-tap/attestation.required-path.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-fides-tap.attestation.required-path",
+      "scope": "profile:auth-fides-tap"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/actor-card.discovery-assertion.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.discovery.identity",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/interaction.create.subject-binding.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.interaction-create",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/message.append.subject-binding.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.message-append",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/approval.subject-binding.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.approve",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/reject.subject-binding.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.reject",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/revoke.subject-binding.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.revoke",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/delegated-actor.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.delegated-actor.baseline",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/invalid.subject-mismatch.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.subject-binding.actor-mismatch.invalid",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/auth-web/index.v1.json",
+        "examples/auth-web/delegation.expired.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "auth-web.delegation.expired",
+      "scope": "profile:auth-web"
+    },
+    {
+      "artifacts": [
         "conformance/fixtures/profiles/mcp/index.v1.json",
         "schemas/actor-card.json",
         "examples/actor-card-mcp.json",
@@ -1380,6 +1871,36 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "mcp.capability-card.mapping",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "examples/mcp/invalid-tool-missing-input-schema.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.tool-metadata.missing-input-schema",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "examples/mcp/invalid-tool-malformed-metadata.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.tool-metadata.malformed",
       "scope": "profile:mcp"
     },
     {
@@ -1422,7 +1943,33 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
+      "scenario_id": "mcp.policy.denial",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
       "scenario_id": "mcp.approval.insertion",
+      "scope": "profile:mcp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.approval.rejection",
       "scope": "profile:mcp"
     },
     {
@@ -1457,9 +2004,9 @@
     },
     {
       "artifacts": [
-        "conformance/fixtures/profiles/a2a/index.v1.json",
-        "schemas/foundation/task.json",
-        "examples/foundation/task.json"
+        "conformance/fixtures/profiles/mpp/index.v1.json",
+        "schemas/payment/payment-session.json",
+        "examples/mpp/payment-session.v1.json"
       ],
       "coverage": [
         "schema",
@@ -1467,201 +2014,48 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "a2a.task.lifecycle.preservation",
-      "scope": "profile:a2a"
+      "scenario_id": "mpp.session.discovery",
+      "scope": "profile:mpp"
     },
     {
       "artifacts": [
-        "conformance/fixtures/profiles/a2a/index.v1.json",
-        "schemas/foundation/delegation.json",
-        "examples/foundation/delegation.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "a2a.delegation.carryover",
-      "scope": "profile:a2a"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/a2a/index.v1.json",
-        "schemas/foundation/approval-request.json",
-        "examples/foundation/approval-request.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "a2a.approval.interposition",
-      "scope": "profile:a2a"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/a2a/index.v1.json",
-        "schemas/foundation/evidence-event.json",
-        "examples/foundation/evidence-event.json"
-      ],
-      "coverage": [
-        "schema",
-        "fixture"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "a2a.message.evidence.carryover",
-      "scope": "profile:a2a"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/auth-web/index.v1.json",
-        "examples/well-known-oaps.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "auth-web.discovery.identity",
-      "scope": "profile:auth-web"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/auth-web/index.v1.json",
-        "examples/actor-card-mcp.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "auth-web.subject-binding.actor-card",
-      "scope": "profile:auth-web"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/auth-web/index.v1.json",
-        "examples/envelope-intent-request.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "auth-web.subject-binding.message-append",
-      "scope": "profile:auth-web"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/auth-web/index.v1.json",
-        "examples/delegation-token.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "auth-web.delegation.fail-closed",
-      "scope": "profile:auth-web"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
-        "examples/actor-card-mcp.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+        "conformance/fixtures/profiles/mpp/index.v1.json",
+        "schemas/payment/mandate-chain.json",
+        "examples/mpp/mandate-linked-session.v1.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "auth-fides-tap.attestation.actor-card",
-      "scope": "profile:auth-fides-tap"
+      "scenario_id": "mpp.session.authorization",
+      "scope": "profile:mpp"
     },
     {
       "artifacts": [
-        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
-        "examples/delegation-token.json",
-        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+        "conformance/fixtures/profiles/mpp/index.v1.json",
+        "examples/mpp/payment-session.v1.json"
       ],
       "coverage": [
         "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "auth-fides-tap.trust-upgrade.delegation",
-      "scope": "profile:auth-fides-tap"
+      "scenario_id": "mpp.session.settlement-reference",
+      "scope": "profile:mpp"
     },
     {
       "artifacts": [
-        "conformance/fixtures/profiles/auth-fides-tap/index.v1.json",
-        "examples/approval-request.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+        "conformance/fixtures/profiles/mpp/index.v1.json",
+        "examples/mpp/profile-support.partial.v1.json"
       ],
       "coverage": [
-        "fixture",
-        "reference-runtime"
+        "fixture"
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "auth-fides-tap.evidence.approval-boundary",
-      "scope": "profile:auth-fides-tap"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/x402/index.v1.json",
-        "examples/well-known-oaps.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "x402.payment.discovery",
-      "scope": "profile:x402"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/x402/index.v1.json",
-        "examples/intent-invoke.json",
-        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "x402.payment.authorization.intent",
-      "scope": "profile:x402"
-    },
-    {
-      "artifacts": [
-        "conformance/fixtures/profiles/x402/index.v1.json",
-        "examples/execution-result.json",
-        "reference/oaps-monorepo/packages/http/src/index.test.ts"
-      ],
-      "coverage": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "notes": "static fixture check; no runtime execution was performed",
-      "outcome": "pass",
-      "scenario_id": "x402.settlement.execution-result",
-      "scope": "profile:x402"
+      "scenario_id": "mpp.compatibility.partial-support",
+      "scope": "profile:mpp"
     },
     {
       "artifacts": [
@@ -1707,27 +2101,202 @@
       "outcome": "pass",
       "scenario_id": "osp.lifecycle.execution-result",
       "scope": "profile:osp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ucp/index.v1.json",
+        "schemas/domain/order-intent.json",
+        "examples/commerce/order-intent.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ucp.checkout.initiation",
+      "scope": "profile:ucp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ucp/index.v1.json",
+        "schemas/domain/merchant-authorization.json",
+        "examples/commerce/merchant-authorization.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ucp.authorization.boundary",
+      "scope": "profile:ucp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ucp/index.v1.json",
+        "schemas/domain/fulfillment-commitment.json",
+        "examples/commerce/fulfillment-outcome.v1.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ucp.fulfillment.confirmation",
+      "scope": "profile:ucp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/ucp/index.v1.json",
+        "examples/commerce/profile-support.compatible.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "ucp.compatibility.compatible-support",
+      "scope": "profile:ucp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/well-known-oaps.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.payment.discovery",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/x402/payment-requirement.challenge.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.payment.requirement.challenge",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/intent-invoke.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.payment.authorization.intent",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/x402/authorization.retry-lineage.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.challenge.retry-lineage",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/execution-result.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.settlement.execution-result",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/x402/settlement.metadata-alignment.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.settlement.metadata-alignment",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/x402/invalid.challenge-without-authorization-context.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.payment.challenge.invalid-context",
+      "scope": "profile:x402"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/x402/index.v1.json",
+        "examples/x402/profile-support.partial.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "x402.compatibility.payment-discovery-partial",
+      "scope": "profile:x402"
     }
   ],
   "scopes": [
-    "core",
+    "binding:events",
+    "binding:grpc",
     "binding:http",
     "binding:jsonrpc",
-    "binding:grpc",
-    "binding:events",
-    "profile:agent-client",
-    "profile:mcp",
+    "core",
+    "domain:commerce",
     "profile:a2a",
-    "profile:auth-web",
+    "profile:acp",
+    "profile:agent-client",
+    "profile:ap2",
     "profile:auth-fides-tap",
-    "profile:x402",
-    "profile:osp"
+    "profile:auth-web",
+    "profile:mcp",
+    "profile:mpp",
+    "profile:osp",
+    "profile:ucp",
+    "profile:x402"
   ],
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 122,
+    "pass": 163,
     "skip": 0,
-    "total": 122
+    "total": 163
   }
 }

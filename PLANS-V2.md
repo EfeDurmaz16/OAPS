@@ -239,29 +239,29 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 12. MPP Profile Draft
 
-- [ ] Add `profiles/mpp-draft.md`
-- [ ] Define mapping from OAPS payment coordination objects into machine payment sessions
-- [ ] Add first example session object mappings
-- [ ] Add first fixture pack for `profile:mpp`
-- [ ] Add compatibility declaration examples for draft-only support
+- [x] Add `profiles/mpp-draft.md`
+- [x] Define mapping from OAPS payment coordination objects into machine payment sessions
+- [x] Add first example session object mappings
+- [x] Add first fixture pack for `profile:mpp`
+- [x] Add compatibility declaration examples for draft-only support
 
 ### 13. AP2 Profile Draft
 
-- [ ] Add `profiles/ap2-draft.md`
-- [ ] Define mandate and payment authorization mapping
-- [ ] Add example mandate-chain objects
-- [ ] Add example approval + authorization handoff notes
-- [ ] Add first fixture pack for `profile:ap2`
+- [x] Add `profiles/ap2-draft.md`
+- [x] Define mandate and payment authorization mapping
+- [x] Add example mandate-chain objects
+- [x] Add example approval + authorization handoff notes
+- [x] Add first fixture pack for `profile:ap2`
 
 ### 14. ACP / UCP / Commerce Alignment Track
 
-- [ ] Add `docs/COMMERCE-LANDSCAPE.md`
-- [ ] Add `spec/domain/commerce-draft.md`
-- [ ] Add `profiles/acp-draft.md`
-- [ ] Add `profiles/ucp-draft.md`
-- [ ] Define how cart/order/authorization/fulfillment semantics should relate to OAPS
-- [ ] Add examples for delegated checkout / order intent / merchant authorization context
-- [ ] Add fixture stubs for commerce-domain conformance
+- [x] Add `docs/COMMERCE-LANDSCAPE.md`
+- [x] Add `spec/domain/commerce-draft.md`
+- [x] Add `profiles/acp-draft.md`
+- [x] Add `profiles/ucp-draft.md`
+- [x] Define how cart/order/authorization/fulfillment semantics should relate to OAPS
+- [x] Add examples for delegated checkout / order intent / merchant authorization context
+- [x] Add fixture stubs for commerce-domain conformance
 
 ### 15. OSP / Provisioning Track Expansion
 

@@ -1,0 +1,82 @@
+{
+  "pack_version": "1.0",
+  "scope": "domain:commerce",
+  "status": "draft",
+  "normative_sources": [
+    "docs/COMMERCE-LANDSCAPE.md",
+    "spec/domain/commerce-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "commerce.order-intent.core",
+      "dimension": "order-intent",
+      "schema": "schemas/domain/order-intent.json",
+      "example": "examples/commerce/order-intent.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors the domain-level order-intent primitive.",
+      "related_examples": [
+        "examples/commerce/order-intent.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "commerce.merchant-authorization.boundary",
+      "dimension": "merchant-authorization",
+      "schema": "schemas/domain/merchant-authorization.json",
+      "example": "examples/commerce/merchant-authorization.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors merchant authorization as a first-class commerce boundary.",
+      "related_examples": [
+        "examples/commerce/merchant-authorization.v1.json",
+        "examples/commerce/delegated-checkout.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "commerce.payment-handoff.reference",
+      "dimension": "payment-handoff",
+      "example": "examples/commerce/delegated-checkout.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture keeps the payment handoff explicit so commerce semantics remain distinct from payment coordination.",
+      "related_examples": [
+        "examples/commerce/delegated-checkout.v1.json",
+        "examples/mpp/payment-session.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "commerce.fulfillment.commitment",
+      "dimension": "fulfillment",
+      "schema": "schemas/domain/fulfillment-commitment.json",
+      "example": "examples/commerce/fulfillment-outcome.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors fulfillment commitment and completed delivery.",
+      "related_examples": [
+        "examples/commerce/fulfillment-outcome.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "commerce.commercial-evidence.replay",
+      "dimension": "evidence",
+      "schema": "schemas/domain/commercial-evidence.json",
+      "example": "examples/commerce/commercial-evidence.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors replayable commercial evidence for authorization and fulfillment decisions.",
+      "related_examples": [
+        "examples/commerce/commercial-evidence.v1.json",
+        "examples/evidence-event.json"
+      ]
+    }
+  ]
+}

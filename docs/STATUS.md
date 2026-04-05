@@ -55,6 +55,105 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: MPP profile draft
+- tranche status:
+  - drafted:
+    - added `profiles/mpp-draft.md` defining payment-session mapping goals, authorization/evidence expectations, and bounded draft-only claims
+    - added the first MPP example pack under `examples/mpp/` for payment sessions, mandate-linked sessions, and partial/compatible support declarations
+  - implemented:
+    - wired `profile:mpp` into the suite taxonomy, manifest, fixture index, schema index, and spec/conformance navigation surfaces
+  - conformance-backed:
+    - added `conformance/fixtures/profiles/mpp/index.v1.json` with first payment-session, authorization, settlement-reference, and compatibility fixture anchors
+    - added `schemas/payment/payment-session.json` and related payment draft schemas, then validated `profile:mpp` through the suite conformance validator, Python manifest tests, and Python fixture-check/result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - created the first machine-payment-session draft profile without overclaiming any live MPP rail integration
+  - added portable examples for session discovery, mandate-linked authorization, settlement references, and draft-only support declarations
+  - promoted `profile:mpp` to a first-class draft conformance scope with schema-backed examples
+- validation:
+  - `python3 - <<'PY' ... parse JSON under examples/mpp and schemas/payment ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:mpp --output /tmp/profile__mpp.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/profile__mpp.json --json`
+- commits:
+  - `commerce: add payment and alignment drafts`
+  - `conformance: wire payment and commerce draft scopes`
+- next unfinished work:
+  - continue with tranche 13 AP2 draft wiring and commerce alignment completion
+- status: `DONE`
+
+### 2026-04-05
+
+- tranche: AP2 profile draft
+- tranche status:
+  - drafted:
+    - added `profiles/ap2-draft.md` defining mandate-chain and approval-handoff mapping for AP2-like authorization flows
+    - added the first AP2 example pack under `examples/ap2/` for mandate chains, approval handoff, payment authorization results, and draft-only support declarations
+  - implemented:
+    - wired `profile:ap2` into the suite taxonomy, manifest, fixture index, schema index, and spec/conformance navigation surfaces
+  - conformance-backed:
+    - added `conformance/fixtures/profiles/ap2/index.v1.json` with first mandate-chain, approval-handoff, authorization-reference, and partial-support fixture anchors
+    - validated `profile:ap2` through the suite conformance validator, Python manifest tests, and Python fixture-check/result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - created the first AP2-aligned OAPS profile draft without claiming an AP2 verifier or rail runtime
+  - added portable examples for mandate chains, approval handoff, and authorization-result linkage
+  - promoted `profile:ap2` to a first-class draft conformance scope backed by payment draft schemas
+- validation:
+  - `python3 - <<'PY' ... parse JSON under examples/ap2 and schemas/payment ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:ap2 --output /tmp/profile__ap2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/profile__ap2.json --json`
+- commits:
+  - `commerce: add payment and alignment drafts`
+  - `conformance: wire payment and commerce draft scopes`
+- next unfinished work:
+  - continue with tranche 14 commerce-domain and ACP/UCP alignment fixture wiring
+- status: `DONE`
+
+### 2026-04-05
+
+- tranche: ACP / UCP / commerce alignment track
+- tranche status:
+  - drafted:
+    - added `docs/COMMERCE-LANDSCAPE.md`, `spec/domain/commerce-draft.md`, `profiles/acp-draft.md`, and `profiles/ucp-draft.md` to define the first bounded commerce-domain and profile-alignment surface
+    - expanded `examples/commerce/` with order-intent, delegated-checkout, fulfillment-outcome, merchant-authorization, commercial-evidence, and partial/compatible support declaration artifacts
+  - implemented:
+    - wired `profile:acp`, `profile:ucp`, and `domain:commerce` into the suite taxonomy, manifest, fixture index, schema index, and spec/conformance navigation surfaces
+    - added `schemas/domain/` draft schemas for order intent, merchant authorization, fulfillment commitment, and commercial evidence
+  - conformance-backed:
+    - added `conformance/fixtures/profiles/acp/index.v1.json`, `conformance/fixtures/profiles/ucp/index.v1.json`, and `conformance/fixtures/domains/commerce/index.v1.json` as first draft-only commerce fixture packs
+    - regenerated suite result and compatibility examples so the new commerce-domain and commerce-profile scopes are represented coherently in the Python interoperability line
+    - validated `profile:acp`, `profile:ucp`, and `domain:commerce` through the suite conformance validator, Python manifest tests, and Python fixture-check/result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - created the first bounded commerce-domain draft and adjacent ACP/UCP alignment profiles without collapsing OAPS into a merchant API or checkout product
+  - added explicit examples for order intent, delegated checkout, merchant authorization, payment handoff, fulfillment outcomes, and replayable commercial evidence
+  - promoted the commerce-domain and commerce-profile scopes into machine-readable conformance and schema surfaces
+- validation:
+  - `python3 - <<'PY' ... parse JSON under examples/commerce and schemas/domain ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:acp --output /tmp/profile__acp.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:ucp --output /tmp/profile__ucp.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope domain:commerce --output /tmp/domain__commerce.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/profile__acp.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/profile__ucp.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/domain__commerce.json --json`
+- commits:
+  - `commerce: add payment and alignment drafts`
+  - `conformance: wire payment and commerce draft scopes`
+- next unfinished work:
+  - start V2 tranche 15 by deepening OSP lifecycle mappings, provisioning examples, and payment-linked provisioning handoff coverage
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: x402 profile expansion
 - tranche status:
   - drafted:

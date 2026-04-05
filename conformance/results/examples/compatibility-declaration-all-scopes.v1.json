@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T13:16:53.392575Z",
+  "generated_at": "2026-04-05T17:04:58.855994Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -17,70 +17,72 @@
   "scope_declarations": [
     {
       "coverage_observed": [
-        "schema",
-        "fixture",
-        "reference-runtime"
+        "fixture"
       ],
       "error": 0,
       "evaluated_scenario_ids": [
-        "core.actor.valid",
-        "core.capability.valid",
-        "core.intent.valid",
-        "core.intent.invalid.invoke-missing-arguments",
-        "core.task.valid",
-        "core.delegation.valid",
-        "core.delegation.expired",
-        "core.mandate.valid",
-        "core.approval-request.valid",
-        "core.approval-decision.valid",
-        "core.challenge.valid",
-        "core.interaction-transition.valid",
-        "core.execution-result.valid",
-        "core.evidence-event.valid",
-        "core.evidence.chain.verifiable",
-        "core.evidence.tamper-detected",
-        "core.evidence.prev-hash-mismatch",
-        "core.evidence.hash-stable",
-        "core.error-object.valid",
-        "core.extension-descriptor.valid",
-        "core.task-transition.valid",
-        "core.interaction-transition.invalid.completed-to-executing",
-        "core.task-transition.invalid.completed-to-running",
-        "core.intent.task-promotion",
-        "core.reject-vs-revoke.distinct"
+        "events.push.interaction-envelope",
+        "events.push.approval-envelope",
+        "events.replay-first.relationship",
+        "events.delivery.at-least-once",
+        "events.retry.dedupe-key",
+        "events.resume.replay-checkpoint"
       ],
-      "evaluated_scenarios": 25,
+      "evaluated_scenarios": 6,
       "fail": 0,
       "known_scenario_ids": [
-        "core.actor.valid",
-        "core.capability.valid",
-        "core.intent.valid",
-        "core.intent.invalid.invoke-missing-arguments",
-        "core.task.valid",
-        "core.delegation.valid",
-        "core.delegation.expired",
-        "core.mandate.valid",
-        "core.approval-request.valid",
-        "core.approval-decision.valid",
-        "core.challenge.valid",
-        "core.interaction-transition.valid",
-        "core.execution-result.valid",
-        "core.evidence-event.valid",
-        "core.evidence.chain.verifiable",
-        "core.evidence.tamper-detected",
-        "core.evidence.prev-hash-mismatch",
-        "core.evidence.hash-stable",
-        "core.error-object.valid",
-        "core.extension-descriptor.valid",
-        "core.task-transition.valid",
-        "core.interaction-transition.invalid.completed-to-executing",
-        "core.task-transition.invalid.completed-to-running",
-        "core.intent.task-promotion",
-        "core.reject-vs-revoke.distinct"
+        "events.push.interaction-envelope",
+        "events.push.approval-envelope",
+        "events.replay-first.relationship",
+        "events.delivery.at-least-once",
+        "events.retry.dedupe-key",
+        "events.resume.replay-checkpoint"
       ],
-      "known_scenarios": 25,
-      "pass": 25,
-      "scope": "core",
+      "known_scenarios": 6,
+      "pass": 6,
+      "scope": "binding:events",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "grpc.discovery.request-response",
+        "grpc.interactions.create.unary",
+        "grpc.messages.append.unary",
+        "grpc.approval.approve.unary",
+        "grpc.approval.reject.unary",
+        "grpc.revocation.revoke.unary",
+        "grpc.events.list.unary",
+        "grpc.evidence.list.unary",
+        "grpc.events.stream.server",
+        "grpc.evidence.stream.server",
+        "grpc.error.mapping.status",
+        "grpc.metadata.headers"
+      ],
+      "evaluated_scenarios": 12,
+      "fail": 0,
+      "known_scenario_ids": [
+        "grpc.discovery.request-response",
+        "grpc.interactions.create.unary",
+        "grpc.messages.append.unary",
+        "grpc.approval.approve.unary",
+        "grpc.approval.reject.unary",
+        "grpc.revocation.revoke.unary",
+        "grpc.events.list.unary",
+        "grpc.evidence.list.unary",
+        "grpc.events.stream.server",
+        "grpc.evidence.stream.server",
+        "grpc.error.mapping.status",
+        "grpc.metadata.headers"
+      ],
+      "known_scenarios": 12,
+      "pass": 12,
+      "scope": "binding:grpc",
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
@@ -225,72 +227,161 @@
     },
     {
       "coverage_observed": [
-        "fixture"
+        "schema",
+        "fixture",
+        "reference-runtime"
       ],
       "error": 0,
       "evaluated_scenario_ids": [
-        "grpc.discovery.request-response",
-        "grpc.interactions.create.unary",
-        "grpc.messages.append.unary",
-        "grpc.approval.approve.unary",
-        "grpc.approval.reject.unary",
-        "grpc.revocation.revoke.unary",
-        "grpc.events.list.unary",
-        "grpc.evidence.list.unary",
-        "grpc.events.stream.server",
-        "grpc.evidence.stream.server",
-        "grpc.error.mapping.status",
-        "grpc.metadata.headers"
+        "core.actor.valid",
+        "core.capability.valid",
+        "core.intent.valid",
+        "core.intent.invalid.invoke-missing-arguments",
+        "core.task.valid",
+        "core.delegation.valid",
+        "core.delegation.expired",
+        "core.mandate.valid",
+        "core.approval-request.valid",
+        "core.approval-decision.valid",
+        "core.challenge.valid",
+        "core.interaction-transition.valid",
+        "core.execution-result.valid",
+        "core.evidence-event.valid",
+        "core.evidence.chain.verifiable",
+        "core.evidence.tamper-detected",
+        "core.evidence.prev-hash-mismatch",
+        "core.evidence.hash-stable",
+        "core.error-object.valid",
+        "core.extension-descriptor.valid",
+        "core.task-transition.valid",
+        "core.interaction-transition.invalid.completed-to-executing",
+        "core.task-transition.invalid.completed-to-running",
+        "core.intent.task-promotion",
+        "core.reject-vs-revoke.distinct"
       ],
-      "evaluated_scenarios": 12,
+      "evaluated_scenarios": 25,
       "fail": 0,
       "known_scenario_ids": [
-        "grpc.discovery.request-response",
-        "grpc.interactions.create.unary",
-        "grpc.messages.append.unary",
-        "grpc.approval.approve.unary",
-        "grpc.approval.reject.unary",
-        "grpc.revocation.revoke.unary",
-        "grpc.events.list.unary",
-        "grpc.evidence.list.unary",
-        "grpc.events.stream.server",
-        "grpc.evidence.stream.server",
-        "grpc.error.mapping.status",
-        "grpc.metadata.headers"
+        "core.actor.valid",
+        "core.capability.valid",
+        "core.intent.valid",
+        "core.intent.invalid.invoke-missing-arguments",
+        "core.task.valid",
+        "core.delegation.valid",
+        "core.delegation.expired",
+        "core.mandate.valid",
+        "core.approval-request.valid",
+        "core.approval-decision.valid",
+        "core.challenge.valid",
+        "core.interaction-transition.valid",
+        "core.execution-result.valid",
+        "core.evidence-event.valid",
+        "core.evidence.chain.verifiable",
+        "core.evidence.tamper-detected",
+        "core.evidence.prev-hash-mismatch",
+        "core.evidence.hash-stable",
+        "core.error-object.valid",
+        "core.extension-descriptor.valid",
+        "core.task-transition.valid",
+        "core.interaction-transition.invalid.completed-to-executing",
+        "core.task-transition.invalid.completed-to-running",
+        "core.intent.task-promotion",
+        "core.reject-vs-revoke.distinct"
       ],
-      "known_scenarios": 12,
-      "pass": 12,
-      "scope": "binding:grpc",
+      "known_scenarios": 25,
+      "pass": 25,
+      "scope": "core",
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
     },
     {
       "coverage_observed": [
+        "schema",
         "fixture"
       ],
       "error": 0,
       "evaluated_scenario_ids": [
-        "events.push.interaction-envelope",
-        "events.push.approval-envelope",
-        "events.replay-first.relationship",
-        "events.delivery.at-least-once",
-        "events.retry.dedupe-key",
-        "events.resume.replay-checkpoint"
+        "commerce.order-intent.core",
+        "commerce.merchant-authorization.boundary",
+        "commerce.payment-handoff.reference",
+        "commerce.fulfillment.commitment",
+        "commerce.commercial-evidence.replay"
       ],
-      "evaluated_scenarios": 6,
+      "evaluated_scenarios": 5,
       "fail": 0,
       "known_scenario_ids": [
-        "events.push.interaction-envelope",
-        "events.push.approval-envelope",
-        "events.replay-first.relationship",
-        "events.delivery.at-least-once",
-        "events.retry.dedupe-key",
-        "events.resume.replay-checkpoint"
+        "commerce.order-intent.core",
+        "commerce.merchant-authorization.boundary",
+        "commerce.payment-handoff.reference",
+        "commerce.fulfillment.commitment",
+        "commerce.commercial-evidence.replay"
       ],
-      "known_scenarios": 6,
-      "pass": 6,
-      "scope": "binding:events",
+      "known_scenarios": 5,
+      "pass": 5,
+      "scope": "domain:commerce",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "a2a.task.lifecycle.preservation",
+        "a2a.message.threading.state-propagation",
+        "a2a.delegation.carryover",
+        "a2a.approval.interposition",
+        "a2a.message.evidence.carryover",
+        "a2a.task.long-running.partial-update",
+        "a2a.task.cancellation.revocation-mapping",
+        "a2a.compatibility.partial-declaration"
+      ],
+      "evaluated_scenarios": 8,
+      "fail": 0,
+      "known_scenario_ids": [
+        "a2a.task.lifecycle.preservation",
+        "a2a.message.threading.state-propagation",
+        "a2a.delegation.carryover",
+        "a2a.approval.interposition",
+        "a2a.message.evidence.carryover",
+        "a2a.task.long-running.partial-update",
+        "a2a.task.cancellation.revocation-mapping",
+        "a2a.compatibility.partial-declaration"
+      ],
+      "known_scenarios": 8,
+      "pass": 8,
+      "scope": "profile:a2a",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "acp.order-intent.mapping",
+        "acp.delegated-checkout.mapping",
+        "acp.fulfillment.outcome",
+        "acp.compatibility.partial-support"
+      ],
+      "evaluated_scenarios": 4,
+      "fail": 0,
+      "known_scenario_ids": [
+        "acp.order-intent.mapping",
+        "acp.delegated-checkout.mapping",
+        "acp.fulfillment.outcome",
+        "acp.compatibility.partial-support"
+      ],
+      "known_scenarios": 4,
+      "pass": 4,
+      "scope": "profile:acp",
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
@@ -326,87 +417,26 @@
     {
       "coverage_observed": [
         "schema",
-        "fixture",
-        "reference-runtime"
-      ],
-      "error": 0,
-      "evaluated_scenario_ids": [
-        "mcp.actor-card.mapping",
-        "mcp.capability-card.mapping",
-        "mcp.intent.execution",
-        "mcp.policy.gating",
-        "mcp.approval.insertion",
-        "mcp.error.translation",
-        "mcp.evidence.emission"
-      ],
-      "evaluated_scenarios": 7,
-      "fail": 0,
-      "known_scenario_ids": [
-        "mcp.actor-card.mapping",
-        "mcp.capability-card.mapping",
-        "mcp.intent.execution",
-        "mcp.policy.gating",
-        "mcp.approval.insertion",
-        "mcp.error.translation",
-        "mcp.evidence.emission"
-      ],
-      "known_scenarios": 7,
-      "pass": 7,
-      "scope": "profile:mcp",
-      "selected_in_result": true,
-      "skip": 0,
-      "status": "compatible"
-    },
-    {
-      "coverage_observed": [
-        "schema",
         "fixture"
       ],
       "error": 0,
       "evaluated_scenario_ids": [
-        "a2a.task.lifecycle.preservation",
-        "a2a.delegation.carryover",
-        "a2a.approval.interposition",
-        "a2a.message.evidence.carryover"
+        "ap2.mandate-chain.mapping",
+        "ap2.approval.handoff",
+        "ap2.payment.authorization-reference",
+        "ap2.compatibility.partial-support"
       ],
       "evaluated_scenarios": 4,
       "fail": 0,
       "known_scenario_ids": [
-        "a2a.task.lifecycle.preservation",
-        "a2a.delegation.carryover",
-        "a2a.approval.interposition",
-        "a2a.message.evidence.carryover"
+        "ap2.mandate-chain.mapping",
+        "ap2.approval.handoff",
+        "ap2.payment.authorization-reference",
+        "ap2.compatibility.partial-support"
       ],
       "known_scenarios": 4,
       "pass": 4,
-      "scope": "profile:a2a",
-      "selected_in_result": true,
-      "skip": 0,
-      "status": "compatible"
-    },
-    {
-      "coverage_observed": [
-        "fixture",
-        "reference-runtime"
-      ],
-      "error": 0,
-      "evaluated_scenario_ids": [
-        "auth-web.discovery.identity",
-        "auth-web.subject-binding.actor-card",
-        "auth-web.subject-binding.message-append",
-        "auth-web.delegation.fail-closed"
-      ],
-      "evaluated_scenarios": 4,
-      "fail": 0,
-      "known_scenario_ids": [
-        "auth-web.discovery.identity",
-        "auth-web.subject-binding.actor-card",
-        "auth-web.subject-binding.message-append",
-        "auth-web.delegation.fail-closed"
-      ],
-      "known_scenarios": 4,
-      "pass": 4,
-      "scope": "profile:auth-web",
+      "scope": "profile:ap2",
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
@@ -419,18 +449,22 @@
       "error": 0,
       "evaluated_scenario_ids": [
         "auth-fides-tap.attestation.actor-card",
+        "auth-fides-tap.trust-tier.required",
         "auth-fides-tap.trust-upgrade.delegation",
-        "auth-fides-tap.evidence.approval-boundary"
+        "auth-fides-tap.approval.high-assurance-boundary",
+        "auth-fides-tap.attestation.required-path"
       ],
-      "evaluated_scenarios": 3,
+      "evaluated_scenarios": 5,
       "fail": 0,
       "known_scenario_ids": [
         "auth-fides-tap.attestation.actor-card",
+        "auth-fides-tap.trust-tier.required",
         "auth-fides-tap.trust-upgrade.delegation",
-        "auth-fides-tap.evidence.approval-boundary"
+        "auth-fides-tap.approval.high-assurance-boundary",
+        "auth-fides-tap.attestation.required-path"
       ],
-      "known_scenarios": 3,
-      "pass": 3,
+      "known_scenarios": 5,
+      "pass": 5,
       "scope": "profile:auth-fides-tap",
       "selected_in_result": true,
       "skip": 0,
@@ -443,20 +477,101 @@
       ],
       "error": 0,
       "evaluated_scenario_ids": [
-        "x402.payment.discovery",
-        "x402.payment.authorization.intent",
-        "x402.settlement.execution-result"
+        "auth-web.discovery.identity",
+        "auth-web.subject-binding.interaction-create",
+        "auth-web.subject-binding.message-append",
+        "auth-web.subject-binding.approve",
+        "auth-web.subject-binding.reject",
+        "auth-web.subject-binding.revoke",
+        "auth-web.delegated-actor.baseline",
+        "auth-web.subject-binding.actor-mismatch.invalid",
+        "auth-web.delegation.expired"
       ],
-      "evaluated_scenarios": 3,
+      "evaluated_scenarios": 9,
       "fail": 0,
       "known_scenario_ids": [
-        "x402.payment.discovery",
-        "x402.payment.authorization.intent",
-        "x402.settlement.execution-result"
+        "auth-web.discovery.identity",
+        "auth-web.subject-binding.interaction-create",
+        "auth-web.subject-binding.message-append",
+        "auth-web.subject-binding.approve",
+        "auth-web.subject-binding.reject",
+        "auth-web.subject-binding.revoke",
+        "auth-web.delegated-actor.baseline",
+        "auth-web.subject-binding.actor-mismatch.invalid",
+        "auth-web.delegation.expired"
       ],
-      "known_scenarios": 3,
-      "pass": 3,
-      "scope": "profile:x402",
+      "known_scenarios": 9,
+      "pass": 9,
+      "scope": "profile:auth-web",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "mcp.actor-card.mapping",
+        "mcp.capability-card.mapping",
+        "mcp.tool-metadata.missing-input-schema",
+        "mcp.tool-metadata.malformed",
+        "mcp.intent.execution",
+        "mcp.policy.gating",
+        "mcp.policy.denial",
+        "mcp.approval.insertion",
+        "mcp.approval.rejection",
+        "mcp.error.translation",
+        "mcp.evidence.emission"
+      ],
+      "evaluated_scenarios": 11,
+      "fail": 0,
+      "known_scenario_ids": [
+        "mcp.actor-card.mapping",
+        "mcp.capability-card.mapping",
+        "mcp.tool-metadata.missing-input-schema",
+        "mcp.tool-metadata.malformed",
+        "mcp.intent.execution",
+        "mcp.policy.gating",
+        "mcp.policy.denial",
+        "mcp.approval.insertion",
+        "mcp.approval.rejection",
+        "mcp.error.translation",
+        "mcp.evidence.emission"
+      ],
+      "known_scenarios": 11,
+      "pass": 11,
+      "scope": "profile:mcp",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "mpp.session.discovery",
+        "mpp.session.authorization",
+        "mpp.session.settlement-reference",
+        "mpp.compatibility.partial-support"
+      ],
+      "evaluated_scenarios": 4,
+      "fail": 0,
+      "known_scenario_ids": [
+        "mpp.session.discovery",
+        "mpp.session.authorization",
+        "mpp.session.settlement-reference",
+        "mpp.compatibility.partial-support"
+      ],
+      "known_scenarios": 4,
+      "pass": 4,
+      "scope": "profile:mpp",
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
@@ -485,33 +600,100 @@
       "selected_in_result": true,
       "skip": 0,
       "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "ucp.checkout.initiation",
+        "ucp.authorization.boundary",
+        "ucp.fulfillment.confirmation",
+        "ucp.compatibility.compatible-support"
+      ],
+      "evaluated_scenarios": 4,
+      "fail": 0,
+      "known_scenario_ids": [
+        "ucp.checkout.initiation",
+        "ucp.authorization.boundary",
+        "ucp.fulfillment.confirmation",
+        "ucp.compatibility.compatible-support"
+      ],
+      "known_scenarios": 4,
+      "pass": 4,
+      "scope": "profile:ucp",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "x402.payment.discovery",
+        "x402.payment.requirement.challenge",
+        "x402.payment.authorization.intent",
+        "x402.challenge.retry-lineage",
+        "x402.settlement.execution-result",
+        "x402.settlement.metadata-alignment",
+        "x402.payment.challenge.invalid-context",
+        "x402.compatibility.payment-discovery-partial"
+      ],
+      "evaluated_scenarios": 8,
+      "fail": 0,
+      "known_scenario_ids": [
+        "x402.payment.discovery",
+        "x402.payment.requirement.challenge",
+        "x402.payment.authorization.intent",
+        "x402.challenge.retry-lineage",
+        "x402.settlement.execution-result",
+        "x402.settlement.metadata-alignment",
+        "x402.payment.challenge.invalid-context",
+        "x402.compatibility.payment-discovery-partial"
+      ],
+      "known_scenarios": 8,
+      "pass": 8,
+      "scope": "profile:x402",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
     }
   ],
   "selected_scopes": [
-    "core",
+    "binding:events",
+    "binding:grpc",
     "binding:http",
     "binding:jsonrpc",
-    "binding:grpc",
-    "binding:events",
-    "profile:agent-client",
-    "profile:mcp",
+    "core",
+    "domain:commerce",
     "profile:a2a",
-    "profile:auth-web",
+    "profile:acp",
+    "profile:agent-client",
+    "profile:ap2",
     "profile:auth-fides-tap",
-    "profile:x402",
-    "profile:osp"
+    "profile:auth-web",
+    "profile:mcp",
+    "profile:mpp",
+    "profile:osp",
+    "profile:ucp",
+    "profile:x402"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T13:16:53.279493Z",
+    "executed_at": "2026-04-05T17:04:58.813267Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/example-result.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },
   "suite_version": "foundation-draft",
   "summary": {
-    "compatible": 12,
+    "compatible": 17,
     "incompatible": 0,
     "not_evaluated": 0,
     "partial": 0,
-    "total": 12
+    "total": 17
   }
 }

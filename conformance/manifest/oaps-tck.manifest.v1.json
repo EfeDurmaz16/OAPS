@@ -5,8 +5,12 @@
   "status": "draft",
   "entrypoints": [
     {
-      "scope": "core",
-      "pack": "conformance/fixtures/core/index.v1.json"
+      "scope": "binding:events",
+      "pack": "conformance/fixtures/bindings/events/index.v1.json"
+    },
+    {
+      "scope": "binding:grpc",
+      "pack": "conformance/fixtures/bindings/grpc/index.v1.json"
     },
     {
       "scope": "binding:http",
@@ -17,40 +21,56 @@
       "pack": "conformance/fixtures/bindings/jsonrpc/index.v1.json"
     },
     {
-      "scope": "binding:grpc",
-      "pack": "conformance/fixtures/bindings/grpc/index.v1.json"
+      "scope": "core",
+      "pack": "conformance/fixtures/core/index.v1.json"
     },
     {
-      "scope": "binding:events",
-      "pack": "conformance/fixtures/bindings/events/index.v1.json"
-    },
-    {
-      "scope": "profile:agent-client",
-      "pack": "conformance/fixtures/profiles/agent-client/index.v1.json"
-    },
-    {
-      "scope": "profile:mcp",
-      "pack": "conformance/fixtures/profiles/mcp/index.v1.json"
+      "scope": "domain:commerce",
+      "pack": "conformance/fixtures/domains/commerce/index.v1.json"
     },
     {
       "scope": "profile:a2a",
       "pack": "conformance/fixtures/profiles/a2a/index.v1.json"
     },
     {
-      "scope": "profile:auth-web",
-      "pack": "conformance/fixtures/profiles/auth-web/index.v1.json"
+      "scope": "profile:acp",
+      "pack": "conformance/fixtures/profiles/acp/index.v1.json"
+    },
+    {
+      "scope": "profile:agent-client",
+      "pack": "conformance/fixtures/profiles/agent-client/index.v1.json"
+    },
+    {
+      "scope": "profile:ap2",
+      "pack": "conformance/fixtures/profiles/ap2/index.v1.json"
     },
     {
       "scope": "profile:auth-fides-tap",
       "pack": "conformance/fixtures/profiles/auth-fides-tap/index.v1.json"
     },
     {
-      "scope": "profile:x402",
-      "pack": "conformance/fixtures/profiles/x402/index.v1.json"
+      "scope": "profile:auth-web",
+      "pack": "conformance/fixtures/profiles/auth-web/index.v1.json"
+    },
+    {
+      "scope": "profile:mcp",
+      "pack": "conformance/fixtures/profiles/mcp/index.v1.json"
+    },
+    {
+      "scope": "profile:mpp",
+      "pack": "conformance/fixtures/profiles/mpp/index.v1.json"
     },
     {
       "scope": "profile:osp",
       "pack": "conformance/fixtures/profiles/osp/index.v1.json"
+    },
+    {
+      "scope": "profile:ucp",
+      "pack": "conformance/fixtures/profiles/ucp/index.v1.json"
+    },
+    {
+      "scope": "profile:x402",
+      "pack": "conformance/fixtures/profiles/x402/index.v1.json"
     }
   ],
   "taxonomy": "conformance/taxonomy/scenario-taxonomy.v1.json",
@@ -58,18 +78,24 @@
   "runner_contract": "conformance/runner-contract.md",
   "result_schema": "conformance/results/result-schema.v1.json",
   "normative_sources": [
-    "spec/core/FOUNDATION-DRAFT.md",
+    "docs/COMMERCE-LANDSCAPE.md",
+    "profiles/a2a-draft.md",
+    "profiles/acp-draft.md",
+    "profiles/ap2-draft.md",
+    "profiles/auth-fides-tap-draft.md",
+    "profiles/auth-web.md",
+    "profiles/mcp.md",
+    "profiles/mpp-draft.md",
+    "profiles/osp-draft.md",
+    "profiles/ucp-draft.md",
+    "profiles/x402-draft.md",
+    "spec/bindings/events-binding-draft.md",
+    "spec/bindings/grpc-binding-draft.md",
     "spec/bindings/http-binding-draft.md",
     "spec/bindings/jsonrpc-binding-draft.md",
-    "spec/bindings/grpc-binding-draft.md",
-    "spec/bindings/events-binding-draft.md",
-    "spec/profiles/agent-client-draft.md",
-    "profiles/mcp.md",
-    "profiles/a2a-draft.md",
-    "profiles/auth-web.md",
-    "profiles/auth-fides-tap-draft.md",
-    "profiles/x402-draft.md",
-    "profiles/osp-draft.md"
+    "spec/core/FOUNDATION-DRAFT.md",
+    "spec/domain/commerce-draft.md",
+    "spec/profiles/agent-client-draft.md"
   ],
   "reference_implementations": [
     "reference/oaps-monorepo/packages/core/src/index.ts",

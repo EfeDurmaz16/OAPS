@@ -1,0 +1,27 @@
+{
+  "$id": "https://oaps.dev/schemas/domain/fulfillment-commitment.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Fulfillment Commitment",
+  "type": "object",
+  "required": [
+    "fulfillment_id",
+    "status",
+    "resource_ref"
+  ],
+  "properties": {
+    "fulfillment_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "resource_ref": {
+      "type": "string"
+    },
+    "delivered_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

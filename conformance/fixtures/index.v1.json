@@ -2,8 +2,12 @@
   "index_version": "1.0",
   "packs": [
     {
-      "scope": "core",
-      "path": "conformance/fixtures/core/index.v1.json"
+      "scope": "binding:events",
+      "path": "conformance/fixtures/bindings/events/index.v1.json"
+    },
+    {
+      "scope": "binding:grpc",
+      "path": "conformance/fixtures/bindings/grpc/index.v1.json"
     },
     {
       "scope": "binding:http",
@@ -14,40 +18,56 @@
       "path": "conformance/fixtures/bindings/jsonrpc/index.v1.json"
     },
     {
-      "scope": "binding:grpc",
-      "path": "conformance/fixtures/bindings/grpc/index.v1.json"
+      "scope": "core",
+      "path": "conformance/fixtures/core/index.v1.json"
     },
     {
-      "scope": "binding:events",
-      "path": "conformance/fixtures/bindings/events/index.v1.json"
-    },
-    {
-      "scope": "profile:agent-client",
-      "path": "conformance/fixtures/profiles/agent-client/index.v1.json"
-    },
-    {
-      "scope": "profile:mcp",
-      "path": "conformance/fixtures/profiles/mcp/index.v1.json"
+      "scope": "domain:commerce",
+      "path": "conformance/fixtures/domains/commerce/index.v1.json"
     },
     {
       "scope": "profile:a2a",
       "path": "conformance/fixtures/profiles/a2a/index.v1.json"
     },
     {
-      "scope": "profile:auth-web",
-      "path": "conformance/fixtures/profiles/auth-web/index.v1.json"
+      "scope": "profile:acp",
+      "path": "conformance/fixtures/profiles/acp/index.v1.json"
+    },
+    {
+      "scope": "profile:agent-client",
+      "path": "conformance/fixtures/profiles/agent-client/index.v1.json"
+    },
+    {
+      "scope": "profile:ap2",
+      "path": "conformance/fixtures/profiles/ap2/index.v1.json"
     },
     {
       "scope": "profile:auth-fides-tap",
       "path": "conformance/fixtures/profiles/auth-fides-tap/index.v1.json"
     },
     {
-      "scope": "profile:x402",
-      "path": "conformance/fixtures/profiles/x402/index.v1.json"
+      "scope": "profile:auth-web",
+      "path": "conformance/fixtures/profiles/auth-web/index.v1.json"
+    },
+    {
+      "scope": "profile:mcp",
+      "path": "conformance/fixtures/profiles/mcp/index.v1.json"
+    },
+    {
+      "scope": "profile:mpp",
+      "path": "conformance/fixtures/profiles/mpp/index.v1.json"
     },
     {
       "scope": "profile:osp",
       "path": "conformance/fixtures/profiles/osp/index.v1.json"
+    },
+    {
+      "scope": "profile:ucp",
+      "path": "conformance/fixtures/profiles/ucp/index.v1.json"
+    },
+    {
+      "scope": "profile:x402",
+      "path": "conformance/fixtures/profiles/x402/index.v1.json"
     }
   ]
 }

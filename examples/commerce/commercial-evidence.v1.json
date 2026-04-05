@@ -1,0 +1,13 @@
+{
+  "event_id": "evt_com_002",
+  "order_intent_id": "com_order_001",
+  "event_type": "commerce.authorization.recorded",
+  "actor": "https://merchant.example/actors/storefront",
+  "timestamp": "2026-04-05T10:15:01Z",
+  "event_hash": "sha256:commerce002",
+  "prev_event_hash": "sha256:0",
+  "metadata": {
+    "merchant_authorization_id": "m_auth_001",
+    "fulfillment_ref": "ful_com_001"
+  }
+}

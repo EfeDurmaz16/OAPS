@@ -1,0 +1,10 @@
+{
+  "merchant_authorization_id": "m_auth_001",
+  "merchant": {
+    "actor_id": "https://merchant.example/actors/storefront"
+  },
+  "order_intent_id": "com_order_001",
+  "decision": "approved",
+  "reason": "Inventory available and buyer within budget",
+  "decided_at": "2026-04-05T10:15:00Z"
+}

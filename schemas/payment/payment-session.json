@@ -1,0 +1,63 @@
+{
+  "$id": "https://oaps.dev/schemas/payment/payment-session.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Payment Session",
+  "type": "object",
+  "required": [
+    "payment_session_id",
+    "payer",
+    "payee",
+    "status",
+    "requested_amount"
+  ],
+  "properties": {
+    "payment_session_id": {
+      "type": "string"
+    },
+    "payer": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "payee": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "status": {
+      "type": "string"
+    },
+    "requested_amount": {
+      "type": "object",
+      "required": [
+        "value",
+        "currency"
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "currency": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorization_intent": {
+      "type": "object"
+    },
+    "mandate_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "settlement_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

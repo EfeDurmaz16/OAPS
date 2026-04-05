@@ -1,0 +1,65 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:acp",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/acp-draft.md",
+    "spec/domain/commerce-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "acp.order-intent.mapping",
+      "dimension": "order-intent",
+      "schema": "schemas/domain/order-intent.json",
+      "example": "examples/commerce/order-intent.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors order-intent mapping for ACP-style commerce initiation.",
+      "related_examples": [
+        "examples/commerce/order-intent.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "acp.delegated-checkout.mapping",
+      "dimension": "delegated-checkout",
+      "example": "examples/commerce/delegated-checkout.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture preserves delegated checkout plus payment handoff semantics for ACP-style flows.",
+      "related_examples": [
+        "examples/commerce/delegated-checkout.v1.json",
+        "examples/commerce/profile-support.partial.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "acp.fulfillment.outcome",
+      "dimension": "fulfillment",
+      "schema": "schemas/domain/fulfillment-commitment.json",
+      "example": "examples/commerce/fulfillment-outcome.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors fulfillment outcome carryover for ACP-style commerce flows.",
+      "related_examples": [
+        "examples/commerce/fulfillment-outcome.v1.json",
+        "examples/execution-result.json"
+      ]
+    },
+    {
+      "scenario_id": "acp.compatibility.partial-support",
+      "dimension": "merchant-authorization",
+      "example": "examples/commerce/profile-support.partial.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern for example-only ACP alignment.",
+      "related_examples": [
+        "examples/commerce/profile-support.partial.v1.json"
+      ]
+    }
+  ]
+}

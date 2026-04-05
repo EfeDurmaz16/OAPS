@@ -5,6 +5,8 @@ This directory holds the machine-readable schema packs for the OAPS suite.
 Current schema families:
 
 - `foundation/` — core foundation draft schemas
+- `payment/` — draft payment profile schemas for MPP/AP2-style mappings
+- `domain/` — draft domain-family schemas for commerce alignment
 - top-level draft-pack schemas used by the current MCP-oriented reference slice
 
 Current foundation entry points:
@@ -46,5 +48,18 @@ Suite rule:
 - normative drafts should ship with schemas
 - schemas should ship with examples
 - conformance should reference both
+
+Draft payment entry points:
+
+- `payment/payment-session.json`
+- `payment/payment-authorization.json`
+- `payment/mandate-chain.json`
+
+Draft domain entry points:
+
+- `domain/order-intent.json`
+- `domain/merchant-authorization.json`
+- `domain/fulfillment-commitment.json`
+- `domain/commercial-evidence.json`
 
 When new bindings or profiles become hard-normative, add their schema families here instead of overloading the existing foundation pack.

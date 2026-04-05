@@ -2,20 +2,29 @@
   "taxonomy_version": "1.0",
   "families": [
     {
-      "id": "core",
+      "id": "binding:events",
       "dimensions": [
-        "identity",
-        "intent",
-        "lifecycle",
-        "task",
-        "challenge",
-        "delegation",
-        "mandate",
-        "approval",
-        "execution",
-        "evidence",
-        "error",
-        "extension"
+        "delivery-envelope",
+        "event-payload",
+        "replay-relationship",
+        "delivery-guarantees",
+        "retry-dedupe",
+        "replay-resumption"
+      ]
+    },
+    {
+      "id": "binding:grpc",
+      "dimensions": [
+        "discovery",
+        "rpc-shape",
+        "interaction-lifecycle",
+        "message-lifecycle",
+        "approval-flow",
+        "revocation",
+        "event-stream",
+        "error-mapping",
+        "metadata-mapping",
+        "streaming-behavior"
       ]
     },
     {
@@ -49,29 +58,50 @@
       ]
     },
     {
-      "id": "binding:grpc",
+      "id": "core",
       "dimensions": [
-        "discovery",
-        "rpc-shape",
-        "interaction-lifecycle",
-        "message-lifecycle",
-        "approval-flow",
-        "revocation",
-        "event-stream",
-        "error-mapping",
-        "metadata-mapping",
-        "streaming-behavior"
+        "identity",
+        "intent",
+        "lifecycle",
+        "task",
+        "challenge",
+        "delegation",
+        "mandate",
+        "approval",
+        "execution",
+        "evidence",
+        "error",
+        "extension"
       ]
     },
     {
-      "id": "binding:events",
+      "id": "domain:commerce",
       "dimensions": [
-        "delivery-envelope",
-        "event-payload",
-        "replay-relationship",
-        "delivery-guarantees",
-        "retry-dedupe",
-        "replay-resumption"
+        "order-intent",
+        "merchant-authorization",
+        "payment-handoff",
+        "fulfillment",
+        "compensation",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:a2a",
+      "dimensions": [
+        "task-mapping",
+        "lifecycle-preservation",
+        "delegation",
+        "approval",
+        "evidence-lineage"
+      ]
+    },
+    {
+      "id": "profile:acp",
+      "dimensions": [
+        "order-intent",
+        "delegated-checkout",
+        "merchant-authorization",
+        "fulfillment"
       ]
     },
     {
@@ -82,6 +112,33 @@
         "remote-execution-evidence",
         "approval-semantics",
         "non-goal-boundary"
+      ]
+    },
+    {
+      "id": "profile:ap2",
+      "dimensions": [
+        "mandate-chain",
+        "approval-handoff",
+        "payment-authorization",
+        "compatibility"
+      ]
+    },
+    {
+      "id": "profile:auth-fides-tap",
+      "dimensions": [
+        "attestation",
+        "trust-upgrade",
+        "delegation",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:auth-web",
+      "dimensions": [
+        "identity",
+        "subject-binding",
+        "delegation",
+        "evidence"
       ]
     },
     {
@@ -96,40 +153,12 @@
       ]
     },
     {
-      "id": "profile:a2a",
+      "id": "profile:mpp",
       "dimensions": [
-        "task-mapping",
-        "lifecycle-preservation",
-        "delegation",
-        "approval",
-        "evidence-lineage"
-      ]
-    },
-    {
-      "id": "profile:auth-web",
-      "dimensions": [
-        "identity",
-        "subject-binding",
-        "delegation",
-        "evidence"
-      ]
-    },
-    {
-      "id": "profile:auth-fides-tap",
-      "dimensions": [
-        "attestation",
-        "trust-upgrade",
-        "delegation",
-        "evidence"
-      ]
-    },
-    {
-      "id": "profile:x402",
-      "dimensions": [
-        "payment-discovery",
-        "payment-authorization",
+        "payment-session",
+        "authorization",
         "settlement",
-        "evidence"
+        "compatibility"
       ]
     },
     {
@@ -138,6 +167,24 @@
         "provisioning",
         "approval",
         "credential-delivery",
+        "evidence"
+      ]
+    },
+    {
+      "id": "profile:ucp",
+      "dimensions": [
+        "checkout-initiation",
+        "authorization-boundary",
+        "fulfillment",
+        "compatibility"
+      ]
+    },
+    {
+      "id": "profile:x402",
+      "dimensions": [
+        "payment-discovery",
+        "payment-authorization",
+        "settlement",
         "evidence"
       ]
     }

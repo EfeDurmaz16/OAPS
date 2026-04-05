@@ -1,0 +1,67 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:ucp",
+  "status": "draft",
+  "normative_sources": [
+    "profiles/ucp-draft.md",
+    "spec/domain/commerce-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "ucp.checkout.initiation",
+      "dimension": "checkout-initiation",
+      "schema": "schemas/domain/order-intent.json",
+      "example": "examples/commerce/order-intent.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors checkout initiation mapping for UCP-style flows.",
+      "related_examples": [
+        "examples/commerce/order-intent.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "ucp.authorization.boundary",
+      "dimension": "authorization-boundary",
+      "schema": "schemas/domain/merchant-authorization.json",
+      "example": "examples/commerce/merchant-authorization.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors merchant or checkout authorization boundaries in UCP-style flows.",
+      "related_examples": [
+        "examples/commerce/merchant-authorization.v1.json",
+        "examples/approval-request.json"
+      ]
+    },
+    {
+      "scenario_id": "ucp.fulfillment.confirmation",
+      "dimension": "fulfillment",
+      "schema": "schemas/domain/fulfillment-commitment.json",
+      "example": "examples/commerce/fulfillment-outcome.v1.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "This fixture anchors fulfillment confirmation and closure in UCP-style flows.",
+      "related_examples": [
+        "examples/commerce/fulfillment-outcome.v1.json",
+        "examples/execution-result.json"
+      ]
+    },
+    {
+      "scenario_id": "ucp.compatibility.compatible-support",
+      "dimension": "compatibility",
+      "example": "examples/commerce/profile-support.compatible.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern for fuller draft-only UCP support.",
+      "related_examples": [
+        "examples/commerce/profile-support.compatible.v1.json"
+      ]
+    }
+  ]
+}

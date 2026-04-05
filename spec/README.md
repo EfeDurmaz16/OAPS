@@ -8,6 +8,7 @@ Current structure:
 - `core/` — hard semantic core drafts
 - `bindings/` — binding drafts
 - `profiles/` — suite-owned profile drafts that currently live inside the spec tree
+- `domain/` — domain-family drafts such as commerce
 
 Current entry points:
 
@@ -21,5 +22,10 @@ Current entry points:
 - `bindings/grpc-binding-draft.md` — first gRPC binding-track draft
 - `bindings/events-binding-draft.md` — first events/webhooks binding-track draft
 - `profiles/agent-client-draft.md` — first agent-client / CLI / SSH profile-track draft
+- `domain/commerce-draft.md` — first commerce domain-family draft
+- `../profiles/mpp-draft.md` — draft MPP payment-session profile
+- `../profiles/ap2-draft.md` — draft AP2 payment authorization profile
+- `../profiles/acp-draft.md` — draft ACP commerce alignment profile
+- `../profiles/ucp-draft.md` — draft UCP commerce alignment profile
 
 The older consolidated `../SPEC.md` still exists because it backs the current MCP-oriented reference slice, but it should no longer be treated as the entire future shape of OAPS.

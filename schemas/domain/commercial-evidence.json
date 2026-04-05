@@ -1,0 +1,43 @@
+{
+  "$id": "https://oaps.dev/schemas/domain/commercial-evidence.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Commercial Evidence",
+  "type": "object",
+  "required": [
+    "event_id",
+    "order_intent_id",
+    "event_type",
+    "actor",
+    "timestamp",
+    "event_hash",
+    "prev_event_hash"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "order_intent_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "event_hash": {
+      "type": "string"
+    },
+    "prev_event_hash": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

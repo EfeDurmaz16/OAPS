@@ -1,0 +1,34 @@
+{
+  "$id": "https://oaps.dev/schemas/payment/mandate-chain.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Mandate Chain",
+  "type": "object",
+  "required": [
+    "mandate_chain_id",
+    "principal",
+    "delegatee",
+    "action"
+  ],
+  "properties": {
+    "mandate_chain_id": {
+      "type": "string"
+    },
+    "principal": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "delegatee": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "action": {
+      "$ref": "../foundation/common.json#/$defs/action"
+    },
+    "payment_authorization": {
+      "type": "object"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

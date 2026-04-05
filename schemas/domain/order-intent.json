@@ -1,0 +1,34 @@
+{
+  "$id": "https://oaps.dev/schemas/domain/order-intent.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Order Intent",
+  "type": "object",
+  "required": [
+    "order_intent_id",
+    "customer",
+    "merchant",
+    "requested_outcome",
+    "state"
+  ],
+  "properties": {
+    "order_intent_id": {
+      "type": "string"
+    },
+    "customer": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "merchant": {
+      "$ref": "../foundation/common.json#/$defs/actorRef"
+    },
+    "cart": {
+      "type": "object"
+    },
+    "requested_outcome": {
+      "type": "string"
+    },
+    "state": {
+      "$ref": "../foundation/common.json#/$defs/interactionState"
+    }
+  },
+  "additionalProperties": false
+}
