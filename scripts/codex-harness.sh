@@ -11,6 +11,7 @@ STATE_DIR="${ROOT}/.codex/state"
 LAST_MESSAGE_FILE="${STATE_DIR}/last-message.txt"
 RUNTIME_HOME_DIR="${ROOT}/.codex/runtime-home"
 RUNTIME_CONFIG_TEMPLATE="${ROOT}/codex/config/runtime-home.toml"
+USER_CODEX_HOME="${HOME}/.codex"
 mkdir -p "${STATE_DIR}"
 
 prepare_codex_home() {
@@ -22,6 +23,11 @@ prepare_codex_home() {
   fi
 
   cp "${RUNTIME_CONFIG_TEMPLATE}" "${RUNTIME_HOME_DIR}/config.toml"
+
+  if [[ -f "${USER_CODEX_HOME}/auth.json" ]]; then
+    cp "${USER_CODEX_HOME}/auth.json" "${RUNTIME_HOME_DIR}/auth.json"
+    chmod 600 "${RUNTIME_HOME_DIR}/auth.json"
+  fi
 }
 
 default_prompt() {
