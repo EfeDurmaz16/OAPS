@@ -9,9 +9,13 @@ The goal is to reduce interactive check-ins and move repeat execution into non-i
 ## Primary Files
 
 - `AGENTS.md` — execution contract
+- `PLANS.md` — durable tranche queue
+- `docs/NEXT-STEPS.md` — short-horizon priority override
 - `docs/STATUS.md` — live progress and tranche log
+- `CHARTER.md`, `VISION.md`, `ROADMAP.md`, `SPEC.md`, `spec/`, and suite docs — durable protocol context
 - `.codex/config.toml` — project-scoped Codex defaults
 - `codex/instructions/harness.txt` — injected harness instructions
+- `codex/prompts/full-oaps-implementation.txt` — default long-run prompt
 - `scripts/codex-harness.sh` — single non-interactive tranche runner
 - `scripts/codex-tranche-loop.sh` — auto-resume tranche loop
 
@@ -32,6 +36,8 @@ scripts/codex-tranche-loop.sh
 ## Expectations
 
 - update `docs/STATUS.md`
+- load the durable protocol context before deep implementation work
+- follow `PLANS.md` and `docs/NEXT-STEPS.md`
 - use objective validators and tests
 - commit atomically
 - stop only on real completion or real blockers

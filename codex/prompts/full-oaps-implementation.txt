@@ -1,0 +1,37 @@
+Read these files first:
+
+- AGENTS.md
+- docs/STATUS.md
+- PLANS.md
+- docs/NEXT-STEPS.md
+- CHARTER.md
+- VISION.md
+- ROADMAP.md
+- SPEC.md
+- docs/SUITE-ARCHITECTURE.md
+- docs/ECOSYSTEM-MAP.md
+- docs/STANDARDS-LANDSCAPE.md
+
+Then continue implementing OAPS as far as possible across:
+
+- spec/
+- profiles/
+- conformance/
+- reference/
+- docs/
+
+Execution rules:
+
+- start from the first unfinished tranche in PLANS.md, unless docs/NEXT-STEPS.md defines a narrower near-term priority
+- work autonomously until the current tranche is actually complete
+- do not stop for summaries
+- do not ask whether to continue
+- atomically commit every small completed step
+- validate before stopping
+- use parallel agents when scopes split cleanly
+- update docs/STATUS.md as you work
+
+Stop only with exactly one final status line:
+
+- DONE: <short summary>
+- BLOCKED: <precise blocker>

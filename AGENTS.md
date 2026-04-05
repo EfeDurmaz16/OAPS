@@ -14,7 +14,26 @@ When work references any of the following, treat it as long-horizon execution sc
 - `profiles/`
 - `conformance/`
 - `reference/`
+- `PLANS.md`
+- `docs/NEXT-STEPS.md`
 - `docs/STATUS.md`
+
+## Context Loading
+
+Before substantive long-horizon execution, read the durable project context:
+
+- `CHARTER.md`
+- `VISION.md`
+- `ROADMAP.md`
+- `SPEC.md`
+- `spec/`
+- `docs/SUITE-ARCHITECTURE.md`
+- `docs/ECOSYSTEM-MAP.md`
+- `docs/STANDARDS-LANDSCAPE.md`
+- `profiles/`
+- `conformance/`
+
+This context defines the project vision, mission, scope, protocol boundaries, and implementation direction.
 
 ## Autonomy
 
@@ -36,6 +55,8 @@ Stop only when one of these is true:
 ## Working Rules
 
 - Update `docs/STATUS.md` as the live execution log.
+- Treat `PLANS.md` as the durable tranche queue.
+- Treat `docs/NEXT-STEPS.md` as the short-horizon priority override when it is more specific than `PLANS.md`.
 - Make atomic commits for each coherent unit of work.
 - Prefer many small atomic commits over one large mixed commit.
 - When a small step is complete and validated, commit it before moving to the next step.

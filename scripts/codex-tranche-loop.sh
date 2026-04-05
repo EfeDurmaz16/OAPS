@@ -14,26 +14,19 @@ mkdir -p "${STATE_DIR}"
 MAX_ROUNDS="${MAX_ROUNDS:-20}"
 
 default_initial_prompt() {
+  if [[ -f "${ROOT}/codex/prompts/full-oaps-implementation.txt" ]]; then
+    cat "${ROOT}/codex/prompts/full-oaps-implementation.txt"
+    return
+  fi
   cat <<'EOF'
-Read AGENTS.md and docs/STATUS.md first.
-
-Then read the current tranche context from:
-- CHARTER.md
-- ROADMAP.md
-- SPEC.md
-- spec/
-- profiles/
-- conformance/
-- reference/
-
+Read AGENTS.md, docs/STATUS.md, PLANS.md, and docs/NEXT-STEPS.md first.
 Execute the next unfinished tranche autonomously.
 Do not stop for progress summaries.
 Do not ask whether to continue.
 Update docs/STATUS.md as you work.
 Use parallel agents when the work cleanly decomposes into disjoint scopes.
-Make atomic commits.
+Atomically commit every small completed step.
 Validate before stopping.
-
 Stop only with exactly one final status line:
 DONE: <short summary>
 or
@@ -43,7 +36,7 @@ EOF
 
 default_continue_prompt() {
   cat <<'EOF'
-Continue from the existing session and docs/STATUS.md.
+Continue from the existing session, docs/STATUS.md, PLANS.md, and docs/NEXT-STEPS.md.
 Do not stop for summaries.
 Do not ask whether to continue.
 Complete the next unfinished tranche, validate it, and commit atomically.

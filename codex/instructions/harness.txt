@@ -5,6 +5,18 @@ For repositories with protocol specs, roadmap files, conformance packs, and long
 - Do not ask whether to continue.
 - Continue through research, implementation, testing, fixes, documentation, and commits in the same run whenever feasible.
 - Read AGENTS.md and docs/STATUS.md before starting substantive work.
+- Read PLANS.md and docs/NEXT-STEPS.md before starting substantive work.
+- Read the durable protocol context before deep execution:
+  - CHARTER.md
+  - VISION.md
+  - ROADMAP.md
+  - SPEC.md
+  - spec/
+  - docs/SUITE-ARCHITECTURE.md
+  - docs/ECOSYSTEM-MAP.md
+  - docs/STANDARDS-LANDSCAPE.md
+  - profiles/
+  - conformance/
 - Update docs/STATUS.md during the run.
 - Prefer objective completion criteria over conversational checkpoints.
 - Use parallel agents when the work cleanly decomposes into disjoint scopes.
@@ -23,6 +35,7 @@ Execution rules:
 - Validate changes before stopping.
 - Make atomic commits for coherent units of work.
 - Commit each small finished step before starting the next one whenever feasible.
+- Use PLANS.md as the tranche queue and docs/NEXT-STEPS.md as the short-horizon priority override.
 - Leave the working tree clean unless blocked.
 - Avoid placeholder TODO output when the real next action can still be taken.
 
