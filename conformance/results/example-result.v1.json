@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T11:26:28.447249Z",
+  "executed_at": "2026-04-05T13:09:00.428937Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -58,6 +58,19 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "core.intent.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/intent-invoke-missing-arguments.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.intent.invalid.invoke-missing-arguments",
       "scope": "core"
     },
     {
@@ -146,6 +159,36 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "core.approval-decision.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/challenge.json",
+        "examples/foundation/challenge.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.challenge.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/interaction-transition.json",
+        "examples/foundation/interaction-transition.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.interaction-transition.valid",
       "scope": "core"
     },
     {
@@ -262,6 +305,73 @@
     },
     {
       "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "schemas/foundation/task-transition.json",
+        "examples/foundation/task-transition.json"
+      ],
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.task-transition.valid",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/interaction-transition-completed-to-executing.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.interaction-transition.invalid.completed-to-executing",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "conformance/fixtures/core/invalid/task-transition-completed-to-running.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.task-transition.invalid.completed-to-running",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.intent.task-promotion",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json",
+        "reference/oaps-monorepo/packages/core/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "core.reject-vs-revoke.distinct",
+      "scope": "core"
+    },
+    {
+      "artifacts": [
         "conformance/fixtures/bindings/http/index.v1.json",
         "reference/oaps-monorepo/packages/http/src/index.test.ts"
       ],
@@ -300,6 +410,36 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "http.discovery.well-known",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/actor-card.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.discovery.actor-card",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/capabilities.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.discovery.capabilities",
       "scope": "binding:http"
     },
     {
@@ -450,6 +590,19 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
+      "scenario_id": "http.events.replay-window.edge-cases",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
       "scenario_id": "http.events.replay-cursor-invalid",
       "scope": "binding:http"
     },
@@ -494,6 +647,19 @@
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
       "scenario_id": "http.approval.rejection",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.approval.rejection.retrieval",
       "scope": "binding:http"
     },
     {
@@ -590,6 +756,81 @@
     {
       "artifacts": [
         "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/errors/authentication-required.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.error.authentication-required",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/errors/interaction-not-found.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.error.interaction-not-found",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/errors/approval-not-pending.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.error.approval-not-pending",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/errors/idempotency-conflict.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.error.idempotency-conflict",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "examples/http/errors/replay-cursor-not-found.response.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.error.replay-cursor-not-found",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
         "reference/oaps-monorepo/packages/http/src/index.test.ts"
       ],
       "coverage": [
@@ -599,6 +840,370 @@
       "outcome": "pass",
       "scenario_id": "http.revocation.request",
       "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.revocation.retrieval",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.replay.after-approve",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.replay.after-reject",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/http/index.v1.json",
+        "reference/oaps-monorepo/packages/http/src/index.test.ts"
+      ],
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "http.events.replay.after-revoke",
+      "scope": "binding:http"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/discovery.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.discovery.request-response",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/discovery.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.discovery.response-shape",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/interactions.create.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.interactions.create",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/messages.append.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.messages.append",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/approve.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.approval.approve",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/reject.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.approval.reject",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/revoke.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.revocation.request",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/events.list.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.events.list",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/errors/approval-not-pending.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.error.mapping",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/interactions.create.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.idempotency.keyed-mutations",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/interactions.create.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.correlation.ids",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/jsonrpc/index.v1.json",
+        "examples/jsonrpc/notification.progress.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "jsonrpc.notifications.progress-update",
+      "scope": "binding:jsonrpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/discovery.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.discovery.request-response",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/interactions.create.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.interactions.create.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/messages.append.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.messages.append.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/approve.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.approval.approve.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/reject.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.approval.reject.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/revoke.request.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.revocation.revoke.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/events.list.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.events.list.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/evidence.list.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.evidence.list.unary",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/events.stream.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.events.stream.server",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/evidence.stream.response.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.evidence.stream.server",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/errors/approval-not-pending.status.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.error.mapping.status",
+      "scope": "binding:grpc"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/grpc/index.v1.json",
+        "examples/grpc/metadata.request-headers.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "grpc.metadata.headers",
+      "scope": "binding:grpc"
     },
     {
       "artifacts": [
@@ -964,6 +1569,8 @@
   "scopes": [
     "core",
     "binding:http",
+    "binding:jsonrpc",
+    "binding:grpc",
     "profile:mcp",
     "profile:a2a",
     "profile:auth-web",
@@ -974,8 +1581,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 66,
+    "pass": 111,
     "skip": 0,
-    "total": 66
+    "total": 111
   }
 }

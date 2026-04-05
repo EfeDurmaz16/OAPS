@@ -3,7 +3,7 @@
 Recommended request metadata keys:
 
 - `authorization`
-- `idempotency-key`
+- `x-oaps-idempotency-key`
 - `x-oaps-spec-version`
 - `x-oaps-min-supported-version`
 - `x-oaps-max-supported-version`

@@ -1,0 +1,31 @@
+{
+  "interactionId": "ix_grpc_1",
+  "evidence": [
+    {
+      "eventId": "evt_grpc_3",
+      "interactionId": "ix_grpc_1",
+      "eventType": "mcp.tool_call.completed",
+      "timestamp": "2026-04-05T14:02:00Z",
+      "prevEventHash": "sha256:evt_grpc_2",
+      "eventHash": "sha256:evt_grpc_3",
+      "payloadJson": "{\"tool\":\"read_repo\",\"status\":\"completed\"}"
+    },
+    {
+      "eventId": "evt_grpc_4",
+      "interactionId": "ix_grpc_1",
+      "eventType": "interaction.completed",
+      "timestamp": "2026-04-05T14:02:01Z",
+      "prevEventHash": "sha256:evt_grpc_3",
+      "eventHash": "sha256:evt_grpc_4",
+      "payloadJson": "{\"state\":\"completed\"}"
+    }
+  ],
+  "replay": {
+    "after": "evt_grpc_2",
+    "limit": 2,
+    "returned": 2,
+    "totalEvents": 4,
+    "hasMore": false,
+    "nextAfter": "evt_grpc_4"
+  }
+}

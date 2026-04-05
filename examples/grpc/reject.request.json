@@ -1,11 +1,9 @@
 {
-  "grpc_service": "oaps.bindings.grpc.v1.InteractionService",
-  "grpc_method": "RejectInteraction",
+  "service": "oaps.bindings.grpc.v1.InteractionsService/RejectInteraction",
   "metadata": {
-    "authorization": "Bearer approver-token",
-    "idempotency-key": "idem-grpc-reject-1"
+    "x-oaps-idempotency-key": "idem-grpc-reject-1"
   },
-  "message": {
+  "request": {
     "interaction_id": "ix_grpc_pending_1",
     "idempotency_key": "idem-grpc-reject-1",
     "reason": "denied for test"

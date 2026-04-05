@@ -1,13 +1,11 @@
 {
-  "grpc_service": "oaps.bindings.grpc.v1.InteractionService",
-  "grpc_method": "RevokeInteraction",
+  "service": "oaps.bindings.grpc.v1.InteractionsService/RevokeInteraction",
   "metadata": {
-    "authorization": "Bearer approver-token",
-    "idempotency-key": "idem-grpc-revoke-1"
+    "x-oaps-idempotency-key": "idem-grpc-revoke-1"
   },
-  "message": {
+  "request": {
     "interaction_id": "ix_grpc_1",
     "idempotency_key": "idem-grpc-revoke-1",
-    "reason": "revoked for test"
+    "reason": "authority withdrawn"
   }
 }

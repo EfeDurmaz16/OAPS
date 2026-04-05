@@ -155,14 +155,14 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 4. gRPC Binding Draft
 
-- [ ] Add `spec/bindings/grpc-binding-draft.md`
-- [ ] Add initial `.proto` package layout under `reference/proto/` or `spec/bindings/grpc/`
-- [ ] Define unary vs streaming method mapping for interactions, messages, approvals, events
-- [ ] Define gRPC error mapping rules
-- [ ] Define metadata/header mapping rules
-- [ ] Add example service definitions and message mapping notes
-- [ ] Add draft conformance fixture pack for `binding:grpc`
-- [ ] Add compatibility-scope placeholder rules for `binding:grpc`
+- [x] Add `spec/bindings/grpc-binding-draft.md`
+- [x] Add initial `.proto` package layout under `reference/proto/` or `spec/bindings/grpc/`
+- [x] Define unary vs streaming method mapping for interactions, messages, approvals, events
+- [x] Define gRPC error mapping rules
+- [x] Define metadata/header mapping rules
+- [x] Add example service definitions and message mapping notes
+- [x] Add draft conformance fixture pack for `binding:grpc`
+- [x] Add compatibility-scope placeholder rules for `binding:grpc`
 
 ### 5. Events / Webhooks Binding Draft
 

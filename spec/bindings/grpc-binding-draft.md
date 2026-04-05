@@ -139,22 +139,27 @@ they remain draft-track follow surfaces rather than the only recovery mechanism.
 
 ## Metadata And Header Mapping
 
-The current draft maps binding metadata into gRPC metadata headers/trailers.
+The current draft maps binding metadata into gRPC metadata headers and trailers.
 
 Recommended request metadata keys include:
 
-- `authorization` for bearer or stronger auth credentials
+- `authorization`
 - `x-oaps-spec-version`
 - `x-oaps-min-supported-version`
 - `x-oaps-max-supported-version`
 - `x-oaps-idempotency-key`
 - `x-oaps-correlation-id`
+- `x-oaps-actor-id`
+- `x-oaps-replay-after`
+- `x-oaps-replay-limit`
 
 Recommended response or trailer metadata keys include:
 
 - `x-oaps-interaction-id`
+- `x-oaps-next-after`
 - `x-oaps-error-code`
 - `x-oaps-error-category`
+- `x-oaps-retryable`
 
 The binding SHOULD preserve the same idempotency rule as HTTP for unary mutating
 methods: the same authenticated caller, method, request body, and idempotency key
@@ -189,15 +194,18 @@ portable OAPS error object there rather than flattening everything into a string
 The repository now includes:
 
 - a first example pack under `examples/grpc/`
-- a draft `.proto` package layout under `reference/proto/`
+- a draft `.proto` package layout under `reference/proto/oaps/bindings/grpc/v1/`
+- discovery request/response examples
+- a service-map example describing unary versus server-streaming boundaries
+- replay request, streaming follow, metadata mapping, and error-detail examples
 
 The example pack covers:
 
-- unary discovery response shape
+- unary discovery request/response shapes
 - interaction create and message append request shapes
 - unary approve/reject/revoke mutations
 - replay-window list calls
-- server-streaming event follow notes
+- server-streaming event and evidence follow examples
 - metadata/header mapping notes
 - gRPC status plus OAPS error-detail mapping
 

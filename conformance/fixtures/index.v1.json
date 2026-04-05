@@ -14,6 +14,10 @@
       "path": "conformance/fixtures/bindings/jsonrpc/index.v1.json"
     },
     {
+      "scope": "binding:grpc",
+      "path": "conformance/fixtures/bindings/grpc/index.v1.json"
+    },
+    {
       "scope": "profile:mcp",
       "path": "conformance/fixtures/profiles/mcp/index.v1.json"
     },

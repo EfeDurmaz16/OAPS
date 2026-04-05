@@ -49,6 +49,21 @@
       ]
     },
     {
+      "id": "binding:grpc",
+      "dimensions": [
+        "discovery",
+        "rpc-shape",
+        "interaction-lifecycle",
+        "message-lifecycle",
+        "approval-flow",
+        "revocation",
+        "event-stream",
+        "error-mapping",
+        "metadata-mapping",
+        "streaming-behavior"
+      ]
+    },
+    {
       "id": "profile:mcp",
       "dimensions": [
         "capability-mapping",

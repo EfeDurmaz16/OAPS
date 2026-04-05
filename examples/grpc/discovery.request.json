@@ -1,8 +1,7 @@
 {
-  "grpc_service": "oaps.bindings.grpc.v1.DiscoveryService",
-  "grpc_method": "Discover",
+  "service": "oaps.bindings.grpc.v1.DiscoveryService/GetWellKnown",
   "metadata": {
     "x-oaps-spec-version": "0.4-draft"
   },
-  "message": {}
+  "request": {}
 }

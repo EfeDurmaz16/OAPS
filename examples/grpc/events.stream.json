@@ -1,0 +1,25 @@
+[
+  {
+    "interaction_id": "ix_grpc_1",
+    "ordinal": 1,
+    "event": {
+      "event_id": "evt_grpc_3",
+      "event_type": "mcp.tool_call.completed"
+    }
+  },
+  {
+    "interaction_id": "ix_grpc_1",
+    "ordinal": 2,
+    "event": {
+      "event_id": "evt_grpc_4",
+      "event_type": "interaction.completed"
+    },
+    "replay": {
+      "after": "evt_grpc_2",
+      "returned": 2,
+      "total_events": 4,
+      "has_more": false,
+      "next_after": "evt_grpc_4"
+    }
+  }
+]

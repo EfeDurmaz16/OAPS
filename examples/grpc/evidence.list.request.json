@@ -1,0 +1,16 @@
+{
+  "grpc_service": "oaps.bindings.grpc.v1.InteractionService",
+  "grpc_method": "ListInteractionEvidence",
+  "metadata": {
+    "x-oaps-replay-after": "evt_grpc_2",
+    "x-oaps-replay-limit": "2"
+  },
+  "message": {
+    "interaction_id": "ix_grpc_1",
+    "replay": {
+      "after": "evt_grpc_2",
+      "limit": 2,
+      "follow": false
+    }
+  }
+}

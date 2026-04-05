@@ -1,0 +1,15 @@
+{
+  "requestMetadata": {
+    "authorization": "Bearer test-token",
+    "idempotency-key": "idem-grpc-create-1",
+    "x-oaps-spec-version": "0.4-draft",
+    "x-oaps-request-id": "grpc-req-1"
+  },
+  "responseTrailers": {
+    "x-oaps-next-after": "evt_grpc_4"
+  },
+  "notes": [
+    "request metadata mirrors but does not replace request message fields",
+    "servers should treat idempotency-key as equivalent to the explicit idempotency_key field for identical retries"
+  ]
+}

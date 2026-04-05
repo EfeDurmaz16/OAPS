@@ -1,0 +1,131 @@
+{
+  "pack_version": "1.0",
+  "scope": "binding:grpc",
+  "status": "draft",
+  "normative_sources": [
+    "spec/bindings/grpc-binding-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "grpc.discovery.request-response",
+      "dimension": "discovery",
+      "example": "examples/grpc/discovery.response.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/discovery.request.json",
+        "examples/grpc/service-map.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "grpc.interactions.create.unary",
+      "dimension": "interaction-lifecycle",
+      "example": "examples/grpc/interactions.create.request.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/interactions.create.response.json"
+      ]
+    },
+    {
+      "scenario_id": "grpc.messages.append.unary",
+      "dimension": "message-lifecycle",
+      "example": "examples/grpc/messages.append.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "grpc.approval.approve.unary",
+      "dimension": "approval-flow",
+      "example": "examples/grpc/approve.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "grpc.approval.reject.unary",
+      "dimension": "approval-flow",
+      "example": "examples/grpc/reject.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "grpc.revocation.revoke.unary",
+      "dimension": "revocation",
+      "example": "examples/grpc/revoke.request.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "grpc.events.list.unary",
+      "dimension": "event-stream",
+      "example": "examples/grpc/events.list.response.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/events.list.request.json"
+      ]
+    },
+    {
+      "scenario_id": "grpc.evidence.list.unary",
+      "dimension": "event-stream",
+      "example": "examples/grpc/evidence.list.response.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/evidence.list.request.json"
+      ]
+    },
+    {
+      "scenario_id": "grpc.events.stream.server",
+      "dimension": "streaming-behavior",
+      "example": "examples/grpc/events.stream.response.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/events.stream.json",
+        "examples/grpc/events.watch.md"
+      ]
+    },
+    {
+      "scenario_id": "grpc.evidence.stream.server",
+      "dimension": "streaming-behavior",
+      "example": "examples/grpc/evidence.stream.response.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/evidence.stream.json"
+      ]
+    },
+    {
+      "scenario_id": "grpc.error.mapping.status",
+      "dimension": "error-mapping",
+      "example": "examples/grpc/errors/approval-not-pending.status.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "grpc.metadata.headers",
+      "dimension": "metadata-mapping",
+      "example": "examples/grpc/metadata.request-headers.json",
+      "coverage": [
+        "fixture"
+      ],
+      "related_examples": [
+        "examples/grpc/metadata.idempotency.json",
+        "reference/proto/oaps/bindings/grpc/v1/oaps.proto",
+        "examples/grpc/service-map.v1.json"
+      ]
+    }
+  ]
+}

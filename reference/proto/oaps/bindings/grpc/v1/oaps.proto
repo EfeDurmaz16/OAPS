@@ -35,8 +35,11 @@ message DiscoveryResponse {
   string actor_card_rpc = 2;
   string capabilities_rpc = 3;
   string interactions_create_rpc = 4;
-  repeated string supported_auth_schemes = 5;
-  repeated string supported_profiles = 6;
+  string interactions_get_rpc = 5;
+  string events_replay_rpc = 6;
+  string evidence_replay_rpc = 7;
+  repeated string supported_auth_schemes = 8;
+  repeated string supported_profiles = 9;
 }
 
 message GetActorCardRequest {}

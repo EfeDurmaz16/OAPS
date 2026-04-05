@@ -1,0 +1,17 @@
+{
+  "request_metadata": {
+    "authorization": "Bearer grpc-test-token",
+    "x-oaps-idempotency-key": "idem-grpc-create-1",
+    "x-oaps-spec-version": "0.4-draft",
+    "x-oaps-min-supported-version": "0.4",
+    "x-oaps-max-supported-version": "0.4",
+    "x-oaps-actor-id": "urn:oaps:actor:agent:builder"
+  },
+  "response_metadata": {
+    "x-oaps-interaction-id": "ix_grpc_1",
+    "x-oaps-result-version": "0.4-draft"
+  },
+  "trailer_metadata": {
+    "x-oaps-next-after": "evt_grpc_4"
+  }
+}

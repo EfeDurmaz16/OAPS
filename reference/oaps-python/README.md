@@ -28,7 +28,8 @@ python3 -m oaps_python inventory
 Limit inventory output to one or more scopes:
 
 ```bash
-python3 -m oaps_python inventory --scope profile:mcp --scope profile:x402
+python3 -m oaps_python inventory --scope binding:grpc --scope profile:mcp --scope profile:x402
+python3 -m oaps_python inventory --scope binding:grpc
 ```
 
 Emit a schema-shaped dry-run result:
@@ -47,6 +48,7 @@ Run a static fixture check over selected scopes or scenarios:
 
 ```bash
 python3 -m oaps_python check --scope profile:mcp --scope profile:a2a
+python3 -m oaps_python check --scope binding:grpc
 python3 -m oaps_python check --scenario mcp.intent.execution
 ```
 

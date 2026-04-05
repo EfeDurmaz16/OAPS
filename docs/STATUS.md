@@ -55,6 +55,37 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: gRPC binding draft
+- tranche status:
+  - drafted:
+    - rewrote `spec/bindings/grpc-binding-draft.md` around the canonical `oaps.bindings.grpc.v1` package, unary-versus-streaming rules, metadata/header conventions, and gRPC-to-OAPS error mapping
+    - consolidated the proto surface into `reference/proto/oaps/bindings/grpc/v1/oaps.proto` and refreshed the gRPC example pack under `examples/grpc/`
+  - implemented:
+    - wired `binding:grpc` into the suite fixture index, manifest, taxonomy, README surfaces, maturity notes, and Python manifest tests/inventory behavior
+    - regenerated machine-readable result and compatibility examples so the new gRPC binding scope is represented coherently in the Python interoperability line
+  - conformance-backed:
+    - added `conformance/fixtures/bindings/grpc/index.v1.json` with fixture-backed discovery, unary mutation, replay, streaming, metadata, and error-mapping anchors
+    - validated the gRPC draft scope end-to-end through the suite conformance validator and Python manifest/result tooling
+  - externally-blocked:
+    - none
+- changes:
+  - completed the first coherent gRPC binding draft slice with a stable proto package, example service map, replay examples for both events and evidence, and fixture-only conformance coverage
+  - aligned repo-wide scope wiring and result examples so `binding:grpc` now behaves like the other draft binding scopes in inventory, checks, and compatibility declarations
+- validation:
+  - `git diff --check`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope binding:grpc --output /tmp/oaps-grpc-fixture-check.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-grpc-fixture-check.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/example-result.v1.json`
+- commits:
+  - `grpc: add binding draft pack`
+- next unfinished work:
+  - start V2 tranche 5 by drafting the events / webhooks binding, its first example pack, and fixture-backed `binding:events` scope wiring
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: JSON-RPC binding draft bootstrap
 - tranche status:
   - drafted:
