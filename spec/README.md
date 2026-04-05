@@ -2,6 +2,14 @@
 
 This directory holds the suite-level specification material.
 
+For a compact directory index, see [`INDEX.md`](./INDEX.md).
+
+Status labels:
+
+- draft: the current core, binding, profile, and domain drafts
+- support-only: the older consolidated `SPEC.md` reference slice
+- concept: future family expansions that are not yet added to the tree
+
 Current structure:
 
 - `INDEX.md` - entry point for the spec tree

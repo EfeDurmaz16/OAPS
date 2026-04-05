@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-04-05",
+  "scopes": [
+    {
+      "scope": "core",
+      "status": "runtime-backed",
+      "notes": "TypeScript and Python reference lines both exercise core semantics"
+    },
+    {
+      "scope": "binding:http",
+      "status": "runtime-backed",
+      "notes": "HTTP reference server is implementation-backed"
+    },
+    {
+      "scope": "binding:jsonrpc",
+      "status": "fixture-backed",
+      "notes": "Draft binding pack exists in the conformance registry"
+    },
+    {
+      "scope": "binding:grpc",
+      "status": "fixture-backed",
+      "notes": "Draft binding pack exists in the conformance registry"
+    },
+    {
+      "scope": "binding:events",
+      "status": "fixture-backed",
+      "notes": "Draft binding pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:agent-client",
+      "status": "fixture-backed",
+      "notes": "Draft profile pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:mcp",
+      "status": "runtime-backed",
+      "notes": "TypeScript reference line includes MCP capability, policy, and evidence anchors"
+    },
+    {
+      "scope": "profile:a2a",
+      "status": "fixture-backed",
+      "notes": "Draft A2A profile pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:auth-web",
+      "status": "runtime-backed",
+      "notes": "Shared trust anchors exist in the TypeScript reference line"
+    },
+    {
+      "scope": "profile:auth-fides-tap",
+      "status": "fixture-backed",
+      "notes": "Draft high-assurance trust pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:x402",
+      "status": "fixture-backed",
+      "notes": "Draft payment coordination pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:osp",
+      "status": "fixture-backed",
+      "notes": "Draft provisioning pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:mpp",
+      "status": "fixture-backed",
+      "notes": "Draft machine-payment pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:ap2",
+      "status": "fixture-backed",
+      "notes": "Draft mandate and payment authorization pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:acp",
+      "status": "fixture-backed",
+      "notes": "Draft commerce alignment pack exists in the conformance registry"
+    },
+    {
+      "scope": "profile:ucp",
+      "status": "fixture-backed",
+      "notes": "Draft commerce alignment pack exists in the conformance registry"
+    },
+    {
+      "scope": "domain:commerce",
+      "status": "fixture-backed",
+      "notes": "Draft commerce domain pack exists in the conformance registry"
+    }
+  ]
+}

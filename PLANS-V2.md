@@ -316,47 +316,47 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 21. Public Docs Surface
 
-- [ ] Add a top-level "suite map" page
-- [ ] Add a top-level "binding map" page
-- [ ] Add a top-level "profile map" page
-- [ ] Add a top-level "domain protocol map" page
-- [ ] Add a top-level "implementation map" page
-- [ ] Add glossary page for agentic primitives
-- [ ] Add "why OAPS exists" explainer page with direct protocol comparisons
+- [x] Add a top-level "suite map" page
+- [x] Add a top-level "binding map" page
+- [x] Add a top-level "profile map" page
+- [x] Add a top-level "domain protocol map" page
+- [x] Add a top-level "implementation map" page
+- [x] Add glossary page for agentic primitives
+- [x] Add "why OAPS exists" explainer page with direct protocol comparisons
 
 ### 22. Co-Signer / Design Partner Surface
 
-- [ ] Add `docs/COSIGNERS.md`
-- [ ] Add `docs/DESIGN-PARTNERS.md`
-- [ ] Add a clearer review workflow from public landing page to spec packet
-- [ ] Add a "what we want reviewed" page grouped by protocol area
-- [ ] Add a co-signer readiness checklist
-- [ ] Add a design-partner readiness checklist
+- [x] Add `docs/COSIGNERS.md`
+- [x] Add `docs/DESIGN-PARTNERS.md`
+- [x] Add a clearer review workflow from public landing page to spec packet
+- [x] Add a "what we want reviewed" page grouped by protocol area
+- [x] Add a co-signer readiness checklist
+- [x] Add a design-partner readiness checklist
 
 ### 23. Landing Page / Narrative Surface
 
-- [ ] Add homepage content map aligned to the latest protocol positioning
-- [ ] Add co-signer page copy
-- [ ] Add design-partner page copy
-- [ ] Add FAQ for protocol, profile, and governance questions
-- [ ] Add "not a wrapper, not a replacement" narrative blocks
-- [ ] Add agent-to-tool / agent-to-agent / agent-to-service / payment-coordination framing explicitly
-- [ ] Add proof-point section for Sardis / FIDES / agit / OSP as aligned systems
-- [ ] Add neutral-by-design positioning notes
+- [x] Add homepage content map aligned to the latest protocol positioning
+- [x] Add co-signer page copy
+- [x] Add design-partner page copy
+- [x] Add FAQ for protocol, profile, and governance questions
+- [x] Add "not a wrapper, not a replacement" narrative blocks
+- [x] Add agent-to-tool / agent-to-agent / agent-to-service / payment-coordination framing explicitly
+- [x] Add proof-point section for Sardis / FIDES / agit / OSP as aligned systems
+- [x] Add neutral-by-design positioning notes
 
 ### 24. Review Packet System Expansion
 
-- [ ] Add profile-specific review packets for MCP, A2A, auth/trust, x402, provisioning, and commerce
-- [ ] Add review packet templates for future profiles
-- [ ] Add issue templates for review feedback intake
-- [ ] Add a repo issue taxonomy for protocol review comments
+- [x] Add profile-specific review packets for MCP, A2A, auth/trust, x402, provisioning, and commerce
+- [x] Add review packet templates for future profiles
+- [x] Add issue templates for review feedback intake
+- [x] Add a repo issue taxonomy for protocol review comments
 
 ### 25. Repository Structure and Navigation Hardening
 
-- [ ] Add index files for every major directory missing one
-- [ ] Add explicit stable/draft/concept badges or labels to directory READMEs
-- [ ] Add an implementation coverage map across docs, schemas, examples, and reference code
-- [ ] Add a generated or maintained index for conformance scopes and status
+- [x] Add index files for every major directory missing one
+- [x] Add explicit stable/draft/concept badges or labels to directory READMEs
+- [x] Add an implementation coverage map across docs, schemas, examples, and reference code
+- [x] Add a generated or maintained index for conformance scopes and status
 
 ## EXTERNAL BLOCKERS
 

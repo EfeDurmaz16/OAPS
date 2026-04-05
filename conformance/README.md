@@ -4,6 +4,14 @@
 
 This directory is the suite-level home for OAPS conformance definitions, fixture indexes, and TCK coordination.
 
+For a compact directory index, see [`INDEX.md`](./INDEX.md).
+
+Status labels:
+
+- runtime-backed: core, HTTP, MCP, and auth-web reference slices
+- fixture-backed: the current draft profile and domain packs
+- concept: future scopes not yet present in the fixture registry
+
 The goal is to make it possible for an implementation to answer a concrete question:
 
 > Does this implementation conform to the OAPS core, binding, and profile behavior it claims?
@@ -34,6 +42,7 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `results/result-schema.v1.json` - machine-readable result format for compatibility claims
 - `results/compatibility-declaration-schema.v1.json` - machine-readable scope-level compatibility summary format
 - `results/examples/` - example result files and derived compatibility declarations
+- `scopes-status.v1.json` - maintained scope/status index for current conformance coverage
 
 These files now exist in-repo and are validated by the reference workspace.
 

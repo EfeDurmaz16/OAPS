@@ -2,6 +2,14 @@
 
 Profiles define how OAPS semantics compose with external ecosystems.
 
+For a compact directory index, see [`INDEX.md`](./INDEX.md).
+
+Status labels:
+
+- stable: `auth-web.md` as the current baseline trust mapping
+- draft: the current profile set listed below
+- concept: future profile families not yet drafted
+
 They are not the core specification and should not push ecosystem-specific transport details back into the core.
 
 Current profile set:

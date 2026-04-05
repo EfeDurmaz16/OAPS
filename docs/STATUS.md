@@ -55,6 +55,126 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: Repository Structure and Navigation Hardening
+- tranche status:
+  - drafted:
+    - added compact index pages for `docs/`, `profiles/`, `conformance/`, `reference/`, and `scripts/`
+    - added repository-navigation labels and index pointers to the current directory READMEs
+  - implemented:
+    - added a maintained conformance scope/status index
+    - added an implementation coverage map and directory index pages for the major navigation surfaces
+  - conformance-backed:
+    - validated the new JSON index artifact and link targets
+  - externally-blocked:
+    - none
+- changes:
+  - made the major repo trees easier to navigate without requiring a full read-through of the long-form docs
+  - exposed the current conformance scope coverage in a single maintained machine-readable place
+  - gave the major directory READMEs an explicit status vocabulary so readers can see what is stable, draft, or conceptual
+- validation:
+  - `python3 -m json.tool conformance/scopes-status.v1.json`
+  - targeted link existence checks for the new index and packet pages
+  - `git diff --check`
+- commits:
+  - pending
+- next unfinished work:
+  - keep the review packets and public-facing maps aligned as the suite grows
+- status: `DONE`
+
+- tranche: Review Packet System Expansion
+- tranche status:
+  - drafted:
+    - added bounded review packets for MCP, A2A, auth/trust, payment, provisioning, and commerce
+    - added a reusable review-packet template and a GitHub issue template for review intake
+  - implemented:
+    - added a lightweight review issue taxonomy so feedback stays searchable and bounded
+  - conformance-backed:
+    - wired the new packet docs into the review index and bounded-review explainer pages
+  - externally-blocked:
+    - none
+- changes:
+  - turned the review workflow into reusable packet files instead of leaving it as scattered prose
+  - made review intake easier to file through a single issue template and label set
+  - connected packet docs back into the review matrix so reviewers can start from one map and drill down
+- validation:
+  - targeted link existence checks for the packet docs
+  - `git diff --check`
+- commits:
+  - pending
+- next unfinished work:
+  - keep the packet set synchronized with future profile or conformance expansion
+- status: `DONE`
+
+- tranche: Landing Page / Narrative Surface
+- tranche status:
+  - drafted:
+    - added a homepage content map, reusable narrative blocks, a FAQ, and neutral-by-design copy guidance
+  - implemented:
+    - sharpened the public positioning pages so they explain what OAPS is, what it is not, and why it exists
+  - conformance-backed:
+    - linked the public narrative pages back to the current implementation and review surfaces
+  - externally-blocked:
+    - none
+- changes:
+  - gave the repository a concise public narrative surface that can be reused across landing pages and review packets
+  - made the not-a-wrapper / not-a-replacement positioning explicit in reusable copy blocks
+  - added a neutral-by-design posture note so the public copy stays aligned with the charter
+- validation:
+  - targeted link existence checks for the narrative pages
+  - `git diff --check`
+- commits:
+  - pending
+- next unfinished work:
+  - keep landing-page copy in sync with future review and positioning updates
+- status: `DONE`
+
+- tranche: Co-Signer / Design Partner Surface
+- tranche status:
+  - drafted:
+    - added cosigner and design-partner guidance pages
+    - added bounded review-readiness checklists and a review issue taxonomy
+  - implemented:
+    - defined the review packet shape and the intended audience split between cosigners and design partners
+  - conformance-backed:
+    - linked the guidance back to the review matrix and packet index
+  - externally-blocked:
+    - none
+- changes:
+  - clarified who should be asked for technical validation versus adoption and fit feedback
+  - gave the repo a repeatable review workflow before external outreach begins
+  - made the bounded review ask explicit so future issues stay scoped
+- validation:
+  - targeted link existence checks for the review guidance docs
+  - `git diff --check`
+- commits:
+  - pending
+- next unfinished work:
+  - keep the cosigner and design-partner guidance aligned with future review packet changes
+- status: `DONE`
+
+- tranche: Public Docs Surface
+- tranche status:
+  - drafted:
+    - added top-level suite, binding, profile, domain, implementation, glossary, and why-OAPS docs
+  - implemented:
+    - connected the new public docs into the root README and docs navigation tree
+  - conformance-backed:
+    - aligned the docs surface to the current suite architecture and review artifacts
+  - externally-blocked:
+    - none
+- changes:
+  - created a cleaner public entry point into the suite instead of forcing readers to start in the deepest specs
+  - separated binding, profile, domain, and implementation navigation so the repo surface reads more like a map
+  - added a public explanation of why OAPS exists and what boundary it is meant to hold
+- validation:
+  - targeted link existence checks for the new map pages
+  - `git diff --check`
+- commits:
+  - pending
+- next unfinished work:
+  - keep the public docs surface synchronized with future review packet and positioning changes
+- status: `DONE`
+
 - tranche: Detached Supervisor / Long-Run Harness Expansion
 - tranche status:
   - drafted:
@@ -74,7 +194,7 @@ Append one entry per tranche using the V2 template above:
 - validation:
   - `bash -n scripts/codex-supervisor.sh scripts/codex-tranche-loop.sh scripts/codex-cloud-task.sh`
 - commits:
-  - pending
+  - `harness: add supervisor checkpoint artifacts` (`f37d93f`)
 - next unfinished work:
   - continue with the public docs, review packet, and repository navigation tranches now that the supervisor path is auditable
 - status: `DONE`
