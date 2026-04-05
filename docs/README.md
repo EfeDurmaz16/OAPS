@@ -2,6 +2,8 @@
 
 This directory holds suite-level explanatory and architecture documents.
 
+For a compact directory index, see [`INDEX.md`](./INDEX.md).
+
 Status labels:
 
 - stable: navigation and review-entry docs that describe the current repo surface
@@ -23,24 +25,25 @@ Suggested reading order:
 11. `COMPATIBILITY-DECLARATIONS.md`
 12. `PARALLEL-AGENT-WORKSTREAMS.md`
 13. `SUITE-MAP.md`
-14. `BINDING-MAP.md`
-15. `PROFILE-MAP.md`
-16. `DOMAIN-PROTOCOL-MAP.md`
-17. `IMPLEMENTATION-MAP.md`
-18. `GLOSSARY.md`
-19. `WHY-OAPS.md`
-20. `WHAT-WE-WANT-REVIEWED.md`
-21. `REVIEW-READINESS-CHECKLISTS.md`
-22. `REVIEW-PACKET-TEMPLATE.md`
-23. `REVIEW-ISSUE-TAXONOMY.md`
-24. `COSIGNERS.md`
-25. `DESIGN-PARTNERS.md`
-26. `HOMEPAGE-CONTENT-MAP.md`
-27. `NARRATIVE-BLOCKS.md`
-28. `FAQ.md`
-29. `NEUTRAL-BY-DESIGN.md`
-30. `COVERAGE-MAP.md`
-31. `CONFORMANCE-SCOPE-INDEX.md`
+14. `INDEX.md`
+15. `BINDING-MAP.md`
+16. `PROFILE-MAP.md`
+17. `DOMAIN-PROTOCOL-MAP.md`
+18. `IMPLEMENTATION-MAP.md`
+19. `GLOSSARY.md`
+20. `WHY-OAPS.md`
+21. `WHAT-WE-WANT-REVIEWED.md`
+22. `REVIEW-READINESS-CHECKLISTS.md`
+23. `REVIEW-PACKET-TEMPLATE.md`
+24. `REVIEW-ISSUE-TAXONOMY.md`
+25. `COSIGNERS.md`
+26. `DESIGN-PARTNERS.md`
+27. `HOMEPAGE-CONTENT-MAP.md`
+28. `NARRATIVE-BLOCKS.md`
+29. `FAQ.md`
+30. `NEUTRAL-BY-DESIGN.md`
+31. `COVERAGE-MAP.md`
+32. `CONFORMANCE-SCOPE-INDEX.md`
 
 Use these documents to understand the intended shape of the protocol suite before reading the narrower normative drafts under `spec/`.
 

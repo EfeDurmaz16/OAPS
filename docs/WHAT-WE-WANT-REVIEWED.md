@@ -14,6 +14,7 @@ Current packet:
 
 - [`profiles/mcp.md`](../profiles/mcp.md)
 - [`docs/REVIEW-PACKET-INDEX.md`](./REVIEW-PACKET-INDEX.md)
+- [`docs/REVIEW-PACKET-MCP.md`](./REVIEW-PACKET-MCP.md)
 
 ### A2A
 
@@ -22,6 +23,7 @@ Review whether the A2A profile preserves task and message meaning while adding d
 Current packet:
 
 - [`profiles/a2a-draft.md`](../profiles/a2a-draft.md)
+- [`docs/REVIEW-PACKET-A2A.md`](./REVIEW-PACKET-A2A.md)
 
 ### Auth / Trust
 
@@ -31,6 +33,7 @@ Current packet:
 
 - [`profiles/auth-web.md`](../profiles/auth-web.md)
 - [`profiles/auth-fides-tap-draft.md`](../profiles/auth-fides-tap-draft.md)
+- [`docs/REVIEW-PACKET-TRUST.md`](./REVIEW-PACKET-TRUST.md)
 
 ### Payments
 
@@ -41,6 +44,7 @@ Current packet:
 - [`profiles/x402-draft.md`](../profiles/x402-draft.md)
 - [`profiles/mpp-draft.md`](../profiles/mpp-draft.md)
 - [`profiles/ap2-draft.md`](../profiles/ap2-draft.md)
+- [`docs/REVIEW-PACKET-PAYMENT.md`](./REVIEW-PACKET-PAYMENT.md)
 
 ### Provisioning
 
@@ -49,6 +53,7 @@ Review whether the OSP-aligned provisioning profile keeps lifecycle and credenti
 Current packet:
 
 - [`profiles/osp-draft.md`](../profiles/osp-draft.md)
+- [`docs/REVIEW-PACKET-PROVISIONING.md`](./REVIEW-PACKET-PROVISIONING.md)
 
 ### Commerce
 
@@ -59,6 +64,7 @@ Current packet:
 - [`profiles/acp-draft.md`](../profiles/acp-draft.md)
 - [`profiles/ucp-draft.md`](../profiles/ucp-draft.md)
 - [`spec/domain/commerce-draft.md`](../spec/domain/commerce-draft.md)
+- [`docs/REVIEW-PACKET-COMMERCE.md`](./REVIEW-PACKET-COMMERCE.md)
 
 ## How To Use This Page
 

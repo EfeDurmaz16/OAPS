@@ -24,6 +24,7 @@ Use for MCP maintainers and tool-runtime reviewers.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-MCP.md`](./REVIEW-PACKET-MCP.md)
 - `oaps-mcp-v1` profile draft
 - capability mapping summary
 - policy and approval mapping
@@ -40,6 +41,7 @@ Use for A2A maintainers and task/workflow reviewers.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-A2A.md`](./REVIEW-PACKET-A2A.md)
 - `oaps-a2a-v1` profile draft
 - task and message mapping
 - lifecycle preservation notes
@@ -56,6 +58,7 @@ Use for identity, signing, and attestation reviewers.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-TRUST.md`](./REVIEW-PACKET-TRUST.md)
 - `oaps-auth-web-v1` baseline profile
 - `oaps-fides-tap-v1` draft
 - subject binding rules
@@ -72,6 +75,7 @@ Use for x402, MPP, AP2, Sardis, and payment infrastructure reviewers.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-PAYMENT.md`](./REVIEW-PACKET-PAYMENT.md)
 - `oaps-x402-v1` draft
 - payment coordination primitives
 - mandate and authorization references
@@ -88,6 +92,7 @@ Use for OSP and provisioning reviewers.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-PROVISIONING.md`](./REVIEW-PACKET-PROVISIONING.md)
 - `oaps-osp-v1` draft
 - service lifecycle mapping
 - credential delivery and rotation concerns
@@ -104,6 +109,7 @@ Use for ACP/UCP-adjacent reviewers and commerce design partners.
 
 Includes:
 
+- [`docs/REVIEW-PACKET-COMMERCE.md`](./REVIEW-PACKET-COMMERCE.md)
 - OAPS Commerce concept note
 - order/authorization/fulfillment boundary note
 - merchant and checkout mapping notes

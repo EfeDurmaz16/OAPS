@@ -92,6 +92,7 @@ This is the smallest real working system in the repo today, and it should be und
 - `CHARTER.md` — mission, boundaries, neutrality, and governance posture
 - `docs/MATURITY-MATRIX.md` — what is stable now vs draft vs concept
 - `docs/SUITE-MAP.md` — top-level suite navigation
+- `docs/INDEX.md` — docs directory navigation index
 - `docs/BINDING-MAP.md` — binding-family navigation
 - `docs/PROFILE-MAP.md` — profile-family navigation
 - `docs/DOMAIN-PROTOCOL-MAP.md` — domain-family navigation
