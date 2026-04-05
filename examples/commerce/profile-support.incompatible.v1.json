@@ -1,0 +1,9 @@
+{
+  "profile": "oaps-acp-v1",
+  "support": "incompatible",
+  "unsupported_surfaces": [
+    "merchant-authorization-boundary",
+    "fulfillment-replay"
+  ],
+  "notes": "This draft example shows a commerce alignment that cannot preserve portable authorization or fulfillment semantics."
+}

@@ -1,0 +1,33 @@
+{
+  "$id": "https://oaps.dev/schemas/profiles/payment-challenge.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Payment Challenge",
+  "type": "object",
+  "required": [
+    "profile",
+    "interaction_id",
+    "challenge_type"
+  ],
+  "properties": {
+    "profile": {
+      "type": "string"
+    },
+    "interaction_id": {
+      "type": "string"
+    },
+    "challenge_type": {
+      "type": "string"
+    },
+    "http_status": {
+      "type": "integer"
+    },
+    "required_authorization": {
+      "type": "object"
+    },
+    "authorization_intent": {},
+    "expected_error": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

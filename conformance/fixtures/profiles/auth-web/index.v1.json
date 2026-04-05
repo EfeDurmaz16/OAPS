@@ -45,7 +45,8 @@
         "examples/auth-web/interaction.create.subject-binding.v1.json",
         "examples/envelope-intent-request.json",
         "examples/auth-web/invalid.subject-mismatch.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/subject-binding-assertion.json"
     },
     {
       "scenario_id": "auth-web.subject-binding.message-append",
@@ -64,7 +65,8 @@
         "examples/auth-web/message.append.subject-binding.v1.json",
         "examples/interaction-updated.json",
         "examples/error.json"
-      ]
+      ],
+      "schema": "schemas/profiles/subject-binding-assertion.json"
     },
     {
       "scenario_id": "auth-web.subject-binding.approve",
@@ -78,7 +80,8 @@
         "examples/auth-web/approval.subject-binding.v1.json",
         "examples/approval-decision.json",
         "examples/approval-request.json"
-      ]
+      ],
+      "schema": "schemas/profiles/subject-binding-assertion.json"
     },
     {
       "scenario_id": "auth-web.subject-binding.reject",
@@ -92,7 +95,8 @@
         "examples/auth-web/reject.subject-binding.v1.json",
         "examples/approval-decision.json",
         "examples/auth-web/delegated-actor.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/subject-binding-assertion.json"
     },
     {
       "scenario_id": "auth-web.subject-binding.revoke",
@@ -106,7 +110,8 @@
         "examples/auth-web/revoke.subject-binding.v1.json",
         "examples/error.json",
         "examples/interaction-updated.json"
-      ]
+      ],
+      "schema": "schemas/profiles/subject-binding-assertion.json"
     },
     {
       "scenario_id": "auth-web.delegated-actor.baseline",

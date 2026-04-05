@@ -1,0 +1,34 @@
+{
+  "$id": "https://oaps.dev/schemas/profiles/subject-binding-assertion.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Subject Binding Assertion",
+  "type": "object",
+  "required": [
+    "surface",
+    "authenticated_subject"
+  ],
+  "properties": {
+    "surface": {
+      "type": "string"
+    },
+    "authenticated_subject": {
+      "type": "string"
+    },
+    "envelope_from_actor_id": {
+      "type": "string"
+    },
+    "interaction_actor_id": {
+      "type": "string"
+    },
+    "delegation_required": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "string"
+    },
+    "claim_boundary": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

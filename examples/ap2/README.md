@@ -5,6 +5,7 @@ payment-authorization mapping bounded to example artifacts.
 
 Current highlights:
 
+- incompatible support declarations for draft-only review
 - mandate-chain examples with principal, delegatee, and target action
 - approval-handoff examples for payment authorization boundaries
 - partial support declarations for draft-only review

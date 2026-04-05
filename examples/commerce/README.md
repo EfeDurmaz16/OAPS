@@ -5,6 +5,7 @@ drafts.
 
 Current highlights:
 
+- incompatible support declarations for draft review
 - order-intent examples for commerce initiation
 - delegated-checkout examples showing approval and payment handoff
 - fulfillment-outcome examples showing replayable commercial closure

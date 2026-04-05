@@ -37,7 +37,8 @@
         "examples/x402/payment-requirement.challenge.v1.json",
         "examples/x402/authorization.retry-lineage.v1.json",
         "examples/x402/invalid.challenge-without-authorization-context.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/payment-challenge.json"
     },
     {
       "scenario_id": "x402.payment.authorization.intent",
@@ -126,7 +127,8 @@
         "examples/x402/invalid.challenge-without-authorization-context.v1.json",
         "examples/error.json",
         "examples/x402/payment-requirement.challenge.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/payment-challenge.json"
     },
     {
       "scenario_id": "x402.compatibility.payment-discovery-partial",
@@ -139,7 +141,8 @@
       "related_examples": [
         "examples/x402/profile-support.partial.v1.json",
         "examples/well-known-oaps.json"
-      ]
+      ],
+      "schema": "schemas/profiles/profile-support-declaration.json"
     }
   ]
 }

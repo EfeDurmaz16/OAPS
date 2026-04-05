@@ -1,0 +1,9 @@
+{
+  "profile": "oaps-ap2-v1",
+  "support": "incompatible",
+  "unsupported_surfaces": [
+    "mandate-chain-auditability",
+    "approval-handoff-preservation"
+  ],
+  "notes": "This draft example shows an AP2-like implementation that cannot preserve the portable mandate and approval story."
+}

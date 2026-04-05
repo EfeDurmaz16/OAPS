@@ -7,6 +7,7 @@ Current schema families:
 - `foundation/` — core foundation draft schemas
 - `payment/` — draft payment profile schemas for MPP/AP2-style mappings
 - `domain/` — draft domain-family schemas for commerce alignment
+- `profiles/` — draft cross-profile helper schemas for auth, trust, payment, provisioning, and compatibility declarations
 - top-level draft-pack schemas used by the current MCP-oriented reference slice
 
 Current foundation entry points:
@@ -61,5 +62,13 @@ Draft domain entry points:
 - `domain/merchant-authorization.json`
 - `domain/fulfillment-commitment.json`
 - `domain/commercial-evidence.json`
+
+Draft profile helper entry points:
+
+- `profiles/subject-binding-assertion.json`
+- `profiles/trust-attestation.json`
+- `profiles/payment-challenge.json`
+- `profiles/provisioning-operation.json`
+- `profiles/profile-support-declaration.json`
 
 When new bindings or profiles become hard-normative, add their schema families here instead of overloading the existing foundation pack.

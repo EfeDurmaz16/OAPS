@@ -1,0 +1,34 @@
+{
+  "$id": "https://oaps.dev/schemas/profiles/trust-attestation.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Trust Attestation",
+  "type": "object",
+  "required": [
+    "profile"
+  ],
+  "properties": {
+    "profile": {
+      "type": "string"
+    },
+    "actor_id": {
+      "type": "string"
+    },
+    "trust_tier": {
+      "type": "string"
+    },
+    "attestation": {
+      "type": "object"
+    },
+    "required_trust_tier": {
+      "type": "string"
+    },
+    "provided_attestation": {},
+    "expected_result": {
+      "type": "string"
+    },
+    "error": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

@@ -58,8 +58,10 @@
       ],
       "notes": "This fixture gives implementations an honest declaration pattern for example-only ACP alignment.",
       "related_examples": [
-        "examples/commerce/profile-support.partial.v1.json"
-      ]
+        "examples/commerce/profile-support.partial.v1.json",
+        "examples/commerce/profile-support.incompatible.v1.json"
+      ],
+      "schema": "schemas/profiles/profile-support-declaration.json"
     }
   ]
 }

@@ -69,6 +69,14 @@ The scope exists in the suite, but the result did not evaluate any scenario for 
 
 This is useful when a result only covers a narrow slice of the suite.
 
+## Draft Scopes Versus Stable Scopes
+
+The declaration model does not special-case draft scopes out of existence.
+
+That means a draft scope may still be reported as `compatible`, `partial`, `incompatible`, or `not_evaluated` based on the known scenarios in the suite. For draft scopes, the declaration should be read as: "compatible with the currently published draft fixture surface", not as "permanently final or ecosystem-complete".
+
+Stable scopes and draft scopes therefore share one derivation algorithm, but readers should interpret the surrounding maturity and coverage notes honestly.
+
 ## Coverage Honesty
 
 Scope status and coverage level are related, but they are not the same thing.

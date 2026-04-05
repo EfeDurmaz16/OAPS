@@ -1,0 +1,52 @@
+{
+  "$id": "https://oaps.dev/schemas/profiles/profile-support-declaration.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Draft Profile Support Declaration",
+  "type": "object",
+  "required": [
+    "profile"
+  ],
+  "properties": {
+    "implementation_id": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "support": {
+      "type": "string",
+      "enum": [
+        "compatible",
+        "partial",
+        "incompatible"
+      ]
+    },
+    "compatibility": {
+      "type": "string",
+      "enum": [
+        "compatible",
+        "partial",
+        "incompatible"
+      ]
+    },
+    "supported_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unsupported_surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": [
+        "string",
+        "array"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

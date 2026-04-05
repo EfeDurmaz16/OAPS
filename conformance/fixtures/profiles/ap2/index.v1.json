@@ -58,8 +58,10 @@
       ],
       "notes": "This fixture gives implementations an honest declaration pattern for draft-only AP2 support.",
       "related_examples": [
-        "examples/ap2/profile-support.partial.v1.json"
-      ]
+        "examples/ap2/profile-support.partial.v1.json",
+        "examples/ap2/profile-support.incompatible.v1.json"
+      ],
+      "schema": "schemas/profiles/profile-support-declaration.json"
     }
   ]
 }

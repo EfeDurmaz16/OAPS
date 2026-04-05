@@ -194,5 +194,14 @@
     "fixture",
     "reference-runtime",
     "cross-implementation"
+  ],
+  "negative_path_categories": [
+    "authentication_failed",
+    "delegation_expired",
+    "malformed_metadata",
+    "attestation_required",
+    "payment_authorization_context_required",
+    "replay_cursor_not_found",
+    "idempotency_conflict"
   ]
 }

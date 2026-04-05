@@ -118,3 +118,17 @@ Runner output SHOULD preserve:
 - result schema version
 
 This is required for stable compatibility declarations over time.
+
+
+## Multi-Binding And Multi-Layer Runs
+
+A runner MAY execute multiple bindings, profiles, and domain scopes in one session.
+
+When it does so, it SHOULD:
+
+- preserve the original scope on every scenario record
+- keep per-scope outcomes derivable without extra handwritten metadata
+- avoid collapsing binding-level and profile-level evidence into one opaque aggregate
+- retain enough artifacts to explain failures that only appear in one layer or transport
+
+This matters because an implementation may be compatible for one binding while remaining draft-only, partial, or not evaluated in another binding or profile scope.

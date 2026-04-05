@@ -58,8 +58,10 @@
       "notes": "This fixture gives implementations an honest declaration pattern when only the draft semantic session layer is present.",
       "related_examples": [
         "examples/mpp/profile-support.partial.v1.json",
-        "examples/mpp/profile-support.compatible.v1.json"
-      ]
+        "examples/mpp/profile-support.compatible.v1.json",
+        "examples/mpp/profile-support.incompatible.v1.json"
+      ],
+      "schema": "schemas/profiles/profile-support-declaration.json"
     }
   ]
 }

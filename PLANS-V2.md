@@ -273,20 +273,20 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 16. Core + Binding + Profile Schema Growth
 
-- [ ] Add any missing schemas required by the new drafts above
-- [ ] Add example JSON for each new schema
-- [ ] Keep schema and example validation green as new scopes are added
-- [ ] Add schema index entries for every new area
-- [ ] Add spec/index pointers for every new area
+- [x] Add any missing schemas required by the new drafts above
+- [x] Add example JSON for each new schema
+- [x] Keep schema and example validation green as new scopes are added
+- [x] Add schema index entries for every new area
+- [x] Add spec/index pointers for every new area
 
 ### 17. Conformance System Growth
 
-- [ ] Extend taxonomy for new binding and profile scopes
-- [ ] Add fixture packs for JSON-RPC, gRPC, events, agent-client, MPP, AP2, ACP, UCP
-- [ ] Add richer negative-path scenario taxonomy
-- [ ] Add compatibility examples for partial / incompatible / draft-only implementations
-- [ ] Add runner-contract notes for multi-binding runners
-- [ ] Add docs explaining compatibility declarations for draft scopes vs stable scopes
+- [x] Extend taxonomy for new binding and profile scopes
+- [x] Add fixture packs for JSON-RPC, gRPC, events, agent-client, MPP, AP2, ACP, UCP
+- [x] Add richer negative-path scenario taxonomy
+- [x] Add compatibility examples for partial / incompatible / draft-only implementations
+- [x] Add runner-contract notes for multi-binding runners
+- [x] Add docs explaining compatibility declarations for draft scopes vs stable scopes
 
 ### 18. Python Second Implementation Expansion
 

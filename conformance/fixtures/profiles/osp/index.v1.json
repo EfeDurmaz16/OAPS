@@ -57,7 +57,8 @@
         "examples/osp/provision.approval-gated.v1.json",
         "examples/approval-request.json",
         "examples/approval-decision.json"
-      ]
+      ],
+      "schema": "schemas/profiles/provisioning-operation.json"
     },
     {
       "scenario_id": "osp.credential.delivery",
@@ -78,7 +79,8 @@
         "examples/osp/credential-delivery.v1.json",
         "examples/execution-result.json",
         "examples/evidence-event.json"
-      ]
+      ],
+      "schema": "schemas/profiles/provisioning-operation.json"
     },
     {
       "scenario_id": "osp.credential.rotate",
@@ -91,7 +93,8 @@
       "related_examples": [
         "examples/osp/credential-rotate.v1.json",
         "examples/osp/credential-delivery.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/provisioning-operation.json"
     },
     {
       "scenario_id": "osp.lifecycle.suspend-deprovision",
@@ -118,7 +121,8 @@
         "examples/osp/payment-linked-handoff.v1.json",
         "examples/mpp/mandate-linked-session.v1.json",
         "examples/x402/payment-requirement.challenge.v1.json"
-      ]
+      ],
+      "schema": "schemas/profiles/provisioning-operation.json"
     }
   ]
 }

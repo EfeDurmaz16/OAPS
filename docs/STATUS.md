@@ -55,6 +55,60 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: core + binding + profile schema growth
+- tranche status:
+  - drafted:
+    - added `schemas/profiles/` draft helper schemas for subject-binding assertions, trust attestation, payment challenges, provisioning operations, and profile support declarations
+    - extended the existing payment/domain schema growth with more explicit schema-family readmes, index entries, and spec-tree pointers for the newer draft areas
+  - implemented:
+    - wired the new helper schemas into auth-web, trust, x402, osp, and compatibility-oriented fixture anchors so draft profile objects are no longer purely prose-only where machine-readable shapes now exist
+  - conformance-backed:
+    - kept schema/example validation green while the newer draft scopes expanded by validating JSON artifacts plus the suite conformance validator and Python manifest tests
+  - externally-blocked:
+    - none
+- changes:
+  - reduced the amount of profile-draft surface that was still only implicit in prose by adding reusable machine-readable helper schemas
+  - added schema-family documentation and spec/index pointers for the expanding payment, domain, and profile-helper areas
+  - attached new schema refs to profile fixtures where draft objects are now concrete enough to validate statically
+- validation:
+  - `python3 - <<'PY' ... parse JSON under schemas/profiles and new support examples ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+- commits:
+  - `schemas: add draft profile helper families`
+- next unfinished work:
+  - continue with tranche 17 conformance-system polish across taxonomy, compatibility examples, and runner guidance
+- status: `DONE`
+
+### 2026-04-05
+
+- tranche: conformance system growth
+- tranche status:
+  - drafted:
+    - extended `conformance/taxonomy/scenario-taxonomy.v1.json` with the new payment, commerce, and domain scope families plus richer negative-path categories
+    - added explicit draft-vs-stable compatibility guidance to `docs/COMPATIBILITY-DECLARATIONS.md` and multi-binding guidance to `conformance/runner-contract.md`
+  - implemented:
+    - wired fixture-backed payment and commerce draft scopes into the machine-readable conformance system and added incompatible declaration examples alongside the existing partial/draft-only examples
+  - conformance-backed:
+    - kept the conformance pack validator and Python manifest tests green after the taxonomy, fixture, and documentation expansion
+  - externally-blocked:
+    - none
+- changes:
+  - deepened the conformance taxonomy so newer draft scopes and negative-path classes are visible in one machine-readable place
+  - added explicit incompatible declaration examples for payment and commerce draft profiles alongside the existing partial/compatible declarations
+  - documented how multi-binding runners and draft-scope compatibility declarations should be interpreted honestly
+- validation:
+  - `python3 - <<'PY' ... parse JSON under schemas/profiles and incompatible support examples ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+- commits:
+  - `schemas: add draft profile helper families`
+- next unfinished work:
+  - start V2 tranche 18 by expanding the Python second implementation around grouped scope summaries, comparison helpers, declaration validation, and richer command docs
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: OSP / provisioning track expansion
 - tranche status:
   - drafted:

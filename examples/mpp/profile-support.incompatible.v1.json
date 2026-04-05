@@ -1,0 +1,9 @@
+{
+  "profile": "oaps-mpp-v1",
+  "support": "incompatible",
+  "unsupported_surfaces": [
+    "authorization-intent-lineage",
+    "settlement-reference-consistency"
+  ],
+  "notes": "This draft example shows a payment implementation that cannot preserve portable OAPS payment-session semantics."
+}

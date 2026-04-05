@@ -60,8 +60,10 @@
       ],
       "notes": "This fixture gives implementations an honest declaration pattern for fuller draft-only UCP support.",
       "related_examples": [
-        "examples/commerce/profile-support.compatible.v1.json"
-      ]
+        "examples/commerce/profile-support.compatible.v1.json",
+        "examples/commerce/profile-support.incompatible.v1.json"
+      ],
+      "schema": "schemas/profiles/profile-support-declaration.json"
     }
   ]
 }
