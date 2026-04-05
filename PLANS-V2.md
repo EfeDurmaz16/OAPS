@@ -112,12 +112,12 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 1. Core Semantics Deepening
 
-- [ ] Add a dedicated `spec/core/STATE-MACHINE-DRAFT.md`
-- [ ] Define canonical task / interaction lifecycle states and illegal transitions
-- [ ] Define intent-to-task promotion semantics
-- [ ] Define challenge vs approval semantics explicitly
-- [ ] Define revoke vs reject vs cancel vs fail semantics explicitly
-- [ ] Define mandate vs delegation boundaries with examples
+- [x] Add a dedicated `spec/core/STATE-MACHINE-DRAFT.md`
+- [x] Define canonical task / interaction lifecycle states and illegal transitions
+- [x] Define intent-to-task promotion semantics
+- [x] Define challenge vs approval semantics explicitly
+- [x] Define revoke vs reject vs cancel vs fail semantics explicitly
+- [x] Define mandate vs delegation boundaries with examples
 - [ ] Add core schemas for any still-prose-only objects needed by the foundation draft
 - [ ] Add invalid example fixtures for core negative-path testing
 - [ ] Add runtime-backed core scenarios for intent-to-task promotion

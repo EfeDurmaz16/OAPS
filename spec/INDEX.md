@@ -5,6 +5,7 @@ This is the entry point for the suite-level specification tree.
 ## Current Structure
 
 - `core/FOUNDATION-DRAFT.md` - first hard semantic core draft
+- `core/STATE-MACHINE-DRAFT.md` - canonical task and lifecycle semantics draft
 - `bindings/http-binding-draft.md` - first binding-track draft
 
 ## Current Reading Order
@@ -13,11 +14,12 @@ This is the entry point for the suite-level specification tree.
 2. `../docs/SUITE-ARCHITECTURE.md`
 3. `README.md`
 4. `core/FOUNDATION-DRAFT.md`
-5. `bindings/http-binding-draft.md`
+5. `core/STATE-MACHINE-DRAFT.md`
+6. `bindings/http-binding-draft.md`
 
 ## Status Notes
 
-- `core/` is the only hard-normative area currently being expanded
+- `core/` is the main hard-normative area currently being expanded
 - `bindings/` currently starts with HTTP and can grow into other transports later
 - `schemas/` and `conformance/` are the machine-readable companions to this spec tree
 

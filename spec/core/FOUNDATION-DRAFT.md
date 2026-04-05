@@ -185,6 +185,7 @@ The following belong to later drafts, profiles, or domain protocols:
 
 The expected next hard-normative documents after this foundation draft are:
 
+- Core state machine draft
 - HTTP binding draft
 - MCP profile draft
 - A2A profile draft

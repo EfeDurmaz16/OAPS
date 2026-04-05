@@ -55,6 +55,36 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: core lifecycle state-machine draft
+- tranche status:
+  - drafted:
+    - added `spec/core/STATE-MACHINE-DRAFT.md` as the dedicated lifecycle companion to the core foundation draft
+    - defined canonical task states, permitted transitions, illegal transitions, intent-to-task promotion rules, approval-versus-challenge semantics, revoke/reject/cancel/fail distinctions, and mandate-versus-delegation boundaries
+  - implemented:
+    - linked the new lifecycle draft from the spec tree entry points so it is part of the canonical reading order
+  - conformance-backed:
+    - marked the first six Core Semantics Deepening plan items complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - added the first dedicated lifecycle/state-machine draft under `spec/core/`
+  - aligned `spec/README.md`, `spec/INDEX.md`, and `spec/core/FOUNDATION-DRAFT.md` so the lifecycle draft is a first-class normative companion
+  - advanced the V2 core-semantics checklist past the prose-only lifecycle clarification items
+- validation:
+  - `python3 - <<'PY' ... verify spec navigation now references STATE-MACHINE-DRAFT.md and PLANS-V2.md marks the first six core-semantics items complete ... PY`
+  - `git diff --check`
+- commits:
+  - `spec: add core lifecycle state machine draft`
+- next unfinished work:
+  - add core schemas for any still-prose-only objects needed by the foundation draft
+  - add invalid example fixtures for core negative-path testing
+  - add runtime-backed core scenarios for intent-to-task promotion and revoke/reject distinction
+  - add replay semantics notes for evidence chain reconstruction from core events
+  - add a core error taxonomy appendix that aligns schema, docs, and runtime terminology
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: V2 status convention and tranche template
 - tranche status:
   - drafted:
