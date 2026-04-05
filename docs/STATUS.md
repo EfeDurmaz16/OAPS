@@ -129,6 +129,22 @@ Append one entry per tranche:
 
 ### 2026-04-05
 
+- tranche: HTTP mutation hardening runtime
+- changes:
+  - confirmed authenticated-subject binding on `POST /interactions/{id}/messages` so a bearer-authenticated caller cannot append a message envelope that claims a different `from.actor_id`
+  - kept the existing idempotency-key behavior in place for message, approval, rejection, and revocation mutation routes while validating the message-auth boundary
+  - exercised the HTTP reference tests for the subject-mismatch rejection path alongside the existing idempotent replay/conflict cases
+- validation:
+  - `pnpm --dir reference/oaps-monorepo build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
+- commits:
+  - `docs: record HTTP mutation hardening tranche`
+- next unfinished work:
+  - none currently queued in `PLANS.md`
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: profile mapping note hardening
 - changes:
   - added an explicit A2A mapping matrix and lifecycle mapping notes without claiming end-to-end A2A runtime support
