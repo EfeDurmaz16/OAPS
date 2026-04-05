@@ -12,6 +12,7 @@ Prefer this page when you want a compact list of the suite-level narrative, revi
 - [`PROFILE-MAP.md`](./PROFILE-MAP.md)
 - [`DOMAIN-PROTOCOL-MAP.md`](./DOMAIN-PROTOCOL-MAP.md)
 - [`IMPLEMENTATION-MAP.md`](./IMPLEMENTATION-MAP.md)
+- [`COVERAGE-MAP.md`](./COVERAGE-MAP.md)
 - [`GLOSSARY.md`](./GLOSSARY.md)
 - [`WHY-OAPS.md`](./WHY-OAPS.md)
 
@@ -25,6 +26,7 @@ Prefer this page when you want a compact list of the suite-level narrative, revi
 - [`WHAT-WE-WANT-REVIEWED.md`](./WHAT-WE-WANT-REVIEWED.md)
 - [`COSIGNERS.md`](./COSIGNERS.md)
 - [`DESIGN-PARTNERS.md`](./DESIGN-PARTNERS.md)
+- [`CONFORMANCE-SCOPE-INDEX.md`](./CONFORMANCE-SCOPE-INDEX.md)
 
 ## Narrative Surface
 
