@@ -107,8 +107,8 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 - [x] Update `docs/NEXT-STEPS.md` to point at this file as the active queue
 - [x] Add a "program wave" note to `docs/STATUS.md`
 - [x] Add a top-level pointer in `README.md` explaining `PLANS.md` vs `PLANS-V2.md`
-- [ ] Add a status convention for `implemented`, `drafted`, `conformance-backed`, `externally-blocked`
-- [ ] Add a standard tranche template for V2 work inside `docs/STATUS.md`
+- [x] Add a status convention for `implemented`, `drafted`, `conformance-backed`, `externally-blocked`
+- [x] Add a standard tranche template for V2 work inside `docs/STATUS.md`
 
 ### 1. Core Semantics Deepening
 

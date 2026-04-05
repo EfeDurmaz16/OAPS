@@ -15,6 +15,33 @@ Implement the OAPS protocol suite as far as the current repo, tooling, and speci
 - `PLANS.md` is the completed first execution wave
 - `PLANS-V2.md` is the active long-horizon master program
 
+## V2 Status Convention
+
+Use these labels inside each V2 tranche entry to show what kind of completion happened:
+
+- `drafted` — spec text, schemas, examples, or docs now exist, but runtime and fixture coverage may still be partial
+- `implemented` — reference code or tooling behavior now exists and is locally validated
+- `conformance-backed` — the work is covered by fixture metadata, validators, runtime tests, or result artifacts
+- `externally-blocked` — the next honest completion step requires an outside reviewer, co-signer, or independent implementation
+
+## V2 Tranche Entry Template
+
+Append one entry per tranche using this shape:
+
+### YYYY-MM-DD
+
+- tranche:
+- tranche status:
+  - drafted:
+  - implemented:
+  - conformance-backed:
+  - externally-blocked:
+- changes:
+- validation:
+- commits:
+- next unfinished work:
+- status: `DONE` or `BLOCKED`
+
 ## Latest Known Baseline
 
 - suite charter, architecture, and roadmap docs exist
@@ -24,7 +51,31 @@ Implement the OAPS protocol suite as far as the current repo, tooling, and speci
 
 ## Execution Log
 
-Append one entry per tranche:
+Append one entry per tranche using the V2 template above:
+
+### 2026-04-05
+
+- tranche: V2 status convention and tranche template
+- tranche status:
+  - drafted:
+    - `docs/STATUS.md` now defines the V2 execution-status vocabulary used to describe tranche outcomes
+  - implemented:
+    - `docs/STATUS.md` now includes a standard V2 tranche entry template for future long-horizon execution logs
+  - conformance-backed:
+    - `PLANS-V2.md` now marks the V2 control-plane status-convention/template tranche complete
+  - externally-blocked:
+    - none
+- changes:
+  - added a V2 status convention section to distinguish `drafted`, `implemented`, `conformance-backed`, and `externally-blocked`
+  - added a standard V2 tranche entry template so future execution-log entries use a consistent shape
+  - recorded this tranche and aligned the active V2 plan queue with the completed control-plane work
+- validation:
+  - `python3 - <<'PY' ... verify docs/STATUS.md contains the four V2 status labels and template headings, and PLANS-V2.md marks both control-plane checkboxes complete ... PY`
+- commits:
+  - `docs: add v2 status conventions`
+- next unfinished work:
+  - begin V2 tranche 1: add the dedicated core state-machine draft and related lifecycle semantics
+- status: `DONE`
 
 ### 2026-04-05
 
@@ -40,36 +91,6 @@ Append one entry per tranche:
 - next unfinished work:
   - begin the first unfinished V2 tranche from `PLANS-V2.md`
 - status: `DONE`
-
-
-### 2026-04-05
-
-- tranche: unattended local Codex harness exercise
-- changes:
-  - treated this invocation itself as the real local harness exercise tranche required by `PLANS.md` and the previous `docs/NEXT-STEPS.md`
-  - loaded the required AGENTS-scoped startup context before making substantive changes and confirmed the repository started from a clean working tree
-  - did not recurse into another harness-exercise task; instead marked the harness exercise complete in `PLANS.md` and advanced `docs/NEXT-STEPS.md` to the next unfinished documentation work
-- validation:
-  - `git status --short --branch`
-  - `python3 - <<'PY' ... verify the harness plan checkbox is complete and docs/NEXT-STEPS.md now starts with the docs matrix priority ... PY`
-- commits:
-  - `docs: record harness exercise tranche`
-- next unfinished work:
-  - add a clearer stable-versus-draft-versus-concept matrix to top-level docs
-  - add a public-facing how-to-review packet
-  - decide whether to formalize event replay semantics further in the HTTP binding draft
-  - evaluate a cloud-task or SDK-supervisor harness variant later if the local loop proves insufficient
-- status: `DONE`
-
-### Template
-
-- date:
-- tranche:
-- changes:
-- validation:
-- commits:
-- next unfinished work:
-- status: `DONE` or `BLOCKED`
 
 ### 2026-04-05
 
