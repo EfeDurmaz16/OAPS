@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from oaps_python.cli import main
 from oaps_python.manifest import (
     MANIFEST_RELATIVE_PATH,
+    build_compatibility_declaration,
     fixture_check_repository,
     inventory_repository,
     validate_result_file,
@@ -411,6 +412,120 @@ class ManifestValidationTests(unittest.TestCase):
             report = validate_result_file(repo_root=repo_root, result_path=result_path)
             self.assertFalse(report.ok)
             self.assertTrue(any("manifest_id must match" in issue.message for issue in report.issues))
+
+    def test_compatibility_declaration_summarizes_full_fixture_check(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result_path = Path(tmpdir) / "fixture-check.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "check",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--output",
+                    str(result_path),
+                ])
+            self.assertEqual(exit_code, 0)
+            report = build_compatibility_declaration(repo_root=repo_root, result_path=result_path)
+            self.assertTrue(report.ok, report.to_dict())
+            self.assertEqual(report.compatible_count, 8)
+            self.assertEqual(report.partial_count, 0)
+            self.assertEqual(report.incompatible_count, 0)
+            self.assertEqual(report.not_evaluated_count, 0)
+            self.assertTrue(all(scope.status == "compatible" for scope in report.scope_reports))
+
+    def test_compatibility_declaration_marks_partial_scope_for_filtered_result(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result_path = Path(tmpdir) / "fixture-check.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "check",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--scope",
+                    "profile:mcp",
+                    "--scenario",
+                    "mcp.intent.execution",
+                    "--output",
+                    str(result_path),
+                ])
+            self.assertEqual(exit_code, 0)
+            report = build_compatibility_declaration(repo_root=repo_root, result_path=result_path)
+            self.assertTrue(report.ok, report.to_dict())
+            by_scope = {scope.scope: scope for scope in report.scope_reports}
+            self.assertEqual(by_scope["profile:mcp"].status, "partial")
+            self.assertEqual(by_scope["profile:mcp"].pass_count, 1)
+            self.assertEqual(by_scope["profile:mcp"].evaluated_scenario_count, 1)
+            self.assertEqual(by_scope["core"].status, "not_evaluated")
+            self.assertEqual(report.partial_count, 1)
+            self.assertEqual(report.not_evaluated_count, 7)
+
+    def test_compatibility_cli_json_emits_machine_readable_declaration(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result_path = Path(tmpdir) / "fixture-check.json"
+            declaration_path = Path(tmpdir) / "compatibility.json"
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "check",
+                    "--repo-root",
+                    str(repo_root),
+                    "--json",
+                    "--scope",
+                    "profile:mcp",
+                    "--scenario",
+                    "mcp.intent.execution",
+                    "--output",
+                    str(result_path),
+                ])
+            self.assertEqual(exit_code, 0)
+
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                exit_code = main([
+                    "compatibility",
+                    "--repo-root",
+                    str(repo_root),
+                    "--result",
+                    str(result_path),
+                    "--json",
+                    "--output",
+                    str(declaration_path),
+                ])
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Wrote compatibility declaration", stdout.getvalue())
+            payload = json.loads(declaration_path.read_text(encoding="utf-8"))
+            self.assertEqual(payload["declaration_schema_version"], "1.0")
+            self.assertEqual(payload["summary"]["compatible"], 0)
+            self.assertEqual(payload["summary"]["partial"], 1)
+            self.assertEqual(payload["summary"]["not_evaluated"], 7)
+            mcp_scope = next(scope for scope in payload["scope_declarations"] if scope["scope"] == "profile:mcp")
+            self.assertEqual(mcp_scope["status"], "partial")
+            self.assertEqual(mcp_scope["evaluated_scenarios"], 1)
+
+    def test_compatibility_cli_text_mentions_scope_statuses(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main([
+                "compatibility",
+                "--repo-root",
+                str(repo_root),
+                "--result",
+                str(repo_root / "conformance/results/example-result.v1.json"),
+            ])
+        self.assertEqual(exit_code, 0)
+        output = stdout.getvalue()
+        self.assertIn("Compatibility declaration", output)
+        self.assertIn("scope declarations", output)
+        self.assertIn("core:", output)
+        self.assertIn("binding:http:", output)
 
 
 if __name__ == "__main__":

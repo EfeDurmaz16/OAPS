@@ -7,10 +7,12 @@ from pathlib import Path
 
 from .manifest import (
     MANIFEST_RELATIVE_PATH,
+    CompatibilityDeclarationReport,
     FixtureCheckReport,
     InventoryReport,
     ResultValidationReport,
     ValidationReport,
+    build_compatibility_declaration,
     discover_repo_root,
     fixture_check_repository,
     inventory_repository,
@@ -88,6 +90,27 @@ def build_parser() -> argparse.ArgumentParser:
         help="conformance result JSON file to validate",
     )
     result.add_argument("--json", action="store_true", help="emit machine-readable output")
+
+    compatibility = subparsers.add_parser(
+        "compatibility",
+        aliases=["declare-compatibility"],
+        help="summarize scope-level compatibility from a conformance result file",
+    )
+    compatibility.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    compatibility.add_argument(
+        "--result",
+        type=Path,
+        required=True,
+        help="conformance result JSON file to summarize",
+    )
+    compatibility.add_argument("--manifest", type=Path, default=None, help="override conformance manifest path")
+    compatibility.add_argument("--json", action="store_true", help="emit a machine-readable compatibility declaration")
+    compatibility.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="write the compatibility declaration to a file instead of only stdout",
+    )
     return parser
 
 
@@ -215,6 +238,61 @@ def _print_result_validation(report: ResultValidationReport, as_json: bool) -> i
     return 0 if report.ok else 1
 
 
+def _render_compatibility(report: CompatibilityDeclarationReport, as_json: bool) -> str:
+    if as_json:
+        return json.dumps(report.to_dict(), indent=2, sort_keys=True)
+
+    implementation_id = report.implementation.get('implementation_id', 'unknown')
+    implementation_version = report.implementation.get('implementation_version', 'unknown')
+    lines = [
+        f"Compatibility declaration for {report.result_path}",
+        f"- repo root: {report.repo_root}",
+        f"- implementation: {implementation_id} ({implementation_version})",
+        f"- runner: {report.runner_id or 'unknown'}",
+        f"- result executed at: {report.result_executed_at or 'unknown'}",
+        (
+            f"- manifest: {report.manifest.tck_id} ({report.manifest.suite_version})"
+            if report.manifest is not None
+            else "- manifest: missing"
+        ),
+        f"- compatible scopes: {report.compatible_count}",
+        f"- partial scopes: {report.partial_count}",
+        f"- incompatible scopes: {report.incompatible_count}",
+        f"- not evaluated scopes: {report.not_evaluated_count}",
+    ]
+    if report.selected_scopes:
+        lines.append(f"- selected scopes in result: {', '.join(report.selected_scopes)}")
+    lines.append("- scope declarations:")
+    for scope in report.scope_reports:
+        lines.append(
+            "  - "
+            f"{scope.scope}: {scope.status} "
+            f"(pass={scope.pass_count}, fail={scope.fail_count}, skip={scope.skip_count}, error={scope.error_count}, "
+            f"evaluated={scope.evaluated_scenario_count}/{scope.known_scenario_count})"
+        )
+    if report.issues:
+        lines.append("- issues:")
+        for issue in report.issues:
+            lines.append(f"  - {issue.path}: {issue.message}")
+    return "\n".join(lines)
+
+
+def _print_compatibility(
+    report: CompatibilityDeclarationReport,
+    as_json: bool,
+    output_path: Path | None = None,
+) -> int:
+    payload = _render_compatibility(report, as_json)
+    if output_path is not None:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(payload + "\n", encoding="utf-8")
+        print(f"Wrote compatibility declaration to {output_path}")
+        return 0 if report.ok else 1
+
+    print(payload)
+    return 0 if report.ok else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -250,6 +328,16 @@ def main(argv: list[str] | None = None) -> int:
         repo_root = discover_repo_root(args.repo_root or Path.cwd())
         report = validate_result_file(repo_root=repo_root, result_path=args.result)
         return _print_result_validation(report, args.json)
+
+    if args.command in {"compatibility", "declare-compatibility"}:
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        manifest_path = args.manifest or (repo_root / MANIFEST_RELATIVE_PATH)
+        report = build_compatibility_declaration(
+            repo_root=repo_root,
+            result_path=args.result,
+            manifest_path=manifest_path,
+        )
+        return _print_compatibility(report, args.json, args.output)
 
     parser.error("unknown command")
     return 2

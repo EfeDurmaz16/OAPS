@@ -2,10 +2,12 @@
 
 from .manifest import (
     ConformanceManifest,
+    CompatibilityDeclarationReport,
     FixtureCheckReport,
     InventoryReport,
     ResultValidationReport,
     ValidationReport,
+    build_compatibility_declaration,
     fixture_check_repository,
     inventory_repository,
     validate_result_file,
@@ -14,10 +16,12 @@ from .manifest import (
 
 __all__ = [
     "ConformanceManifest",
+    "CompatibilityDeclarationReport",
     "FixtureCheckReport",
     "InventoryReport",
     "ResultValidationReport",
     "ValidationReport",
+    "build_compatibility_declaration",
     "fixture_check_repository",
     "inventory_repository",
     "validate_result_file",

@@ -9,6 +9,9 @@ from typing import Any, Iterable
 
 MANIFEST_RELATIVE_PATH = Path("conformance/manifest/oaps-tck.manifest.v1.json")
 RESULT_SCHEMA_RELATIVE_PATH = Path("conformance/results/result-schema.v1.json")
+COMPATIBILITY_DECLARATION_SCHEMA_RELATIVE_PATH = Path(
+    "conformance/results/compatibility-declaration-schema.v1.json"
+)
 
 
 @dataclass(frozen=True)
@@ -329,6 +332,106 @@ class ResultValidationReport:
 
 
 @dataclass(frozen=True)
+class CompatibilityScopeReport:
+    scope: str
+    status: str
+    selected_in_result: bool
+    known_scenarios: tuple[str, ...]
+    evaluated_scenarios: tuple[str, ...]
+    coverage_observed: tuple[str, ...]
+    pass_count: int
+    fail_count: int
+    skip_count: int
+    error_count: int
+
+    @property
+    def known_scenario_count(self) -> int:
+        return len(self.known_scenarios)
+
+    @property
+    def evaluated_scenario_count(self) -> int:
+        return len(self.evaluated_scenarios)
+
+
+@dataclass(frozen=True)
+class CompatibilityDeclarationReport:
+    result_path: Path
+    repo_root: Path
+    manifest: ConformanceManifest | None
+    implementation: dict[str, Any]
+    runner_id: str
+    result_executed_at: str
+    selected_scopes: tuple[str, ...]
+    scope_reports: tuple[CompatibilityScopeReport, ...]
+    compatibility_schema_path: Path
+    issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
+
+    @property
+    def ok(self) -> bool:
+        return not self.issues
+
+    @property
+    def compatible_count(self) -> int:
+        return sum(1 for scope in self.scope_reports if scope.status == 'compatible')
+
+    @property
+    def partial_count(self) -> int:
+        return sum(1 for scope in self.scope_reports if scope.status == 'partial')
+
+    @property
+    def incompatible_count(self) -> int:
+        return sum(1 for scope in self.scope_reports if scope.status == 'incompatible')
+
+    @property
+    def not_evaluated_count(self) -> int:
+        return sum(1 for scope in self.scope_reports if scope.status == 'not_evaluated')
+
+    def to_dict(self) -> dict[str, Any]:
+        generated_at = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+        return {
+            'declaration_schema_version': '1.0',
+            'manifest_id': self.manifest.tck_id if self.manifest else 'oaps-tck',
+            'suite_version': self.manifest.suite_version if self.manifest else '',
+            'generated_at': generated_at,
+            'source_result': {
+                'result_path': str(self.result_path),
+                'runner_id': self.runner_id,
+                'executed_at': self.result_executed_at,
+            },
+            'implementation': self.implementation,
+            'selected_scopes': list(self.selected_scopes),
+            'summary': {
+                'compatible': self.compatible_count,
+                'partial': self.partial_count,
+                'incompatible': self.incompatible_count,
+                'not_evaluated': self.not_evaluated_count,
+                'total': len(self.scope_reports),
+            },
+            'scope_declarations': [
+                {
+                    'scope': scope.scope,
+                    'status': scope.status,
+                    'selected_in_result': scope.selected_in_result,
+                    'known_scenarios': scope.known_scenario_count,
+                    'evaluated_scenarios': scope.evaluated_scenario_count,
+                    'pass': scope.pass_count,
+                    'fail': scope.fail_count,
+                    'skip': scope.skip_count,
+                    'error': scope.error_count,
+                    'coverage_observed': list(scope.coverage_observed),
+                    'known_scenario_ids': list(scope.known_scenarios),
+                    'evaluated_scenario_ids': list(scope.evaluated_scenarios),
+                }
+                for scope in self.scope_reports
+            ],
+            'issues': [
+                {'path': issue.path, 'message': issue.message}
+                for issue in self.issues
+            ],
+        }
+
+
+@dataclass(frozen=True)
 class ConformanceManifest:
     manifest_version: str
     tck_id: str
@@ -596,6 +699,57 @@ def _pack_entries_by_scope(repo_root: Path, manifest: ConformanceManifest, issue
             continue
         entries[scope] = {'scope': scope, 'path': pack_path}
     return entries
+
+
+def _load_fixture_scenarios_by_scope(
+    repo_root: Path,
+    manifest: ConformanceManifest,
+    issues: list[ValidationIssue],
+) -> dict[str, tuple[FixtureScenario, ...]]:
+    pack_entries = _pack_entries_by_scope(repo_root, manifest, issues)
+    scenarios_by_scope: dict[str, tuple[FixtureScenario, ...]] = {}
+    for scope, pack_entry in pack_entries.items():
+        pack_path = str(pack_entry['path'])
+        pack_file = _resolve_repo_path(repo_root, pack_path)
+        if not pack_file.exists():
+            continue
+        try:
+            pack_json = load_json_file(pack_file)
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            issues.append(
+                ValidationIssue(
+                    path=str(pack_file),
+                    message=f'invalid fixture pack JSON: {error}',
+                )
+            )
+            continue
+        fixtures = pack_json.get('fixtures', [])
+        if not isinstance(fixtures, list):
+            issues.append(
+                ValidationIssue(
+                    path=str(pack_file),
+                    message='fixture pack fixtures must be a list',
+                )
+            )
+            continue
+        scope_scenarios: list[FixtureScenario] = []
+        for fixture in fixtures:
+            if not isinstance(fixture, dict):
+                continue
+            scenario_id = str(fixture.get('scenario_id', '')).strip()
+            if not scenario_id:
+                continue
+            coverage = fixture.get('coverage', [])
+            scope_scenarios.append(
+                FixtureScenario(
+                    scope=scope,
+                    scenario_id=scenario_id,
+                    coverage=tuple(str(item) for item in coverage if str(item)) if isinstance(coverage, list) else tuple(),
+                    pack_path=pack_path,
+                )
+            )
+        scenarios_by_scope[scope] = tuple(scope_scenarios)
+    return scenarios_by_scope
 
 
 def fixture_check_repository(
@@ -995,6 +1149,188 @@ def validate_result_file(
         result_path=result_path,
         repo_root=repo_root,
         result_schema_path=result_schema_path,
+        issues=tuple(issues),
+    )
+
+
+def build_compatibility_declaration(
+    repo_root: Path | None = None,
+    result_path: Path | None = None,
+    manifest_path: Path | None = None,
+    compatibility_schema_path: Path | None = None,
+) -> CompatibilityDeclarationReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    result_path = (result_path or repo_root / 'conformance/results/example-result.v1.json').resolve()
+    manifest_path = (manifest_path or repo_root / MANIFEST_RELATIVE_PATH).resolve()
+    compatibility_schema_path = (
+        compatibility_schema_path or repo_root / COMPATIBILITY_DECLARATION_SCHEMA_RELATIVE_PATH
+    ).resolve()
+    issues: list[ValidationIssue] = []
+
+    result_validation = validate_result_file(repo_root=repo_root, result_path=result_path)
+    issues.extend(result_validation.issues)
+
+    manifest: ConformanceManifest | None = None
+    if manifest_path.exists():
+        try:
+            manifest = ConformanceManifest.from_json(load_json_file(manifest_path))
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            issues.append(
+                ValidationIssue(
+                    path=str(manifest_path),
+                    message=f'invalid conformance manifest: {error}',
+                )
+            )
+    else:
+        issues.append(
+            ValidationIssue(
+                path=str(manifest_path),
+                message='conformance manifest does not exist',
+            )
+        )
+
+    implementation: dict[str, Any] = {}
+    runner_id = ''
+    result_executed_at = ''
+    selected_scopes: tuple[str, ...] = tuple()
+    payload: dict[str, Any] = {}
+    if result_path.exists():
+        try:
+            payload = load_json_file(result_path)
+            implementation = payload.get('implementation', {}) if isinstance(payload.get('implementation'), dict) else {}
+            runner_id = str(payload.get('runner_id', ''))
+            result_executed_at = str(payload.get('executed_at', ''))
+            selected_scopes_raw = payload.get('scopes', [])
+            if isinstance(selected_scopes_raw, list):
+                selected_scopes = tuple(str(scope) for scope in selected_scopes_raw if str(scope))
+        except (OSError, ValueError, json.JSONDecodeError) as error:
+            issues.append(
+                ValidationIssue(
+                    path=str(result_path),
+                    message=f'invalid JSON result file: {error}',
+                )
+            )
+
+    if not compatibility_schema_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(compatibility_schema_path),
+                message='compatibility declaration schema does not exist',
+            )
+        )
+
+    if manifest is None or not payload:
+        return CompatibilityDeclarationReport(
+            result_path=result_path,
+            repo_root=repo_root,
+            manifest=manifest,
+            implementation=implementation,
+            runner_id=runner_id,
+            result_executed_at=result_executed_at,
+            selected_scopes=selected_scopes,
+            scope_reports=tuple(),
+            compatibility_schema_path=compatibility_schema_path,
+            issues=tuple(issues),
+        )
+
+    fixture_scenarios_by_scope = _load_fixture_scenarios_by_scope(repo_root, manifest, issues)
+    scope_order = tuple(fixture_scenarios_by_scope.keys())
+    known_scenarios_by_scope = {
+        scope: tuple(scenario.scenario_id for scenario in scenarios)
+        for scope, scenarios in fixture_scenarios_by_scope.items()
+    }
+
+    result_scenarios_by_scope: dict[str, list[dict[str, Any]]] = {}
+    scenarios = payload.get('scenarios', [])
+    if isinstance(scenarios, list):
+        for raw_scenario in scenarios:
+            if not isinstance(raw_scenario, dict):
+                continue
+            scope = str(raw_scenario.get('scope', ''))
+            scenario_id = str(raw_scenario.get('scenario_id', ''))
+            if not scope or not scenario_id:
+                continue
+            if scope not in known_scenarios_by_scope:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'result scenario references unknown scope: {scope}',
+                    )
+                )
+                continue
+            if scenario_id not in set(known_scenarios_by_scope[scope]):
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'result scenario is not present in fixture pack for {scope}: {scenario_id}',
+                    )
+                )
+            result_scenarios_by_scope.setdefault(scope, []).append(raw_scenario)
+
+    scope_reports: list[CompatibilityScopeReport] = []
+    for scope in scope_order:
+        known_scenarios = known_scenarios_by_scope.get(scope, tuple())
+        result_scope_scenarios = result_scenarios_by_scope.get(scope, [])
+        coverage_observed = _unique_preserve_order(
+            coverage_item
+            for scenario in result_scope_scenarios
+            for coverage_item in scenario.get('coverage', [])
+            if isinstance(coverage_item, str) and coverage_item
+        )
+        evaluated_scenario_ids = _unique_preserve_order(
+            str(scenario.get('scenario_id', ''))
+            for scenario in result_scope_scenarios
+            if isinstance(scenario.get('scenario_id', ''), str) and str(scenario.get('scenario_id', ''))
+        )
+        pass_count = sum(1 for scenario in result_scope_scenarios if scenario.get('outcome') == 'pass')
+        fail_count = sum(1 for scenario in result_scope_scenarios if scenario.get('outcome') == 'fail')
+        skip_count = sum(1 for scenario in result_scope_scenarios if scenario.get('outcome') == 'skip')
+        error_count = sum(1 for scenario in result_scope_scenarios if scenario.get('outcome') == 'error')
+        selected_in_result = scope in selected_scopes
+
+        if fail_count or error_count:
+            status = 'incompatible'
+        elif pass_count == len(known_scenarios) and len(evaluated_scenario_ids) == len(known_scenarios) and skip_count == 0:
+            status = 'compatible'
+        elif pass_count == 0:
+            status = 'not_evaluated'
+        else:
+            status = 'partial'
+
+        scope_reports.append(
+            CompatibilityScopeReport(
+                scope=scope,
+                status=status,
+                selected_in_result=selected_in_result,
+                known_scenarios=known_scenarios,
+                evaluated_scenarios=evaluated_scenario_ids,
+                coverage_observed=coverage_observed,
+                pass_count=pass_count,
+                fail_count=fail_count,
+                skip_count=skip_count,
+                error_count=error_count,
+            )
+        )
+
+    unknown_selected_scopes = [scope for scope in selected_scopes if scope not in set(scope_order)]
+    for scope in unknown_selected_scopes:
+        issues.append(
+            ValidationIssue(
+                path=str(result_path),
+                message=f'result scopes contains unknown scope: {scope}',
+            )
+        )
+
+    return CompatibilityDeclarationReport(
+        result_path=result_path,
+        repo_root=repo_root,
+        manifest=manifest,
+        implementation=implementation,
+        runner_id=runner_id,
+        result_executed_at=result_executed_at,
+        selected_scopes=selected_scopes,
+        scope_reports=tuple(scope_reports),
+        compatibility_schema_path=compatibility_schema_path,
         issues=tuple(issues),
     )
 

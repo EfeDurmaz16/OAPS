@@ -74,6 +74,24 @@ Use JSON output for machine-readable validation reports:
 python3 -m oaps_python validate-result --result /tmp/oaps-fixture-check.json --json
 ```
 
+Summarize scope-level compatibility from a result file:
+
+```bash
+python3 -m oaps_python compatibility --result /tmp/oaps-fixture-check.json
+```
+
+Emit a machine-readable compatibility declaration:
+
+```bash
+python3 -m oaps_python compatibility --result /tmp/oaps-fixture-check.json --json
+```
+
+Write the compatibility declaration to a file:
+
+```bash
+python3 -m oaps_python compatibility --result /tmp/oaps-fixture-check.json --json --output /tmp/oaps-compatibility.json
+```
+
 Or with an explicit starting directory:
 
 ```bash
@@ -87,6 +105,7 @@ oaps-python validate
 oaps-python inventory
 oaps-python check
 oaps-python validate-result
+oaps-python compatibility
 ```
 
 ## Scope
@@ -96,3 +115,4 @@ Its job is to prove that the suite-level manifest can be consumed from a second 
 The inventory command can also narrow inspection to selected scopes and emit the payload to a file for downstream tooling.
 The `check` command performs honest static fixture checks, including manifest consistency and JSON fixture file parsing where applicable, and emits a conformance-result-shaped payload without pretending to execute runtime scenarios.
 The `validate-result` command checks a conformance result file against the suite's pragmatic result shape and is intended for outputs emitted by `check`.
+The `compatibility` command derives a scope-level declaration from a result file so compatibility statements stay machine-derived rather than handwritten.
