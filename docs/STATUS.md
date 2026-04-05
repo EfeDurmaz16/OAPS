@@ -73,6 +73,34 @@ Append one entry per tranche:
   - add optional cloud-task or SDK supervisor variants if the local loop still stops too early
 - status: `DONE`
 
+### 2026-04-05
+
+- tranche: compatibility declaration surfaces
+- changes:
+  - added Python `compatibility` / `declare-compatibility` CLI support for scope-level summaries and machine-readable declaration export
+  - added `conformance/results/compatibility-declaration-schema.v1.json`
+  - expanded `conformance/results/example-result.v1.json` to reflect the current Python fixture-check runner across all suite scopes
+  - added `docs/COMPATIBILITY-DECLARATIONS.md`
+  - added example result and derived declaration artifacts under `conformance/results/examples/`
+  - updated docs, conformance indexes, `PLANS.md`, and `docs/NEXT-STEPS.md` to point at the new declaration surfaces and next tranche
+- validation:
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result conformance/results/example-result.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/example-result.v1.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --output conformance/results/examples/fixture-check-all-scopes.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:mcp --scenario mcp.intent.execution --output conformance/results/examples/fixture-check-profile-mcp-partial.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/examples/fixture-check-all-scopes.v1.json --json --output conformance/results/examples/compatibility-declaration-all-scopes.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/examples/fixture-check-profile-mcp-partial.v1.json --json --output conformance/results/examples/compatibility-declaration-profile-mcp-partial.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result conformance/results/examples/fixture-check-core-incompatible.v1.json`
+- commits:
+  - `dfbc2f2` `feat: add compatibility declaration reporting`
+  - `c584b64` `docs: add compatibility declaration examples`
+- next unfinished work:
+  - add runtime-backed conformance scenarios where the current reference implementation already supports them
+  - tighten profile mapping notes without overclaiming unsupported behavior
+  - exercise the local Codex harness on a real unattended multi-tranche run and record the behavior
+- status: `DONE`
+
 ## Current Open Fronts
 
 - harden bindings and profiles
