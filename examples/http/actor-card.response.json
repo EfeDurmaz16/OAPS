@@ -1,0 +1,34 @@
+{
+  "actor_id": "urn:oaps:actor:server:reference",
+  "actor_type": "service",
+  "display_name": "OAPS Reference Server",
+  "identity_profile": "urn",
+  "auth_schemes": [
+    "bearer"
+  ],
+  "endpoints": [
+    {
+      "kind": "discovery",
+      "url": "http://localhost:3000/.well-known/oaps.json"
+    },
+    {
+      "kind": "interaction",
+      "url": "http://localhost:3000/interactions"
+    },
+    {
+      "kind": "approval",
+      "url": "http://localhost:3000/interactions/{id}/approve"
+    },
+    {
+      "kind": "evidence",
+      "url": "http://localhost:3000/interactions/{id}/evidence"
+    }
+  ],
+  "capabilities": [
+    "cap_read_repo",
+    "cap_pay_invoice"
+  ],
+  "supported_profiles": [
+    "oaps-mcp-v1"
+  ]
+}

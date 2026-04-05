@@ -1,0 +1,9 @@
+{
+  "code": "REPLAY_CURSOR_NOT_FOUND",
+  "category": "validation",
+  "message": "Replay cursor does not match any event in this interaction",
+  "retryable": false,
+  "details": {
+    "after": "evt_missing"
+  }
+}

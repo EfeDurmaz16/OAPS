@@ -1,0 +1,25 @@
+{
+  "spec_version": "0.4-draft",
+  "min_supported_version": "0.4",
+  "max_supported_version": "0.4",
+  "message_id": "interactions_reject_response_json_msg",
+  "interaction_id": "ix_http_completed_1",
+  "from": {
+    "actor_id": "urn:oaps:actor:server:reference",
+    "display_name": "OAPS Reference Server"
+  },
+  "to": {
+    "actor_id": "urn:oaps:actor:agent:builder"
+  },
+  "channel": "oaps-http",
+  "message_type": "interaction.updated",
+  "timestamp": "2026-04-05T12:00:01Z",
+  "payload": {
+    "interaction_id": "ix_http_completed_1",
+    "state": "failed",
+    "timestamp": "2026-04-05T12:00:01Z",
+    "metadata": {
+      "approval_request_id": "apr_http_pending_1"
+    }
+  }
+}

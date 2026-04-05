@@ -1,0 +1,6 @@
+{
+  "code": "APPROVAL_NOT_PENDING",
+  "category": "validation",
+  "message": "Interaction is not awaiting approval",
+  "retryable": false
+}

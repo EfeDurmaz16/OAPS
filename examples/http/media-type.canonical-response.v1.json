@@ -1,0 +1,17 @@
+{
+  "canonical_response_content_type": "application/oaps+json",
+  "examples": [
+    {
+      "endpoint": "GET /.well-known/oaps.json",
+      "response_example": "examples/well-known-oaps.json"
+    },
+    {
+      "endpoint": "GET /actor-card",
+      "response_example": "examples/http/actor-card.response.json"
+    },
+    {
+      "endpoint": "GET /interactions/{id}/events",
+      "response_example": "examples/http/interactions.events.response.json"
+    }
+  ]
+}

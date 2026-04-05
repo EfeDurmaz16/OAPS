@@ -1,0 +1,8 @@
+{
+  "compatibility_allowance": "application/json",
+  "when_permitted": "Implementations MAY still accept or emit application/json as a compatibility allowance while advertising application/oaps+json as canonical.",
+  "discovery_anchor": "examples/well-known-oaps.json",
+  "example_response_headers": {
+    "content-type": "application/json"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "capability_id": "cap_read_repo",
+    "kind": "tool",
+    "name": "read_repo",
+    "description": "Read repository files",
+    "input_schema": {
+      "type": "object"
+    },
+    "risk_class": "R1"
+  },
+  {
+    "capability_id": "cap_pay_invoice",
+    "kind": "tool",
+    "name": "pay_invoice",
+    "description": "Pay an invoice",
+    "input_schema": {
+      "type": "object"
+    },
+    "risk_class": "R4"
+  }
+]

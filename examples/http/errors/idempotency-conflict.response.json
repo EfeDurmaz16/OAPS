@@ -1,0 +1,6 @@
+{
+  "code": "IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD",
+  "category": "validation",
+  "message": "Idempotency key cannot be reused with a different payload",
+  "retryable": false
+}

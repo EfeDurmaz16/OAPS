@@ -1,0 +1,6 @@
+{
+  "code": "INTERACTION_NOT_FOUND",
+  "category": "discovery",
+  "message": "Interaction not found",
+  "retryable": false
+}

@@ -55,6 +55,38 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: HTTP contract and response example pack
+- tranche status:
+  - drafted:
+    - added `examples/http/discovery-contract.v1.json` with explicit request/response anchors for every normative HTTP endpoint
+    - added canonical HTTP response examples, request examples, error examples, and media-type examples under `examples/http/`
+    - tightened the HTTP binding draft with an explicit example-pack section and clearer content-negotiation fallback notes
+  - implemented:
+    - packaged the current HTTP reference slice into stable example artifacts that match the implemented endpoint shapes and error payloads
+  - conformance-backed:
+    - marked the HTTP discovery-example, response-example, content-negotiation-note, canonical-media example, and compatibility-fallback example items complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - added a reader-facing HTTP example pack with endpoint contract metadata, request bodies, response bodies, error payloads, and media-type notes
+  - documented the example-pack entry points directly in `spec/bindings/http-binding-draft.md`
+  - advanced the HTTP hardening tranche past the example-and-documentation sub-slice before the remaining runtime/conformance follow-ons
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/http and verify discovery-contract.v1.json references only existing example files ... PY`
+  - `git diff --check`
+- commits:
+  - `docs: add http contract examples`
+- next unfinished work:
+  - add explicit response-shape fixtures for HTTP error objects
+  - add conformance scenarios for reject / revoke retrieval after mutation
+  - add conformance scenarios for replay-window pagination edge cases
+  - decide and document default ordering semantics for events and evidence retrieval
+  - add stronger auth-web notes for follow-on message authentication semantics
+  - expand HTTP reference tests to cover every documented normative endpoint path and state-transition assertions
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: core lifecycle conformance follow-through
 - tranche status:
   - drafted:

@@ -49,6 +49,20 @@ The canonical HTTP surface should expose:
 
 These endpoints are the current reference shape for the suite. Later bindings may use different wire shapes while preserving the same semantics.
 
+## Example Contract Pack
+
+The current repository now ships a concrete HTTP example pack under
+`examples/http/`.
+
+Key entry points:
+
+- `examples/http/discovery-contract.v1.json` — maps every normative endpoint to representative request/response examples
+- `examples/http/*.response.json` — canonical response-body examples for the current reference slice
+- `examples/http/requests/` — representative mutation request bodies
+- `examples/http/errors/` — stable error-payload examples reused across the binding draft
+- `examples/http/media-type.canonical-response.v1.json` — canonical `application/oaps+json` response examples
+- `examples/http/media-type.compatibility-fallback.v1.json` — draft compatibility example for `application/json` fallback where still permitted
+
 ## Messages
 
 `POST /interactions/{id}/messages` is the canonical HTTP mutation for appending a new message or progress update to an existing interaction.
@@ -89,6 +103,11 @@ Discovery is not optional for a conformant HTTP binding.
 The canonical media type for OAPS HTTP payloads should be `application/oaps+json`.
 
 If an implementation also accepts or emits `application/json`, that should be treated as a compatibility allowance rather than the normative target.
+
+The current example pack therefore distinguishes:
+
+- canonical response examples that assume `application/oaps+json`
+- a separate draft compatibility-fallback example that shows how `application/json` may still be described without treating it as the normative target
 
 ## Version Negotiation
 

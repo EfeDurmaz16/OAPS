@@ -1,0 +1,84 @@
+{
+  "binding": "oaps-http",
+  "spec_version": "0.4-draft",
+  "canonical_response_content_type": "application/oaps+json",
+  "compatibility_response_content_types": [
+    "application/json"
+  ],
+  "normative_endpoint_examples": [
+    {
+      "method": "GET",
+      "path": "/.well-known/oaps.json",
+      "authentication": "none",
+      "response_example": "examples/well-known-oaps.json"
+    },
+    {
+      "method": "GET",
+      "path": "/actor-card",
+      "authentication": "none",
+      "response_example": "examples/http/actor-card.response.json"
+    },
+    {
+      "method": "GET",
+      "path": "/capabilities",
+      "authentication": "none",
+      "response_example": "examples/http/capabilities.response.json"
+    },
+    {
+      "method": "POST",
+      "path": "/interactions",
+      "authentication": "bearer",
+      "request_example": "examples/http/requests/interactions.create.request.json",
+      "response_examples": [
+        "examples/http/interactions.create.completed.response.json",
+        "examples/http/interactions.create.pending-approval.response.json"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/interactions/{id}",
+      "authentication": "none",
+      "response_example": "examples/http/interactions.get.response.json"
+    },
+    {
+      "method": "POST",
+      "path": "/interactions/{id}/messages",
+      "authentication": "bearer",
+      "request_example": "examples/http/requests/interactions.messages.append.request.json",
+      "response_example": "examples/http/interactions.messages.append.response.json"
+    },
+    {
+      "method": "POST",
+      "path": "/interactions/{id}/approve",
+      "authentication": "bearer",
+      "request_example": "examples/http/requests/interactions.approve.request.json",
+      "response_example": "examples/http/interactions.approve.response.json"
+    },
+    {
+      "method": "POST",
+      "path": "/interactions/{id}/reject",
+      "authentication": "bearer",
+      "request_example": "examples/http/requests/interactions.reject.request.json",
+      "response_example": "examples/http/interactions.reject.response.json"
+    },
+    {
+      "method": "POST",
+      "path": "/interactions/{id}/revoke",
+      "authentication": "bearer",
+      "request_example": "examples/http/requests/interactions.revoke.request.json",
+      "response_example": "examples/http/interactions.revoke.response.json"
+    },
+    {
+      "method": "GET",
+      "path": "/interactions/{id}/evidence",
+      "authentication": "none",
+      "response_example": "examples/http/interactions.evidence.response.json"
+    },
+    {
+      "method": "GET",
+      "path": "/interactions/{id}/events",
+      "authentication": "none",
+      "response_example": "examples/http/interactions.events.response.json"
+    }
+  ]
+}

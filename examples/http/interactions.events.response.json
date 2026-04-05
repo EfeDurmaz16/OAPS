@@ -1,0 +1,63 @@
+{
+  "interaction_id": "ix_http_completed_1",
+  "events": [
+    {
+      "event_id": "evt_http_1",
+      "interaction_id": "ix_http_completed_1",
+      "event_type": "interaction.received",
+      "actor": "urn:oaps:actor:agent:builder",
+      "timestamp": "2026-04-05T12:00:00Z",
+      "prev_event_hash": "sha256:0",
+      "event_hash": "sha256:event1",
+      "input_hash": "sha256:input1",
+      "metadata": {
+        "message_id": "msg_http_request_1"
+      }
+    },
+    {
+      "event_id": "evt_http_2",
+      "interaction_id": "ix_http_completed_1",
+      "event_type": "mcp.tool_call.started",
+      "actor": "urn:oaps:actor:server:reference",
+      "timestamp": "2026-04-05T12:00:00Z",
+      "prev_event_hash": "sha256:event1",
+      "event_hash": "sha256:event2",
+      "metadata": {
+        "capability_id": "cap_read_repo"
+      }
+    },
+    {
+      "event_id": "evt_http_3",
+      "interaction_id": "ix_http_completed_1",
+      "event_type": "mcp.tool_call.completed",
+      "actor": "urn:oaps:actor:server:reference",
+      "timestamp": "2026-04-05T12:00:01Z",
+      "prev_event_hash": "sha256:event2",
+      "event_hash": "sha256:event3",
+      "output_hash": "sha256:output1",
+      "metadata": {
+        "capability_id": "cap_read_repo",
+        "execution_id": "exec_http_completed_1"
+      }
+    },
+    {
+      "event_id": "evt_http_4",
+      "interaction_id": "ix_http_completed_1",
+      "event_type": "interaction.completed",
+      "actor": "urn:oaps:actor:server:reference",
+      "timestamp": "2026-04-05T12:00:01Z",
+      "prev_event_hash": "sha256:event3",
+      "event_hash": "sha256:event4",
+      "metadata": {
+        "execution_id": "exec_http_completed_1"
+      }
+    }
+  ],
+  "replay": {
+    "after": null,
+    "returned": 4,
+    "total_events": 4,
+    "has_more": false,
+    "next_after": "evt_http_4"
+  }
+}

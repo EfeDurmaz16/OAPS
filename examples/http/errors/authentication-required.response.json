@@ -1,0 +1,6 @@
+{
+  "code": "AUTHENTICATION_REQUIRED",
+  "category": "authentication",
+  "message": "Bearer authentication is required",
+  "retryable": false
+}
