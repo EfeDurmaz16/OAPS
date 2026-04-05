@@ -97,6 +97,20 @@ test('assertAuthenticatedActor fails closed on expired delegations', () => {
   ), (error: unknown) => error instanceof OapsError && error.error.code === 'DELEGATION_EXPIRED');
 });
 
+test('assertAuthenticatedActor includes mismatch details when subject binding fails', () => {
+  assert.throws(
+    () => assertAuthenticatedActor(
+      'urn:oaps:actor:merchant:owner',
+      { actor_id: 'urn:oaps:actor:agent:builder' },
+    ),
+    (error: unknown) =>
+      error instanceof OapsError
+      && error.error.code === 'AUTHENTICATED_SUBJECT_MISMATCH'
+      && error.error.details?.authenticated_actor_id === 'urn:oaps:actor:merchant:owner'
+      && error.error.details?.envelope_actor_id === 'urn:oaps:actor:agent:builder',
+  );
+});
+
 test('promoteIntentToTask materializes a task that preserves the originating intent reference', () => {
   const task = promoteIntentToTask(
     {

@@ -358,6 +358,7 @@ export class OapsMcpAdapter {
           metadata: {
             approval_request_id: approvalDecision.approval_request_id,
             capability_id: capability.capability_id,
+            evaluated_context_hash: contextHash,
           },
         });
         throw new OapsError({

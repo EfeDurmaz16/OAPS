@@ -300,10 +300,10 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 19. TypeScript Reference Line Expansion
 
-- [ ] Add runtime-backed support where feasible for the newly deepened HTTP semantics
-- [ ] Add reference test slices for newly specified core/HTTP semantics
-- [ ] Add partial runtime anchors for MCP and auth/trust scenarios where already credible
-- [ ] Add explicit placeholders only when bounded by honest non-claim docs and conformance metadata
+- [x] Add runtime-backed support where feasible for the newly deepened HTTP semantics
+- [x] Add reference test slices for newly specified core/HTTP semantics
+- [x] Add partial runtime anchors for MCP and auth/trust scenarios where already credible
+- [x] Add explicit placeholders only when bounded by honest non-claim docs and conformance metadata
 
 ### 20. Detached Supervisor / Long-Run Harness Expansion
 

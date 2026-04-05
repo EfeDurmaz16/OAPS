@@ -55,6 +55,37 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: TypeScript reference line expansion
+- tranche status:
+  - drafted:
+    - kept the existing non-claim boundaries intact while tightening the runtime-backed seams that are already credible for auth/trust and HTTP mutation behavior
+  - implemented:
+    - added HTTP reference tests that prove approve/reject/revoke mutation surfaces still fail closed on missing authentication
+    - added a core reference test that checks authenticated-subject mismatch details explicitly
+    - added an MCP adapter runtime anchor so approval-rejection evidence now carries the evaluated policy-context hash on high-risk rejection paths too
+  - conformance-backed:
+    - rebuilt and retested the core, MCP adapter, and HTTP TypeScript packages after the new runtime-backed slices were added
+  - externally-blocked:
+    - none
+- changes:
+  - expanded the TypeScript reference line around the most credible auth/trust/runtime seams instead of pretending broader transport or verifier support already exists
+  - added clearer regression coverage for HTTP mutation authentication and core subject-binding mismatch details
+  - strengthened the MCP approval-rejection evidence path so high-risk rejection now preserves the same context-hash audit seam as the other gating paths
+- validation:
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/core build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/core test`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/mcp-adapter build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/mcp-adapter test`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
+- commits:
+  - `ts: deepen auth and approval runtime anchors`
+- next unfinished work:
+  - start V2 tranche 20 by expanding the detached supervisor and unattended harness surfaces
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: Python second implementation expansion
 - tranche status:
   - drafted:

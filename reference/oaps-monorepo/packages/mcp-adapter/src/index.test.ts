@@ -348,6 +348,7 @@ test('invoke emits approval rejection evidence when an approver rejects a high-r
 
   assert.equal(chain.events.length, 1);
   assert.equal(chain.events[0]?.event_type, 'approval.rejected');
+  assert.equal(typeof chain.events[0]?.metadata?.evaluated_context_hash, 'string');
 });
 
 test('invoke rejects modified approvals that target a different capability', async () => {

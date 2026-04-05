@@ -258,6 +258,65 @@ test('POST /interactions/:id/approve respects idempotency keys', async () => {
   assert.equal(conflictBody.category, 'validation');
 });
 
+test('approval, rejection, and revocation mutations require authentication', async () => {
+  const app = createTestApp();
+
+  const createPendingResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_auth_mutations_pending',
+      message_id: 'msg_auth_mutations_pending',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_auth_mutations_pending',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+  assert.equal(createPendingResponse.status, 202);
+
+  const approveResponse = await app.request('/interactions/ix_auth_mutations_pending/approve', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ reason: 'missing auth' }),
+  });
+  assert.equal(approveResponse.status, 401);
+  assert.equal((await approveResponse.json()).code, 'AUTHENTICATION_REQUIRED');
+
+  const rejectResponse = await app.request('/interactions/ix_auth_mutations_pending/reject', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ reason: 'missing auth' }),
+  });
+  assert.equal(rejectResponse.status, 401);
+  assert.equal((await rejectResponse.json()).code, 'AUTHENTICATION_REQUIRED');
+
+  const createCompletedResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_auth_mutations_completed',
+      message_id: 'msg_auth_mutations_completed',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_auth_mutations_completed',
+      },
+    }),
+  });
+  assert.equal(createCompletedResponse.status, 201);
+
+  const revokeResponse = await app.request('/interactions/ix_auth_mutations_completed/revoke', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ reason: 'missing auth' }),
+  });
+  assert.equal(revokeResponse.status, 401);
+  assert.equal((await revokeResponse.json()).code, 'AUTHENTICATION_REQUIRED');
+});
+
 test('idempotency returns the original response for repeated requests', async () => {
   const app = createTestApp();
   const headers = jsonHeaders({ 'idempotency-key': 'idem-1' });
