@@ -82,6 +82,18 @@ function jsonHeaders(extra?: Record<string, string>) {
   };
 }
 
+test('GET /.well-known/oaps.json exposes OAPS discovery metadata', async () => {
+  const app = createTestApp();
+
+  const response = await app.request('/.well-known/oaps.json');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.oaps_version, '0.4-draft');
+  assert.deepEqual(body.auth_schemes, ['bearer']);
+  assert.deepEqual(body.supported_profiles, ['oaps-mcp-v1']);
+});
+
 test('POST /interactions completes low-risk invocations', async () => {
   const app = createTestApp();
 
@@ -94,6 +106,21 @@ test('POST /interactions completes low-risk invocations', async () => {
   assert.equal(response.status, 201);
   const body = await response.json();
   assert.equal(body.payload.state, 'completed');
+});
+
+test('GET /.well-known/oaps.json exposes the canonical discovery document', async () => {
+  const app = createTestApp();
+
+  const response = await app.request('/.well-known/oaps.json');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.oaps_version, '0.4-draft');
+  assert.equal(body.actor_card_url, 'http://localhost:3000/actor-card');
+  assert.equal(body.capabilities_url, 'http://localhost:3000/capabilities');
+  assert.equal(body.interactions_url, 'http://localhost:3000/interactions');
+  assert.deepEqual(body.auth_schemes, ['bearer']);
+  assert.deepEqual(body.supported_profiles, ['oaps-mcp-v1']);
 });
 
 test('approval flow moves interaction from pending_approval to completed', async () => {
@@ -176,6 +203,56 @@ test('POST /interactions/:id/messages appends envelopes to interaction history',
   const interaction = await fetchResponse.json();
   assert.equal(interaction.messages.length, 2);
   assert.equal(interaction.messages[1].message_id, 'msg_2');
+});
+
+test('GET /interactions/:id/evidence and /events return the recorded evidence chain', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const evidenceResponse = await app.request('/interactions/ix_1/evidence');
+  assert.equal(evidenceResponse.status, 200);
+  const evidence = await evidenceResponse.json();
+  assert.equal(evidence.events.length, 3);
+  assert.equal(evidence.events[0].event_type, 'interaction.received');
+  assert.equal(evidence.events.at(-1).event_type, 'interaction.completed');
+
+  const eventsResponse = await app.request('/interactions/ix_1/events');
+  assert.equal(eventsResponse.status, 200);
+  const events = await eventsResponse.json();
+  assert.equal(events.length, evidence.events.length);
+  assert.equal(events[1].event_type, 'mcp.tool_call.started');
+});
+
+test('POST /interactions/:id/messages rejects mismatched interaction ids', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const response = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...messageEnvelope,
+      interaction_id: 'ix_other',
+      message_id: 'msg_bad_message_id',
+    }),
+  });
+
+  assert.equal(response.status, 400);
+  const body = await response.json();
+  assert.equal(body.code, 'VALIDATION_FAILED');
+  assert.equal(body.category, 'validation');
 });
 
 test('POST /interactions requires bearer authentication', async () => {
@@ -325,6 +402,194 @@ test('POST /interactions/:id/approve returns 409 when approval is not pending', 
   const body = await approveResponse.json();
   assert.equal(body.code, 'APPROVAL_NOT_PENDING');
   assert.equal(body.category, 'validation');
+});
+
+test('POST /interactions/:id/reject records approval rejection and fails the interaction', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_reject',
+      message_id: 'msg_reject',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_reject',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+
+  assert.equal(createResponse.status, 202);
+
+  const rejectResponse = await app.request('/interactions/ix_reject/reject', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({ reason: 'denied for test' }),
+  });
+
+  assert.equal(rejectResponse.status, 200);
+  const rejected = await rejectResponse.json();
+  assert.equal(rejected.payload.state, 'failed');
+  assert.equal(rejected.payload.metadata.approval_request_id.startsWith('apr_'), true);
+
+  const interactionResponse = await app.request('/interactions/ix_reject');
+  assert.equal(interactionResponse.status, 200);
+  const interaction = await interactionResponse.json();
+  assert.equal(interaction.state, 'failed');
+  assert.equal(interaction.error.code, 'APPROVAL_REJECTED');
+  assert.equal(interaction.approval_decision.decision, 'reject');
+
+  const eventsResponse = await app.request('/interactions/ix_reject/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.at(-1).event_type, 'approval.rejected');
+});
+
+test('POST /interactions/:id/revoke moves the interaction into revoked state', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_revoke',
+      message_id: 'msg_revoke',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const revokeResponse = await app.request('/interactions/ix_revoke/revoke', {
+    method: 'POST',
+    headers: jsonHeaders(),
+  });
+
+  assert.equal(revokeResponse.status, 200);
+  const revoked = await revokeResponse.json();
+  assert.equal(revoked.payload.state, 'revoked');
+
+  const interactionResponse = await app.request('/interactions/ix_revoke');
+  const interaction = await interactionResponse.json();
+  assert.equal(interaction.state, 'revoked');
+
+  const eventsResponse = await app.request('/interactions/ix_revoke/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.at(-1).event_type, 'interaction.revoked');
+});
+
+test('POST /interactions/:id/reject transitions a pending approval to failed', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_reject',
+      message_id: 'msg_reject',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_reject',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+
+  assert.equal(createResponse.status, 202);
+
+  const rejectResponse = await app.request('/interactions/ix_reject/reject', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({ reason: 'denied for test' }),
+  });
+
+  assert.equal(rejectResponse.status, 200);
+  const rejected = await rejectResponse.json();
+  assert.equal(rejected.payload.state, 'failed');
+
+  const fetchResponse = await app.request('/interactions/ix_reject');
+  assert.equal(fetchResponse.status, 200);
+  const interaction = await fetchResponse.json();
+  assert.equal(interaction.state, 'failed');
+  assert.equal(interaction.approval_decision.decision, 'reject');
+  assert.equal(interaction.error.code, 'APPROVAL_REJECTED');
+});
+
+test('POST /interactions/:id/revoke transitions an interaction to revoked', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_revoke',
+      message_id: 'msg_revoke',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const revokeResponse = await app.request('/interactions/ix_revoke/revoke', {
+    method: 'POST',
+    headers: jsonHeaders(),
+  });
+
+  assert.equal(revokeResponse.status, 200);
+  const revoked = await revokeResponse.json();
+  assert.equal(revoked.payload.state, 'revoked');
+
+  const fetchResponse = await app.request('/interactions/ix_revoke');
+  assert.equal(fetchResponse.status, 200);
+  const interaction = await fetchResponse.json();
+  assert.equal(interaction.state, 'revoked');
+});
+
+test('GET /interactions/:id/evidence returns the hash-linked evidence chain', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_evidence',
+      message_id: 'msg_evidence',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const response = await app.request('/interactions/ix_evidence/evidence');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.events.length, 4);
+  assert.equal(body.events[0].event_type, 'interaction.received');
+  assert.equal(body.events.at(-1).event_type, 'interaction.completed');
+});
+
+test('GET /interactions/:id/events returns the flattened event stream', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_events',
+      message_id: 'msg_events',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const response = await app.request('/interactions/ix_events/events');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.length, 4);
+  assert.equal(body[0].event_type, 'interaction.received');
+  assert.equal(body.at(-1).event_type, 'interaction.completed');
 });
 
 test('file-backed store persists interactions across app instances', async () => {

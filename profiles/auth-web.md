@@ -108,7 +108,7 @@ A conforming `oaps-auth-web-v1` implementation:
 - SHOULD preserve auth decisions in evidence when relevant
 
 The current conformance pack groups this profile into discovery, subject-binding, and delegation anchors.
-Only the discovery and actor-card shapes are currently tied to a shared runtime surface; delegation fail-closed remains a static fixture anchor until a dedicated negative test lands.
+Discovery and actor-card subject binding continue to use the shared HTTP runtime surface, and delegation fail-closed is now also tied to the reference core runtime's expired-delegation path. That keeps the pack honest about the current implementation slice without pretending a full auth-web verifier stack already exists.
 
 ## Open Questions
 

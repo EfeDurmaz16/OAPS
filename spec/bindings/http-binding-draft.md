@@ -197,7 +197,7 @@ A conforming HTTP binding implementation should:
 - honor version negotiation
 - preserve OAPS error semantics
 
-The current reference conformance pack treats the messages endpoint as a lifecycle extension that is expected to be exercised by the reference runtime when implemented. Negative-path coverage already present in the reference runtime includes authentication failure, version negotiation failure, missing interactions, idempotency conflict, and approval-not-pending.
+The current reference conformance pack exercises discovery, interaction creation, message append, message interaction-id mismatch rejection, approval completion, approval rejection, revocation, evidence retrieval, event retrieval, idempotent replay, idempotency conflict, authentication failure, version negotiation failure, missing interactions, and approval-not-pending behavior against the reference runtime.
 
 ## Open Questions
 

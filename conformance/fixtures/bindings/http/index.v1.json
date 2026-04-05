@@ -75,6 +75,14 @@
       ]
     },
     {
+      "scenario_id": "http.messages.interaction-id-mismatch",
+      "dimension": "message-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.approval.decision",
       "dimension": "approval-flow",
       "schema": "schemas/approval-decision.json",
@@ -95,6 +103,14 @@
       ]
     },
     {
+      "scenario_id": "http.idempotency.conflict",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.version.negotiation",
       "dimension": "version-negotiation",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
@@ -105,6 +121,38 @@
     {
       "scenario_id": "http.approval.not-pending",
       "dimension": "approval-flow",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.approval.rejection",
+      "dimension": "approval-flow",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.revocation.request",
+      "dimension": "revocation",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.evidence.retrieval",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.events.retrieval",
+      "dimension": "event-stream",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "reference-runtime"

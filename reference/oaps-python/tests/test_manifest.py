@@ -8,6 +8,33 @@ import unittest
 from pathlib import Path
 import sys
 
+
+def _fixture_count(repo_root: Path, *scopes: str) -> int:
+    fixture_index = json.loads((repo_root / "conformance/fixtures/index.v1.json").read_text(encoding="utf-8"))
+    wanted = set(scopes)
+    total = 0
+    for pack in fixture_index.get("packs", []):
+        scope = pack["scope"]
+        if wanted and scope not in wanted:
+            continue
+        pack_json = json.loads((repo_root / pack["path"]).read_text(encoding="utf-8"))
+        total += len(pack_json.get("fixtures", []))
+    return total
+
+
+def _all_scopes() -> tuple[str, ...]:
+    return (
+        "core",
+        "binding:http",
+        "profile:mcp",
+        "profile:a2a",
+        "profile:auth-web",
+        "profile:auth-fides-tap",
+        "profile:x402",
+        "profile:osp",
+    )
+
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from oaps_python.cli import main
@@ -69,27 +96,15 @@ class ManifestValidationTests(unittest.TestCase):
         report = inventory_repository(repo_root=repo_root)
         self.assertTrue(report.ok, report.to_dict())
         self.assertEqual(report.total_packs, 8)
-        self.assertEqual(report.total_scenarios, 44)
-        self.assertEqual(
-            report.scopes,
-            (
-                "core",
-                "binding:http",
-                "profile:mcp",
-                "profile:a2a",
-                "profile:auth-web",
-                "profile:auth-fides-tap",
-                "profile:x402",
-                "profile:osp",
-            ),
-        )
+        self.assertEqual(report.total_scenarios, _fixture_count(repo_root))
+        self.assertEqual(report.scopes, _all_scopes())
 
     def test_inventory_can_filter_by_scope(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
         report = inventory_repository(repo_root=repo_root, requested_scopes=("profile:mcp", "profile:x402"))
         self.assertTrue(report.ok, report.to_dict())
         self.assertEqual(report.total_packs, 2)
-        self.assertEqual(report.total_scenarios, 8)
+        self.assertEqual(report.total_scenarios, _fixture_count(repo_root, "profile:mcp", "profile:x402"))
         self.assertEqual(report.scopes, ("profile:mcp", "profile:x402"))
         self.assertEqual(report.requested_scopes, ("profile:mcp", "profile:x402"))
 
@@ -112,22 +127,10 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(payload["summary"]["pass"], 0)
         self.assertEqual(payload["summary"]["fail"], 0)
         self.assertEqual(payload["summary"]["error"], 0)
-        self.assertEqual(len(payload["scenarios"]), 44)
+        self.assertEqual(len(payload["scenarios"]), _fixture_count(repo_root))
         self.assertTrue(all(scenario["outcome"] == "skip" for scenario in payload["scenarios"]))
         self.assertEqual(payload["requested_scopes"], [])
-        self.assertEqual(
-            payload["scopes"],
-            [
-                "core",
-                "binding:http",
-                "profile:mcp",
-                "profile:a2a",
-                "profile:auth-web",
-                "profile:auth-fides-tap",
-                "profile:x402",
-                "profile:osp",
-            ],
-        )
+        self.assertEqual(payload["scopes"], list(_all_scopes()))
 
     def test_inventory_json_can_be_written_to_file(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
@@ -148,7 +151,7 @@ class ManifestValidationTests(unittest.TestCase):
             self.assertEqual(exit_code, 0)
             self.assertIn("Wrote inventory report", stdout.getvalue())
             payload = json.loads(output_path.read_text(encoding="utf-8"))
-            self.assertEqual(payload["summary"]["total"], 5)
+            self.assertEqual(payload["summary"]["total"], _fixture_count(repo_root, "profile:mcp"))
             self.assertEqual(payload["requested_scopes"], ["profile:mcp"])
             self.assertEqual(payload["scopes"], ["profile:mcp"])
             self.assertTrue(all(scenario["scope"] == "profile:mcp" for scenario in payload["scenarios"]))
@@ -193,22 +196,10 @@ class ManifestValidationTests(unittest.TestCase):
         repo_root = Path(__file__).resolve().parents[3]
         report = fixture_check_repository(repo_root=repo_root)
         self.assertTrue(report.ok, report.to_dict())
-        self.assertEqual(report.total_scenarios, 44)
-        self.assertEqual(report.total_pass, 44)
+        self.assertEqual(report.total_scenarios, _fixture_count(repo_root))
+        self.assertEqual(report.total_pass, _fixture_count(repo_root))
         self.assertEqual(report.total_fail, 0)
-        self.assertEqual(
-            report.scopes,
-            (
-                "core",
-                "binding:http",
-                "profile:mcp",
-                "profile:a2a",
-                "profile:auth-web",
-                "profile:auth-fides-tap",
-                "profile:x402",
-                "profile:osp",
-            ),
-        )
+        self.assertEqual(report.scopes, _all_scopes())
 
     def test_fixture_check_can_filter_scopes_and_scenarios(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
@@ -297,9 +288,9 @@ class ManifestValidationTests(unittest.TestCase):
         payload = json.loads(stdout.getvalue())
         self.assertEqual(payload["result_schema_version"], "1.0")
         self.assertEqual(payload["runner_id"], "oaps-python-fixture-check")
-        self.assertEqual(payload["summary"]["pass"], 44)
+        self.assertEqual(payload["summary"]["pass"], _fixture_count(repo_root))
         self.assertEqual(payload["summary"]["fail"], 0)
-        self.assertEqual(payload["summary"]["total"], 44)
+        self.assertEqual(payload["summary"]["total"], _fixture_count(repo_root))
         self.assertNotIn("requested_scopes", payload)
         self.assertEqual(payload["implementation"]["metadata"]["requested_scopes"], [])
         self.assertEqual(payload["implementation"]["metadata"]["requested_scenarios"], [])

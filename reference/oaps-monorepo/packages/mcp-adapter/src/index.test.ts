@@ -18,6 +18,18 @@ const policy: PolicyBundle = {
   ],
 };
 
+const denyPolicy: PolicyBundle = {
+  policy_id: 'policy_deny',
+  policy_language: 'oaps-policy-v1' as const,
+  rules: [
+    {
+      rule_id: 'deny-all',
+      effect: 'deny' as const,
+      when: { eq: [true, true] as [boolean, boolean] },
+    },
+  ],
+};
+
 const context = {
   delegation: {},
   approval: {},
@@ -190,6 +202,102 @@ test('invoke emits approval request evidence when approval is required but no de
 
   assert.equal(chain.events.length, 1);
   assert.equal(chain.events[0]?.event_type, 'approval.requested');
+  assert.equal(typeof chain.events[0]?.metadata?.evaluated_context_hash, 'string');
+});
+
+test('invoke denies calls when policy evaluation rejects the invocation and records the context hash for high-risk actions', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'pay_invoice',
+          description: 'Pay an invoice',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_policy_deny',
+        verb: 'invoke',
+        object: 'tool:pay_invoice',
+        constraints: { arguments: { amount: '25.00' } },
+      },
+      policy: denyPolicy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_policy_deny',
+      chain,
+      riskClassResolver: () => 'R4',
+    }),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string } }).error?.code === 'POLICY_DENIED',
+  );
+
+  assert.equal(chain.events.length, 1);
+  assert.equal(chain.events[0]?.event_type, 'mcp.tool_call.denied');
+  assert.equal(typeof chain.events[0]?.metadata?.evaluated_context_hash, 'string');
+});
+
+test('invoke emits approval rejection evidence when an approver rejects a high-risk call', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'pay_invoice',
+          description: 'Pay an invoice',
+          inputSchema: { type: 'object' },
+        },
+      ];
+    },
+    async callTool() {
+      return { ok: true };
+    },
+  });
+
+  const chain = createEvidenceChain();
+
+  await assert.rejects(
+    adapter.invoke({
+      intent: {
+        intent_id: 'int_reject',
+        verb: 'invoke',
+        object: 'tool:pay_invoice',
+        constraints: { arguments: { amount: '25.00' } },
+      },
+      policy,
+      context,
+      actor: { actor_id: 'urn:oaps:actor:agent:builder' },
+      authenticated_subject: 'urn:oaps:actor:agent:builder',
+      interactionId: 'ix_reject',
+      chain,
+      approvalDecision: {
+        approval_request_id: 'apr_reject',
+        interaction_id: 'ix_reject',
+        decided_by: { actor_id: 'urn:oaps:actor:human:approver' },
+        decision: 'reject',
+        reason: 'denied for test',
+        timestamp: '2026-04-05T10:02:00Z',
+      },
+      riskClassResolver: () => 'R4',
+    }),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string } }).error?.code === 'APPROVAL_REJECTED',
+  );
+
+  assert.equal(chain.events.length, 1);
+  assert.equal(chain.events[0]?.event_type, 'approval.rejected');
 });
 
 test('invoke rejects modified approvals that target a different capability', async () => {

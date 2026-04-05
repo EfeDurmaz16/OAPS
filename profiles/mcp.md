@@ -145,7 +145,7 @@ A conforming `oaps-mcp-v1` implementation:
 - MUST map common MCP failures to OAPS errors
 - SHOULD support sidecar, gateway, or embedded deployment
 
-The current fixture pack groups the runtime-backed negative and approval paths into `policy-gating` and `evidence-emission` scenarios rather than pretending every subcase is already a dedicated test case. That grouping intentionally covers policy denial, approval request, approval rejection, capability lookup failure, validation failure, upstream timeout, upstream auth failure, and the evidence emitted by those paths while keeping the pack aligned with the current reference implementation.
+The current fixture pack now makes the runtime-backed high-risk paths more explicit without overclaiming unsupported MCP interop. In particular, the reference runtime exercises policy denial before tool execution, approval insertion for high-risk calls, approval rejection handling, explicit error translation for capability lookup failure, authenticated-subject mismatch, approval-modification mismatch, upstream timeout, upstream auth failure, and validation failure, plus evidence emission that carries evaluated policy-context hashes on high-risk denial/request paths.
 
 ## Open Questions
 

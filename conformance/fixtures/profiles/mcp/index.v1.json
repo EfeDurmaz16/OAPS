@@ -45,15 +45,37 @@
     {
       "scenario_id": "mcp.policy.gating",
       "dimension": "policy-gating",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
       "coverage": [
         "reference-runtime"
       ],
-      "notes": "Groups the runtime-backed policy-denial, approval-requested, and approval-rejected adapter paths without pretending they are all direct test cases yet.",
+      "notes": "Covers runtime-backed policy denial before tool execution, including high-risk evaluated policy-context hashes on denied calls.",
       "runtime_cases": [
         "policy.denial",
+        "policy.denial.context_hash"
+      ]
+    },
+    {
+      "scenario_id": "mcp.approval.insertion",
+      "dimension": "approval-insertion",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Covers runtime-backed approval-required and approval-rejected adapter paths for high-risk MCP calls.",
+      "runtime_cases": [
         "approval.requested",
         "approval.rejected"
       ]
+    },
+    {
+      "scenario_id": "mcp.error.translation",
+      "dimension": "error-translation",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Covers runtime-backed capability lookup failure, authenticated-subject mismatch, approval modification mismatch, timeout translation, upstream auth translation, and validation translation."
     },
     {
       "scenario_id": "mcp.evidence.emission",
@@ -66,13 +88,14 @@
         "fixture",
         "reference-runtime"
       ],
-      "notes": "Runtime evidence includes start/completion/denial events and carries approval and policy metadata when those paths are exercised.",
+      "notes": "Runtime evidence includes start/completion/denial events, approval request/rejection events, and evaluated policy-context hashes on high-risk denial/request paths.",
       "runtime_cases": [
         "mcp.tool_call.started",
         "mcp.tool_call.completed",
         "mcp.tool_call.denied",
         "approval.requested",
-        "approval.rejected"
+        "approval.rejected",
+        "policy.denial.context_hash"
       ],
       "related_examples": [
         "examples/evidence-event.json",

@@ -53,9 +53,13 @@
       "example": "examples/delegation-token.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
-        "fixture"
+        "fixture",
+        "reference-runtime"
       ],
-      "notes": "Static delegation anchor for fail-closed subject binding. The reference slice proves the delegated sender path, but this fixture does not claim a dedicated negative delegation runtime test yet.",
+      "notes": "Delegation-aware subject binding now includes the reference core runtime's expired-delegation fail-closed path without claiming a full auth-web verifier stack.",
+      "runtime_cases": [
+        "delegation.expired"
+      ],
       "related_examples": [
         "examples/delegation-token.json",
         "examples/error.json",
