@@ -4,8 +4,8 @@ This file is the short operational queue for the next long-running Codex tranche
 
 ## Current Priority Order
 
-1. No short-horizon override at present. Continue from `PLANS.md` when new unfinished tranches are added.
+1. `PLANS-V2.md` is now the active long-horizon queue. Start from the first unfinished tranche there.
 
 ## Usage Rule
 
-If `PLANS.md` contains many unfinished tranches, use this file as the short-horizon priority override.
+Use `PLANS-V2.md` as the default execution queue unless this file is explicitly narrowed again for a short-horizon tranche.

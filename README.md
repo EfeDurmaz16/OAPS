@@ -184,7 +184,8 @@ Parallel agent lanes should be treated as part of the founding team across:
 This repo now includes a project-scoped Codex harness for long-horizon execution:
 
 - `AGENTS.md` — execution contract for autonomous tranche work
-- `PLANS.md` — durable tranche queue
+- `PLANS.md` — completed first execution-wave queue
+- `PLANS-V2.md` — active long-horizon execution program
 - `docs/NEXT-STEPS.md` — short-horizon execution priority
 - `.codex/config.toml` — recommended project defaults
 - `codex/instructions/harness.txt` — no-check-in execution instructions
@@ -202,7 +203,7 @@ The intended model is:
 - use interactive Codex for steering and review
 - use `codex exec` via the harness scripts for long implementation runs
 - load charter, vision, roadmap, spec, suite architecture, and profile docs at run start
-- use `PLANS.md` and `docs/NEXT-STEPS.md` as the tranche queue
+- use `PLANS-V2.md` and `docs/NEXT-STEPS.md` as the active tranche queue
 - use `docs/STATUS.md` as the durable memory between resumed runs
 
 ## Current implementation priorities

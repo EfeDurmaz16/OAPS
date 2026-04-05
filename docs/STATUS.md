@@ -10,6 +10,11 @@ Implement the OAPS protocol suite as far as the current repo, tooling, and speci
 - execution mode: founder-led, agent-amplified, atomic commits
 - stop rule: only `DONE:` or `BLOCKED:`
 
+## Program Wave
+
+- `PLANS.md` is the completed first execution wave
+- `PLANS-V2.md` is the active long-horizon master program
+
 ## Latest Known Baseline
 
 - suite charter, architecture, and roadmap docs exist
@@ -20,6 +25,21 @@ Implement the OAPS protocol suite as far as the current repo, tooling, and speci
 ## Execution Log
 
 Append one entry per tranche:
+
+### 2026-04-05
+
+- tranche: V2 master program bootstrap
+- changes:
+  - added `PLANS-V2.md` as the new active long-horizon execution program after the original `PLANS.md` wave reached completion
+  - moved the active queue pointer in `docs/NEXT-STEPS.md` from the completed V1 plan to the new V2 program
+  - updated this status file to record the program-wave transition from the completed first execution wave to the new larger implementation wave
+- validation:
+  - `git diff --check`
+- commits:
+  - pending in current tranche
+- next unfinished work:
+  - begin the first unfinished V2 tranche from `PLANS-V2.md`
+- status: `DONE`
 
 
 ### 2026-04-05
