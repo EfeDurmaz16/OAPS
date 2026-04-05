@@ -15,6 +15,7 @@ When work references any of the following, treat it as long-horizon execution sc
 - `conformance/`
 - `reference/`
 - `PLANS.md`
+- `PLANS-V2.md`
 - `docs/NEXT-STEPS.md`
 - `docs/STATUS.md`
 
@@ -55,8 +56,9 @@ Stop only when one of these is true:
 ## Working Rules
 
 - Update `docs/STATUS.md` as the live execution log.
-- Treat `PLANS.md` as the durable tranche queue.
-- Treat `docs/NEXT-STEPS.md` as the short-horizon priority override when it is more specific than `PLANS.md`.
+- Treat `PLANS-V2.md` as the active durable tranche queue.
+- Treat `PLANS.md` as the completed first execution-wave record.
+- Treat `docs/NEXT-STEPS.md` as the short-horizon priority override when it is more specific than `PLANS-V2.md`.
 - Make atomic commits for each coherent unit of work.
 - Prefer many small atomic commits over one large mixed commit.
 - When a small step is complete and validated, commit it before moving to the next step.

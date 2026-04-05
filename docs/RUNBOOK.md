@@ -9,7 +9,8 @@ The goal is to reduce interactive check-ins and move repeat execution into non-i
 ## Primary Files
 
 - `AGENTS.md` — execution contract
-- `PLANS.md` — durable tranche queue
+- `PLANS.md` — completed first execution-wave queue
+- `PLANS-V2.md` — active durable tranche queue
 - `docs/NEXT-STEPS.md` — short-horizon priority override
 - `docs/STATUS.md` — live progress and tranche log
 - `CHARTER.md`, `VISION.md`, `ROADMAP.md`, `SPEC.md`, `spec/`, and suite docs — durable protocol context
@@ -58,7 +59,7 @@ scripts/claude-design-worker.sh "Design and implement a landing page for OAPS."
 
 - update `docs/STATUS.md`
 - load the durable protocol context before deep implementation work
-- follow `PLANS.md` and `docs/NEXT-STEPS.md`
+- follow `PLANS-V2.md` and `docs/NEXT-STEPS.md`
 - use objective validators and tests
 - commit atomically
 - stop only on real completion or real blockers
@@ -72,5 +73,6 @@ scripts/claude-design-worker.sh "Design and implement a landing page for OAPS."
 - The harness mirrors `~/.codex/auth.json` into the repo-local runtime home before each run so ChatGPT login state is preserved.
 - The default protocol harness uses `danger-full-access` because atomic Git commits require writes under `.git/`, including `index.lock`.
 - `CODEX_HARNESS_BYPASS_SANDBOX=1` adds `--dangerously-bypass-approvals-and-sandbox` for environments where the CLI still blocks Git writes despite the configured sandbox mode.
+- The default prompt and execution contract now target `PLANS-V2.md` as the active queue.
 - When the harness is invoked from inside another Codex session, the nested `codex exec` process may still be unable to create `.git/index.lock` even though the outer run has full write access. If that happens, re-run the harness from a top-level shell or supervisor process that grants the nested Codex process direct Git write access.
 - `scripts/codex-supervisor.sh` is the repo-local workaround for that limitation: it launches the tranche loop as a detached host-shell process, writes run metadata under `.codex/supervisor-runs/`, and refuses to start when it detects an existing `CODEX_THREAD_ID`.

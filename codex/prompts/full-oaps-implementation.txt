@@ -2,7 +2,7 @@ Read these files first:
 
 - AGENTS.md
 - docs/STATUS.md
-- PLANS.md
+- PLANS-V2.md
 - docs/NEXT-STEPS.md
 - CHARTER.md
 - VISION.md
@@ -22,7 +22,7 @@ Then continue implementing OAPS as far as possible across:
 
 Execution rules:
 
-- start from the first unfinished tranche in PLANS.md, unless docs/NEXT-STEPS.md defines a narrower near-term priority
+- start from the first unfinished tranche in PLANS-V2.md, unless docs/NEXT-STEPS.md defines a narrower near-term priority
 - work autonomously until the current tranche is actually complete
 - do not stop for summaries
 - do not ask whether to continue
