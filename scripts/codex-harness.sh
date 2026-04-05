@@ -9,7 +9,20 @@ fi
 
 STATE_DIR="${ROOT}/.codex/state"
 LAST_MESSAGE_FILE="${STATE_DIR}/last-message.txt"
+RUNTIME_HOME_DIR="${ROOT}/.codex/runtime-home"
+RUNTIME_CONFIG_TEMPLATE="${ROOT}/codex/config/runtime-home.toml"
 mkdir -p "${STATE_DIR}"
+
+prepare_codex_home() {
+  mkdir -p "${RUNTIME_HOME_DIR}"
+
+  if [[ ! -f "${RUNTIME_CONFIG_TEMPLATE}" ]]; then
+    echo "BLOCKED: missing Codex runtime config template at ${RUNTIME_CONFIG_TEMPLATE}" >&2
+    exit 1
+  fi
+
+  cp "${RUNTIME_CONFIG_TEMPLATE}" "${RUNTIME_HOME_DIR}/config.toml"
+}
 
 default_prompt() {
   if [[ -f "${ROOT}/codex/prompts/full-oaps-implementation.txt" ]]; then
@@ -39,4 +52,5 @@ else
 fi
 
 cd "${ROOT}"
-codex exec -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${PROMPT}"
+prepare_codex_home
+env CODEX_HOME="${RUNTIME_HOME_DIR}" codex exec --disable apps -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${PROMPT}"

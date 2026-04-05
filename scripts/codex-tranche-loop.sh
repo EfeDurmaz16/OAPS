@@ -9,9 +9,22 @@ fi
 
 STATE_DIR="${ROOT}/.codex/state"
 LAST_MESSAGE_FILE="${STATE_DIR}/last-message.txt"
+RUNTIME_HOME_DIR="${ROOT}/.codex/runtime-home"
+RUNTIME_CONFIG_TEMPLATE="${ROOT}/codex/config/runtime-home.toml"
 mkdir -p "${STATE_DIR}"
 
 MAX_ROUNDS="${MAX_ROUNDS:-20}"
+
+prepare_codex_home() {
+  mkdir -p "${RUNTIME_HOME_DIR}"
+
+  if [[ ! -f "${RUNTIME_CONFIG_TEMPLATE}" ]]; then
+    echo "BLOCKED: missing Codex runtime config template at ${RUNTIME_CONFIG_TEMPLATE}" >&2
+    exit 1
+  fi
+
+  cp "${RUNTIME_CONFIG_TEMPLATE}" "${RUNTIME_HOME_DIR}/config.toml"
+}
 
 default_initial_prompt() {
   if [[ -f "${ROOT}/codex/prompts/full-oaps-implementation.txt" ]]; then
@@ -57,12 +70,14 @@ CONTINUE_PROMPT="$(default_continue_prompt)"
 
 run_initial() {
   cd "${ROOT}"
-  codex exec -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${INITIAL_PROMPT}"
+  prepare_codex_home
+  env CODEX_HOME="${RUNTIME_HOME_DIR}" codex exec --disable apps -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${INITIAL_PROMPT}"
 }
 
 run_resume() {
   cd "${ROOT}"
-  codex exec resume --last -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${CONTINUE_PROMPT}"
+  prepare_codex_home
+  env CODEX_HOME="${RUNTIME_HOME_DIR}" codex exec resume --last --disable apps -C "${ROOT}" -o "${LAST_MESSAGE_FILE}" "${CONTINUE_PROMPT}"
 }
 
 terminal_status() {
