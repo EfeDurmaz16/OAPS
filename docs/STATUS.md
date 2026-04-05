@@ -21,6 +21,26 @@ Implement the OAPS protocol suite as far as the current repo, tooling, and speci
 
 Append one entry per tranche:
 
+
+### 2026-04-05
+
+- tranche: unattended local Codex harness exercise
+- changes:
+  - treated this invocation itself as the real local harness exercise tranche required by `PLANS.md` and the previous `docs/NEXT-STEPS.md`
+  - loaded the required AGENTS-scoped startup context before making substantive changes and confirmed the repository started from a clean working tree
+  - did not recurse into another harness-exercise task; instead marked the harness exercise complete in `PLANS.md` and advanced `docs/NEXT-STEPS.md` to the next unfinished documentation work
+- validation:
+  - `git status --short --branch`
+  - `python3 - <<'PY' ... verify the harness plan checkbox is complete and docs/NEXT-STEPS.md now starts with the docs matrix priority ... PY`
+- commits:
+  - `docs: record harness exercise tranche`
+- next unfinished work:
+  - add a clearer stable-versus-draft-versus-concept matrix to top-level docs
+  - add a public-facing how-to-review packet
+  - decide whether to formalize event replay semantics further in the HTTP binding draft
+  - evaluate a cloud-task or SDK-supervisor harness variant later if the local loop proves insufficient
+- status: `DONE`
+
 ### Template
 
 - date:

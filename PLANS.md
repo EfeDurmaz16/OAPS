@@ -22,7 +22,7 @@ Execution rule:
 - [x] Add harness instructions and loop scripts
 - [x] Add `docs/STATUS.md` and `docs/RUNBOOK.md`
 - [x] Add explicit atomic-commit rules
-- [ ] Exercise the harness on at least one multi-tranche unattended run and record the behavior
+- [x] Exercise the harness on at least one multi-tranche unattended run and record the behavior
 - [ ] Add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
 
 ### 1. Core Semantics and Evidence
