@@ -57,6 +57,18 @@
       ]
     },
     {
+      "scenario_id": "core.delegation.expired",
+      "dimension": "delegation",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Covers fail-closed handling for expired delegation tokens before execution proceeds.",
+      "runtime_cases": [
+        "delegation.expired"
+      ]
+    },
+    {
       "scenario_id": "core.mandate.valid",
       "dimension": "mandate",
       "schema": "schemas/foundation/mandate.json",
@@ -104,6 +116,54 @@
       "coverage": [
         "schema",
         "fixture"
+      ]
+    },
+    {
+      "scenario_id": "core.evidence.chain.verifiable",
+      "dimension": "evidence",
+      "reference_test": "reference/oaps-monorepo/packages/evidence/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Verifies that appended evidence events form a hash-linked chain that validates successfully.",
+      "runtime_cases": [
+        "evidence.chain.verifiable"
+      ]
+    },
+    {
+      "scenario_id": "core.evidence.replay.tamper-detected",
+      "dimension": "evidence",
+      "reference_test": "reference/oaps-monorepo/packages/evidence/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Verifies replay-oriented evidence validation detects event payload tampering.",
+      "runtime_cases": [
+        "evidence.replay.tamper-detected"
+      ]
+    },
+    {
+      "scenario_id": "core.evidence.replay.prev-hash-mismatch",
+      "dimension": "evidence",
+      "reference_test": "reference/oaps-monorepo/packages/evidence/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Verifies replay-oriented evidence validation detects broken prev_event_hash links.",
+      "runtime_cases": [
+        "evidence.replay.prev-hash-mismatch"
+      ]
+    },
+    {
+      "scenario_id": "core.evidence.hash-stable",
+      "dimension": "evidence",
+      "reference_test": "reference/oaps-monorepo/packages/evidence/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Verifies evidence hashing stays stable for semantically equivalent objects with different key orderings.",
+      "runtime_cases": [
+        "evidence.hash.stable"
       ]
     },
     {

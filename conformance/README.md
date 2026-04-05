@@ -61,6 +61,7 @@ At minimum, conformance should verify:
 The current fixture packs are centered on the reference slice already present in the repository:
 
 - foundation actor, capability, intent, task, delegation, mandate, approval, execution, evidence, error, and extension schemas
+- runtime-backed core checks for delegation expiry, evidence tamper detection, replay-chain mismatch detection, and stable evidence hashing
 - HTTP discovery and interaction lifecycle behavior
 - MCP capability mapping, policy gating, evidence emission, and error translation
 - A2A task mapping, lifecycle preservation, and evidence lineage
