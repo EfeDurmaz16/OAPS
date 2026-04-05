@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pact — Roadmap" description="The Pact protocol suite roadmap. Seven phases from reframing to ecosystem.">
+
+<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 md:px-12">
+  <a href="/" class="flex items-center gap-2.5 text-foreground" aria-label="Pact home">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+      <circle cx="9" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="19" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <span class="text-[22px] font-bold tracking-tight">Pact</span>
+  </a>
+  <div class="flex items-center gap-5 md:gap-7">
+    <a href="/" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Home</a>
+    <a href="/spec" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Spec</a>
+    <a href="/cosign" class="rounded-md border border-border px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-primary hover:text-primary-foreground">Co-Sign</a>
+  </div>
+</nav>
+
+<section class="mx-auto max-w-[760px] px-6 pt-16 pb-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Roadmap</span>
+  <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-[48px] md:tracking-[-1.5px]">
+    Seven phases to a standard.
+  </h1>
+  <p class="mt-6 text-[17px] leading-relaxed text-muted-foreground">
+    Pact is planned as a protocol suite. The roadmap spans from initial framing through
+    binding standardization, profile hardening, conformance, and ecosystem growth.
+  </p>
+
+  <div class="mt-12 flex flex-col">
+    {[
+      { phase: 'A', name: 'Reframing', desc: 'Charter, suite architecture, neutrality posture, enhancement process.', status: 'done' },
+      { phase: 'B', name: 'Foundation Draft', desc: 'Hard-normative semantic core, initial object family, schema alignment.', status: 'active' },
+      { phase: 'C', name: 'Bindings', desc: 'HTTP first, then JSON-RPC, gRPC, events/webhooks.', status: 'planned' },
+      { phase: 'D', name: 'Profiles', desc: 'MCP v1, A2A v1, auth profiles, payment profiles.', status: 'planned' },
+      { phase: 'E', name: 'Domain Families', desc: 'Provisioning, commerce, jobs as protocol families.', status: 'planned' },
+      { phase: 'F', name: 'Conformance', desc: 'Layered TCK, replay fixtures, two independent implementations.', status: 'planned' },
+      { phase: 'G', name: 'Ecosystem', desc: 'Neutral consortium, external governance, cosigner network.', status: 'planned' },
+    ].map(({ phase, name, desc, status }) => (
+      <div class="flex items-center gap-5 border-b border-border/60 py-5">
+        <span class="font-mono text-[12px] text-muted-foreground min-w-[64px]">Phase {phase}</span>
+        <div class="flex-1">
+          <span class="text-[15px] font-semibold text-foreground">{name}</span>
+          <p class="mt-0.5 text-[13px] text-muted-foreground">{desc}</p>
+        </div>
+        {status === 'done' && (
+          <span class="rounded bg-primary px-3 py-1 font-mono text-[10px] text-primary-foreground">DONE</span>
+        )}
+        {status === 'active' && (
+          <span class="rounded border border-border px-3 py-1 font-mono text-[10px] text-muted-foreground">ACTIVE</span>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <h2 class="mt-16 text-2xl font-bold tracking-tight">What is working today</h2>
+  <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+    <div>
+      <span class="font-mono text-[10px] uppercase tracking-[1.5px] text-foreground border-b border-border pb-2 block">Implemented</span>
+      <div class="mt-4 flex flex-col gap-3">
+        {[
+          'Schema-backed spec pack validation',
+          'Core protocol types, IDs, version negotiation',
+          'Evidence chain creation and verification',
+          'Policy evaluation with fail-closed behavior',
+          'MCP capability discovery and invocation',
+          'Approval gating for high-risk actions',
+          'Reference HTTP server with durable state',
+        ].map(item => (
+          <span class="text-[14px] text-foreground/80">{item}</span>
+        ))}
+      </div>
+    </div>
+    <div>
+      <span class="font-mono text-[10px] uppercase tracking-[1.5px] text-muted-foreground border-b border-border pb-2 block">Coming</span>
+      <div class="mt-4 flex flex-col gap-3">
+        {[
+          'Suite-level binding family',
+          'Hard-normative A2A and payment profiles',
+          'Domain protocol families',
+          'Registry infrastructure',
+          'Cross-implementation conformance',
+          'External governance structure',
+        ].map(item => (
+          <span class="text-[14px] text-muted-foreground">{item}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-16 flex flex-wrap gap-3">
+    <a href="/cosign" class="rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85">Become a Co-Signer</a>
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/ROADMAP.md" target="_blank" rel="noopener" class="rounded-lg border border-border px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-muted-foreground">Full Roadmap on GitHub</a>
+  </div>
+</section>
+
+</Base>

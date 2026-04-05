@@ -1,0 +1,269 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pact — The open standard for agentic primitives">
+
+<!-- Dotted column borders -->
+<div class="fixed top-0 bottom-0 left-[calc(50%-400px)] w-px border-l border-dotted border-border/60 pointer-events-none hidden lg:block" aria-hidden="true"></div>
+<div class="fixed top-0 bottom-0 right-[calc(50%-400px)] w-px border-l border-dotted border-border/60 pointer-events-none hidden lg:block" aria-hidden="true"></div>
+
+<!-- Nav -->
+<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 md:px-12">
+  <a href="/" class="flex items-center gap-2.5 text-foreground" aria-label="Pact home">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+      <circle cx="9" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="19" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <span class="text-[22px] font-bold tracking-tight">Pact</span>
+  </a>
+  <div class="flex items-center gap-5 md:gap-7">
+    <a href="/spec" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Spec</a>
+    <a href="/roadmap" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hidden sm:inline">Roadmap</a>
+    <a href="https://github.com/EfeDurmaz16/OAPS" target="_blank" rel="noopener" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hidden sm:inline">GitHub</a>
+    <a href="/cosign" class="rounded-md border border-border px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-primary hover:text-primary-foreground">Co-Sign</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="mx-auto max-w-[760px] px-6 pt-16 md:pt-24">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Open Protocol Suite</span>
+  <h1 class="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight md:text-[56px] md:tracking-[-2px]">
+    The open standard for agentic primitives.
+  </h1>
+  <p class="mt-6 text-lg leading-relaxed text-muted-foreground md:text-[19px]">
+    AI agents can call tools, exchange messages, and make payments.
+    But they still do not share a common open standard for identity,
+    delegation, mandates, approvals, evidence, and cross-protocol execution.
+  </p>
+  <p class="mt-4 text-lg font-semibold text-foreground">Pact exists to define that missing layer.</p>
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a href="/cosign" class="rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85">Become a Co-Signer</a>
+    <a href="/spec" class="rounded-lg border border-border px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-muted-foreground">Read the Spec</a>
+  </div>
+</section>
+
+<hr class="mx-auto mt-20 max-w-[760px] border-t border-border" />
+
+<!-- The Problem -->
+<section class="mx-auto max-w-[760px] px-6 pt-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">The Problem</span>
+  <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+    Agents have protocols. They do not have a standard.
+  </h2>
+  <p class="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+    The ecosystem is moving fast: tool protocols, agent-to-agent protocols,
+    payment protocols, trust systems, provisioning systems. That progress is
+    real. It is also fragmented.
+  </p>
+  <p class="mt-4 text-[17px] leading-relaxed text-muted-foreground">What is still missing is the shared open layer above them:</p>
+
+  <div class="mt-5 border-l-2 border-border py-1 pl-6">
+    <p class="text-[15px] font-medium leading-loose text-foreground">Who is this agent?</p>
+    <p class="text-[15px] font-medium leading-loose text-foreground">What is it allowed to do?</p>
+    <p class="text-[15px] font-medium leading-loose text-foreground">Under whose mandate?</p>
+    <p class="text-[15px] font-medium leading-loose text-foreground">With what approval boundary?</p>
+    <p class="text-[15px] font-medium leading-loose text-foreground">What evidence proves what happened?</p>
+    <p class="text-[15px] font-medium leading-loose text-foreground">How does that context survive across systems?</p>
+  </div>
+
+  <p class="mt-6 text-[17px] leading-relaxed text-muted-foreground">
+    Agents talk to tools through MCP &mdash; but MCP bloats the context window.
+    So teams switch to CLI. Now CLI discovery is a problem. Which tools are
+    available? Which APIs? People are betting on MCP, Agent Client Protocol,
+    and custom HTTP endpoints &mdash; all at the same time.
+  </p>
+  <p class="mt-4 text-[17px] leading-relaxed text-muted-foreground">
+    Multi-agent systems are worse. How does your Claude Code agent discover
+    your Codex agent? How do they coordinate tasks? How do they reach consensus?
+    Right now the answer is: you send them a message. Manually. From your terminal.
+  </p>
+  <p class="mt-4 text-[17px] font-semibold text-foreground">What happens when you are away from the computer?</p>
+  <p class="mt-4 text-[17px] leading-relaxed text-muted-foreground">
+    Agent-to-agent communication, agent-to-tool discovery, handshake, protocol
+    negotiation &mdash; none of it has a shared open standard. Every team re-invents
+    these primitives from scratch. Every integration is bespoke. Every system is
+    fragile to the next protocol change.
+  </p>
+</section>
+
+<hr class="mx-auto mt-20 max-w-[760px] border-t border-border" />
+
+<!-- What Pact Is -->
+<section class="mx-auto max-w-[760px] px-6 pt-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">What Pact Is</span>
+  <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+    The primitives agent systems keep re-inventing.
+  </h2>
+  <p class="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+    Pact is an open protocol suite designed to sit above fragmented agent
+    infrastructure and provide a shared control plane for serious autonomous systems.
+  </p>
+
+  <!-- Primitives grid -->
+  <div class="mt-8 grid grid-cols-1 gap-0 sm:grid-cols-2">
+    {[
+      ['01', 'Identity references'],
+      ['02', 'Delegation and mandates'],
+      ['03', 'Intents and tasks'],
+      ['04', 'Approvals and challenges'],
+      ['05', 'Execution and results'],
+      ['06', 'Evidence and audit trails'],
+      ['07', 'Payment coordination'],
+      ['08', 'Ecosystem profile mappings'],
+    ].map(([num, name]) => (
+      <div class="flex items-center gap-3 border-b border-border/60 py-3.5 text-[15px] font-medium text-foreground">
+        <span class="font-mono text-[11px] text-muted-foreground">{num}</span>
+        {name}
+      </div>
+    ))}
+  </div>
+
+  <!-- Architecture Layers -->
+  <span class="mt-12 block font-mono text-[11px] uppercase tracking-[2px] text-muted-foreground">Suite Architecture</span>
+  <div class="mt-4 flex flex-col gap-2">
+    {[
+      ['Layer 1', 'Semantic Core', 'Actors, capabilities, intents, tasks, delegation, mandates, approvals, evidence'],
+      ['Layer 2', 'Bindings', 'HTTP, JSON-RPC, gRPC, events/webhooks'],
+      ['Layer 3', 'Profiles', 'MCP, A2A, auth-web, x402, OSP'],
+      ['Layer 4', 'Domain Families', 'Provisioning, commerce, jobs'],
+    ].map(([num, name, desc]) => (
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1 rounded-md border border-border px-5 py-3.5">
+        <span class="font-mono text-[10px] uppercase tracking-wider text-muted-foreground min-w-[56px]">{num}</span>
+        <span class="text-[15px] font-semibold text-foreground min-w-[120px]">{name}</span>
+        <span class="text-[13px] text-muted-foreground">{desc}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<hr class="mx-auto mt-20 max-w-[760px] border-t border-border" />
+
+<!-- What Pact Is Not -->
+<section class="mx-auto max-w-[760px] px-6 pt-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">What Pact Is Not</span>
+  <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+    Not a replacement. A shared layer.
+  </h2>
+  <p class="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+    Where one protocol defines tool access, Pact adds semantics. Where another
+    defines tasks, Pact adds delegation and evidence. Where another defines
+    payment flows, Pact adds mandates, approvals, and interoperable context.
+  </p>
+  <p class="mt-4 text-[17px] font-semibold text-foreground">
+    The goal is not protocol conquest. The goal is shared agentic ground truth.
+  </p>
+</section>
+
+<hr class="mx-auto mt-20 max-w-[760px] border-t border-border" />
+
+<!-- Why Now -->
+<section class="mx-auto max-w-[760px] px-6 pt-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Why Now</span>
+  <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+    Agents are becoming real systems, not demos.
+  </h2>
+  <p class="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+    As agents move from toy workflows into production infrastructure,
+    the missing pieces become obvious:
+  </p>
+  <div class="mt-4 space-y-1.5">
+    <p class="text-[15px] font-medium text-foreground">Identity cannot remain hand-wavy.</p>
+    <p class="text-[15px] font-medium text-foreground">Delegation cannot remain implicit.</p>
+    <p class="text-[15px] font-medium text-foreground">Approval cannot remain product-specific.</p>
+    <p class="text-[15px] font-medium text-foreground">Evidence cannot remain an afterthought.</p>
+    <p class="text-[15px] font-medium text-foreground">Payment cannot remain detached from intent.</p>
+  </div>
+  <p class="mt-6 text-[17px] font-semibold text-foreground">
+    The next generation of agent systems will need protocol-grade primitives.
+    Pact is being built for that future now.
+  </p>
+</section>
+
+<!-- Design Principles -->
+<section class="mt-20 border-y border-border py-20">
+  <div class="mx-auto max-w-[760px] px-6">
+    <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Design Principles</span>
+    <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+      Built carefully, because the standard we need does not exist yet.
+    </h2>
+    <div class="mt-8 grid grid-cols-1 gap-x-12 gap-y-8 sm:grid-cols-2">
+      {[
+        ['Open by default', 'Usable across vendors, products, and ecosystems.'],
+        ['Composable, not imperial', 'Interoperate without forcing one system to swallow the others.'],
+        ['Protocol-first', 'The semantics must outlive any one implementation.'],
+        ['Evidence-bearing', 'Agent actions should be explainable, reviewable, and auditable.'],
+        ['Developer-legible', 'Understandable by the people who actually implement it.'],
+        ['Built in public', 'Debated, reviewed, tested, and improved through open participation.'],
+      ].map(([title, desc]) => (
+        <div>
+          <h3 class="text-[15px] font-semibold text-foreground">{title}</h3>
+          <p class="mt-1 text-[13px] leading-relaxed text-muted-foreground">{desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Co-Signers CTA -->
+<section class="mx-auto max-w-[760px] px-6 pt-20" id="cosign">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Co-Signers</span>
+  <h2 class="mt-4 text-3xl font-extrabold leading-tight tracking-tight md:text-[40px] md:tracking-[-1px]">
+    Help define the open standard for agentic primitives.
+  </h2>
+  <p class="mt-5 text-[17px] leading-relaxed text-muted-foreground">
+    If you believe agent systems need more than isolated protocol islands,
+    join the effort. We need protocol reviewers, technical co-signers,
+    design partners, and ecosystem participants willing to shape the real
+    interface of the agentic web.
+  </p>
+  <div class="mt-8 flex flex-wrap gap-3">
+    <a href="/cosign" class="rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85">Become a Co-Signer</a>
+    <a href="/roadmap" class="rounded-lg border border-border px-7 py-3 text-sm font-semibold text-foreground transition-colors hover:border-muted-foreground">View Roadmap</a>
+  </div>
+</section>
+
+<!-- Closing -->
+<section class="mx-auto max-w-[760px] border-t border-border px-6 mt-20 py-20">
+  <p class="text-2xl font-bold leading-snug tracking-tight text-foreground md:text-[32px] md:leading-snug">
+    If agents are going to become infrastructure, their primitives must become standards.
+  </p>
+  <div class="mt-6 h-px w-10 bg-border"></div>
+  <p class="mt-6 text-sm leading-relaxed text-muted-foreground">
+    Pact is an open protocol effort. It is being built in public as a real
+    foundation for interoperable agent systems.
+  </p>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-border bg-secondary/50">
+  <div class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-12 md:flex-row md:justify-between md:px-12">
+    <div class="flex flex-col gap-1">
+      <span class="text-lg font-bold">Pact</span>
+      <span class="text-xs text-muted-foreground">Open Agentic Primitive Standard</span>
+      <span class="mt-3 font-mono text-[11px] text-muted-foreground">&copy; 2026</span>
+    </div>
+    <div class="flex gap-12 md:gap-16">
+      <div class="flex flex-col gap-2.5">
+        <span class="font-mono text-[10px] uppercase tracking-[1.5px] text-muted-foreground">Protocol</span>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/spec/core/FOUNDATION-DRAFT.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Foundation Draft</a>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/docs/SUITE-ARCHITECTURE.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Architecture</a>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/CHARTER.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Charter</a>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <span class="font-mono text-[10px] uppercase tracking-[1.5px] text-muted-foreground">Profiles</span>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/profiles/mcp.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">MCP</a>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/profiles/a2a-draft.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">A2A</a>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/profiles/x402-draft.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">x402</a>
+      </div>
+      <div class="flex flex-col gap-2.5">
+        <span class="font-mono text-[10px] uppercase tracking-[1.5px] text-muted-foreground">Community</span>
+        <a href="https://github.com/EfeDurmaz16/OAPS" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">GitHub</a>
+        <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Contributing</a>
+        <a href="/cosign" class="text-sm text-muted-foreground transition-colors hover:text-foreground">Co-Sign</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</Base>

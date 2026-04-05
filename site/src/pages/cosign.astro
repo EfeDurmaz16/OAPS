@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pact — Become a Co-Signer" description="Co-sign the open standard for agentic primitives. Join protocol reviewers, design partners, and ecosystem participants shaping the agentic web.">
+
+<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 md:px-12">
+  <a href="/" class="flex items-center gap-2.5 text-foreground" aria-label="Pact home">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+      <circle cx="9" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="19" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <span class="text-[22px] font-bold tracking-tight">Pact</span>
+  </a>
+  <div class="flex items-center gap-5 md:gap-7">
+    <a href="/" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Home</a>
+    <a href="/spec" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Spec</a>
+    <a href="/roadmap" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Roadmap</a>
+  </div>
+</nav>
+
+<section class="mx-auto max-w-[760px] px-6 pt-16">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Co-Sign</span>
+  <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-[48px] md:tracking-[-1.5px]">
+    Co-sign the open standard for agentic primitives.
+  </h1>
+  <p class="mt-6 text-[17px] leading-relaxed text-muted-foreground">
+    Open standards become real when more than one party is willing to stand behind them.
+    We are looking for protocol reviewers, technical co-signers, design partners, and
+    ecosystem participants who want agent infrastructure to converge on shared primitives.
+  </p>
+
+  <h2 class="mt-12 text-xl font-bold tracking-tight">Who should co-sign</h2>
+  <div class="mt-4 space-y-2">
+    <p class="text-[15px] text-muted-foreground">Agent tooling and infrastructure teams</p>
+    <p class="text-[15px] text-muted-foreground">Agent-to-agent and multi-agent system builders</p>
+    <p class="text-[15px] text-muted-foreground">Trust, identity, and authentication providers</p>
+    <p class="text-[15px] text-muted-foreground">Payment and authorization platforms</p>
+    <p class="text-[15px] text-muted-foreground">Provisioning and workflow automation services</p>
+    <p class="text-[15px] text-muted-foreground">Compliance and evidence system teams</p>
+  </div>
+
+  <h2 class="mt-12 text-xl font-bold tracking-tight">Express your interest</h2>
+  <p class="mt-3 text-[15px] text-muted-foreground">
+    Fill out the form below. It will open a pre-filled GitHub issue so your interest
+    is tracked publicly and transparently.
+  </p>
+
+  <form id="cosign-form" class="mt-8 flex flex-col gap-6">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="flex flex-col gap-2">
+        <label for="name" class="text-sm font-medium text-foreground">Name <span class="text-muted-foreground">*</span></label>
+        <input id="name" name="name" required placeholder="Your name"
+          class="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="org" class="text-sm font-medium text-foreground">Organization</label>
+        <input id="org" name="org" placeholder="Company or project"
+          class="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="flex flex-col gap-2">
+        <label for="email" class="text-sm font-medium text-foreground">Email <span class="text-muted-foreground">*</span></label>
+        <input id="email" name="email" type="email" required placeholder="you@example.com"
+          class="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="role" class="text-sm font-medium text-foreground">Role</label>
+        <input id="role" name="role" placeholder="e.g. Protocol Engineer"
+          class="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="areas" class="text-sm font-medium text-foreground">Areas of interest</label>
+      <input id="areas" name="areas" placeholder="e.g. MCP, A2A, payments, identity, provisioning"
+        class="flex h-10 w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="message" class="text-sm font-medium text-foreground">Message <span class="text-muted-foreground">(optional)</span></label>
+      <textarea id="message" name="message" rows="4" placeholder="What you're building, what you'd like reviewed, how you want to participate."
+        class="flex min-h-[100px] w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-y"></textarea>
+    </div>
+
+    <button type="submit"
+      class="self-start rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-85">
+      Submit as Co-Signer Interest
+    </button>
+
+    <div class="my-2 h-px w-full bg-border"></div>
+
+    <div class="flex flex-col gap-3 text-sm text-muted-foreground pb-20">
+      <p>
+        Prefer to go directly?
+        <a href="https://github.com/EfeDurmaz16/OAPS/issues/new?template=cosigner.yml" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-foreground">
+          Open a GitHub issue
+        </a>
+      </p>
+      <p>
+        Want to talk first?
+        <a href="https://cal.com/sardis/30min" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-foreground">
+          Book a call
+        </a>
+      </p>
+    </div>
+  </form>
+
+  <!-- Success state (hidden by default) -->
+  <div id="cosign-success" class="hidden rounded-lg border border-border p-8 text-center pb-20">
+    <p class="text-lg font-semibold text-foreground">Thank you for your interest.</p>
+    <p class="mt-2 text-sm text-muted-foreground">A GitHub issue should have opened in a new tab.</p>
+    <p class="mt-4 text-sm text-muted-foreground">
+      Want to discuss further?
+      <a href="https://cal.com/sardis/30min" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-foreground">Book a call</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('cosign-form') as HTMLFormElement | null;
+    const success = document.getElementById('cosign-success');
+    if (!form || !success) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name') as string;
+      const org = data.get('org') as string;
+      const email = data.get('email') as string;
+      const role = data.get('role') as string;
+      const areas = data.get('areas') as string;
+      const message = data.get('message') as string;
+
+      const body = encodeURIComponent(
+        `## Co-Signer Interest\n\n` +
+        `**Name:** ${name}\n` +
+        `**Organization:** ${org || 'N/A'}\n` +
+        `**Role:** ${role || 'N/A'}\n` +
+        `**Email:** ${email}\n\n` +
+        `### Areas of Interest\n${areas || 'N/A'}\n\n` +
+        `### Message\n${message || 'N/A'}\n`
+      );
+      const title = encodeURIComponent(`Co-Signer Interest: ${name}${org ? ` (${org})` : ''}`);
+
+      window.open(
+        `https://github.com/EfeDurmaz16/OAPS/issues/new?template=cosigner.yml&title=${title}`,
+        '_blank'
+      );
+
+      form.classList.add('hidden');
+      success.classList.remove('hidden');
+    });
+  });
+</script>
+
+</Base>

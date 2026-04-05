@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pact — Spec" description="Read the Pact protocol specification, foundation draft, and suite architecture.">
+
+<nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 md:px-12">
+  <a href="/" class="flex items-center gap-2.5 text-foreground" aria-label="Pact home">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+      <circle cx="9" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="19" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <span class="text-[22px] font-bold tracking-tight">Pact</span>
+  </a>
+  <div class="flex items-center gap-5 md:gap-7">
+    <a href="/" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Home</a>
+    <a href="/roadmap" class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">Roadmap</a>
+    <a href="/cosign" class="rounded-md border border-border px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-primary hover:text-primary-foreground">Co-Sign</a>
+  </div>
+</nav>
+
+<section class="mx-auto max-w-[760px] px-6 pt-16 pb-20">
+  <span class="font-mono text-[11px] uppercase tracking-[2.5px] text-muted-foreground">Specification</span>
+  <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-[48px] md:tracking-[-1.5px]">
+    Protocol specification.
+  </h1>
+  <p class="mt-6 text-[17px] leading-relaxed text-muted-foreground">
+    Pact is defined as a protocol suite with four layers: core semantics, bindings, profiles, and domain protocols.
+    Below are the primary specification documents.
+  </p>
+
+  <div class="mt-12 flex flex-col gap-6">
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/spec/core/FOUNDATION-DRAFT.md" target="_blank" rel="noopener" class="group flex flex-col gap-2 rounded-lg border border-border p-6 transition-colors hover:border-foreground/20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">Foundation Draft</h2>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </div>
+      <p class="text-sm text-muted-foreground">The hard-normative semantic core. Defines actors, capabilities, intents, tasks, delegation, mandates, approvals, execution, evidence, and errors.</p>
+      <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">spec/core</span>
+    </a>
+
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/spec/core/STATE-MACHINE-DRAFT.md" target="_blank" rel="noopener" class="group flex flex-col gap-2 rounded-lg border border-border p-6 transition-colors hover:border-foreground/20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">State Machine Draft</h2>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </div>
+      <p class="text-sm text-muted-foreground">Canonical interaction and task lifecycle states, legal transitions, and promotion semantics.</p>
+      <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">spec/core</span>
+    </a>
+
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/SPEC.md" target="_blank" rel="noopener" class="group flex flex-col gap-2 rounded-lg border border-border p-6 transition-colors hover:border-foreground/20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">Consolidated Spec (v0.4-draft)</h2>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </div>
+      <p class="text-sm text-muted-foreground">The full consolidated specification including core object graph, policy language, interaction lifecycle, evidence model, and HTTP binding.</p>
+      <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">legacy reference</span>
+    </a>
+
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/docs/SUITE-ARCHITECTURE.md" target="_blank" rel="noopener" class="group flex flex-col gap-2 rounded-lg border border-border p-6 transition-colors hover:border-foreground/20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">Suite Architecture</h2>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </div>
+      <p class="text-sm text-muted-foreground">The five-layer model: core semantics, bindings, profiles, domain protocols, and companion systems.</p>
+      <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">docs</span>
+    </a>
+
+    <a href="https://github.com/EfeDurmaz16/OAPS/blob/main/CHARTER.md" target="_blank" rel="noopener" class="group flex flex-col gap-2 rounded-lg border border-border p-6 transition-colors hover:border-foreground/20">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold text-foreground">Charter</h2>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </div>
+      <p class="text-sm text-muted-foreground">Mission, boundaries, neutrality, governance posture, and early success criteria.</p>
+      <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">governance</span>
+    </a>
+  </div>
+
+  <h2 class="mt-16 text-2xl font-bold tracking-tight">Bindings</h2>
+  <div class="mt-6 flex flex-col gap-4">
+    {[
+      ['HTTP Binding', 'spec/bindings/http-binding-draft.md', 'Primary binding. REST endpoints, content negotiation, idempotency.'],
+      ['JSON-RPC Binding', 'spec/bindings/jsonrpc-binding-draft.md', 'Method families, error mapping, correlation semantics.'],
+      ['gRPC Binding', 'spec/bindings/grpc-binding-draft.md', 'Unary/streaming methods, proto layout, metadata conventions.'],
+      ['Events Binding', 'spec/bindings/events-binding-draft.md', 'Push envelopes, webhook delivery, replay-first semantics.'],
+    ].map(([title, path, desc]) => (
+      <a href={`https://github.com/EfeDurmaz16/OAPS/blob/main/${path}`} target="_blank" rel="noopener" class="group flex items-center justify-between gap-4 border-b border-border/60 pb-4">
+        <div>
+          <span class="text-[15px] font-semibold text-foreground">{title}</span>
+          <p class="mt-0.5 text-[13px] text-muted-foreground">{desc}</p>
+        </div>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="mt-16 text-2xl font-bold tracking-tight">Profiles</h2>
+  <div class="mt-6 flex flex-col gap-4">
+    {[
+      ['MCP', 'profiles/mcp.md', 'Tool mapping, policy gating, approval, evidence.'],
+      ['A2A', 'profiles/a2a-draft.md', 'Task lifecycle, message threading, delegation carryover.'],
+      ['Auth-Web', 'profiles/auth-web.md', 'Baseline web authentication and subject binding.'],
+      ['x402', 'profiles/x402-draft.md', 'Payment challenge, authorization, settlement.'],
+      ['OSP', 'profiles/osp-draft.md', 'Provisioning lifecycle, credential delivery.'],
+      ['Agent-Client', 'spec/profiles/agent-client-draft.md', 'CLI/SSH session mapping, remote execution evidence.'],
+    ].map(([title, path, desc]) => (
+      <a href={`https://github.com/EfeDurmaz16/OAPS/blob/main/${path}`} target="_blank" rel="noopener" class="group flex items-center justify-between gap-4 border-b border-border/60 pb-4">
+        <div>
+          <span class="text-[15px] font-semibold text-foreground">{title}</span>
+          <p class="mt-0.5 text-[13px] text-muted-foreground">{desc}</p>
+        </div>
+        <span class="text-sm text-muted-foreground transition-colors group-hover:text-foreground">&rarr;</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+</Base>
