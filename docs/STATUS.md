@@ -55,6 +55,34 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: Python second implementation expansion
+- tranche status:
+  - drafted:
+    - expanded `reference/oaps-python/README.md` with example CLI usage for validation, inventory, fixture checks, compatibility declaration validation, and result/declaration comparison flows
+  - implemented:
+    - added direct compatibility declaration validation plus new `compare-results` and `compare-declarations` helper commands to the Python CLI
+    - hardened result validation so coverage labels, scope ids, and scenario ids are checked against the live suite manifest and taxonomy instead of only the loose result shape
+    - added layer-grouped scope summaries to text outputs for compatibility and comparison commands
+  - conformance-backed:
+    - expanded the Python test suite with declaration-validation, comparison-command, and richer result-validation coverage and kept all manifest/CLI tests green across the newly added scopes
+  - externally-blocked:
+    - none
+- changes:
+  - turned the Python line into a more useful second-implementation tooling surface for reviewing and comparing conformance evidence
+  - made compatibility declaration outputs directly validatable instead of treating them as unchecked derived artifacts
+  - improved output ergonomics with grouped layer summaries and comparison helpers for result/declaration diffs
+- validation:
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compare-results --repo-root . --left conformance/results/examples/fixture-check-all-scopes.v1.json --right conformance/results/examples/fixture-check-profile-mcp-partial.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-declaration --repo-root . --declaration conformance/results/examples/compatibility-declaration-all-scopes.v1.json`
+- commits:
+  - `python: add result and declaration comparison tools`
+- next unfinished work:
+  - start V2 tranche 19 by expanding the TypeScript reference line around credible auth/trust/runtime anchors and additional core/http test slices
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: core + binding + profile schema growth
 - tranche status:
   - drafted:

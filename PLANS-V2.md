@@ -290,13 +290,13 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 18. Python Second Implementation Expansion
 
-- [ ] Add fixture support for all new scopes introduced above
-- [ ] Add compatibility support for all new scopes introduced above
-- [ ] Add richer result validation for new coverage types
-- [ ] Add text output for scope summaries grouped by layer
-- [ ] Add helper commands for comparing result files or declaration files
-- [ ] Add result-schema validation for compatibility declaration outputs directly
-- [ ] Add example CLI docs for every major command mode
+- [x] Add fixture support for all new scopes introduced above
+- [x] Add compatibility support for all new scopes introduced above
+- [x] Add richer result validation for new coverage types
+- [x] Add text output for scope summaries grouped by layer
+- [x] Add helper commands for comparing result files or declaration files
+- [x] Add result-schema validation for compatibility declaration outputs directly
+- [x] Add example CLI docs for every major command mode
 
 ### 19. TypeScript Reference Line Expansion
 

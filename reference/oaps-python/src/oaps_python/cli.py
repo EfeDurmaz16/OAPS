@@ -7,15 +7,20 @@ from pathlib import Path
 
 from .manifest import (
     MANIFEST_RELATIVE_PATH,
+    ComparisonReport,
     CompatibilityDeclarationReport,
+    DeclarationValidationReport,
     FixtureCheckReport,
     InventoryReport,
     ResultValidationReport,
     ValidationReport,
     build_compatibility_declaration,
+    compare_compatibility_declarations,
+    compare_result_files,
     discover_repo_root,
     fixture_check_repository,
     inventory_repository,
+    validate_compatibility_declaration_file,
     validate_result_file,
     validate_repository,
 )
@@ -91,6 +96,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     result.add_argument("--json", action="store_true", help="emit machine-readable output")
 
+    declaration = subparsers.add_parser(
+        "validate-declaration",
+        aliases=["declaration-validate", "validate-compatibility"],
+        help="validate a compatibility declaration file against the suite declaration shape",
+    )
+    declaration.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    declaration.add_argument(
+        "--declaration",
+        type=Path,
+        required=True,
+        help="compatibility declaration JSON file to validate",
+    )
+    declaration.add_argument("--json", action="store_true", help="emit machine-readable output")
+
     compatibility = subparsers.add_parser(
         "compatibility",
         aliases=["declare-compatibility"],
@@ -111,6 +130,25 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="write the compatibility declaration to a file instead of only stdout",
     )
+
+    compare_results = subparsers.add_parser(
+        "compare-results",
+        help="compare two result files by derived scope-level compatibility changes",
+    )
+    compare_results.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    compare_results.add_argument("--left", type=Path, required=True, help="baseline result file")
+    compare_results.add_argument("--right", type=Path, required=True, help="candidate result file")
+    compare_results.add_argument("--manifest", type=Path, default=None, help="override conformance manifest path")
+    compare_results.add_argument("--json", action="store_true", help="emit machine-readable output")
+
+    compare_declarations = subparsers.add_parser(
+        "compare-declarations",
+        help="compare two compatibility declaration files by scope status changes",
+    )
+    compare_declarations.add_argument("--repo-root", type=Path, default=None, help="repository root to inspect")
+    compare_declarations.add_argument("--left", type=Path, required=True, help="baseline compatibility declaration file")
+    compare_declarations.add_argument("--right", type=Path, required=True, help="candidate compatibility declaration file")
+    compare_declarations.add_argument("--json", action="store_true", help="emit machine-readable output")
     return parser
 
 
@@ -238,6 +276,57 @@ def _print_result_validation(report: ResultValidationReport, as_json: bool) -> i
     return 0 if report.ok else 1
 
 
+def _render_declaration_validation(report: DeclarationValidationReport, as_json: bool) -> str:
+    if as_json:
+        return json.dumps(report.to_dict(), indent=2, sort_keys=True)
+
+    lines = [
+        f"Compatibility declaration validation report for {report.declaration_path}",
+        f"- repo root: {report.repo_root}",
+        f"- declaration schema: {report.declaration_schema_path}",
+        f"- status: {'ok' if report.ok else 'failed'}",
+    ]
+    if report.issues:
+        lines.append("- issues:")
+        for issue in report.issues:
+            lines.append(f"  - {issue.path}: {issue.message}")
+    else:
+        lines.append("- note: declaration file matches the suite's pragmatic declaration shape")
+    return "\n".join(lines)
+
+
+def _print_declaration_validation(report: DeclarationValidationReport, as_json: bool) -> int:
+    print(_render_declaration_validation(report, as_json))
+    return 0 if report.ok else 1
+
+
+def _render_layer_summaries(layer_summaries: tuple[dict[str, object], ...]) -> list[str]:
+    lines: list[str] = []
+    if not layer_summaries:
+        return lines
+    lines.append("- layer summaries:")
+    for layer in layer_summaries:
+        lines.append(
+            "  - "
+            f"{layer['layer']}: compatible={layer['compatible']}, partial={layer['partial']}, "
+            f"incompatible={layer['incompatible']}, not_evaluated={layer['not_evaluated']}, total={layer['total']}"
+        )
+    return lines
+
+
+def _layer_summaries_from_scope_reports(report: CompatibilityDeclarationReport) -> tuple[dict[str, object], ...]:
+    grouped: dict[str, dict[str, int]] = {}
+    for scope_report in report.scope_reports:
+        layer = "core" if scope_report.scope == "core" else scope_report.scope.split(":", 1)[0]
+        counts = grouped.setdefault(
+            layer,
+            {"compatible": 0, "partial": 0, "incompatible": 0, "not_evaluated": 0, "total": 0},
+        )
+        counts["total"] += 1
+        counts[scope_report.status] += 1
+    return tuple({"layer": layer, **counts} for layer, counts in grouped.items())
+
+
 def _render_compatibility(report: CompatibilityDeclarationReport, as_json: bool) -> str:
     if as_json:
         return json.dumps(report.to_dict(), indent=2, sort_keys=True)
@@ -262,6 +351,7 @@ def _render_compatibility(report: CompatibilityDeclarationReport, as_json: bool)
     ]
     if report.selected_scopes:
         lines.append(f"- selected scopes in result: {', '.join(report.selected_scopes)}")
+    lines.extend(_render_layer_summaries(_layer_summaries_from_scope_reports(report)))
     lines.append("- scope declarations:")
     for scope in report.scope_reports:
         lines.append(
@@ -290,6 +380,34 @@ def _print_compatibility(
         return 0 if report.ok else 1
 
     print(payload)
+    return 0 if report.ok else 1
+
+
+def _render_comparison(report: ComparisonReport, as_json: bool) -> str:
+    if as_json:
+        return json.dumps(report.to_dict(), indent=2, sort_keys=True)
+
+    lines = [
+        f"{report.comparison_kind.capitalize()} comparison",
+        f"- repo root: {report.repo_root}",
+        f"- left: {report.left_path}",
+        f"- right: {report.right_path}",
+        f"- changed scopes: {len(report.changed_scopes)}",
+    ]
+    lines.extend(_render_layer_summaries(report.layer_summaries))
+    if report.changed_scopes:
+        lines.append("- scope changes:")
+        for change in report.changed_scopes:
+            lines.append(f"  - {change.scope}: {change.before_status} -> {change.after_status}")
+    if report.issues:
+        lines.append("- issues:")
+        for issue in report.issues:
+            lines.append(f"  - {issue.path}: {issue.message}")
+    return "\n".join(lines)
+
+
+def _print_comparison(report: ComparisonReport, as_json: bool) -> int:
+    print(_render_comparison(report, as_json))
     return 0 if report.ok else 1
 
 
@@ -329,6 +447,11 @@ def main(argv: list[str] | None = None) -> int:
         report = validate_result_file(repo_root=repo_root, result_path=args.result)
         return _print_result_validation(report, args.json)
 
+    if args.command in {"validate-declaration", "declaration-validate", "validate-compatibility"}:
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        report = validate_compatibility_declaration_file(repo_root=repo_root, declaration_path=args.declaration)
+        return _print_declaration_validation(report, args.json)
+
     if args.command in {"compatibility", "declare-compatibility"}:
         repo_root = discover_repo_root(args.repo_root or Path.cwd())
         manifest_path = args.manifest or (repo_root / MANIFEST_RELATIVE_PATH)
@@ -338,6 +461,26 @@ def main(argv: list[str] | None = None) -> int:
             manifest_path=manifest_path,
         )
         return _print_compatibility(report, args.json, args.output)
+
+    if args.command == "compare-results":
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        manifest_path = args.manifest or (repo_root / MANIFEST_RELATIVE_PATH)
+        report = compare_result_files(
+            repo_root=repo_root,
+            left_result_path=args.left,
+            right_result_path=args.right,
+            manifest_path=manifest_path,
+        )
+        return _print_comparison(report, args.json)
+
+    if args.command == "compare-declarations":
+        repo_root = discover_repo_root(args.repo_root or Path.cwd())
+        report = compare_compatibility_declarations(
+            repo_root=repo_root,
+            left_declaration_path=args.left,
+            right_declaration_path=args.right,
+        )
+        return _print_comparison(report, args.json)
 
     parser.error("unknown command")
     return 2

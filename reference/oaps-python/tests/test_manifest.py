@@ -36,8 +36,11 @@ from oaps_python.cli import main
 from oaps_python.manifest import (
     MANIFEST_RELATIVE_PATH,
     build_compatibility_declaration,
+    compare_compatibility_declarations,
+    compare_result_files,
     fixture_check_repository,
     inventory_repository,
+    validate_compatibility_declaration_file,
     validate_result_file,
     validate_repository,
 )
@@ -533,9 +536,71 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         output = stdout.getvalue()
         self.assertIn("Compatibility declaration", output)
+        self.assertIn("layer summaries", output)
         self.assertIn("scope declarations", output)
         self.assertIn("core:", output)
         self.assertIn("binding:http:", output)
+
+    def test_validate_declaration_cli_accepts_example_file(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main([
+                "validate-declaration",
+                "--repo-root",
+                str(repo_root),
+                "--declaration",
+                str(repo_root / "conformance/results/examples/compatibility-declaration-all-scopes.v1.json"),
+            ])
+        self.assertEqual(exit_code, 0)
+        self.assertIn("Compatibility declaration validation report", stdout.getvalue())
+
+    def test_compare_results_reports_scope_changes(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = compare_result_files(
+            repo_root=repo_root,
+            left_result_path=repo_root / "conformance/results/examples/fixture-check-all-scopes.v1.json",
+            right_result_path=repo_root / "conformance/results/examples/fixture-check-profile-mcp-partial.v1.json",
+        )
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertTrue(any(change.scope == "profile:mcp" for change in report.changed_scopes))
+
+    def test_compare_declarations_cli_reports_changes(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        stdout = io.StringIO()
+        with contextlib.redirect_stdout(stdout):
+            exit_code = main([
+                "compare-declarations",
+                "--repo-root",
+                str(repo_root),
+                "--left",
+                str(repo_root / "conformance/results/examples/compatibility-declaration-all-scopes.v1.json"),
+                "--right",
+                str(repo_root / "conformance/results/examples/compatibility-declaration-profile-mcp-partial.v1.json"),
+            ])
+        self.assertEqual(exit_code, 0)
+        output = stdout.getvalue()
+        self.assertIn("Compatibility-declaration comparison", output)
+        self.assertIn("scope changes", output)
+
+    def test_validate_result_reports_unknown_coverage_level(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        payload = json.loads((repo_root / "conformance/results/example-result.v1.json").read_text(encoding="utf-8"))
+        payload["scenarios"][0]["coverage"] = ["not-a-real-coverage-level"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            result_path = Path(tmpdir) / "bad-result.json"
+            result_path.write_text(json.dumps(payload), encoding="utf-8")
+            report = validate_result_file(repo_root=repo_root, result_path=result_path)
+        self.assertFalse(report.ok)
+        self.assertTrue(any("unknown coverage level" in issue.message for issue in report.issues))
+
+    def test_validate_compatibility_declaration_report_api(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = validate_compatibility_declaration_file(
+            repo_root=repo_root,
+            declaration_path=repo_root / "conformance/results/examples/compatibility-declaration-all-scopes.v1.json",
+        )
+        self.assertTrue(report.ok, report.to_dict())
 
 
 if __name__ == "__main__":

@@ -94,6 +94,29 @@ Write the compatibility declaration to a file:
 python3 -m oaps_python compatibility --result /tmp/oaps-fixture-check.json --json --output /tmp/oaps-compatibility.json
 ```
 
+Validate a compatibility declaration directly:
+
+```bash
+python3 -m oaps_python validate-declaration \
+  --declaration conformance/results/examples/compatibility-declaration-all-scopes.v1.json
+```
+
+Compare two result files by derived scope status:
+
+```bash
+python3 -m oaps_python compare-results \
+  --left conformance/results/examples/fixture-check-all-scopes.v1.json \
+  --right conformance/results/examples/fixture-check-profile-mcp-partial.v1.json
+```
+
+Compare two compatibility declarations directly:
+
+```bash
+python3 -m oaps_python compare-declarations \
+  --left conformance/results/examples/compatibility-declaration-all-scopes.v1.json \
+  --right conformance/results/examples/compatibility-declaration-profile-mcp-partial.v1.json
+```
+
 Or with an explicit starting directory:
 
 ```bash
@@ -107,7 +130,10 @@ oaps-python validate
 oaps-python inventory
 oaps-python check
 oaps-python validate-result
+oaps-python validate-declaration
 oaps-python compatibility
+oaps-python compare-results
+oaps-python compare-declarations
 ```
 
 ## Scope
@@ -117,4 +143,6 @@ Its job is to prove that the suite-level manifest can be consumed from a second 
 The inventory command can also narrow inspection to selected scopes and emit the payload to a file for downstream tooling.
 The `check` command performs honest static fixture checks, including manifest consistency and JSON fixture file parsing where applicable, and emits a conformance-result-shaped payload without pretending to execute runtime scenarios.
 The `validate-result` command checks a conformance result file against the suite's pragmatic result shape and is intended for outputs emitted by `check`.
+The `validate-declaration` command validates a derived compatibility declaration directly against the suite's pragmatic declaration shape.
 The `compatibility` command derives a scope-level declaration from a result file so compatibility statements stay machine-derived rather than handwritten.
+The compare commands help review scope-level changes between result files or between already-derived declaration files.

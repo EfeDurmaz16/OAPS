@@ -332,6 +332,30 @@ class ResultValidationReport:
 
 
 @dataclass(frozen=True)
+class DeclarationValidationReport:
+    declaration_path: Path
+    repo_root: Path
+    declaration_schema_path: Path
+    issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
+
+    @property
+    def ok(self) -> bool:
+        return not self.issues
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            'ok': self.ok,
+            'declaration_path': str(self.declaration_path),
+            'repo_root': str(self.repo_root),
+            'declaration_schema_path': str(self.declaration_schema_path),
+            'issues': [
+                {'path': issue.path, 'message': issue.message}
+                for issue in self.issues
+            ],
+        }
+
+
+@dataclass(frozen=True)
 class CompatibilityScopeReport:
     scope: str
     status: str
@@ -351,6 +375,50 @@ class CompatibilityScopeReport:
     @property
     def evaluated_scenario_count(self) -> int:
         return len(self.evaluated_scenarios)
+
+
+@dataclass(frozen=True)
+class ScopeComparison:
+    scope: str
+    before_status: str
+    after_status: str
+
+
+@dataclass(frozen=True)
+class ComparisonReport:
+    comparison_kind: str
+    left_path: Path
+    right_path: Path
+    repo_root: Path
+    changed_scopes: tuple[ScopeComparison, ...]
+    layer_summaries: tuple[dict[str, Any], ...]
+    issues: tuple[ValidationIssue, ...] = field(default_factory=tuple)
+
+    @property
+    def ok(self) -> bool:
+        return not self.issues
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            'ok': self.ok,
+            'comparison_kind': self.comparison_kind,
+            'left_path': str(self.left_path),
+            'right_path': str(self.right_path),
+            'repo_root': str(self.repo_root),
+            'changed_scopes': [
+                {
+                    'scope': change.scope,
+                    'before_status': change.before_status,
+                    'after_status': change.after_status,
+                }
+                for change in self.changed_scopes
+            ],
+            'layer_summaries': list(self.layer_summaries),
+            'issues': [
+                {'path': issue.path, 'message': issue.message}
+                for issue in self.issues
+            ],
+        }
 
 
 @dataclass(frozen=True)
@@ -650,6 +718,37 @@ def _load_taxonomy_dimensions(repo_root: Path, taxonomy_path: str, issues: list[
             )
         )
     return dimensions
+
+
+def _load_taxonomy_coverage_levels(
+    repo_root: Path,
+    taxonomy_path: str,
+    issues: list[ValidationIssue],
+) -> set[str]:
+    taxonomy_file = _resolve_repo_path(repo_root, taxonomy_path)
+    if not taxonomy_file.exists():
+        return set()
+
+    taxonomy = load_json_file(taxonomy_file)
+    coverage_levels = taxonomy.get('coverage_levels', [])
+    if not isinstance(coverage_levels, list):
+        issues.append(
+            ValidationIssue(
+                path=str(taxonomy_file),
+                message='scenario taxonomy coverage_levels must be a list',
+            )
+        )
+        return set()
+
+    return {str(level) for level in coverage_levels if isinstance(level, str) and level}
+
+
+def _scope_layer(scope: str) -> str:
+    if scope == 'core':
+        return 'core'
+    if ':' in scope:
+        return scope.split(':', 1)[0]
+    return 'other'
 
 
 def _pack_entries_by_scope(repo_root: Path, manifest: ConformanceManifest, issues: list[ValidationIssue]) -> dict[str, dict[str, Any]]:
@@ -953,6 +1052,9 @@ def validate_result_file(
     issues: list[ValidationIssue] = []
     manifest_path = (repo_root / MANIFEST_RELATIVE_PATH).resolve()
     manifest: ConformanceManifest | None = None
+    known_scopes: set[str] = set()
+    known_scenarios_by_scope: dict[str, set[str]] = {}
+    allowed_coverage_levels: set[str] = set()
 
     if not manifest_path.exists():
         issues.append(
@@ -964,6 +1066,13 @@ def validate_result_file(
     else:
         try:
             manifest = ConformanceManifest.from_json(load_json_file(manifest_path))
+            known_scopes = {entry.get('scope', '') for entry in manifest.entrypoints if isinstance(entry, dict)}
+            fixture_scenarios_by_scope = _load_fixture_scenarios_by_scope(repo_root, manifest, issues)
+            known_scenarios_by_scope = {
+                scope: {scenario.scenario_id for scenario in scenarios}
+                for scope, scenarios in fixture_scenarios_by_scope.items()
+            }
+            allowed_coverage_levels = _load_taxonomy_coverage_levels(repo_root, manifest.taxonomy, issues)
         except (OSError, ValueError, json.JSONDecodeError) as error:
             issues.append(
                 ValidationIssue(
@@ -1121,6 +1230,41 @@ def validate_result_file(
     else:
         for scenario in scenarios:
             _validate_result_scenario(scenario, issues, str(result_path))
+            if not isinstance(scenario, dict):
+                continue
+            scope = scenario.get('scope')
+            scenario_id = scenario.get('scenario_id')
+            coverage = scenario.get('coverage')
+            if isinstance(scope, str) and scope and known_scopes and scope not in known_scopes:
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'result scenario references unknown scope: {scope}',
+                    )
+                )
+            if (
+                isinstance(scope, str)
+                and scope
+                and isinstance(scenario_id, str)
+                and scenario_id
+                and scope in known_scenarios_by_scope
+                and scenario_id not in known_scenarios_by_scope[scope]
+            ):
+                issues.append(
+                    ValidationIssue(
+                        path=str(result_path),
+                        message=f'result scenario is not present in fixture pack for {scope}: {scenario_id}',
+                    )
+                )
+            if isinstance(coverage, list) and allowed_coverage_levels:
+                for coverage_level in coverage:
+                    if isinstance(coverage_level, str) and coverage_level not in allowed_coverage_levels:
+                        issues.append(
+                            ValidationIssue(
+                                path=str(result_path),
+                                message=f'result scenario uses unknown coverage level: {coverage_level}',
+                            )
+                        )
 
     if isinstance(summary, dict) and isinstance(scenarios, list):
         total = summary.get('total')
@@ -1146,6 +1290,189 @@ def validate_result_file(
         result_path=result_path,
         repo_root=repo_root,
         result_schema_path=result_schema_path,
+        issues=tuple(issues),
+    )
+
+
+def validate_compatibility_declaration_file(
+    repo_root: Path | None = None,
+    declaration_path: Path | None = None,
+    declaration_schema_path: Path | None = None,
+) -> DeclarationValidationReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    declaration_schema_path = (
+        declaration_schema_path or repo_root / COMPATIBILITY_DECLARATION_SCHEMA_RELATIVE_PATH
+    ).resolve()
+    declaration_path = (
+        declaration_path or repo_root / 'conformance/results/examples/compatibility-declaration-all-scopes.v1.json'
+    ).resolve()
+    issues: list[ValidationIssue] = []
+
+    if not declaration_schema_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(declaration_schema_path),
+                message='compatibility declaration schema does not exist',
+            )
+        )
+
+    if not declaration_path.exists():
+        issues.append(
+            ValidationIssue(
+                path=str(declaration_path),
+                message='compatibility declaration file does not exist',
+            )
+        )
+        return DeclarationValidationReport(
+            declaration_path=declaration_path,
+            repo_root=repo_root,
+            declaration_schema_path=declaration_schema_path,
+            issues=tuple(issues),
+        )
+
+    try:
+        payload = load_json_file(declaration_path)
+    except (OSError, ValueError, json.JSONDecodeError) as error:
+        issues.append(
+            ValidationIssue(
+                path=str(declaration_path),
+                message=f'invalid JSON compatibility declaration file: {error}',
+            )
+        )
+        return DeclarationValidationReport(
+            declaration_path=declaration_path,
+            repo_root=repo_root,
+            declaration_schema_path=declaration_schema_path,
+            issues=tuple(issues),
+        )
+
+    required_keys = (
+        'declaration_schema_version',
+        'manifest_id',
+        'suite_version',
+        'generated_at',
+        'source_result',
+        'implementation',
+        'selected_scopes',
+        'summary',
+        'scope_declarations',
+    )
+    for key in required_keys:
+        if key not in payload:
+            issues.append(
+                ValidationIssue(
+                    path=str(declaration_path),
+                    message=f'compatibility declaration is missing required key: {key}',
+                )
+            )
+
+    extra_top_level_keys = sorted(set(payload) - (set(required_keys) | {'issues'}))
+    if extra_top_level_keys:
+        issues.append(
+            ValidationIssue(
+                path=str(declaration_path),
+                message=f'compatibility declaration contains unsupported keys: {", ".join(extra_top_level_keys)}',
+            )
+        )
+
+    if payload.get('declaration_schema_version') != '1.0':
+        issues.append(ValidationIssue(path=str(declaration_path), message='declaration_schema_version must be 1.0'))
+    if not isinstance(payload.get('manifest_id'), str) or not payload['manifest_id']:
+        issues.append(ValidationIssue(path=str(declaration_path), message='manifest_id must be a non-empty string'))
+    if not isinstance(payload.get('suite_version'), str):
+        issues.append(ValidationIssue(path=str(declaration_path), message='suite_version must be a string'))
+    if not _validate_date_time(payload.get('generated_at')):
+        issues.append(ValidationIssue(path=str(declaration_path), message='generated_at must be an RFC3339 date-time string'))
+
+    source_result = payload.get('source_result')
+    if not isinstance(source_result, dict):
+        issues.append(ValidationIssue(path=str(declaration_path), message='source_result must be a JSON object'))
+    else:
+        for key in ('result_path', 'runner_id', 'executed_at'):
+            if key not in source_result:
+                issues.append(
+                    ValidationIssue(
+                        path=str(declaration_path),
+                        message=f'source_result is missing required key: {key}',
+                    )
+                )
+
+    implementation = payload.get('implementation')
+    if not isinstance(implementation, dict):
+        issues.append(ValidationIssue(path=str(declaration_path), message='implementation must be a JSON object'))
+
+    selected_scopes = payload.get('selected_scopes')
+    if not isinstance(selected_scopes, list) or not all(isinstance(item, str) for item in selected_scopes):
+        issues.append(ValidationIssue(path=str(declaration_path), message='selected_scopes must be a list of strings'))
+
+    summary = payload.get('summary')
+    if not isinstance(summary, dict):
+        issues.append(ValidationIssue(path=str(declaration_path), message='summary must be a JSON object'))
+    else:
+        for key in ('compatible', 'partial', 'incompatible', 'not_evaluated', 'total'):
+            if key not in summary:
+                issues.append(
+                    ValidationIssue(
+                        path=str(declaration_path),
+                        message=f'summary is missing required key: {key}',
+                    )
+                )
+            elif not isinstance(summary[key], int) or summary[key] < 0:
+                issues.append(
+                    ValidationIssue(
+                        path=str(declaration_path),
+                        message=f'summary {key} must be a non-negative integer',
+                    )
+                )
+
+    scope_declarations = payload.get('scope_declarations')
+    if not isinstance(scope_declarations, list):
+        issues.append(ValidationIssue(path=str(declaration_path), message='scope_declarations must be a list'))
+    else:
+        allowed_statuses = {'compatible', 'partial', 'incompatible', 'not_evaluated'}
+        for declaration in scope_declarations:
+            if not isinstance(declaration, dict):
+                issues.append(
+                    ValidationIssue(
+                        path=str(declaration_path),
+                        message='scope_declarations entries must be JSON objects',
+                    )
+                )
+                continue
+            required_scope_keys = (
+                'scope',
+                'status',
+                'selected_in_result',
+                'known_scenarios',
+                'evaluated_scenarios',
+                'pass',
+                'fail',
+                'skip',
+                'error',
+                'coverage_observed',
+                'known_scenario_ids',
+                'evaluated_scenario_ids',
+            )
+            for key in required_scope_keys:
+                if key not in declaration:
+                    issues.append(
+                        ValidationIssue(
+                            path=str(declaration_path),
+                            message=f'scope declaration is missing required key: {key}',
+                        )
+                    )
+            if declaration.get('status') not in allowed_statuses:
+                issues.append(
+                    ValidationIssue(
+                        path=str(declaration_path),
+                        message='scope declaration status must be compatible, partial, incompatible, or not_evaluated',
+                    )
+                )
+
+    return DeclarationValidationReport(
+        declaration_path=declaration_path,
+        repo_root=repo_root,
+        declaration_schema_path=declaration_schema_path,
         issues=tuple(issues),
     )
 
@@ -1329,6 +1656,135 @@ def build_compatibility_declaration(
         scope_reports=tuple(scope_reports),
         compatibility_schema_path=compatibility_schema_path,
         issues=tuple(issues),
+    )
+
+
+def _layer_summaries_from_scope_reports(scope_reports: Iterable[CompatibilityScopeReport]) -> tuple[dict[str, Any], ...]:
+    grouped: dict[str, dict[str, int]] = {}
+    for scope in scope_reports:
+        layer = _scope_layer(scope.scope)
+        counts = grouped.setdefault(
+            layer,
+            {'compatible': 0, 'partial': 0, 'incompatible': 0, 'not_evaluated': 0, 'total': 0},
+        )
+        counts['total'] += 1
+        counts[scope.status] += 1
+    return tuple(
+        {'layer': layer, **counts}
+        for layer, counts in sorted(grouped.items())
+    )
+
+
+def compare_result_files(
+    repo_root: Path | None = None,
+    left_result_path: Path | None = None,
+    right_result_path: Path | None = None,
+    manifest_path: Path | None = None,
+) -> ComparisonReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    left_result_path = (left_result_path or repo_root / 'conformance/results/example-result.v1.json').resolve()
+    right_result_path = (right_result_path or repo_root / 'conformance/results/examples/fixture-check-profile-mcp-partial.v1.json').resolve()
+    manifest_path = (manifest_path or repo_root / MANIFEST_RELATIVE_PATH).resolve()
+
+    left = build_compatibility_declaration(
+        repo_root=repo_root,
+        result_path=left_result_path,
+        manifest_path=manifest_path,
+    )
+    right = build_compatibility_declaration(
+        repo_root=repo_root,
+        result_path=right_result_path,
+        manifest_path=manifest_path,
+    )
+
+    left_by_scope = {scope.scope: scope for scope in left.scope_reports}
+    right_by_scope = {scope.scope: scope for scope in right.scope_reports}
+    all_scopes = sorted(set(left_by_scope) | set(right_by_scope))
+    changed_scopes = tuple(
+        ScopeComparison(
+            scope=scope,
+            before_status=left_by_scope.get(scope).status if scope in left_by_scope else 'not_present',
+            after_status=right_by_scope.get(scope).status if scope in right_by_scope else 'not_present',
+        )
+        for scope in all_scopes
+        if (left_by_scope.get(scope).status if scope in left_by_scope else 'not_present')
+        != (right_by_scope.get(scope).status if scope in right_by_scope else 'not_present')
+    )
+    issues = tuple((*left.issues, *right.issues))
+    return ComparisonReport(
+        comparison_kind='result',
+        left_path=left_result_path,
+        right_path=right_result_path,
+        repo_root=repo_root,
+        changed_scopes=changed_scopes,
+        layer_summaries=_layer_summaries_from_scope_reports(right.scope_reports),
+        issues=issues,
+    )
+
+
+def compare_compatibility_declarations(
+    repo_root: Path | None = None,
+    left_declaration_path: Path | None = None,
+    right_declaration_path: Path | None = None,
+) -> ComparisonReport:
+    repo_root = (repo_root or discover_repo_root()).resolve()
+    left_declaration_path = (
+        left_declaration_path or repo_root / 'conformance/results/examples/compatibility-declaration-all-scopes.v1.json'
+    ).resolve()
+    right_declaration_path = (
+        right_declaration_path or repo_root / 'conformance/results/examples/compatibility-declaration-profile-mcp-partial.v1.json'
+    ).resolve()
+
+    left_validation = validate_compatibility_declaration_file(repo_root=repo_root, declaration_path=left_declaration_path)
+    right_validation = validate_compatibility_declaration_file(repo_root=repo_root, declaration_path=right_declaration_path)
+
+    left_payload = load_json_file(left_declaration_path) if left_declaration_path.exists() else {}
+    right_payload = load_json_file(right_declaration_path) if right_declaration_path.exists() else {}
+    left_scopes = {
+        str(scope['scope']): str(scope['status'])
+        for scope in left_payload.get('scope_declarations', [])
+        if isinstance(scope, dict) and 'scope' in scope and 'status' in scope
+    }
+    right_scopes = {
+        str(scope['scope']): str(scope['status'])
+        for scope in right_payload.get('scope_declarations', [])
+        if isinstance(scope, dict) and 'scope' in scope and 'status' in scope
+    }
+    all_scopes = sorted(set(left_scopes) | set(right_scopes))
+    changed_scopes = tuple(
+        ScopeComparison(
+            scope=scope,
+            before_status=left_scopes.get(scope, 'not_present'),
+            after_status=right_scopes.get(scope, 'not_present'),
+        )
+        for scope in all_scopes
+        if left_scopes.get(scope, 'not_present') != right_scopes.get(scope, 'not_present')
+    )
+    layer_summaries = tuple()
+    if isinstance(right_payload.get('scope_declarations'), list):
+        grouped: dict[str, dict[str, int]] = {}
+        for scope in right_payload['scope_declarations']:
+            if not isinstance(scope, dict):
+                continue
+            layer = _scope_layer(str(scope.get('scope', '')))
+            counts = grouped.setdefault(
+                layer,
+                {'compatible': 0, 'partial': 0, 'incompatible': 0, 'not_evaluated': 0, 'total': 0},
+            )
+            status = str(scope.get('status', ''))
+            counts['total'] += 1
+            if status in counts:
+                counts[status] += 1
+        layer_summaries = tuple({'layer': layer, **counts} for layer, counts in sorted(grouped.items()))
+
+    return ComparisonReport(
+        comparison_kind='compatibility-declaration',
+        left_path=left_declaration_path,
+        right_path=right_declaration_path,
+        repo_root=repo_root,
+        changed_scopes=changed_scopes,
+        layer_summaries=layer_summaries,
+        issues=tuple((*left_validation.issues, *right_validation.issues)),
     )
 
 
