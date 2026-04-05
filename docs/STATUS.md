@@ -76,7 +76,7 @@ Append one entry per tranche using the V2 template above:
   - targeted link existence checks for the new index and packet pages
   - `git diff --check`
 - commits:
-  - pending
+  - `docs: expand review and navigation surfaces` (`f1ff33b`)
 - next unfinished work:
   - keep the review packets and public-facing maps aligned as the suite grows
 - status: `DONE`
@@ -100,7 +100,7 @@ Append one entry per tranche using the V2 template above:
   - targeted link existence checks for the packet docs
   - `git diff --check`
 - commits:
-  - pending
+  - `docs: expand review and navigation surfaces` (`f1ff33b`)
 - next unfinished work:
   - keep the packet set synchronized with future profile or conformance expansion
 - status: `DONE`
@@ -123,7 +123,7 @@ Append one entry per tranche using the V2 template above:
   - targeted link existence checks for the narrative pages
   - `git diff --check`
 - commits:
-  - pending
+  - `docs: expand review and navigation surfaces` (`f1ff33b`)
 - next unfinished work:
   - keep landing-page copy in sync with future review and positioning updates
 - status: `DONE`
@@ -147,7 +147,7 @@ Append one entry per tranche using the V2 template above:
   - targeted link existence checks for the review guidance docs
   - `git diff --check`
 - commits:
-  - pending
+  - `docs: expand review and navigation surfaces` (`f1ff33b`)
 - next unfinished work:
   - keep the cosigner and design-partner guidance aligned with future review packet changes
 - status: `DONE`
@@ -170,7 +170,7 @@ Append one entry per tranche using the V2 template above:
   - targeted link existence checks for the new map pages
   - `git diff --check`
 - commits:
-  - pending
+  - `docs: expand review and navigation surfaces` (`f1ff33b`)
 - next unfinished work:
   - keep the public docs surface synchronized with future review packet and positioning changes
 - status: `DONE`
@@ -194,7 +194,7 @@ Append one entry per tranche using the V2 template above:
 - validation:
   - `bash -n scripts/codex-supervisor.sh scripts/codex-tranche-loop.sh scripts/codex-cloud-task.sh`
 - commits:
-  - `harness: add supervisor checkpoint artifacts` (`f37d93f`)
+  - `harness: add supervisor checkpoint artifacts` (`b5979c1`)
 - next unfinished work:
   - continue with the public docs, review packet, and repository navigation tranches now that the supervisor path is auditable
 - status: `DONE`
