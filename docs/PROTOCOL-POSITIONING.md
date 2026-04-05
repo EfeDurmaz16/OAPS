@@ -101,3 +101,11 @@ OAPS is the standard for the things agent systems keep re-inventing:
 - how money or service lifecycle state should move with the action
 
 Everything else belongs in a binding, a profile, or a companion protocol.
+
+## Related Maps
+
+- [`docs/SUITE-MAP.md`](./SUITE-MAP.md)
+- [`docs/BINDING-MAP.md`](./BINDING-MAP.md)
+- [`docs/PROFILE-MAP.md`](./PROFILE-MAP.md)
+- [`docs/DOMAIN-PROTOCOL-MAP.md`](./DOMAIN-PROTOCOL-MAP.md)
+- [`docs/IMPLEMENTATION-MAP.md`](./IMPLEMENTATION-MAP.md)
