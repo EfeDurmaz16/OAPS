@@ -8,6 +8,14 @@ The packet is the unit of external review. The target matrix decides who gets wh
 
 For the shortest public-facing entry point before any packet-specific deep dive, start with [`HOW-TO-REVIEW-OAPS.md`](./HOW-TO-REVIEW-OAPS.md).
 
+For packet drafting help, see:
+
+- [`docs/REVIEW-PACKET-TEMPLATE.md`](./REVIEW-PACKET-TEMPLATE.md)
+- [`docs/REVIEW-READINESS-CHECKLISTS.md`](./REVIEW-READINESS-CHECKLISTS.md)
+- [`docs/REVIEW-ISSUE-TAXONOMY.md`](./REVIEW-ISSUE-TAXONOMY.md)
+- [`docs/COSIGNERS.md`](./COSIGNERS.md)
+- [`docs/DESIGN-PARTNERS.md`](./DESIGN-PARTNERS.md)
+
 ## Packet Types
 
 ### MCP Packet

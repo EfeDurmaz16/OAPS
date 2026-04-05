@@ -66,6 +66,14 @@ OAPS is **not** asking reviewers to:
 - treat every draft profile as a stable standard
 - assume that current aligned systems are mandatory dependencies
 
+## Useful Review Support Pages
+
+- [`docs/WHAT-WE-WANT-REVIEWED.md`](./WHAT-WE-WANT-REVIEWED.md) — bounded review asks by area
+- [`docs/REVIEW-READINESS-CHECKLISTS.md`](./REVIEW-READINESS-CHECKLISTS.md) — packet readiness checks
+- [`docs/REVIEW-PACKET-TEMPLATE.md`](./REVIEW-PACKET-TEMPLATE.md) — reusable packet shape
+- [`docs/COSIGNERS.md`](./COSIGNERS.md) — cosigner guidance
+- [`docs/DESIGN-PARTNERS.md`](./DESIGN-PARTNERS.md) — design-partner guidance
+
 ## Reviewer Decision Template
 
 A good review response can be as small as:

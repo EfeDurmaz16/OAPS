@@ -6,6 +6,8 @@ This matrix turns the long-term outreach plan into bounded review asks that can 
 
 Each row is one review target family, one concrete artifact, and one requested decision.
 
+For the bounded ask that corresponds to each row, see [`docs/WHAT-WE-WANT-REVIEWED.md`](./WHAT-WE-WANT-REVIEWED.md) and [`docs/REVIEW-PACKET-INDEX.md`](./REVIEW-PACKET-INDEX.md).
+
 ## Target Matrix
 
 | Target family | Example targets | Review artifact | Requested decision | Why now |
