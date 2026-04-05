@@ -91,6 +91,19 @@ This is the smallest real working system in the repo today, and it should be und
 
 - `CHARTER.md` — mission, boundaries, neutrality, and governance posture
 - `docs/MATURITY-MATRIX.md` — what is stable now vs draft vs concept
+- `docs/SUITE-MAP.md` — top-level suite navigation
+- `docs/BINDING-MAP.md` — binding-family navigation
+- `docs/PROFILE-MAP.md` — profile-family navigation
+- `docs/DOMAIN-PROTOCOL-MAP.md` — domain-family navigation
+- `docs/IMPLEMENTATION-MAP.md` — implementation-surface navigation
+- `docs/GLOSSARY.md` — shared suite terminology
+- `docs/WHY-OAPS.md` — public explainer for why the suite exists
+- `docs/HOMEPAGE-CONTENT-MAP.md` — homepage narrative map
+- `docs/NARRATIVE-BLOCKS.md` — reusable positioning copy
+- `docs/FAQ.md` — public FAQ
+- `docs/NEUTRAL-BY-DESIGN.md` — neutrality posture notes
+- `docs/COVERAGE-MAP.md` — current repo coverage map
+- `docs/CONFORMANCE-SCOPE-INDEX.md` — maintained conformance scope index
 - `docs/HOW-TO-REVIEW-OAPS.md` — shortest public-facing review packet
 - `docs/SUITE-ARCHITECTURE.md` — protocol suite layering and long-term structure
 - `docs/STANDARDS-LANDSCAPE.md` — adjacent protocol and standards-body landscape
