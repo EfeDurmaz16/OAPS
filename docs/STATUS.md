@@ -54,6 +54,25 @@ Append one entry per tranche:
   - consider a cloud-task or SDK supervisor variant after local loop usage
 - status: `DONE`
 
+### 2026-04-05
+
+- tranche: tranche queue and default prompt bootstrap
+- changes:
+  - added `PLANS.md` as the durable tranche queue
+  - added `docs/NEXT-STEPS.md` as the short-horizon priority override
+  - added `codex/prompts/full-oaps-implementation.txt` as the default long-run prompt
+  - updated `AGENTS.md`, `README.md`, `docs/RUNBOOK.md`, and harness instructions to require loading vision, mission, scope, spec, and design context
+  - updated harness scripts to default to the tracked prompt file
+- validation:
+  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh`
+- commits:
+  - `88e3212` `docs: add codex tranche plan and default prompt`
+- next unfinished work:
+  - run the loop against a real unattended OAPS tranche and record the result here
+  - add compatibility declaration artifacts and result examples
+  - add optional cloud-task or SDK supervisor variants if the local loop still stops too early
+- status: `DONE`
+
 ## Current Open Fronts
 
 - harden bindings and profiles
