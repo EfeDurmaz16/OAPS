@@ -1,0 +1,23 @@
+{
+  "package": "oaps.bindings.grpc.v1",
+  "services": {
+    "DiscoveryService": {
+      "Discover": "bootstrap discovery surface",
+      "GetActorCard": "actor-card retrieval surface",
+      "ListCapabilities": "capability discovery surface"
+    },
+    "InteractionService": {
+      "CreateInteraction": "authoritative unary create mutation",
+      "GetInteraction": "interaction retrieval surface",
+      "AppendMessage": "append-only follow-on message mutation",
+      "ApproveInteraction": "approval mutation",
+      "RejectInteraction": "rejection mutation",
+      "RevokeInteraction": "revocation mutation",
+      "ListInteractionEvents": "authoritative unary event replay",
+      "StreamInteractionEvents": "optional server-streaming event follow surface",
+      "ListInteractionEvidence": "authoritative unary evidence replay",
+      "StreamInteractionEvidence": "optional server-streaming evidence follow surface"
+    }
+  },
+  "proto_path": "reference/proto/oaps/bindings/grpc/v1/oaps.proto"
+}

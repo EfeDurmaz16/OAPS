@@ -1,30 +1,17 @@
 {
-  "service": "oaps.bindings.grpc.v1.InteractionsService/AppendMessage",
+  "grpc_service": "oaps.bindings.grpc.v1.InteractionService",
+  "grpc_method": "AppendMessage",
   "metadata": {
-    "authorization": "Bearer opaque-token",
-    "x-oaps-idempotency-key": "idem-grpc-message-1"
+    "authorization": "Bearer demo-token",
+    "idempotency-key": "idem-grpc-message-1",
+    "x-oaps-actor-id": "urn:oaps:actor:agent:builder"
   },
-  "request": {
+  "message": {
     "interaction_id": "ix_grpc_1",
     "idempotency_key": "idem-grpc-message-1",
     "envelope": {
-      "message_id": "msg_grpc_append_1",
-      "interaction_id": "ix_grpc_1",
-      "from": {
-        "actor_id": "urn:oaps:actor:agent:builder"
-      },
-      "to": {
-        "actor_id": "urn:oaps:actor:server:reference"
-      },
-      "channel": "oaps-grpc",
-      "message_type": "intent.response",
-      "timestamp": "2026-04-05T14:01:00Z",
-      "payload": {
-        "intent_id": "int_grpc_1",
-        "verb": "invoke",
-        "object": "tool:read_repo",
-        "requested_outcome": "Report completion"
-      }
+      "media_type": "application/oaps+json",
+      "json": "{\"spec_version\":\"0.4-draft\",\"interaction_id\":\"ix_grpc_1\",\"message_id\":\"msg_grpc_append_1\",\"from\":{\"actor_id\":\"urn:oaps:actor:agent:builder\"},\"to\":{\"actor_id\":\"urn:oaps:actor:server:reference\"},\"message_type\":\"intent.response\",\"timestamp\":\"2026-04-05T14:01:00Z\",\"payload\":{\"intent_id\":\"int_grpc_1\",\"verb\":\"invoke\",\"object\":\"tool:read_repo\",\"requested_outcome\":\"Report completion\"}}"
     }
   }
 }

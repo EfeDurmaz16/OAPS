@@ -1,0 +1,24 @@
+{
+  "grpc_service": "oaps.bindings.grpc.v1.InteractionService",
+  "grpc_method": "StreamInteractionEvidence",
+  "frames": [
+    {
+      "interaction_id": "ix_grpc_1",
+      "evidence": {
+        "media_type": "application/oaps+json",
+        "json": "{\"event_id\":\"evt_grpc_3\",\"event_type\":\"mcp.tool_call.completed\",\"event_hash\":\"sha256:evt_grpc_3\",\"prev_event_hash\":\"sha256:evt_grpc_2\"}"
+      },
+      "next_after": "evt_grpc_3",
+      "end_of_window": false
+    },
+    {
+      "interaction_id": "ix_grpc_1",
+      "evidence": {
+        "media_type": "application/oaps+json",
+        "json": "{\"event_id\":\"evt_grpc_4\",\"event_type\":\"interaction.completed\",\"event_hash\":\"sha256:evt_grpc_4\",\"prev_event_hash\":\"sha256:evt_grpc_3\"}"
+      },
+      "next_after": "evt_grpc_4",
+      "end_of_window": true
+    }
+  ]
+}

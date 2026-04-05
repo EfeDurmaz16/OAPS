@@ -1,9 +1,9 @@
-# OAPS Proto Drafts
+# OAPS Proto Artifacts
 
-This directory holds draft protobuf layouts for non-HTTP OAPS binding tracks.
+This directory holds draft protobuf artifacts for binding-track work.
 
-Current draft surface:
+Current contents:
 
-- `oaps/bindings/grpc/v1/oaps_bindings_grpc.proto` — first gRPC binding package layout for discovery, interaction, and replay services
+- `oaps/bindings/grpc/v1/oaps.proto` — initial gRPC binding package layout
 
-These files are draft transport contracts, not frozen core semantics.
+These files are currently draft protocol artifacts, not generated SDK output.

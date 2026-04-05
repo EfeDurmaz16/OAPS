@@ -1,10 +1,11 @@
 {
-  "service": "oaps.bindings.grpc.v1.DiscoveryService/GetWellKnown",
-  "response": {
+  "grpc_service": "oaps.bindings.grpc.v1.DiscoveryService",
+  "grpc_method": "Discover",
+  "message": {
     "oaps_version": "0.4-draft",
-    "actor_card_service": "oaps.bindings.grpc.v1.DiscoveryService/GetActorCard",
-    "capabilities_service": "oaps.bindings.grpc.v1.DiscoveryService/ListCapabilities",
-    "interactions_service": "oaps.bindings.grpc.v1.InteractionsService",
+    "actor_card_rpc": "oaps.bindings.grpc.v1.DiscoveryService/GetActorCard",
+    "capabilities_rpc": "oaps.bindings.grpc.v1.DiscoveryService/ListCapabilities",
+    "interactions_create_rpc": "oaps.bindings.grpc.v1.InteractionService/CreateInteraction",
     "supported_auth_schemes": [
       "bearer"
     ],

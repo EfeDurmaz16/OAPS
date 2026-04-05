@@ -1,0 +1,154 @@
+syntax = "proto3";
+
+package oaps.bindings.grpc.v1;
+
+option java_multiple_files = true;
+option java_package = "org.oaps.bindings.grpc.v1";
+option go_package = "github.com/oaps/oaps/reference/proto/oaps/bindings/grpc/v1;oapsgrpcv1";
+
+// JsonDocument intentionally carries canonical OAPS JSON payloads so the first
+// gRPC binding draft can stabilize service boundaries before every core object
+// is re-expressed as protobuf fields.
+message JsonDocument {
+  string media_type = 1;
+  string json = 2;
+}
+
+message ReplayWindow {
+  string after = 1;
+  uint32 limit = 2;
+  bool follow = 3;
+}
+
+message ReplayPage {
+  string after = 1;
+  uint32 returned = 2;
+  uint32 total_events = 3;
+  bool has_more = 4;
+  string next_after = 5;
+}
+
+message DiscoveryRequest {}
+
+message DiscoveryResponse {
+  string oaps_version = 1;
+  string actor_card_rpc = 2;
+  string capabilities_rpc = 3;
+  string interactions_create_rpc = 4;
+  repeated string supported_auth_schemes = 5;
+  repeated string supported_profiles = 6;
+}
+
+message GetActorCardRequest {}
+
+message ActorCardResponse {
+  JsonDocument actor_card = 1;
+}
+
+message ListCapabilitiesRequest {}
+
+message CapabilitiesResponse {
+  JsonDocument capabilities = 1;
+}
+
+message CreateInteractionRequest {
+  string idempotency_key = 1;
+  JsonDocument envelope = 2;
+}
+
+message GetInteractionRequest {
+  string interaction_id = 1;
+}
+
+message AppendMessageRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  JsonDocument envelope = 3;
+}
+
+message ApproveInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  string reason = 3;
+}
+
+message RejectInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  string reason = 3;
+}
+
+message RevokeInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  string reason = 3;
+}
+
+message InteractionResponse {
+  JsonDocument interaction = 1;
+}
+
+message ListInteractionEventsRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message ListInteractionEventsResponse {
+  string interaction_id = 1;
+  repeated JsonDocument events = 2;
+  ReplayPage replay = 3;
+}
+
+message StreamInteractionEventsRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message InteractionEventFrame {
+  string interaction_id = 1;
+  JsonDocument event = 2;
+  string next_after = 3;
+  bool end_of_window = 4;
+}
+
+message ListInteractionEvidenceRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message ListInteractionEvidenceResponse {
+  string interaction_id = 1;
+  repeated JsonDocument evidence = 2;
+  ReplayPage replay = 3;
+}
+
+message StreamInteractionEvidenceRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message InteractionEvidenceFrame {
+  string interaction_id = 1;
+  JsonDocument evidence = 2;
+  string next_after = 3;
+  bool end_of_window = 4;
+}
+
+service DiscoveryService {
+  rpc Discover(DiscoveryRequest) returns (DiscoveryResponse);
+  rpc GetActorCard(GetActorCardRequest) returns (ActorCardResponse);
+  rpc ListCapabilities(ListCapabilitiesRequest) returns (CapabilitiesResponse);
+}
+
+service InteractionService {
+  rpc CreateInteraction(CreateInteractionRequest) returns (InteractionResponse);
+  rpc GetInteraction(GetInteractionRequest) returns (InteractionResponse);
+  rpc AppendMessage(AppendMessageRequest) returns (InteractionResponse);
+  rpc ApproveInteraction(ApproveInteractionRequest) returns (InteractionResponse);
+  rpc RejectInteraction(RejectInteractionRequest) returns (InteractionResponse);
+  rpc RevokeInteraction(RevokeInteractionRequest) returns (InteractionResponse);
+  rpc ListInteractionEvents(ListInteractionEventsRequest) returns (ListInteractionEventsResponse);
+  rpc StreamInteractionEvents(StreamInteractionEventsRequest) returns (stream InteractionEventFrame);
+  rpc ListInteractionEvidence(ListInteractionEvidenceRequest) returns (ListInteractionEvidenceResponse);
+  rpc StreamInteractionEvidence(StreamInteractionEvidenceRequest) returns (stream InteractionEvidenceFrame);
+}
