@@ -161,6 +161,24 @@ Parallel agent lanes should be treated as part of the founding team across:
 - conformance and fixtures
 - outreach and cosigner preparation
 
+## Codex Harness
+
+This repo now includes a project-scoped Codex harness for long-horizon execution:
+
+- `AGENTS.md` — execution contract for autonomous tranche work
+- `.codex/config.toml` — recommended project defaults
+- `codex/instructions/harness.txt` — no-check-in execution instructions
+- `docs/STATUS.md` — durable progress log
+- `docs/RUNBOOK.md` — operator guide
+- `scripts/codex-harness.sh` — single non-interactive tranche runner
+- `scripts/codex-tranche-loop.sh` — auto-resume loop until `DONE:` or `BLOCKED:`
+
+The intended model is:
+
+- use interactive Codex for steering and review
+- use `codex exec` via the harness scripts for long implementation runs
+- use `docs/STATUS.md` as the durable memory between resumed runs
+
 ## Current implementation priorities
 
 1. `@oaps/core`
