@@ -217,3 +217,24 @@ Append one entry per tranche:
   - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
   - add a public-facing how-to-review packet
 - status: `DONE`
+
+
+### 2026-04-05
+
+- tranche: detached top-level Codex supervisor
+- changes:
+  - added `scripts/codex-supervisor.sh` as a detached host-shell supervisor entry point for tranche-loop runs
+  - made the supervisor fail fast inside an existing Codex thread so the known nested `.git/index.lock` limitation is surfaced immediately
+  - documented the supervisor workflow in `README.md` and `docs/RUNBOOK.md`, ignored `.codex/supervisor-runs/`, and marked the execution-harness follow-up complete in `PLANS.md`
+  - advanced `docs/NEXT-STEPS.md` back to the remaining protocol-document priorities after landing the supervisor workaround
+- validation:
+  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh scripts/codex-supervisor.sh`
+  - `scripts/codex-supervisor.sh`
+  - `git diff --check`
+- commits:
+  - `feat: add codex detached supervisor`
+- next unfinished work:
+  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
+  - add a public-facing how-to-review packet
+  - decide whether to formalize event replay semantics further in the HTTP binding draft
+- status: `DONE`

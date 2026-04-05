@@ -6,3 +6,4 @@ dist/
 reference/oaps-monorepo/.oaps-reference-state.json
 .codex/state/
 .codex/runtime-home/
+.codex/supervisor-runs/

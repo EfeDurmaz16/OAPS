@@ -16,15 +16,13 @@ mkdir -p "${STATE_DIR}"
 
 MAX_ROUNDS="${MAX_ROUNDS:-20}"
 
-codex_exec_args() {
-  local -a args
-  args=(--disable apps -C "${ROOT}" -o "${LAST_MESSAGE_FILE}")
+build_codex_exec_args() {
+  CODEX_ARGS=(--disable apps -C "${ROOT}" -o "${LAST_MESSAGE_FILE}")
   if [[ "${CODEX_HARNESS_BYPASS_SANDBOX:-0}" == "1" ]]; then
-    args+=(--dangerously-bypass-approvals-and-sandbox)
+    CODEX_ARGS+=(--dangerously-bypass-approvals-and-sandbox)
   else
-    args+=(--sandbox danger-full-access)
+    CODEX_ARGS+=(--sandbox danger-full-access)
   fi
-  printf '%s\0' "${args[@]}"
 }
 
 prepare_codex_home() {
@@ -88,14 +86,14 @@ CONTINUE_PROMPT="$(default_continue_prompt)"
 run_initial() {
   cd "${ROOT}"
   prepare_codex_home
-  mapfile -d '' CODEX_ARGS < <(codex_exec_args)
+  build_codex_exec_args
   env CODEX_HOME="${RUNTIME_HOME_DIR}" codex exec "${CODEX_ARGS[@]}" "${INITIAL_PROMPT}"
 }
 
 run_resume() {
   cd "${ROOT}"
   prepare_codex_home
-  mapfile -d '' CODEX_ARGS < <(codex_exec_args)
+  build_codex_exec_args
   env CODEX_HOME="${RUNTIME_HOME_DIR}" codex exec resume --last "${CODEX_ARGS[@]}" "${CONTINUE_PROMPT}"
 }
 

@@ -178,6 +178,7 @@ This repo now includes a project-scoped Codex harness for long-horizon execution
 - `docs/RUNBOOK.md` — operator guide
 - `scripts/codex-harness.sh` — single non-interactive tranche runner
 - `scripts/codex-tranche-loop.sh` — auto-resume loop until `DONE:` or `BLOCKED:`
+- `scripts/codex-supervisor.sh` — detached top-level supervisor for host-shell tranche runs
 
 If the local Codex CLI still blocks `.git/index.lock` under the configured sandbox, rerun either harness with `CODEX_HARNESS_BYPASS_SANDBOX=1` in this externally sandboxed repo.
 
