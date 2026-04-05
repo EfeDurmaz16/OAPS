@@ -134,3 +134,23 @@ Append one entry per tranche:
   - add HTTP runtime-backed conformance scenarios for discovery, evidence/event retrieval, rejection, and revoke flows
   - add explicit MCP runtime-backed scenarios for policy denial and approval rejection paths
 - status: `DONE`
+
+
+### 2026-04-05
+
+- tranche: HTTP runtime-backed conformance scenarios
+- changes:
+  - added HTTP runtime-backed conformance scenarios for discovery, message interaction-id mismatch rejection, approval rejection, revocation, and evidence/event retrieval
+  - expanded the HTTP reference tests to exercise the newly declared binding scenarios
+  - tightened the HTTP binding draft to describe the current runtime-backed conformance slice more explicitly
+- validation:
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope binding:http --output /tmp/oaps-http-fixture-check.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-http-fixture-check.json --json`
+- commits:
+  - `conformance: add http runtime-backed scenarios`
+- next unfinished work:
+  - add explicit MCP runtime-backed scenarios for policy denial, approval rejection, and policy-context-hash evidence notes
+  - regenerate suite example result artifacts after the remaining runtime-backed scenario updates land
+- status: `DONE`

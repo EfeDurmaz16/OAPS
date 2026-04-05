@@ -80,7 +80,26 @@
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "reference-runtime"
-      ]
+      ],
+      "notes": "Exercises the fail-closed message path when the envelope interaction_id does not match the URL path."
+    },
+    {
+      "scenario_id": "http.evidence.retrieval",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises GET /interactions/{id}/evidence against a completed interaction."
+    },
+    {
+      "scenario_id": "http.events.retrieval",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises GET /interactions/{id}/events against a completed interaction."
     },
     {
       "scenario_id": "http.approval.decision",
@@ -91,30 +110,6 @@
       "coverage": [
         "schema",
         "fixture",
-        "reference-runtime"
-      ]
-    },
-    {
-      "scenario_id": "http.idempotency.reuse",
-      "dimension": "idempotency",
-      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
-      "coverage": [
-        "reference-runtime"
-      ]
-    },
-    {
-      "scenario_id": "http.idempotency.conflict",
-      "dimension": "idempotency",
-      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
-      "coverage": [
-        "reference-runtime"
-      ]
-    },
-    {
-      "scenario_id": "http.version.negotiation",
-      "dimension": "version-negotiation",
-      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
-      "coverage": [
         "reference-runtime"
       ]
     },
@@ -132,6 +127,23 @@
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "reference-runtime"
+      ],
+      "notes": "Exercises POST /interactions/{id}/reject and the resulting approval.rejected evidence."
+    },
+    {
+      "scenario_id": "http.idempotency.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.version.negotiation",
+      "dimension": "version-negotiation",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
       ]
     },
     {
@@ -140,23 +152,8 @@
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "reference-runtime"
-      ]
-    },
-    {
-      "scenario_id": "http.evidence.retrieval",
-      "dimension": "event-stream",
-      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
-      "coverage": [
-        "reference-runtime"
-      ]
-    },
-    {
-      "scenario_id": "http.events.retrieval",
-      "dimension": "event-stream",
-      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
-      "coverage": [
-        "reference-runtime"
-      ]
+      ],
+      "notes": "Exercises POST /interactions/{id}/revoke and the resulting interaction.revoked evidence."
     }
   ]
 }
