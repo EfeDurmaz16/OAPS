@@ -149,6 +149,24 @@ Append one entry per tranche:
 
 ### 2026-04-05
 
+- tranche: top-level maturity matrix
+- changes:
+  - added `docs/MATURITY-MATRIX.md` to distinguish stable, draft, and concept surfaces across the suite
+  - linked the new maturity matrix from the top-level `README.md` and `docs/README.md`
+  - marked the top-level maturity-matrix tranche complete in `PLANS.md`
+  - advanced `docs/NEXT-STEPS.md` to the remaining review-packet and binding/harness follow-up work
+- validation:
+  - `rg -n "MATURITY-MATRIX" README.md docs/README.md docs/MATURITY-MATRIX.md`
+- commits:
+  - `docs: add top-level maturity matrix`
+- next unfinished work:
+  - add a public-facing how-to-review packet
+  - decide whether to formalize event replay semantics further in the HTTP binding draft
+  - add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: unattended harness exercise attempt
 - changes:
   - ran `scripts/codex-tranche-loop.sh` as a real unattended local harness exercise with a prompt that explicitly avoided recursive harness invocation
@@ -165,3 +183,20 @@ Append one entry per tranche:
   - run the harness from a top-level shell or supervisor that allows the nested `codex exec` process to create `.git/index.lock`
   - once that blocker is cleared, resume the stable-vs-draft-vs-concept docs matrix tranche
 - status: `BLOCKED`
+
+
+### 2026-04-05
+
+- tranche: harness sandbox flag alignment
+- changes:
+  - added explicit sandbox-argument plumbing to `scripts/codex-harness.sh` so the single-tranche runner matches the tranche-loop runner
+  - kept `CODEX_HARNESS_BYPASS_SANDBOX=1` as the documented workaround when nested Codex still blocks `.git/index.lock`
+- validation:
+  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh`
+- commits:
+  - `fix: align codex harness sandbox flags`
+- next unfinished work:
+  - rerun the harness from a top-level shell once account usage resets or with the documented bypass if the CLI still blocks Git writes
+  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
+  - add a public-facing how-to-review packet
+- status: `DONE`

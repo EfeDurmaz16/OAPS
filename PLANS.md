@@ -101,7 +101,7 @@ Execution rule:
 - [x] Add OEP process and RF patent pledge drafts
 - [x] Add review target matrix and packet index
 - [x] Add compatibility declaration documentation
-- [ ] Add a clearer “what is stable vs draft vs concept” matrix to top-level docs
+- [x] Add a clearer “what is stable vs draft vs concept” matrix to top-level docs
 - [ ] Add a public-facing “how to review OAPS” short packet
 
 ## Stop Conditions
