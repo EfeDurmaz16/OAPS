@@ -11,6 +11,7 @@ import {
   ErrorObject,
   ExecutionResult,
   InteractionState,
+  OAPS_HTTP_CONTENT_TYPE,
   OAPS_MAX_SUPPORTED_VERSION,
   OAPS_MIN_SUPPORTED_VERSION,
   OAPS_SPEC_VERSION,
@@ -54,8 +55,14 @@ export interface ReferenceServerOptions {
   storagePath?: string;
 }
 
+function jsonResponse(c: any, body: unknown, status = 200) {
+  return c.newResponse(JSON.stringify(body), status as any, {
+    'content-type': OAPS_HTTP_CONTENT_TYPE,
+  });
+}
+
 function jsonError(c: any, error: ErrorObject, status = 400) {
-  return c.json(error, status as any);
+  return jsonResponse(c, error, status);
 }
 
 interface ReplayWindow {
@@ -83,7 +90,7 @@ function parseReplayWindow(c: any): ReplayWindow | Response {
   }
 
   if (!/^[1-9][0-9]*$/.test(limitRaw)) {
-    return c.json({
+    return jsonResponse(c, {
       code: 'VALIDATION_FAILED',
       category: 'validation',
       message: 'Replay limit must be a positive integer',
@@ -162,9 +169,7 @@ async function replayIdempotentResponse(
     }, 409);
   }
 
-  return c.newResponse(JSON.stringify(existing.body), existing.status as any, {
-    'content-type': 'application/json',
-  });
+  return jsonResponse(c, existing.body, existing.status);
 }
 
 async function persistIdempotentResponse(
@@ -189,7 +194,7 @@ async function persistIdempotentResponse(
 function extractAuthenticatedActor(c: any, tokens: Record<string, string>): string | Response {
   const token = parseBearerToken(c.req.header('authorization'));
   if (!token) {
-    return c.json({
+    return jsonResponse(c, {
       code: 'AUTHENTICATION_REQUIRED',
       category: 'authentication',
       message: 'Bearer authentication is required',
@@ -199,7 +204,7 @@ function extractAuthenticatedActor(c: any, tokens: Record<string, string>): stri
 
   const actorId = tokens[token];
   if (!actorId) {
-    return c.json({
+    return jsonResponse(c, {
       code: 'AUTHENTICATION_FAILED',
       category: 'authentication',
       message: 'Bearer token is not recognized',
@@ -279,12 +284,13 @@ export function createReferenceApp(options: ReferenceServerOptions) {
   );
 
   app.get('/.well-known/oaps.json', async (c) => {
-    return c.json({
+    return jsonResponse(c, {
       oaps_version: OAPS_SPEC_VERSION,
       actor_card_url: 'http://localhost:3000/actor-card',
       capabilities_url: 'http://localhost:3000/capabilities',
       interactions_url: 'http://localhost:3000/interactions',
       auth_schemes: ['bearer'],
+      media_types: [OAPS_HTTP_CONTENT_TYPE, 'application/json'],
       supported_profiles: ['oaps-mcp-v1'],
     });
   });
@@ -307,11 +313,11 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       supported_profiles: ['oaps-mcp-v1'],
       metadata: options.actorCard?.metadata,
     };
-    return c.json(actorCard);
+    return jsonResponse(c, actorCard);
   });
 
   app.get('/capabilities', async (c) => {
-    return c.json(await adapter.listCapabilities());
+    return jsonResponse(c, await adapter.listCapabilities());
   });
 
   app.post('/interactions', async (c) => {
@@ -399,7 +405,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       });
       await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 201, responseBody);
       await stateStore.putInteraction(record);
-      return c.json(responseBody, 201);
+      return jsonResponse(c, responseBody, 201);
     } catch (error) {
       if (error instanceof ApprovalRequiredError) {
         record.state = 'pending_approval';
@@ -411,7 +417,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         });
         await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 202, responseBody);
         await stateStore.putInteraction(record);
-        return c.json(responseBody, 202);
+        return jsonResponse(c, responseBody, 202);
       }
 
       const oapsError = error instanceof OapsError
@@ -447,7 +453,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
-    return c.json(interactionSnapshot(interaction));
+    return jsonResponse(c, interactionSnapshot(interaction));
   });
 
   app.get('/interactions/:id/evidence', async (c) => {
@@ -469,7 +475,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       return jsonError(c, replaySlice, 400);
     }
 
-    return c.json(replaySlice);
+    return jsonResponse(c, replaySlice);
   });
 
   app.get('/interactions/:id/events', async (c) => {
@@ -491,7 +497,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       return jsonError(c, replaySlice, 400);
     }
 
-    return c.json(replaySlice);
+    return jsonResponse(c, replaySlice);
   });
 
   app.post('/interactions/:id/messages', async (c) => {
@@ -563,7 +569,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
     });
     await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
 
-    return c.json(responseBody);
+    return jsonResponse(c, responseBody);
   });
 
   app.post('/interactions/:id/approve', async (c) => {
@@ -646,7 +652,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         approval_request_id: approvalDecision.approval_request_id,
       });
       await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
-      return c.json(responseBody);
+      return jsonResponse(c, responseBody);
     } catch (error) {
       const oapsError = error instanceof OapsError
         ? error.error
@@ -736,7 +742,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       approval_request_id: approvalDecision.approval_request_id,
     });
     await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
-    return c.json(responseBody);
+    return jsonResponse(c, responseBody);
   });
 
   app.post('/interactions/:id/revoke', async (c) => {
@@ -770,7 +776,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
 
     const responseBody = buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'revoked');
     await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
-    return c.json(responseBody);
+    return jsonResponse(c, responseBody);
   });
 
   return app;
