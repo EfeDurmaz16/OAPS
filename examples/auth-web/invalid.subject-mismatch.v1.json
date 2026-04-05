@@ -1,0 +1,12 @@
+{
+  "profile": "oaps-auth-web-v1",
+  "surface": "POST /interactions",
+  "authenticated_subject": "https://merchant.example/actors/rogue",
+  "envelope_from_actor_id": "https://merchant.example/actors/checkout",
+  "delegation": null,
+  "expected_error": {
+    "code": "authentication_failed",
+    "category": "authentication",
+    "retryable": false
+  }
+}

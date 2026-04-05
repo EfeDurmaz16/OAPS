@@ -1,0 +1,14 @@
+{
+  "profile": "oaps-auth-web-v1",
+  "authenticated_subject": "did:web:ops.example:delegates:night-shift",
+  "target_actor_id": "https://merchant.example/actors/checkout",
+  "delegation": {
+    "delegator": "https://merchant.example/actors/checkout",
+    "delegatee": "did:web:ops.example:delegates:night-shift",
+    "expiry": "2024-01-01T00:00:00Z",
+    "scope": [
+      "append-message"
+    ]
+  },
+  "expected_result": "fail-closed"
+}

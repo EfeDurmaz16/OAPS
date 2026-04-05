@@ -1,0 +1,10 @@
+{
+  "surface": "POST /interactions/{id}/reject",
+  "authenticated_subject": "https://merchant.example/actors/reviewer",
+  "interaction_actor_id": "https://merchant.example/actors/checkout",
+  "delegation_required": true,
+  "delegation_scope": [
+    "reject-interaction"
+  ],
+  "claim_boundary": "fixture-only expectation because the current reference slice proves bearer-authenticated mutation behavior first"
+}

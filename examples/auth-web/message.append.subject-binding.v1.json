@@ -1,0 +1,7 @@
+{
+  "surface": "POST /interactions/{id}/messages",
+  "authenticated_subject": "https://merchant.example/actors/checkout",
+  "envelope_from_actor_id": "https://merchant.example/actors/checkout",
+  "message_id": "msg-auth-web-append-1",
+  "result": "accepted"
+}

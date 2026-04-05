@@ -1,0 +1,7 @@
+{
+  "surface": "POST /interactions/{id}/revoke",
+  "authenticated_subject": "https://merchant.example/actors/orchestrator",
+  "interaction_actor_id": "https://merchant.example/actors/orchestrator",
+  "delegation_required": false,
+  "claim_boundary": "fixture-only expectation for actor-bound authority withdrawal"
+}

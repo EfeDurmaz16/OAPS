@@ -9,48 +9,48 @@
     {
       "scenario_id": "auth-web.discovery.identity",
       "dimension": "identity",
-      "example": "examples/well-known-oaps.json",
+      "example": "examples/auth-web/actor-card.discovery-assertion.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "fixture",
         "reference-runtime"
       ],
-      "notes": "Static anchor for web-native discovery and identity document shape. The current reference runtime exercises the shared HTTP discovery and auth boundary behavior, but this pack is not claiming a dedicated auth-web server.",
+      "notes": "Static anchor for web-native discovery and identity assertions. The current reference runtime exercises the shared HTTP discovery and auth boundary behavior, but this pack is not claiming a dedicated auth-web server.",
       "runtime_cases": [
         "http.discovery.well-known",
         "http.authentication.required",
         "http.authentication.failed"
       ],
       "related_examples": [
+        "examples/auth-web/actor-card.discovery-assertion.v1.json",
         "examples/well-known-oaps.json",
-        "examples/actor-card-mcp.json",
-        "examples/envelope-intent-request.json"
+        "examples/actor-card-mcp.json"
       ]
     },
     {
-      "scenario_id": "auth-web.subject-binding.actor-card",
+      "scenario_id": "auth-web.subject-binding.interaction-create",
       "dimension": "subject-binding",
-      "example": "examples/actor-card-mcp.json",
+      "example": "examples/auth-web/interaction.create.subject-binding.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "fixture",
         "reference-runtime"
       ],
-      "notes": "Actor-card subject binding is the transport-facing anchor for who is calling and which actor identity is being claimed. The profile uses the actor-card shape because the same reference server already exposes actor discovery on HTTP.",
+      "notes": "Interaction creation binds the authenticated subject to the envelope actor on the shared HTTP reference surface.",
       "runtime_cases": [
         "http.authentication.required",
         "http.authentication.failed"
       ],
       "related_examples": [
-        "examples/actor-card-mcp.json",
+        "examples/auth-web/interaction.create.subject-binding.v1.json",
         "examples/envelope-intent-request.json",
-        "examples/approval-request.json"
+        "examples/auth-web/invalid.subject-mismatch.v1.json"
       ]
     },
     {
       "scenario_id": "auth-web.subject-binding.message-append",
       "dimension": "subject-binding",
-      "example": "examples/envelope-intent-request.json",
+      "example": "examples/auth-web/message.append.subject-binding.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "fixture",
@@ -61,28 +61,98 @@
         "http.messages.subject-binding"
       ],
       "related_examples": [
-        "examples/envelope-intent-request.json",
+        "examples/auth-web/message.append.subject-binding.v1.json",
         "examples/interaction-updated.json",
         "examples/error.json"
       ]
     },
     {
-      "scenario_id": "auth-web.delegation.fail-closed",
+      "scenario_id": "auth-web.subject-binding.approve",
+      "dimension": "subject-binding",
+      "example": "examples/auth-web/approval.subject-binding.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Approval mutations should still be actor-bound even though the current reference slice proves bearer-authenticated mutation semantics first.",
+      "related_examples": [
+        "examples/auth-web/approval.subject-binding.v1.json",
+        "examples/approval-decision.json",
+        "examples/approval-request.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-web.subject-binding.reject",
+      "dimension": "subject-binding",
+      "example": "examples/auth-web/reject.subject-binding.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Rejection mutations should remain bound to the owning actor or a delegated approver rather than treating bearer authentication alone as sufficient semantics.",
+      "related_examples": [
+        "examples/auth-web/reject.subject-binding.v1.json",
+        "examples/approval-decision.json",
+        "examples/auth-web/delegated-actor.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-web.subject-binding.revoke",
+      "dimension": "subject-binding",
+      "example": "examples/auth-web/revoke.subject-binding.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Revocation should remain bound to the interaction-owning actor or a valid delegated authority that can withdraw the action.",
+      "related_examples": [
+        "examples/auth-web/revoke.subject-binding.v1.json",
+        "examples/error.json",
+        "examples/interaction-updated.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-web.delegated-actor.baseline",
       "dimension": "delegation",
-      "example": "examples/delegation-token.json",
+      "example": "examples/auth-web/delegated-actor.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Delegated actor behavior is explicit in the baseline web profile even when the current reference runtime only proves the fail-closed expiry path.",
+      "related_examples": [
+        "examples/auth-web/delegated-actor.v1.json",
+        "examples/delegation-token.json",
+        "examples/auth-web/approval.subject-binding.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-web.subject-binding.actor-mismatch.invalid",
+      "dimension": "subject-binding",
+      "example": "examples/auth-web/invalid.subject-mismatch.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This invalid example anchors the fail-closed rule for mismatched subject and actor claims when no valid delegation exists.",
+      "related_examples": [
+        "examples/auth-web/invalid.subject-mismatch.v1.json",
+        "examples/error.json",
+        "examples/envelope-intent-request.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-web.delegation.expired",
+      "dimension": "delegation",
+      "example": "examples/auth-web/delegation.expired.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
         "fixture",
         "reference-runtime"
       ],
-      "notes": "Delegation-aware subject binding now includes the reference core runtime's expired-delegation fail-closed path without claiming a full auth-web verifier stack.",
+      "notes": "Delegation expiry is a runtime-backed fail-closed path in the shared core implementation and is the current hard auth-web delegation boundary.",
       "runtime_cases": [
         "delegation.expired"
       ],
       "related_examples": [
+        "examples/auth-web/delegation.expired.v1.json",
         "examples/delegation-token.json",
-        "examples/error.json",
-        "examples/envelope-intent-request.json"
+        "examples/error.json"
       ]
     }
   ]

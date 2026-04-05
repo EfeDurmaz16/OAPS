@@ -1,0 +1,7 @@
+{
+  "surface": "POST /interactions/{id}/approve",
+  "authenticated_subject": "https://merchant.example/actors/checkout",
+  "interaction_actor_id": "https://merchant.example/actors/checkout",
+  "delegation_required": false,
+  "claim_boundary": "fixture-only expectation because the current reference slice does not carry an approval envelope sender field"
+}

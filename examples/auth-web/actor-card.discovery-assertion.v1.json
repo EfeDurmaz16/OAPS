@@ -1,0 +1,13 @@
+{
+  "profile": "oaps-auth-web-v1",
+  "actor_id": "https://merchant.example/actors/checkout",
+  "discovery_document": "https://merchant.example/.well-known/oaps.json",
+  "asserted_identity": {
+    "issuer": "https://merchant.example",
+    "verification_method": "jwks",
+    "jwks_uri": "https://merchant.example/.well-known/jwks.json"
+  },
+  "profiles": [
+    "oaps-auth-web-v1"
+  ]
+}

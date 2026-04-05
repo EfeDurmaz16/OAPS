@@ -55,6 +55,35 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: auth-web profile hardening
+- tranche status:
+  - drafted:
+    - expanded `profiles/auth-web.md` with explicit per-mutation subject-binding guidance for create/message/approve/reject/revoke, actor-card identity assertion notes, delegated-actor behavior expectations, and stronger bearer-token subject-binding assumptions
+    - added the first focused auth-web example pack under `examples/auth-web/` for discovery assertions, every HTTP mutation surface, delegated actor behavior, invalid subject mismatch, and expired delegation anchors
+  - implemented:
+    - rewired the auth-web conformance pack to distinguish runtime-backed create/message binding and expired-delegation behavior from fixture-backed approve/reject/revoke subject-binding expectations
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/auth-web/index.v1.json` with explicit interaction-create, approve, reject, revoke, delegated-actor, invalid-mismatch, and expired-delegation scenarios
+    - validated `profile:auth-web` through the suite conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - made the baseline web-auth story explicit for every current HTTP mutation surface without overclaiming runtime enforcement where the reference slice only proves bearer-authenticated semantics today
+  - added reader-facing auth-web examples for actor discovery, mutation-surface subject binding, delegated actor behavior, and fail-closed mismatch handling
+  - tightened the auth-web conformance pack so expired delegation and invalid mismatched subject/actor semantics now have dedicated fixture anchors
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/auth-web ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:auth-web --output /tmp/oaps-auth-web-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-auth-web-fixture-check-v2.json --json`
+- commits:
+  - `auth-web: harden mutation subject binding docs`
+- next unfinished work:
+  - start V2 tranche 10 by deepening FIDES/TAP trust tiers, attestation examples, and approval-boundary fixture coverage
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: A2A profile expansion
 - tranche status:
   - drafted:

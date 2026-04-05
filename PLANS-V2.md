@@ -211,12 +211,12 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 9. Auth-Web Profile Hardening
 
-- [ ] Add explicit subject-binding examples for every HTTP mutation surface
-- [ ] Add examples for actor-card discovery and identity assertions
-- [ ] Add examples for delegated actor behavior under baseline auth-web rules
-- [ ] Add stronger notes on bearer-token subject binding assumptions
-- [ ] Add invalid-fixture examples for mismatched subject / actor_id
-- [ ] Add conformance scenarios for expired delegation under auth-web profile semantics
+- [x] Add explicit subject-binding examples for every HTTP mutation surface
+- [x] Add examples for actor-card discovery and identity assertions
+- [x] Add examples for delegated actor behavior under baseline auth-web rules
+- [x] Add stronger notes on bearer-token subject binding assumptions
+- [x] Add invalid-fixture examples for mismatched subject / actor_id
+- [x] Add conformance scenarios for expired delegation under auth-web profile semantics
 
 ### 10. FIDES / TAP Trust Profile Hardening
 

@@ -1,0 +1,10 @@
+{
+  "surface": "POST /interactions",
+  "authenticated_subject": "https://merchant.example/actors/checkout",
+  "envelope_from_actor_id": "https://merchant.example/actors/checkout",
+  "result": "accepted",
+  "notes": [
+    "The caller identity and envelope sender are the same actor.",
+    "No delegation is needed for this mutation."
+  ]
+}
