@@ -1,0 +1,11 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/ApproveInteraction",
+  "metadata": {
+    "x-oaps-idempotency-key": "idem-grpc-approve-1"
+  },
+  "request": {
+    "interaction_id": "ix_grpc_pending_1",
+    "idempotency_key": "idem-grpc-approve-1",
+    "reason": "approved for test"
+  }
+}

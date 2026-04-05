@@ -1,0 +1,39 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/CreateInteraction",
+  "metadata": {
+    "authorization": "Bearer opaque-token",
+    "x-oaps-spec-version": "0.4-draft",
+    "x-oaps-idempotency-key": "idem-grpc-create-1"
+  },
+  "request": {
+    "idempotency_key": "idem-grpc-create-1",
+    "envelope": {
+      "version": {
+        "spec_version": "0.4-draft",
+        "min_supported_version": "0.4",
+        "max_supported_version": "0.4"
+      },
+      "message_id": "msg_grpc_create_1",
+      "interaction_id": "ix_grpc_1",
+      "from": {
+        "actor_id": "urn:oaps:actor:agent:builder"
+      },
+      "to": {
+        "actor_id": "urn:oaps:actor:server:reference"
+      },
+      "channel": "oaps-grpc",
+      "message_type": "intent.request",
+      "timestamp": "2026-04-05T14:00:00Z",
+      "payload": {
+        "intent_id": "int_grpc_1",
+        "verb": "invoke",
+        "object": "tool:read_repo",
+        "constraints": {
+          "arguments": {
+            "path": "README.md"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/RejectInteraction",
+  "metadata": {
+    "x-oaps-idempotency-key": "idem-grpc-reject-1"
+  },
+  "request": {
+    "interaction_id": "ix_grpc_pending_1",
+    "idempotency_key": "idem-grpc-reject-1",
+    "reason": "denied for test"
+  }
+}

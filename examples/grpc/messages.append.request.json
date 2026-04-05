@@ -1,0 +1,30 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/AppendMessage",
+  "metadata": {
+    "authorization": "Bearer opaque-token",
+    "x-oaps-idempotency-key": "idem-grpc-message-1"
+  },
+  "request": {
+    "interaction_id": "ix_grpc_1",
+    "idempotency_key": "idem-grpc-message-1",
+    "envelope": {
+      "message_id": "msg_grpc_append_1",
+      "interaction_id": "ix_grpc_1",
+      "from": {
+        "actor_id": "urn:oaps:actor:agent:builder"
+      },
+      "to": {
+        "actor_id": "urn:oaps:actor:server:reference"
+      },
+      "channel": "oaps-grpc",
+      "message_type": "intent.response",
+      "timestamp": "2026-04-05T14:01:00Z",
+      "payload": {
+        "intent_id": "int_grpc_1",
+        "verb": "invoke",
+        "object": "tool:read_repo",
+        "requested_outcome": "Report completion"
+      }
+    }
+  }
+}

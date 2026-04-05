@@ -1,0 +1,20 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/CreateInteraction",
+  "response_metadata": {
+    "x-oaps-interaction-id": "ix_grpc_1"
+  },
+  "response": {
+    "interaction": {
+      "interaction_id": "ix_grpc_1",
+      "state": "completed",
+      "envelope": {
+        "message_id": "msg_grpc_created_1",
+        "interaction_id": "ix_grpc_1",
+        "message_type": "interaction.created"
+      },
+      "metadata": {
+        "execution_id": "exec_grpc_1"
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ This is the entry point for the suite-level specification tree.
 - `core/STATE-MACHINE-DRAFT.md` - canonical task and lifecycle semantics draft
 - `bindings/http-binding-draft.md` - first binding-track draft
 - `bindings/jsonrpc-binding-draft.md` - first JSON-RPC binding-track draft
+- `bindings/grpc-binding-draft.md` - first gRPC binding-track draft
 
 ## Current Reading Order
 
@@ -18,11 +19,12 @@ This is the entry point for the suite-level specification tree.
 5. `core/STATE-MACHINE-DRAFT.md`
 6. `bindings/http-binding-draft.md`
 7. `bindings/jsonrpc-binding-draft.md`
+8. `bindings/grpc-binding-draft.md`
 
 ## Status Notes
 
 - `core/` is the main hard-normative area currently being expanded
-- `bindings/` currently starts with HTTP and can grow into other transports later
+- `bindings/` currently starts with HTTP, JSON-RPC, and gRPC and can grow into other transports later
 - `schemas/` and `conformance/` are the machine-readable companions to this spec tree
 - the lifecycle companion draft is backed by `challenge` and `task-transition`
   foundation schemas

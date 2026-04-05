@@ -1,0 +1,193 @@
+syntax = "proto3";
+
+package oaps.bindings.grpc.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "org.oaps.bindings.grpc.v1";
+option go_package = "github.com/oaps/reference/proto/oaps/bindings/grpc/v1;oapsgrpcv1";
+
+message VersionRange {
+  string spec_version = 1;
+  string min_supported_version = 2;
+  string max_supported_version = 3;
+}
+
+message ActorRef {
+  string actor_id = 1;
+  string display_name = 2;
+  string endpoint_hint = 3;
+}
+
+message Envelope {
+  VersionRange version = 1;
+  string message_id = 2;
+  string interaction_id = 3;
+  ActorRef from = 4;
+  ActorRef to = 5;
+  string channel = 6;
+  string message_type = 7;
+  google.protobuf.Timestamp timestamp = 8;
+  google.protobuf.Struct payload = 9;
+  map<string, string> metadata = 10;
+}
+
+message ReplayWindow {
+  string after = 1;
+  uint32 limit = 2;
+}
+
+message ReplayPageInfo {
+  string after = 1;
+  uint32 returned = 2;
+  uint32 total_events = 3;
+  bool has_more = 4;
+  string next_after = 5;
+}
+
+message InteractionRecord {
+  string interaction_id = 1;
+  string state = 2;
+  Envelope envelope = 3;
+  google.protobuf.Struct payload = 4;
+  map<string, string> metadata = 5;
+}
+
+message EventRecord {
+  string event_id = 1;
+  string event_type = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  google.protobuf.Struct payload = 4;
+}
+
+message EvidenceRecord {
+  string event_id = 1;
+  string event_type = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  string prev_event_hash = 4;
+  string event_hash = 5;
+  google.protobuf.Struct payload = 6;
+}
+
+message OapsErrorDetail {
+  string code = 1;
+  string category = 2;
+  string message = 3;
+  bool retryable = 4;
+  google.protobuf.Struct details = 5;
+}
+
+message DiscoveryDocument {
+  string oaps_version = 1;
+  string actor_card_service = 2;
+  string capabilities_service = 3;
+  string interactions_service = 4;
+  repeated string supported_auth_schemes = 5;
+  repeated string supported_profiles = 6;
+}
+
+message ActorCardResponse {
+  google.protobuf.Struct actor_card = 1;
+}
+
+message CapabilitiesResponse {
+  repeated google.protobuf.Struct capabilities = 1;
+}
+
+message CreateInteractionRequest {
+  Envelope envelope = 1;
+  string idempotency_key = 2;
+  map<string, string> binding_metadata = 3;
+}
+
+message GetInteractionRequest {
+  string interaction_id = 1;
+}
+
+message AppendMessageRequest {
+  string interaction_id = 1;
+  Envelope envelope = 2;
+  string idempotency_key = 3;
+  map<string, string> binding_metadata = 4;
+}
+
+message ApproveInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  string reason = 3;
+  map<string, string> binding_metadata = 4;
+}
+
+message RejectInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  string reason = 3;
+  map<string, string> binding_metadata = 4;
+}
+
+message RevokeInteractionRequest {
+  string interaction_id = 1;
+  string idempotency_key = 2;
+  map<string, string> binding_metadata = 3;
+}
+
+message InteractionResponse {
+  InteractionRecord interaction = 1;
+}
+
+message ListEventsRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message ListEventsResponse {
+  string interaction_id = 1;
+  repeated EventRecord events = 2;
+  ReplayPageInfo replay = 3;
+}
+
+message ListEvidenceRequest {
+  string interaction_id = 1;
+  ReplayWindow replay = 2;
+}
+
+message ListEvidenceResponse {
+  string interaction_id = 1;
+  repeated EvidenceRecord evidence = 2;
+  ReplayPageInfo replay = 3;
+}
+
+message WatchEventsRequest {
+  string interaction_id = 1;
+  string after = 2;
+}
+
+message WatchEvidenceRequest {
+  string interaction_id = 1;
+  string after = 2;
+}
+
+service DiscoveryService {
+  rpc GetWellKnown(google.protobuf.Empty) returns (DiscoveryDocument);
+  rpc GetActorCard(google.protobuf.Empty) returns (ActorCardResponse);
+  rpc ListCapabilities(google.protobuf.Empty) returns (CapabilitiesResponse);
+}
+
+service InteractionsService {
+  rpc CreateInteraction(CreateInteractionRequest) returns (InteractionResponse);
+  rpc GetInteraction(GetInteractionRequest) returns (InteractionResponse);
+  rpc AppendMessage(AppendMessageRequest) returns (InteractionResponse);
+  rpc ApproveInteraction(ApproveInteractionRequest) returns (InteractionResponse);
+  rpc RejectInteraction(RejectInteractionRequest) returns (InteractionResponse);
+  rpc RevokeInteraction(RevokeInteractionRequest) returns (InteractionResponse);
+}
+
+service ReplayService {
+  rpc ListEvents(ListEventsRequest) returns (ListEventsResponse);
+  rpc ListEvidence(ListEvidenceRequest) returns (ListEvidenceResponse);
+  rpc WatchEvents(WatchEventsRequest) returns (stream EventRecord);
+  rpc WatchEvidence(WatchEvidenceRequest) returns (stream EvidenceRecord);
+}

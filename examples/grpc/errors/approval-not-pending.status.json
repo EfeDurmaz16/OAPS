@@ -1,0 +1,17 @@
+{
+  "service": "oaps.bindings.grpc.v1.InteractionsService/ApproveInteraction",
+  "grpc_status": {
+    "code": "FAILED_PRECONDITION",
+    "message": "OAPS approval is not pending"
+  },
+  "trailers": {
+    "x-oaps-error-code": "APPROVAL_NOT_PENDING",
+    "x-oaps-error-category": "validation"
+  },
+  "oaps_error_detail": {
+    "code": "APPROVAL_NOT_PENDING",
+    "category": "validation",
+    "message": "Interaction is not awaiting approval",
+    "retryable": false
+  }
+}

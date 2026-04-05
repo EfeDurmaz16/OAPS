@@ -1,0 +1,15 @@
+{
+  "service": "oaps.bindings.grpc.v1.DiscoveryService/GetWellKnown",
+  "response": {
+    "oaps_version": "0.4-draft",
+    "actor_card_service": "oaps.bindings.grpc.v1.DiscoveryService/GetActorCard",
+    "capabilities_service": "oaps.bindings.grpc.v1.DiscoveryService/ListCapabilities",
+    "interactions_service": "oaps.bindings.grpc.v1.InteractionsService",
+    "supported_auth_schemes": [
+      "bearer"
+    ],
+    "supported_profiles": [
+      "oaps-mcp-v1"
+    ]
+  }
+}

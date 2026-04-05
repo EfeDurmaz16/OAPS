@@ -1,0 +1,10 @@
+{
+  "service": "oaps.bindings.grpc.v1.ReplayService/ListEvents",
+  "request": {
+    "interaction_id": "ix_grpc_1",
+    "replay": {
+      "after": "evt_grpc_2",
+      "limit": 2
+    }
+  }
+}
