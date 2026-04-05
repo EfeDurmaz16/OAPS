@@ -4,8 +4,7 @@ This file is the short operational queue for the next long-running Codex tranche
 
 ## Current Priority Order
 
-1. Add a clearer “what is stable vs draft vs concept” matrix to top-level docs.
-2. Add a public-facing “how to review OAPS” short packet.
+1. No short-horizon override at present. Continue from `PLANS.md` when new unfinished tranches are added.
 
 ## Usage Rule
 
