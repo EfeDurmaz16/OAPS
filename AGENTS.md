@@ -37,6 +37,8 @@ Stop only when one of these is true:
 
 - Update `docs/STATUS.md` as the live execution log.
 - Make atomic commits for each coherent unit of work.
+- Prefer many small atomic commits over one large mixed commit.
+- When a small step is complete and validated, commit it before moving to the next step.
 - Prefer objective completion criteria:
   - tests pass
   - validators pass

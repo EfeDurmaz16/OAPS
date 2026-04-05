@@ -8,6 +8,8 @@ For repositories with protocol specs, roadmap files, conformance packs, and long
 - Update docs/STATUS.md during the run.
 - Prefer objective completion criteria over conversational checkpoints.
 - Use parallel agents when the work cleanly decomposes into disjoint scopes.
+- Atomically commit every small completed step.
+- Prefer small focused commits over large aggregate commits.
 
 Stop only when one of these is true:
 
@@ -20,6 +22,7 @@ Execution rules:
 
 - Validate changes before stopping.
 - Make atomic commits for coherent units of work.
+- Commit each small finished step before starting the next one whenever feasible.
 - Leave the working tree clean unless blocked.
 - Avoid placeholder TODO output when the real next action can still be taken.
 
