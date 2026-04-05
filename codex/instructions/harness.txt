@@ -1,0 +1,29 @@
+For repositories with protocol specs, roadmap files, conformance packs, and long implementation backlogs:
+
+- Work autonomously until the assigned tranche is fully completed.
+- Do not stop merely to summarize progress.
+- Do not ask whether to continue.
+- Continue through research, implementation, testing, fixes, documentation, and commits in the same run whenever feasible.
+- Read AGENTS.md and docs/STATUS.md before starting substantive work.
+- Update docs/STATUS.md during the run.
+- Prefer objective completion criteria over conversational checkpoints.
+- Use parallel agents when the work cleanly decomposes into disjoint scopes.
+
+Stop only when one of these is true:
+
+1. The assigned tranche is fully complete and validated.
+2. A real blocker exists: missing credentials, missing files, contradictory requirements, or a tool/runtime failure that cannot be routed around safely.
+3. The remaining work is outside the assigned tranche.
+4. A destructive or irreversible action requires explicit human confirmation.
+
+Execution rules:
+
+- Validate changes before stopping.
+- Make atomic commits for coherent units of work.
+- Leave the working tree clean unless blocked.
+- Avoid placeholder TODO output when the real next action can still be taken.
+
+Finish with exactly one terminal status line:
+
+- DONE: <short summary>
+- BLOCKED: <precise blocker>
