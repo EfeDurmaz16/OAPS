@@ -129,16 +129,33 @@ Append one entry per tranche:
 
 ### 2026-04-05
 
-- tranche: HTTP mutation hardening runtime
+- tranche: HTTP binding hardening follow-ons
 - changes:
-  - confirmed authenticated-subject binding on `POST /interactions/{id}/messages` so a bearer-authenticated caller cannot append a message envelope that claims a different `from.actor_id`
-  - kept the existing idempotency-key behavior in place for message, approval, rejection, and revocation mutation routes while validating the message-auth boundary
-  - exercised the HTTP reference tests for the subject-mismatch rejection path alongside the existing idempotent replay/conflict cases
+  - enforced authenticated-subject binding on `POST /interactions/{id}/messages` so a bearer-authenticated caller cannot append a message envelope that claims a different `from.actor_id`
+  - extended binding-level idempotency coverage across `POST /interactions/{id}/messages`, `/approve`, `/reject`, and `/revoke`, using stable replay fingerprints so identical retries do not duplicate lifecycle transitions or evidence
+  - added auth-web/profile conformance coverage for follow-on message subject binding so the shared HTTP runtime now proves fail-closed sender checks beyond initial interaction creation
+  - switched the reference HTTP responses onto the canonical `application/oaps+json` media type while still advertising `application/json` as a compatibility allowance in discovery
+  - formalized minimal `after`/`limit` replay-window semantics for HTTP event and evidence retrieval in `SPEC.md`, the HTTP binding draft, the conformance fixture pack, and the profile/doc set that reuses the shared HTTP audit surface
+  - refreshed the example result artifacts and compatibility declarations to reflect the expanded HTTP runtime-backed scenario count and marked the new HTTP binding hardening follow-ons complete in `PLANS.md`
 - validation:
+  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
   - `pnpm --dir reference/oaps-monorepo build`
   - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --output conformance/results/example-result.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --output conformance/results/examples/fixture-check-all-scopes.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:mcp --scenario mcp.intent.execution --output conformance/results/examples/fixture-check-profile-mcp-partial.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result conformance/results/example-result.v1.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result conformance/results/examples/fixture-check-all-scopes.v1.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result conformance/results/examples/fixture-check-profile-mcp-partial.v1.json --json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/example-result.v1.json --json --output conformance/results/examples/compatibility-declaration-all-scopes.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/examples/fixture-check-profile-mcp-partial.v1.json --json --output conformance/results/examples/compatibility-declaration-profile-mcp-partial.v1.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python compatibility --repo-root . --result conformance/results/examples/fixture-check-core-incompatible.v1.json --json --output conformance/results/examples/compatibility-declaration-core-incompatible.v1.json`
 - commits:
-  - `docs: record HTTP mutation hardening tranche`
+  - `http: extend idempotent mutation coverage`
+  - `http: add replay window support`
+  - `http: align replay windows and canonical media type`
+  - `docs: record http binding hardening tranche`
 - next unfinished work:
   - none currently queued in `PLANS.md`
 - status: `DONE`
