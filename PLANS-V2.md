@@ -189,14 +189,14 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 7. MCP Profile Expansion
 
-- [ ] Add explicit conformance scenarios for policy denial
-- [ ] Add explicit conformance scenarios for approval rejection
-- [ ] Add explicit conformance scenarios for missing upstream tool schema or malformed tool metadata
-- [ ] Add evidence notes for policy-context-hash expectations
-- [ ] Add mapping matrix for capability metadata fidelity limits
-- [ ] Add mapping notes for resources and prompts even if not yet runtime-backed
-- [ ] Add example profile declarations for partial vs compatible MCP support
-- [ ] Tighten MCP profile language around what is actually implemented now vs draft-track
+- [x] Add explicit conformance scenarios for policy denial
+- [x] Add explicit conformance scenarios for approval rejection
+- [x] Add explicit conformance scenarios for missing upstream tool schema or malformed tool metadata
+- [x] Add evidence notes for policy-context-hash expectations
+- [x] Add mapping matrix for capability metadata fidelity limits
+- [x] Add mapping notes for resources and prompts even if not yet runtime-backed
+- [x] Add example profile declarations for partial vs compatible MCP support
+- [x] Tighten MCP profile language around what is actually implemented now vs draft-track
 
 ### 8. A2A Profile Expansion
 

@@ -55,6 +55,41 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: MCP profile expansion
+- tranche status:
+  - drafted:
+    - expanded `profiles/mcp.md` with a capability-metadata fidelity matrix, explicit policy-context-hash evidence notes, informative-only resources/prompts mapping notes, and a clearer runtime-backed-versus-draft-track boundary
+    - added the first focused MCP example pack under `examples/mcp/` for fidelity limits, invalid upstream metadata, informative resources/prompts notes, and partial-versus-compatible profile support declarations
+  - implemented:
+    - hardened `@oaps/mcp-adapter` capability discovery to fail closed on missing required input schema or malformed upstream tool metadata
+    - added reference-runtime tests for invalid tool metadata rejection while keeping the existing policy-denial and approval-rejection runtime paths explicit in the tranche docs and conformance pack
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/mcp/index.v1.json` with explicit policy-denial, approval-rejection, missing-input-schema, malformed-metadata, and richer MCP example anchors
+    - validated `profile:mcp` through the adapter build/test path, suite conformance validator, Python manifest tests, and Python fixture-check/result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - clarified exactly which MCP surfaces are normative and runtime-backed today versus still informative or draft-track
+  - added reader-facing MCP examples for fidelity limits, invalid upstream metadata, resources/prompts mapping posture, and partial-versus-compatible support declarations
+  - tightened the MCP conformance pack and adapter behavior so malformed upstream tool metadata now fails closed instead of silently projecting invalid capabilities
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/mcp ... PY`
+  - `git diff --check`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/mcp-adapter build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/mcp-adapter test`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:mcp --output /tmp/oaps-mcp-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-mcp-fixture-check-v2.json --json`
+- commits:
+  - `mcp: deepen profile conformance notes`
+  - `docs: record mcp tranche 7 completion`
+- next unfinished work:
+  - start V2 tranche 8 by deepening the A2A profile lifecycle mapping, message-threading notes, example pack, and fixture coverage
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: agent-client / CLI / SSH communication track
 - tranche status:
   - drafted:
