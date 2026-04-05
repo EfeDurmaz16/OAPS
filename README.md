@@ -49,6 +49,7 @@ It includes:
 
 - a suite charter
 - a suite architecture document
+- a maturity matrix explaining what is stable, draft, and still conceptual
 - a foundation draft for the hard semantic core
 - JSON Schemas
 - examples
@@ -74,6 +75,7 @@ This is the smallest real working system in the repo today, and it should be und
 ## New Document Set
 
 - `CHARTER.md` — mission, boundaries, neutrality, and governance posture
+- `docs/MATURITY-MATRIX.md` — what is stable now vs draft vs concept
 - `docs/SUITE-ARCHITECTURE.md` — protocol suite layering and long-term structure
 - `docs/STANDARDS-LANDSCAPE.md` — adjacent protocol and standards-body landscape
 - `docs/ECOSYSTEM-MAP.md` — how OAPS relates to internal and external protocol ecosystems
@@ -175,6 +177,8 @@ This repo now includes a project-scoped Codex harness for long-horizon execution
 - `docs/RUNBOOK.md` — operator guide
 - `scripts/codex-harness.sh` — single non-interactive tranche runner
 - `scripts/codex-tranche-loop.sh` — auto-resume loop until `DONE:` or `BLOCKED:`
+
+If the local Codex CLI still blocks `.git/index.lock` under the configured sandbox, rerun either harness with `CODEX_HARNESS_BYPASS_SANDBOX=1` in this externally sandboxed repo.
 
 The intended model is:
 
