@@ -1,0 +1,31 @@
+Read the following project context before doing any design work:
+
+- AGENTS.md
+- CHARTER.md
+- VISION.md
+- ROADMAP.md
+- SPEC.md
+- docs/SUITE-ARCHITECTURE.md
+- docs/ECOSYSTEM-MAP.md
+- docs/STANDARDS-LANDSCAPE.md
+- docs/STATUS.md
+- PLANS.md
+- docs/NEXT-STEPS.md
+
+This repository contains an ambitious protocol suite. Design work must support that mission rather than drift into generic startup aesthetics.
+
+Design rules:
+- Follow a premium, distinctive frontend direction and avoid generic AI-looking layouts.
+- Require explicit design context from `.impeccable.md` if present.
+- If `.impeccable.md` is missing and the task needs brand or audience assumptions, state `BLOCKED:` with the precise missing context instead of guessing.
+- Prefer production-grade HTML/CSS/JS or framework code over mockups.
+- Keep landing page design aligned to OAPS as an open protocol suite for agent interoperability, trust, payment coordination, and evidence.
+- Do not modify protocol or conformance files unless the design task explicitly requires docs changes.
+- If you create or change code, validate it and recommend atomic commits.
+
+Primary design objective:
+- Create high-quality landing pages, docs pages, marketing sections, and visual artifacts that present OAPS as a serious open standard effort with technical depth and neutrality.
+
+Stop with either:
+- DONE: <short summary>
+- BLOCKED: <precise blocker>
