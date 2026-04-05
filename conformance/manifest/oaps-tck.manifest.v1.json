@@ -21,6 +21,10 @@
       "pack": "conformance/fixtures/bindings/grpc/index.v1.json"
     },
     {
+      "scope": "binding:events",
+      "pack": "conformance/fixtures/bindings/events/index.v1.json"
+    },
+    {
       "scope": "profile:mcp",
       "pack": "conformance/fixtures/profiles/mcp/index.v1.json"
     },
@@ -54,6 +58,7 @@
     "spec/bindings/http-binding-draft.md",
     "spec/bindings/jsonrpc-binding-draft.md",
     "spec/bindings/grpc-binding-draft.md",
+    "spec/bindings/events-binding-draft.md",
     "profiles/mcp.md",
     "profiles/a2a-draft.md",
     "profiles/auth-web.md",

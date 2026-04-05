@@ -1,0 +1,58 @@
+{
+  "pack_version": "1.0",
+  "scope": "binding:events",
+  "status": "draft",
+  "normative_sources": [
+    "spec/bindings/events-binding-draft.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "events.push.interaction-envelope",
+      "dimension": "delivery-envelope",
+      "example": "examples/events/interaction.updated.webhook.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "events.push.approval-envelope",
+      "dimension": "event-payload",
+      "example": "examples/events/approval.requested.webhook.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "events.replay-first.relationship",
+      "dimension": "replay-relationship",
+      "example": "examples/events/replay.resumption.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "events.delivery.at-least-once",
+      "dimension": "delivery-guarantees",
+      "example": "examples/events/delivery.retry.webhook.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "events.retry.dedupe-key",
+      "dimension": "retry-dedupe",
+      "example": "examples/events/delivery.retry.webhook.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "events.resume.replay-checkpoint",
+      "dimension": "replay-resumption",
+      "example": "examples/events/replay.resumption.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    }
+  ]
+}

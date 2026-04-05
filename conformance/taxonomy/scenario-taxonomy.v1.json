@@ -64,6 +64,17 @@
       ]
     },
     {
+      "id": "binding:events",
+      "dimensions": [
+        "delivery-envelope",
+        "event-payload",
+        "replay-relationship",
+        "delivery-guarantees",
+        "retry-dedupe",
+        "replay-resumption"
+      ]
+    },
+    {
       "id": "profile:mcp",
       "dimensions": [
         "capability-mapping",

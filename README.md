@@ -71,7 +71,7 @@ Use the following shorthand when reading the repo:
 | Repository execution contract (`AGENTS.md`, `PLANS.md`, `docs/STATUS.md`, Codex harness scripts) | Stable | This is the repo's active operating contract for long-horizon execution and durable progress tracking. |
 | Current implementation-backed MCP/HTTP reference slice (`reference/oaps-monorepo`, exercised conformance fixtures, Python manifest consumer) | Stable | The behavior exists, is validated in-repo, and is the most credible implementation baseline today. |
 | Suite/spec documents (`SPEC.md`, `spec/`, `profiles/`, `schemas/`, `examples/`, `conformance/`) | Draft | These are the active standardization surfaces: real enough to implement and review, but still expected to change with evidence. |
-| JSON-RPC and gRPC binding drafts, larger domain families beyond the current drafts, and future external governance/cosigner structures | Draft / Concept | JSON-RPC and gRPC now have first draft specs plus fixture-only binding stubs; the broader remaining non-HTTP binding/domain/governance work is still directional rather than implementation-backed. |
+| JSON-RPC, gRPC, and events/webhooks binding drafts, larger domain families beyond the current drafts, and future external governance/cosigner structures | Draft / Concept | JSON-RPC, gRPC, and events/webhooks now have first draft specs plus fixture-only binding stubs; the broader remaining non-HTTP binding/domain/governance work is still directional rather than implementation-backed. |
 
 ## Current Reference Slice
 
@@ -118,7 +118,7 @@ This is the smallest real working system in the repo today, and it should be und
 
 ## What Is Not Built Yet
 
-- suite-level gRPC or events binding runtime support beyond the current draft-only artifacts
+- suite-level gRPC or events/webhooks runtime support beyond the current draft-only artifacts
 - hard-normative A2A and payment profiles
 - domain protocol families for provisioning, jobs, and commerce
 - registry infrastructure and broader cross-implementation conformance at suite scale

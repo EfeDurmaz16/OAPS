@@ -1,0 +1,24 @@
+{
+  "delivery_id": "del_evt_001_attempt_1",
+  "subscription_id": "sub_oaps_webhook_demo",
+  "dedupe_key": "sub_oaps_webhook_demo:evt_oaps_003",
+  "event_class": "interaction_event",
+  "event_id": "evt_oaps_003",
+  "interaction_id": "ix_oaps_123",
+  "event_type": "interaction.updated",
+  "occurred_at": "2026-04-05T14:30:00Z",
+  "attempt": 1,
+  "cursor_hint": "evt_oaps_003",
+  "source": {
+    "actor_id": "urn:oaps:actor:agent:builder",
+    "binding": "http",
+    "delivery_channel": "webhook"
+  },
+  "payload": {
+    "state": "executing",
+    "message_id": "msg_oaps_009",
+    "metadata": {
+      "progress": "step-2-of-5"
+    }
+  }
+}

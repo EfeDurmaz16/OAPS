@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T13:09:00.575335Z",
+  "generated_at": "2026-04-05T13:13:43.356028Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -167,6 +167,27 @@
       "status": "not_evaluated"
     },
     {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "events.push.interaction-envelope",
+        "events.push.approval-envelope",
+        "events.replay-first.relationship",
+        "events.delivery.at-least-once",
+        "events.retry.dedupe-key",
+        "events.resume.replay-checkpoint"
+      ],
+      "known_scenarios": 6,
+      "pass": 0,
+      "scope": "binding:events",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
       "coverage_observed": [
         "schema",
         "fixture",
@@ -291,7 +312,7 @@
     "profile:mcp"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T13:09:00.507575Z",
+    "executed_at": "2026-04-05T13:13:43.289403Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/examples/fixture-check-profile-mcp-partial.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },
@@ -299,8 +320,8 @@
   "summary": {
     "compatible": 0,
     "incompatible": 0,
-    "not_evaluated": 9,
+    "not_evaluated": 10,
     "partial": 1,
-    "total": 10
+    "total": 11
   }
 }

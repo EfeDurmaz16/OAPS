@@ -1,0 +1,22 @@
+{
+  "delivery_id": "del_evt_approval_001_attempt_1",
+  "subscription_id": "sub_oaps_webhook_demo",
+  "dedupe_key": "sub_oaps_webhook_demo:evt_approval_001",
+  "event_class": "approval_event",
+  "event_id": "evt_approval_001",
+  "interaction_id": "ix_oaps_123",
+  "event_type": "approval.requested",
+  "occurred_at": "2026-04-05T14:31:00Z",
+  "attempt": 1,
+  "cursor_hint": "evt_approval_001",
+  "source": {
+    "actor_id": "urn:oaps:actor:agent:builder",
+    "binding": "http",
+    "delivery_channel": "webhook"
+  },
+  "payload": {
+    "approval_request_id": "apr_oaps_123",
+    "reason": "risk_class_requires_human_review",
+    "requested_by": "urn:oaps:actor:agent:builder"
+  }
+}

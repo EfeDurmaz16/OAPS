@@ -55,6 +55,37 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: events / webhooks binding draft
+- tranche status:
+  - drafted:
+    - added `spec/bindings/events-binding-draft.md` defining the canonical push envelope, replay-first versus push-assisted relationship, delivery guarantees, dedupe keys, retry semantics, and replay resumption concepts
+    - added the first events/webhooks example pack under `examples/events/`
+  - implemented:
+    - wired `binding:events` into the suite fixture index, manifest, taxonomy, spec navigation, maturity docs, and Python inventory/check documentation/tests
+    - regenerated suite result and compatibility examples so the events-binding scope now participates in the Python interoperability line
+  - conformance-backed:
+    - added `conformance/fixtures/bindings/events/index.v1.json` as the first fixture-only events/webhooks binding pack
+    - validated `binding:events` through the conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - drafted the first push-delivery binding track while keeping OAPS replay-first across bindings
+  - added webhook/event-bus oriented examples for interaction updates, approval requests, retries, dedupe behavior, and replay checkpoints
+  - promoted `binding:events` to a first-class draft scope in manifest, taxonomy, docs, and compatibility examples
+- validation:
+  - `git diff --check`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope binding:events --output /tmp/oaps-events-fixture-check.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-events-fixture-check.json --json`
+- commits:
+  - `events: add webhook binding draft`
+- next unfinished work:
+  - start V2 tranche 6 by adding the agent-client landscape, profile draft, examples, and fixture-backed `profile:agent-client` scope wiring
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: gRPC binding draft
 - tranche status:
   - drafted:

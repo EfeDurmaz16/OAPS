@@ -18,5 +18,6 @@ Current entry points:
 - `bindings/http-binding-draft.md` — first binding-track draft
 - `bindings/jsonrpc-binding-draft.md` — first JSON-RPC binding-track draft
 - `bindings/grpc-binding-draft.md` — first gRPC binding-track draft
+- `bindings/events-binding-draft.md` — first events/webhooks binding-track draft
 
 The older consolidated `../SPEC.md` still exists because it backs the current MCP-oriented reference slice, but it should no longer be treated as the entire future shape of OAPS.

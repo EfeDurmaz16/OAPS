@@ -166,14 +166,14 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 5. Events / Webhooks Binding Draft
 
-- [ ] Add `spec/bindings/events-binding-draft.md`
-- [ ] Define push event envelope shape
-- [ ] Define replay-first vs push-first relationship clearly
-- [ ] Define delivery guarantees, dedupe keys, and retry semantics
-- [ ] Define replay resumption concepts even if cursors remain draft
-- [ ] Add example webhook payloads
-- [ ] Add initial fixture pack for `binding:events`
-- [ ] Add compatibility scope support in the Python line
+- [x] Add `spec/bindings/events-binding-draft.md`
+- [x] Define push event envelope shape
+- [x] Define replay-first vs push-first relationship clearly
+- [x] Define delivery guarantees, dedupe keys, and retry semantics
+- [x] Define replay resumption concepts even if cursors remain draft
+- [x] Add example webhook payloads
+- [x] Add initial fixture pack for `binding:events`
+- [x] Add compatibility scope support in the Python line
 
 ### 6. Agent-Client / CLI / SSH Communication Track
 

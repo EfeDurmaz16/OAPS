@@ -18,6 +18,10 @@
       "path": "conformance/fixtures/bindings/grpc/index.v1.json"
     },
     {
+      "scope": "binding:events",
+      "path": "conformance/fixtures/bindings/events/index.v1.json"
+    },
+    {
       "scope": "profile:mcp",
       "path": "conformance/fixtures/profiles/mcp/index.v1.json"
     },

@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T13:09:00.428937Z",
+  "executed_at": "2026-04-05T13:13:43.212668Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -1207,6 +1207,84 @@
     },
     {
       "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/interaction.updated.webhook.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.push.interaction-envelope",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/approval.requested.webhook.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.push.approval-envelope",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/replay.resumption.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.replay-first.relationship",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/delivery.retry.webhook.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.delivery.at-least-once",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/delivery.retry.webhook.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.retry.dedupe-key",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/bindings/events/index.v1.json",
+        "examples/events/replay.resumption.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "events.resume.replay-checkpoint",
+      "scope": "binding:events"
+    },
+    {
+      "artifacts": [
         "conformance/fixtures/profiles/mcp/index.v1.json",
         "schemas/actor-card.json",
         "examples/actor-card-mcp.json",
@@ -1571,6 +1649,7 @@
     "binding:http",
     "binding:jsonrpc",
     "binding:grpc",
+    "binding:events",
     "profile:mcp",
     "profile:a2a",
     "profile:auth-web",
@@ -1581,8 +1660,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 111,
+    "pass": 117,
     "skip": 0,
-    "total": 111
+    "total": 117
   }
 }

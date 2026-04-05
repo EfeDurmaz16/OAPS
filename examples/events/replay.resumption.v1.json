@@ -1,0 +1,17 @@
+{
+  "subscription_id": "sub_oaps_webhook_demo",
+  "checkpoint": {
+    "last_accepted_event_id": "evt_oaps_003",
+    "recorded_at": "2026-04-05T14:30:01Z"
+  },
+  "resume_strategy": {
+    "mode": "replay-first",
+    "authoritative_binding": "http",
+    "replay_path": "/interactions/ix_oaps_123/events?after=evt_oaps_003",
+    "reason": "gap_detected_after_retry_or_delivery_failure"
+  },
+  "notes": [
+    "cursor_hint from a push envelope is advisory rather than authoritative",
+    "receivers should resume from their own last durable checkpoint"
+  ]
+}
