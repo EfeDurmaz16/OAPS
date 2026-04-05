@@ -1,0 +1,79 @@
+name: Co-Signer Interest
+description: Express interest in co-signing the Pact open standard for agentic primitives
+title: "Co-Signer Interest: "
+labels: ["cosigner"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your interest in co-signing Pact. This form helps us understand who you are and how you want to participate.
+
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      placeholder: Your name
+    validations:
+      required: true
+
+  - type: input
+    id: organization
+    attributes:
+      label: Organization
+      description: Company, project, or team you represent
+      placeholder: e.g. Acme Corp
+
+  - type: input
+    id: email
+    attributes:
+      label: Email
+      placeholder: you@example.com
+    validations:
+      required: true
+
+  - type: input
+    id: role
+    attributes:
+      label: Role
+      placeholder: e.g. Protocol Engineer, CTO, Infrastructure Lead
+
+  - type: dropdown
+    id: participation
+    attributes:
+      label: How do you want to participate?
+      multiple: true
+      options:
+        - Technical co-signer
+        - Design partner
+        - Protocol reviewer
+        - Implementation partner
+        - Ecosystem participant
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: Areas of interest
+      options:
+        - label: Agent-to-tool communication (MCP, CLI, tool discovery)
+        - label: Agent-to-agent communication (A2A, multi-agent coordination)
+        - label: Identity and trust (auth, delegation, attestation)
+        - label: Payment and authorization (x402, MPP, AP2)
+        - label: Provisioning and service lifecycle (OSP)
+        - label: Commerce (ACP, UCP, checkout, fulfillment)
+        - label: Evidence and audit (lineage, replay, compliance)
+        - label: Core protocol semantics
+
+  - type: textarea
+    id: context
+    attributes:
+      label: What are you building?
+      description: Tell us about your project or system and how it relates to agent infrastructure.
+      placeholder: We're building a multi-agent orchestration platform that needs...
+
+  - type: textarea
+    id: message
+    attributes:
+      label: Anything else?
+      description: What you'd like reviewed, specific protocol areas you care about, or how you'd like to be involved.
