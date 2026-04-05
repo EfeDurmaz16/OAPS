@@ -146,3 +146,22 @@ Append one entry per tranche:
   - add a clearer stable versus draft versus concept matrix to top-level docs
   - add a public-facing how-to-review packet
 - status: `DONE`
+
+### 2026-04-05
+
+- tranche: unattended harness exercise attempt
+- changes:
+  - ran `scripts/codex-tranche-loop.sh` as a real unattended local harness exercise with a prompt that explicitly avoided recursive harness invocation
+  - confirmed the nested `codex exec` process loaded the required OAPS context and began tranche selection
+  - captured the concrete failure mode in `.codex/state/last-message.txt`: nested Codex could not create `/Users/efebarandurmaz/OAPS/.git/index.lock`, so it could not satisfy the required atomic-commit rule
+  - updated `docs/RUNBOOK.md` with the observed limitation and the recommended operator workaround
+- validation:
+  - `MAX_ROUNDS=4 scripts/codex-tranche-loop.sh "<non-recursive harness exercise prompt>"`
+  - `tail -n 40 .codex/state/last-message.txt`
+  - `git status --short --branch`
+- commits:
+  - `docs: record harness execution blocker`
+- next unfinished work:
+  - run the harness from a top-level shell or supervisor that allows the nested `codex exec` process to create `.git/index.lock`
+  - once that blocker is cleared, resume the stable-vs-draft-vs-concept docs matrix tranche
+- status: `BLOCKED`

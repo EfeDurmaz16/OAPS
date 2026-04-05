@@ -58,3 +58,4 @@ scripts/claude-design-worker.sh "Design and implement a landing page for OAPS."
 - The Codex harness now runs with a repo-local clean `CODEX_HOME` so broken global MCP servers do not contaminate protocol execution.
 - The harness mirrors `~/.codex/auth.json` into the repo-local runtime home before each run so ChatGPT login state is preserved.
 - The default protocol harness uses `danger-full-access` because atomic Git commits require writes under `.git/`, including `index.lock`.
+- When the harness is invoked from inside another Codex session, the nested `codex exec` process may still be unable to create `.git/index.lock` even though the outer run has full write access. If that happens, re-run the harness from a top-level shell or supervisor process that grants the nested Codex process direct Git write access.
