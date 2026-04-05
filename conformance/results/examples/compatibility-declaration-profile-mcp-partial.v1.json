@@ -1,0 +1,209 @@
+{
+  "declaration_schema_version": "1.0",
+  "generated_at": "2026-04-05T01:23:24.936422Z",
+  "implementation": {
+    "implementation_id": "oaps-python",
+    "implementation_version": "0.1.0",
+    "metadata": {
+      "issues": [],
+      "issues_present": false,
+      "mode": "fixture-check",
+      "requested_scenarios": [
+        "mcp.intent.execution"
+      ],
+      "requested_scopes": [
+        "profile:mcp"
+      ]
+    }
+  },
+  "issues": [],
+  "manifest_id": "oaps-tck",
+  "scope_declarations": [
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "core.actor.valid",
+        "core.capability.valid",
+        "core.intent.valid",
+        "core.task.valid",
+        "core.delegation.valid",
+        "core.mandate.valid",
+        "core.approval-request.valid",
+        "core.approval-decision.valid",
+        "core.execution-result.valid",
+        "core.evidence-event.valid",
+        "core.error-object.valid",
+        "core.extension-descriptor.valid"
+      ],
+      "known_scenarios": 12,
+      "pass": 0,
+      "scope": "core",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "http.authentication.required",
+        "http.authentication.failed",
+        "http.discovery.well-known",
+        "http.interaction.created",
+        "http.interaction.not-found",
+        "http.interaction.updated",
+        "http.messages.append",
+        "http.approval.decision",
+        "http.idempotency.reuse",
+        "http.version.negotiation",
+        "http.approval.not-pending"
+      ],
+      "known_scenarios": 11,
+      "pass": 0,
+      "scope": "binding:http",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "mcp.intent.execution"
+      ],
+      "evaluated_scenarios": 1,
+      "fail": 0,
+      "known_scenario_ids": [
+        "mcp.actor-card.mapping",
+        "mcp.capability-card.mapping",
+        "mcp.intent.execution",
+        "mcp.policy.gating",
+        "mcp.evidence.emission"
+      ],
+      "known_scenarios": 5,
+      "pass": 1,
+      "scope": "profile:mcp",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "partial"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "a2a.task.lifecycle.preservation",
+        "a2a.delegation.carryover",
+        "a2a.approval.interposition",
+        "a2a.message.evidence.carryover"
+      ],
+      "known_scenarios": 4,
+      "pass": 0,
+      "scope": "profile:a2a",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "auth-web.discovery.identity",
+        "auth-web.subject-binding.actor-card",
+        "auth-web.delegation.fail-closed"
+      ],
+      "known_scenarios": 3,
+      "pass": 0,
+      "scope": "profile:auth-web",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "auth-fides-tap.attestation.actor-card",
+        "auth-fides-tap.trust-upgrade.delegation",
+        "auth-fides-tap.evidence.approval-boundary"
+      ],
+      "known_scenarios": 3,
+      "pass": 0,
+      "scope": "profile:auth-fides-tap",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "x402.payment.discovery",
+        "x402.payment.authorization.intent",
+        "x402.settlement.execution-result"
+      ],
+      "known_scenarios": 3,
+      "pass": 0,
+      "scope": "profile:x402",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "osp.provisioning.actor-card",
+        "osp.provisioning.approval-request",
+        "osp.lifecycle.execution-result"
+      ],
+      "known_scenarios": 3,
+      "pass": 0,
+      "scope": "profile:osp",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    }
+  ],
+  "selected_scopes": [
+    "profile:mcp"
+  ],
+  "source_result": {
+    "executed_at": "2026-04-05T01:23:24.828399Z",
+    "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/examples/fixture-check-profile-mcp-partial.v1.json",
+    "runner_id": "oaps-python-fixture-check"
+  },
+  "suite_version": "foundation-draft",
+  "summary": {
+    "compatible": 0,
+    "incompatible": 0,
+    "not_evaluated": 7,
+    "partial": 1,
+    "total": 8
+  }
+}

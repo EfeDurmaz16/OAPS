@@ -1,0 +1,50 @@
+{
+  "executed_at": "2026-04-05T01:23:24.828399Z",
+  "implementation": {
+    "implementation_id": "oaps-python",
+    "implementation_version": "0.1.0",
+    "metadata": {
+      "issues": [],
+      "issues_present": false,
+      "mode": "fixture-check",
+      "requested_scenarios": [
+        "mcp.intent.execution"
+      ],
+      "requested_scopes": [
+        "profile:mcp"
+      ]
+    }
+  },
+  "manifest_id": "oaps-tck",
+  "result_schema_version": "1.0",
+  "runner_id": "oaps-python-fixture-check",
+  "scenarios": [
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/mcp/index.v1.json",
+        "schemas/intent.json",
+        "examples/intent-invoke.json",
+        "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts"
+      ],
+      "coverage": [
+        "schema",
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "mcp.intent.execution",
+      "scope": "profile:mcp"
+    }
+  ],
+  "scopes": [
+    "profile:mcp"
+  ],
+  "summary": {
+    "error": 0,
+    "fail": 0,
+    "pass": 1,
+    "skip": 0,
+    "total": 1
+  }
+}

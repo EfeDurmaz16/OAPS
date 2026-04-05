@@ -33,7 +33,7 @@ Execution rule:
 - [x] Add evidence tamper detection coverage
 - [x] Add evidence hash stability coverage
 - [ ] Add core runtime-backed conformance scenarios for delegation expiry and replay-related failures
-- [ ] Add compatibility declaration examples for core scope
+- [x] Add compatibility declaration examples for core scope
 
 ### 2. HTTP Binding
 
@@ -41,7 +41,7 @@ Execution rule:
 - [x] Persist message history in the reference server
 - [x] Add HTTP negative-path coverage for auth, versioning, idempotency, and approval-not-pending
 - [x] Expand HTTP conformance metadata
-- [ ] Add stronger binding-level compatibility declarations and example result payloads
+- [x] Add stronger binding-level compatibility declarations and example result payloads
 - [ ] Decide whether to formalize event replay semantics further in the binding draft
 
 ### 3. MCP Profile
@@ -50,14 +50,14 @@ Execution rule:
 - [x] Add negative-path runtime tests for missing capability, approval mismatch, auth mismatch, and upstream error translation
 - [x] Expand MCP conformance fixtures and runtime-case metadata
 - [ ] Add more explicit approval-rejected and policy-context-hash compatibility notes
-- [ ] Add profile-specific compatibility declaration examples
+- [x] Add profile-specific compatibility declaration examples
 
 ### 4. A2A Profile
 
 - [x] Establish draft profile and basic fixture pack
 - [x] Expand fixture coverage for lifecycle preservation, delegation carryover, approval interposition, and evidence carryover
 - [ ] Add stronger mapping matrices between A2A task/message surfaces and OAPS task/interaction semantics
-- [ ] Add compatibility declaration examples for `profile:a2a`
+- [x] Add compatibility declaration examples for `profile:a2a`
 
 ### 5. Auth and Trust Profiles
 
@@ -65,7 +65,7 @@ Execution rule:
 - [x] Add `oaps-auth-fides-tap-v1` draft and conformance pack
 - [x] Deepen metadata with `notes`, `related_examples`, and bounded runtime-case references
 - [ ] Add stronger explicit mappings from current core/runtime behavior into trust-upgrade semantics
-- [ ] Add compatibility declaration examples for auth scopes
+- [x] Add compatibility declaration examples for auth scopes
 
 ### 6. Payment and Provisioning Profiles
 
@@ -73,7 +73,7 @@ Execution rule:
 - [x] Add `oaps-osp-v1` draft and conformance pack
 - [x] Deepen metadata with bounded runtime-case references
 - [ ] Add stronger mapping notes for payment challenge/retry and provisioning lifecycle transitions
-- [ ] Add compatibility declaration examples for payment and provisioning scopes
+- [x] Add compatibility declaration examples for payment and provisioning scopes
 
 ### 7. Conformance and TCK
 
@@ -81,8 +81,8 @@ Execution rule:
 - [x] Add fixture packs across core, HTTP, MCP, A2A, auth, x402, and OSP
 - [x] Add Python static `inventory` and `check` commands
 - [x] Add Python `validate-result`
-- [ ] Expand `conformance/results/example-result.v1.json` to reflect modern scope and runner usage
-- [ ] Add compatibility declaration documents and examples
+- [x] Expand `conformance/results/example-result.v1.json` to reflect modern scope and runner usage
+- [x] Add compatibility declaration documents and examples
 - [ ] Add more runtime-backed scenarios where the reference implementation already supports them
 
 ### 8. Second Implementation
@@ -92,15 +92,15 @@ Execution rule:
 - [x] Add inventory with scope filtering
 - [x] Add static fixture checking
 - [x] Add result validation
-- [ ] Add scope-level compatibility summary output
-- [ ] Add a small machine-readable compatibility declaration export
+- [x] Add scope-level compatibility summary output
+- [x] Add a small machine-readable compatibility declaration export
 
 ### 9. Docs, Governance, and Outreach
 
 - [x] Add charter, architecture, ecosystem mapping, standards landscape, review calendar, and review packet docs
 - [x] Add OEP process and RF patent pledge drafts
 - [x] Add review target matrix and packet index
-- [ ] Add compatibility declaration documentation
+- [x] Add compatibility declaration documentation
 - [ ] Add a clearer “what is stable vs draft vs concept” matrix to top-level docs
 - [ ] Add a public-facing “how to review OAPS” short packet
 

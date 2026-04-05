@@ -1,0 +1,43 @@
+{
+  "result_schema_version": "1.0",
+  "manifest_id": "oaps-tck",
+  "runner_id": "oaps-python-fixture-check",
+  "implementation": {
+    "implementation_id": "oaps-python",
+    "implementation_version": "0.1.0",
+    "metadata": {
+      "mode": "fixture-check",
+      "issues_present": false,
+      "issues": [],
+      "requested_scopes": [],
+      "requested_scenarios": []
+    }
+  },
+  "executed_at": "2026-04-05T01:22:50Z",
+  "scopes": [
+    "core"
+  ],
+  "summary": {
+    "pass": 0,
+    "fail": 1,
+    "skip": 0,
+    "error": 0,
+    "total": 1
+  },
+  "scenarios": [
+    {
+      "scenario_id": "core.actor.valid",
+      "scope": "core",
+      "outcome": "fail",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "duration_ms": 2,
+      "notes": "Synthetic failing example for compatibility declaration documentation; the schema and fixture shape remain intact, but the scenario outcome is fail.",
+      "artifacts": [
+        "conformance/fixtures/core/index.v1.json"
+      ]
+    }
+  ]
+}

@@ -23,6 +23,8 @@ The goal is to make it possible for an implementation to answer a concrete quest
 - `fixtures/profiles/osp/index.v1.json` - provisioning fixture pack
 - `runner-contract.md` - minimum behavior required from any TCK runner
 - `results/result-schema.v1.json` - machine-readable result format for compatibility claims
+- `results/compatibility-declaration-schema.v1.json` - machine-readable scope-level compatibility summary format
+- `results/examples/` - example result files and derived compatibility declarations
 
 These files now exist in-repo and are validated by the reference workspace.
 

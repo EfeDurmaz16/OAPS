@@ -12,6 +12,7 @@ Suggested reading order:
 6. `REVIEW-TARGET-MATRIX.md`
 7. `REVIEW-PACKET-INDEX.md`
 8. `REVIEW-CALENDAR.md`
-9. `PARALLEL-AGENT-WORKSTREAMS.md`
+9. `COMPATIBILITY-DECLARATIONS.md`
+10. `PARALLEL-AGENT-WORKSTREAMS.md`
 
 Use these documents to understand the intended shape of the protocol suite before reading the narrower normative drafts under `spec/`.
