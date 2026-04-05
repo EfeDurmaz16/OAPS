@@ -155,6 +155,7 @@ Append one entry per tranche:
   - `http: extend idempotent mutation coverage`
   - `http: add replay window support`
   - `http: align replay windows and canonical media type`
+  - `http: cover canonical media type responses`
   - `docs: record http binding hardening tranche`
 - next unfinished work:
   - none currently queued in `PLANS.md`
