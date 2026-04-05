@@ -92,6 +92,8 @@ The core must define:
 - expiry
 - optional revocation hooks
 
+The current reference-backed conformance slice already exercises fail-closed expiry handling for delegated authenticated-subject binding.
+
 ### Mandate
 
 A mandate is a stronger authorization object than generic delegation.
@@ -137,6 +139,8 @@ It is the core lineage primitive and must support:
 - actor attribution
 - event typing
 - input/output references where applicable
+
+The current reference-backed conformance slice already exercises successful chain verification, tamper detection, previous-hash mismatch detection, and canonical hash stability.
 
 ### ErrorObject
 

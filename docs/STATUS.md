@@ -114,3 +114,23 @@ Append one entry per tranche:
 - Read this file before execution.
 - Continue from the last unfinished tranche instead of restarting planning.
 - Do not stop for progress summaries.
+
+
+### 2026-04-05
+
+- tranche: core runtime-backed conformance scenarios
+- changes:
+  - added core conformance scenarios for delegation expiry, verifiable evidence chains, tamper detection, previous-hash mismatch detection, and stable evidence hashing
+  - marked the core runtime-backed conformance tranche complete in `PLANS.md`
+- validation:
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/core test`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/evidence test`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope core --output /tmp/oaps-core-fixture-check.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-core-fixture-check.json --json`
+- commits:
+  - `conformance: add core runtime-backed scenarios`
+- next unfinished work:
+  - add HTTP runtime-backed conformance scenarios for discovery, evidence/event retrieval, rejection, and revoke flows
+  - add explicit MCP runtime-backed scenarios for policy denial and approval rejection paths
+- status: `DONE`

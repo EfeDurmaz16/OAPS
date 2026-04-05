@@ -32,7 +32,7 @@ Execution rule:
 - [x] Add delegation fail-closed coverage
 - [x] Add evidence tamper detection coverage
 - [x] Add evidence hash stability coverage
-- [ ] Add core runtime-backed conformance scenarios for delegation expiry and replay-related failures
+- [x] Add core runtime-backed conformance scenarios for delegation expiry and replay-related failures
 - [x] Add compatibility declaration examples for core scope
 
 ### 2. HTTP Binding
