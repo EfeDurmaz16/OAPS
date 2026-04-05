@@ -49,14 +49,14 @@ Execution rule:
 - [x] Map capability discovery and invoke paths
 - [x] Add negative-path runtime tests for missing capability, approval mismatch, auth mismatch, and upstream error translation
 - [x] Expand MCP conformance fixtures and runtime-case metadata
-- [ ] Add more explicit approval-rejected and policy-context-hash compatibility notes
+- [x] Add more explicit approval-rejected and policy-context-hash compatibility notes
 - [x] Add profile-specific compatibility declaration examples
 
 ### 4. A2A Profile
 
 - [x] Establish draft profile and basic fixture pack
 - [x] Expand fixture coverage for lifecycle preservation, delegation carryover, approval interposition, and evidence carryover
-- [ ] Add stronger mapping matrices between A2A task/message surfaces and OAPS task/interaction semantics
+- [x] Add stronger mapping matrices between A2A task/message surfaces and OAPS task/interaction semantics
 - [x] Add compatibility declaration examples for `profile:a2a`
 
 ### 5. Auth and Trust Profiles
@@ -64,7 +64,7 @@ Execution rule:
 - [x] Add `oaps-auth-web-v1` draft and conformance pack
 - [x] Add `oaps-auth-fides-tap-v1` draft and conformance pack
 - [x] Deepen metadata with `notes`, `related_examples`, and bounded runtime-case references
-- [ ] Add stronger explicit mappings from current core/runtime behavior into trust-upgrade semantics
+- [x] Add stronger explicit mappings from current core/runtime behavior into trust-upgrade semantics
 - [x] Add compatibility declaration examples for auth scopes
 
 ### 6. Payment and Provisioning Profiles
@@ -72,7 +72,7 @@ Execution rule:
 - [x] Add `oaps-x402-v1` draft and conformance pack
 - [x] Add `oaps-osp-v1` draft and conformance pack
 - [x] Deepen metadata with bounded runtime-case references
-- [ ] Add stronger mapping notes for payment challenge/retry and provisioning lifecycle transitions
+- [x] Add stronger mapping notes for payment challenge/retry and provisioning lifecycle transitions
 - [x] Add compatibility declaration examples for payment and provisioning scopes
 
 ### 7. Conformance and TCK
@@ -83,7 +83,7 @@ Execution rule:
 - [x] Add Python `validate-result`
 - [x] Expand `conformance/results/example-result.v1.json` to reflect modern scope and runner usage
 - [x] Add compatibility declaration documents and examples
-- [ ] Add more runtime-backed scenarios where the reference implementation already supports them
+- [x] Add more runtime-backed scenarios where the reference implementation already supports them
 
 ### 8. Second Implementation
 

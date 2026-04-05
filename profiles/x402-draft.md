@@ -51,6 +51,22 @@ A conforming implementation SHOULD be able to map:
 
 The profile is intended to support paid agent actions, not only human checkout flows.
 
+## Current Challenge And Retry Mapping Matrix
+
+The current draft should be read as a semantic mapping matrix rather than as a claim that the suite already runs an x402 facilitator:
+
+| x402-style concern | OAPS anchor | Current fixture/runtime anchor | Current claim level |
+| --- | --- | --- | --- |
+| payment discovery | discovery metadata advertising a payable surface | `x402.payment.discovery` via shared HTTP discovery runtime | runtime-backed through shared HTTP discovery only |
+| payment authorization challenge | pre-execution gate before side effects | `x402.payment.authorization.intent` via shared MCP policy/approval runtime | runtime-backed through shared MCP gating only |
+| retry after challenge | same interaction lineage plus idempotent replay semantics | shared HTTP idempotency and message/evidence continuity | partial; no dedicated payment challenge round-trip yet |
+| settlement or paid completion | `ExecutionResult` plus canonical terminal state | `x402.settlement.execution-result` via shared HTTP completion runtime | runtime-backed through shared completion surfaces only |
+| payment failure mapping | stable OAPS error category instead of rail-specific failure text | shared MCP/HTTP error translation surfaces | partial; no rail-specific error catalog yet |
+
+The current reference slice therefore proves that OAPS can carry payment-gating semantics across challenge, retry, and completion boundaries without claiming a real payment rail or x402 facilitator implementation.
+
+The key rule is that x402 challenge/retry behavior should preserve one OAPS-governed authorization story, not split the payment step from the governed action that it unlocks. In practice, the interaction identifier, idempotent intent, payment authorization reference, and evidence continuity must remain stable across challenge/retry loops even though the current suite does not yet expose a dedicated x402 round-trip runtime.
+
 ## Conformance
 
 A conforming `oaps-x402-v1` implementation:

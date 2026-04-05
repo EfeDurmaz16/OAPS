@@ -50,6 +50,19 @@ A conforming implementation SHOULD be able to map:
 
 The intended trust family is compatible with FIDES-style attestations and TAP-family style agent trust coordination.
 
+## Trust Upgrade Mapping Matrix
+
+The current reference slice does not implement a dedicated FIDES/TAP verifier, but the trust-upgrade seams are concrete enough to map explicitly:
+
+| Stronger-trust concern | OAPS semantic anchor | Current runtime or fixture anchor | Non-claim boundary |
+| --- | --- | --- | --- |
+| attested actor identity | `Actor` / `actorRef` bound to stronger proof material | `auth-fides-tap.attestation.actor-card` fixture anchored on actor-card examples | does not claim a production attestation verifier |
+| signed or attested delegation chain | `Delegation` plus fail-closed authority checks | `auth-fides-tap.trust-upgrade.delegation` fixture plus the shared core expired-delegation logic | does not claim FIDES/TAP-specific signature validation |
+| trust-upgraded approval boundary | `ApprovalRequest`, `ApprovalDecision`, and evidence at the execution seam | `auth-fides-tap.evidence.approval-boundary` plus shared HTTP approval runtime cases | does not claim that approval alone is the full trust protocol |
+| trust result recorded for audit | `EvidenceEvent.metadata` carrying trust outcome references | evidence examples and approval-boundary fixture grouping | does not freeze a FIDES/TAP metadata schema yet |
+
+This mapping keeps the profile honest: stronger trust changes the proof and assurance level, not the surrounding OAPS object family or lifecycle semantics. The current reference line therefore claims reusable semantic seams and one observable shared approval/runtime boundary, not a dedicated FIDES/TAP verifier, attestation exchange, or trust oracle.
+
 ## Conformance
 
 A conforming `oaps-auth-fides-tap-v1` implementation:
@@ -60,7 +73,7 @@ A conforming `oaps-auth-fides-tap-v1` implementation:
 - SHOULD preserve trust outcomes in evidence when they affect execution
 - SHOULD be usable as a drop-in upgrade from `oaps-auth-web-v1`
 
-The current conformance pack treats this profile as a grouped static trust track: attestation, trust-upgrade, and approval-boundary fixtures are all present, but there is not yet a dedicated FIDES/TAP runtime verifier in the reference line.
+The current conformance pack treats this profile as a grouped trust-upgrade track: attestation and delegation upgrade remain fixture-backed, while the approval-boundary seam reuses the shared HTTP approval runtime as the observable place where stronger trust would affect execution. There is not yet a dedicated FIDES/TAP runtime verifier in the reference line.
 
 ## Implementation Notes
 

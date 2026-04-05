@@ -51,6 +51,22 @@ A conforming implementation SHOULD be able to map:
 
 The intended alignment is consistent with OSP-style provisioning semantics, but the profile remains OAPS-native at the semantic layer.
 
+## Current Provisioning Lifecycle Matrix
+
+The current draft should be interpreted as a lifecycle mapping matrix, not as a claim that the reference suite already operates a provisioning control plane:
+
+| Provisioning concern | OAPS anchor | Current fixture/runtime anchor | Current claim level |
+| --- | --- | --- | --- |
+| provider or service bootstrap | actor discovery and authenticated entrypoint | `osp.provisioning.actor-card` via shared HTTP discovery/auth runtime | runtime-backed through shared HTTP surface |
+| provisioning request creation | `Intent` or `Task` describing the requested resource change | provisioning fixtures plus core task examples | fixture-backed only |
+| approval gate before mutation | `ApprovalRequest` / `ApprovalDecision` and `pending_approval` state | `osp.provisioning.approval-request` via shared HTTP approval runtime | runtime-backed through shared approval seam |
+| credential delivery or fulfilled provisioning output | `ExecutionResult` plus evidence | `osp.lifecycle.execution-result` via shared execution-result and HTTP completion runtime | runtime-backed through shared execution/completion surfaces |
+| suspension, revocation, or deprovisioning | `revoked`, `failed`, or `compensated` depending on semantics | shared HTTP revoke surface plus core lifecycle states | partial; no dedicated provisioning state machine yet |
+
+This profile therefore claims portable provisioning semantics across approval, completion, and audit boundaries first. It does **not** yet claim vendor-specific catalogs, credential transports, or OSP-native runtime execution.
+
+The profile should keep these lifecycle transitions portable without pretending that vendor catalog fields or control-plane methods are part of the OAPS core. In practice, requesting actor identity, approval/rejection semantics, produced credential or resource references, lifecycle timestamps, and later revocation or compensation evidence must remain stable even when the current suite is only proving those seams through shared HTTP/core anchors.
+
 ## Conformance
 
 A conforming `oaps-osp-v1` implementation:
