@@ -1,12 +1,9 @@
 model = "gpt-5.4"
 approval_policy = "never"
-sandbox_mode = "workspace-write"
+sandbox_mode = "danger-full-access"
 model_reasoning_effort = "high"
 model_instructions_file = "../codex/instructions/harness.txt"
 web_search = "cached"
-
-[sandbox_workspace_write]
-network_access = true
 
 [agents]
 max_threads = 6

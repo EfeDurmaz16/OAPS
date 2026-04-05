@@ -57,3 +57,4 @@ scripts/claude-design-worker.sh "Design and implement a landing page for OAPS."
 - Non-interactive Codex is the preferred surface for long runs.
 - The Codex harness now runs with a repo-local clean `CODEX_HOME` so broken global MCP servers do not contaminate protocol execution.
 - The harness mirrors `~/.codex/auth.json` into the repo-local runtime home before each run so ChatGPT login state is preserved.
+- The default protocol harness uses `danger-full-access` because atomic Git commits require writes under `.git/`, including `index.lock`.
