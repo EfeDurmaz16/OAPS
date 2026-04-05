@@ -94,7 +94,9 @@ test('GET /.well-known/oaps.json exposes the canonical discovery document', asyn
   assert.equal(body.capabilities_url, 'http://localhost:3000/capabilities');
   assert.equal(body.interactions_url, 'http://localhost:3000/interactions');
   assert.deepEqual(body.auth_schemes, ['bearer']);
+  assert.deepEqual(body.media_types, ['application/oaps+json', 'application/json']);
   assert.deepEqual(body.supported_profiles, ['oaps-mcp-v1']);
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
 });
 
 test('POST /interactions completes low-risk invocations', async () => {
@@ -109,8 +111,29 @@ test('POST /interactions completes low-risk invocations', async () => {
   assert.equal(response.status, 201);
   const body = await response.json();
   assert.equal(body.payload.state, 'completed');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
 });
 
+test('POST /interactions accepts the canonical OAPS media type', async () => {
+  const app = createTestApp();
+
+  const response = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders({
+      'content-type': 'application/oaps+json',
+    }),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_oaps_media_type',
+      message_id: 'msg_oaps_media_type',
+    }),
+  });
+
+  assert.equal(response.status, 201);
+  const body = await response.json();
+  assert.equal(body.payload.state, 'completed');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
+});
 
 test('approval flow moves interaction from pending_approval to completed', async () => {
   const app = createTestApp();
@@ -511,6 +534,7 @@ test('POST /interactions requires bearer authentication', async () => {
   const body = await response.json();
   assert.equal(body.code, 'AUTHENTICATION_REQUIRED');
   assert.equal(body.category, 'authentication');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
 });
 
 test('POST /interactions/:id/messages requires bearer authentication', async () => {
@@ -535,6 +559,7 @@ test('POST /interactions/:id/messages requires bearer authentication', async () 
   const body = await response.json();
   assert.equal(body.code, 'AUTHENTICATION_REQUIRED');
   assert.equal(body.category, 'authentication');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
 });
 
 test('POST /interactions rejects unrecognized bearer tokens', async () => {

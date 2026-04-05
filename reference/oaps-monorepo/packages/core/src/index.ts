@@ -18,6 +18,7 @@ import {
 export const OAPS_SPEC_VERSION = '0.4-draft';
 export const OAPS_MIN_SUPPORTED_VERSION = '0.4';
 export const OAPS_MAX_SUPPORTED_VERSION = '0.4';
+export const OAPS_HTTP_CONTENT_TYPE = 'application/oaps+json';
 
 export type RiskClass = (typeof RISK_CLASS_ORDER)[number];
 export type CapabilityKind = (typeof CAPABILITY_KINDS)[number];
