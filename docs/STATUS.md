@@ -31,6 +31,29 @@ Append one entry per tranche:
 - next unfinished work:
 - status: `DONE` or `BLOCKED`
 
+### 2026-04-05
+
+- tranche: codex harness bootstrap
+- changes:
+  - added repository-scoped `AGENTS.md`
+  - added project-scoped `.codex/config.toml`
+  - added `codex/instructions/harness.txt`
+  - added `docs/RUNBOOK.md`
+  - added `scripts/codex-harness.sh`
+  - added `scripts/codex-tranche-loop.sh`
+  - updated `README.md` and `.gitignore`
+- validation:
+  - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh`
+- commits:
+  - `07918be` `docs: add codex execution contract and status runbook`
+  - `2a1d8d8` `chore: add project codex harness configuration`
+  - `69d2cc5` `feat: add codex exec harness scripts`
+- next unfinished work:
+  - exercise the harness on a real long-running OAPS tranche
+  - tune `MAX_ROUNDS`, logging, and prompt shaping from observed runs
+  - consider a cloud-task or SDK supervisor variant after local loop usage
+- status: `DONE`
+
 ## Current Open Fronts
 
 - harden bindings and profiles
