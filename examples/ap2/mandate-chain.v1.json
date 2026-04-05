@@ -1,0 +1,23 @@
+{
+  "mandate_chain_id": "ap2_chain_001",
+  "principal": {
+    "actor_id": "https://company.example/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example/actors/payments-agent"
+  },
+  "action": {
+    "verb": "authorize_payment",
+    "target": "commerce.checkout:annual-plan",
+    "arguments": {
+      "amount": "499.00",
+      "currency": "USD"
+    }
+  },
+  "payment_authorization": {
+    "authorization_id": "payauth_ap2_001",
+    "status": "pending_approval",
+    "requires_attestation": true
+  },
+  "expires_at": "2026-05-03T00:00:00Z"
+}

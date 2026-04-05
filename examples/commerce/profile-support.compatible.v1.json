@@ -1,0 +1,10 @@
+{
+  "profile": "oaps-ucp-v1",
+  "support": "compatible",
+  "supported_surfaces": [
+    "checkout-initiation",
+    "authorization-boundary",
+    "fulfillment-confirmation"
+  ],
+  "notes": "This example demonstrates a fuller draft-only compatibility posture for UCP-style flows without claiming a runtime-backed checkout implementation."
+}

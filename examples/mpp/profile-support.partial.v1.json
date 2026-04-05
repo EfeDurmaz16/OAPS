@@ -1,0 +1,14 @@
+{
+  "profile": "oaps-mpp-v1",
+  "support": "partial",
+  "supported_surfaces": [
+    "payment-session-discovery",
+    "authorization-intent",
+    "settlement-reference"
+  ],
+  "unsupported_surfaces": [
+    "rail-specific settlement",
+    "wallet-internal transport"
+  ],
+  "notes": "This draft example only claims the semantic surfaces that can be represented as portable OAPS payment-session state."
+}

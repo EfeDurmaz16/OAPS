@@ -1,0 +1,23 @@
+{
+  "checkout_id": "chk_com_001",
+  "order_intent_id": "com_order_001",
+  "principal": {
+    "actor_id": "https://company.example/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example/actors/commerce-agent"
+  },
+  "approval": {
+    "approval_request_id": "apr_com_001",
+    "decision": "approve",
+    "decided_by": {
+      "actor_id": "https://humans.example/actors/approver"
+    },
+    "reason": "Delegate may proceed within budget"
+  },
+  "payment_handoff": {
+    "profile": "oaps-mpp-v1",
+    "payment_session_id": "mpp_sess_003"
+  },
+  "state": "approved"
+}

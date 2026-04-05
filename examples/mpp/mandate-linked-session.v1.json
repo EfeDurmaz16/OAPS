@@ -1,0 +1,37 @@
+{
+  "payment_session_id": "mpp_sess_002",
+  "payer": {
+    "actor_id": "https://company.example/actors/owner"
+  },
+  "payee": {
+    "actor_id": "https://merchant.example/actors/cloud-reseller"
+  },
+  "status": "approved",
+  "requested_amount": {
+    "value": "250.00",
+    "currency": "USD"
+  },
+  "mandate": {
+    "mandate_id": "mdt_mpp_002",
+    "principal": {
+      "actor_id": "https://company.example/actors/owner"
+    },
+    "delegatee": {
+      "actor_id": "https://agents.example/actors/procurement"
+    },
+    "action": {
+      "verb": "purchase",
+      "target": "service:cloud-compute"
+    },
+    "expires_at": "2026-05-02T00:00:00Z"
+  },
+  "approval": {
+    "approval_request_id": "apr_mpp_002",
+    "decision": "approve",
+    "decided_by": {
+      "actor_id": "https://humans.example/actors/approver"
+    },
+    "timestamp": "2026-04-05T10:00:00Z"
+  },
+  "settlement_ref": "set_mpp_002"
+}

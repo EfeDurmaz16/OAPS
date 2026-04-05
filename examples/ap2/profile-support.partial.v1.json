@@ -1,0 +1,10 @@
+{
+  "profile": "oaps-ap2-v1",
+  "support": "partial",
+  "supported_surfaces": [
+    "mandate-chain",
+    "approval-handoff",
+    "payment-authorization-reference"
+  ],
+  "notes": "Draft-only support; no AP2 verifier or settlement rail is claimed in this repository."
+}

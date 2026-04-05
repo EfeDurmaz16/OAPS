@@ -1,0 +1,21 @@
+{
+  "payment_session_id": "mpp_sess_001",
+  "payer": {
+    "actor_id": "https://agent.example/actors/buyer"
+  },
+  "payee": {
+    "actor_id": "https://merchant.example/actors/storefront"
+  },
+  "status": "authorization_required",
+  "requested_amount": {
+    "value": "19.95",
+    "currency": "USD"
+  },
+  "authorization_intent": {
+    "verb": "purchase",
+    "target": "commerce.checkout:premium-plan"
+  },
+  "mandate_ref": "mdt_mpp_001",
+  "settlement_ref": null,
+  "expires_at": "2026-05-01T00:00:00Z"
+}

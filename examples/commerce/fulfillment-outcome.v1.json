@@ -1,0 +1,16 @@
+{
+  "order_id": "ord_com_001",
+  "order_intent_id": "com_order_001",
+  "fulfillment": {
+    "fulfillment_id": "ful_com_001",
+    "status": "completed",
+    "resource_ref": "service:annual-plan",
+    "delivered_at": "2026-04-05T11:00:00Z"
+  },
+  "evidence": {
+    "event_id": "evt_com_001",
+    "event_type": "commerce.fulfilled",
+    "actor": "https://merchant.example/actors/storefront",
+    "event_hash": "sha256:commerce001"
+  }
+}

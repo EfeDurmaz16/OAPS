@@ -1,0 +1,10 @@
+{
+  "payment_authorization_id": "payauth_ap2_002",
+  "mandate_ref": "mdt_ap2_002",
+  "authorized_by": {
+    "actor_id": "https://humans.example/actors/approver"
+  },
+  "status": "settled",
+  "settlement_ref": "set_ap2_002",
+  "evidence_ref": "evt_ap2_002"
+}

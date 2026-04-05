@@ -1,0 +1,10 @@
+{
+  "profile": "oaps-acp-v1",
+  "support": "partial",
+  "supported_surfaces": [
+    "order-intent",
+    "delegated-checkout",
+    "fulfillment-outcome"
+  ],
+  "notes": "This example only claims example-level support for ACP-style alignment."
+}

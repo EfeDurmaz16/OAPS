@@ -1,0 +1,22 @@
+{
+  "approval_request_id": "apr_ap2_001",
+  "mandate_chain_id": "ap2_chain_001",
+  "requested_by": {
+    "actor_id": "https://agents.example/actors/payments-agent"
+  },
+  "requested_from": {
+    "actor_id": "https://humans.example/actors/finance-approver"
+  },
+  "reason": "High-value payment authorization requires explicit approval",
+  "decision": {
+    "decision": "approve",
+    "decided_by": {
+      "actor_id": "https://humans.example/actors/finance-approver"
+    },
+    "timestamp": "2026-04-05T10:30:00Z"
+  },
+  "payment_authorization": {
+    "authorization_id": "payauth_ap2_001",
+    "status": "approved"
+  }
+}

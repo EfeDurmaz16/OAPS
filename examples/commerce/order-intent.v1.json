@@ -1,0 +1,22 @@
+{
+  "order_intent_id": "com_order_001",
+  "customer": {
+    "actor_id": "https://buyer.example/actors/purchaser"
+  },
+  "merchant": {
+    "actor_id": "https://merchant.example/actors/storefront"
+  },
+  "cart": {
+    "cart_id": "cart_com_001",
+    "items": [
+      {
+        "sku": "plan-pro-annual",
+        "quantity": 1,
+        "unit_price": "499.00",
+        "currency": "USD"
+      }
+    ]
+  },
+  "requested_outcome": "Purchase annual plan",
+  "state": "intent_received"
+}

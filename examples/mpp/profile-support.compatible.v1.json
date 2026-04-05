@@ -1,0 +1,11 @@
+{
+  "profile": "oaps-mpp-v1",
+  "support": "compatible",
+  "supported_surfaces": [
+    "payment-session-discovery",
+    "authorization-intent",
+    "mandate-linkage",
+    "settlement-reference"
+  ],
+  "notes": "This example shows a fuller draft-only support declaration, but it still does not claim runtime-backed rail interop in this repository."
+}
