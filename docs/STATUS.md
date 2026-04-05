@@ -55,6 +55,35 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: A2A profile expansion
+- tranche status:
+  - drafted:
+    - deepened `profiles/a2a-draft.md` with task/message lifecycle continuity rules, explicit message-threading/state-propagation guidance, approval-boundary mapping, delegation carryover expectations, replay notes, and compatibility declaration guidance for partial versus compatible implementations
+    - added the first focused A2A example pack under `examples/a2a/` for approval interposition, delegation carryover, message threading, partial-update replay, cancellation-versus-revocation mapping, and partial/compatible support declarations
+  - implemented:
+    - wired the expanded A2A profile scenarios into the existing `profile:a2a` conformance pack without overclaiming runtime-backed A2A interoperability
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/a2a/index.v1.json` with message-threading, long-running partial-update, cancellation/revocation-mapping, and partial-compatibility declaration scenarios
+    - validated `profile:a2a` through the suite conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - clarified how A2A task identity, message threads, state propagation, approvals, delegation carryover, and replay checkpoints should map into portable OAPS semantics
+  - added reader-facing A2A examples for approval gates, delegated handoffs, thread-aware progress updates, long-running replay checkpoints, and cancellation-versus-revocation distinctions
+  - tightened the A2A conformance pack so long-running task updates and partial implementation declarations now have explicit fixture anchors
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/a2a ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:a2a --output /tmp/oaps-a2a-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-a2a-fixture-check-v2.json --json`
+- commits:
+  - `a2a: deepen lifecycle profile mapping`
+- next unfinished work:
+  - start V2 tranche 9 by hardening auth-web subject binding examples, delegation-expiry fixtures, and invalid mismatch coverage
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: MCP profile expansion
 - tranche status:
   - drafted:

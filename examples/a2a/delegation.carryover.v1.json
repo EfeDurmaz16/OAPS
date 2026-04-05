@@ -1,0 +1,30 @@
+{
+  "profile": "oaps-a2a-v1",
+  "source_task": {
+    "task_id": "a2a-task-parent-101",
+    "requesting_actor": "https://merchant.example/actors/orchestrator",
+    "delegate_actor": "https://ops.example/actors/provisioner"
+  },
+  "delegation": {
+    "delegator": "https://merchant.example/actors/orchestrator",
+    "delegatee": "https://ops.example/actors/provisioner",
+    "scope": {
+      "verbs": [
+        "provision",
+        "rotate-credential"
+      ],
+      "resource_prefix": "urn:merchant:tenant:acme:workspace/"
+    },
+    "expiry": "2026-04-06T00:00:00Z"
+  },
+  "downstream_a2a_task": {
+    "task_id": "a2a-task-child-101",
+    "thread_id": "thread-delegation-1",
+    "authority_source": "delegation"
+  },
+  "oaps_mapping": {
+    "interaction_id": "int-a2a-delegation-101",
+    "state": "delegated",
+    "mandate_required": false
+  }
+}

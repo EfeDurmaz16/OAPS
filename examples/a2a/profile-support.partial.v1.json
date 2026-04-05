@@ -1,0 +1,18 @@
+{
+  "implementation_id": "example-a2a-bridge",
+  "profile": "oaps-a2a-v1",
+  "compatibility": "partial",
+  "supported_surfaces": [
+    "task-creation",
+    "terminal-completion"
+  ],
+  "unsupported_surfaces": [
+    "message-threading",
+    "partial-completion",
+    "revocation-mapping"
+  ],
+  "notes": [
+    "This declaration is honest for implementations that translate only basic task lifecycle events.",
+    "Absence of long-running update mapping prevents a compatible declaration."
+  ]
+}

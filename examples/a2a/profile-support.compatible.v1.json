@@ -1,0 +1,17 @@
+{
+  "implementation_id": "example-a2a-bridge-advanced",
+  "profile": "oaps-a2a-v1",
+  "compatibility": "compatible",
+  "supported_surfaces": [
+    "task-creation",
+    "message-threading",
+    "approval-interposition",
+    "delegation-carryover",
+    "partial-completion",
+    "revocation-mapping",
+    "evidence-replay"
+  ],
+  "notes": [
+    "The implementation preserves thread metadata, approval boundaries, and replay checkpoints across long-running tasks."
+  ]
+}

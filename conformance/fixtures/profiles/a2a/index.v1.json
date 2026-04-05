@@ -20,7 +20,22 @@
       "related_examples": [
         "examples/foundation/task.json",
         "examples/foundation/execution-result.json",
-        "examples/foundation/error-object.json"
+        "examples/foundation/error-object.json",
+        "examples/a2a/partial-update.replay.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "a2a.message.threading.state-propagation",
+      "dimension": "lifecycle-preservation",
+      "example": "examples/a2a/message.threading.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors message threading, parent-message linkage, and portable state propagation for long-running A2A tasks.",
+      "related_examples": [
+        "examples/a2a/message.threading.v1.json",
+        "examples/foundation/interaction-transition.json",
+        "examples/foundation/task-transition.json"
       ]
     },
     {
@@ -35,7 +50,8 @@
       "notes": "This fixture keeps delegation and mandate continuity visible across an A2A task handoff.",
       "related_examples": [
         "examples/foundation/delegation.json",
-        "examples/foundation/mandate.json"
+        "examples/foundation/mandate.json",
+        "examples/a2a/delegation.carryover.v1.json"
       ]
     },
     {
@@ -50,7 +66,8 @@
       "notes": "This fixture covers approval interposition and the transition from request to decision during a long-running task.",
       "related_examples": [
         "examples/foundation/approval-request.json",
-        "examples/foundation/approval-decision.json"
+        "examples/foundation/approval-decision.json",
+        "examples/a2a/approval.interposition.v1.json"
       ]
     },
     {
@@ -66,7 +83,49 @@
       "related_examples": [
         "examples/foundation/evidence-event.json",
         "examples/foundation/task.json",
+        "examples/foundation/execution-result.json",
+        "examples/a2a/partial-update.replay.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "a2a.task.long-running.partial-update",
+      "dimension": "lifecycle-preservation",
+      "example": "examples/a2a/partial-update.replay.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors partial completion, checkpointed long-running updates, and replay-friendly carryover.",
+      "related_examples": [
+        "examples/a2a/partial-update.replay.v1.json",
+        "examples/foundation/task-transition.json",
         "examples/foundation/execution-result.json"
+      ]
+    },
+    {
+      "scenario_id": "a2a.task.cancellation.revocation-mapping",
+      "dimension": "lifecycle-preservation",
+      "example": "examples/a2a/cancellation.revocation.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture distinguishes cancellation, revocation, failure, and challenge mapping so authority withdrawal does not collapse into generic task failure.",
+      "related_examples": [
+        "examples/a2a/cancellation.revocation.v1.json",
+        "examples/foundation/challenge.json",
+        "examples/foundation/task-transition.json"
+      ]
+    },
+    {
+      "scenario_id": "a2a.compatibility.partial-declaration",
+      "dimension": "task-mapping",
+      "example": "examples/a2a/profile-support.partial.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern when only a subset of the lifecycle mapping is preserved.",
+      "related_examples": [
+        "examples/a2a/profile-support.partial.v1.json",
+        "examples/a2a/profile-support.compatible.v1.json"
       ]
     }
   ]

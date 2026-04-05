@@ -1,0 +1,29 @@
+{
+  "profile": "oaps-a2a-v1",
+  "task_id": "a2a-task-progress-303",
+  "portable_interaction_id": "int-a2a-progress-303",
+  "updates": [
+    {
+      "checkpoint_id": "cp-1",
+      "status": "running",
+      "portable_state": "executing",
+      "summary": "Prepared tenant workspace and staged credentials."
+    },
+    {
+      "checkpoint_id": "cp-2",
+      "status": "partially_completed",
+      "portable_state": "partially_completed",
+      "summary": "Primary service provisioned; audit export still pending."
+    },
+    {
+      "checkpoint_id": "cp-3",
+      "status": "completed",
+      "portable_state": "completed",
+      "summary": "Audit export delivered and replay chain closed."
+    }
+  ],
+  "replay_notes": [
+    "Each checkpoint reuses the same portable interaction id.",
+    "Checkpoint ids allow consumers to resume from the last durable partial-completion update."
+  ]
+}

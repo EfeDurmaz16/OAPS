@@ -1,0 +1,33 @@
+{
+  "profile": "oaps-a2a-v1",
+  "a2a_task": {
+    "task_id": "a2a-task-thread-202",
+    "status": "running"
+  },
+  "messages": [
+    {
+      "message_id": "msg-1",
+      "thread_id": "phase-planning",
+      "sender": "https://agents.example/planner",
+      "kind": "informational",
+      "summary": "Plan assembled; awaiting execution window.",
+      "portable_state": "executing"
+    },
+    {
+      "message_id": "msg-2",
+      "parent_message_id": "msg-1",
+      "thread_id": "phase-planning",
+      "sender": "https://agents.example/reviewer",
+      "kind": "approval-seeking",
+      "summary": "Escalating the database cutover step for approval.",
+      "portable_state": "pending_approval"
+    }
+  ],
+  "oaps_mapping": {
+    "interaction_id": "int-a2a-thread-202",
+    "message_metadata": {
+      "thread_id": "phase-planning",
+      "state_reason": "approval boundary before cutover"
+    }
+  }
+}

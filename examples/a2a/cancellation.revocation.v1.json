@@ -1,0 +1,20 @@
+{
+  "profile": "oaps-a2a-v1",
+  "cases": [
+    {
+      "a2a_status": "cancelled_by_requester",
+      "preferred_oaps_state": "revoked",
+      "reason": "Authority or desire to continue the task was withdrawn."
+    },
+    {
+      "a2a_status": "failed_during_execution",
+      "preferred_oaps_state": "failed",
+      "reason": "Work stopped because execution failed, not because authority disappeared."
+    },
+    {
+      "a2a_status": "needs_remediation",
+      "preferred_oaps_state": "challenged",
+      "reason": "The task remains resumable after challenge resolution."
+    }
+  ]
+}

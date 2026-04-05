@@ -200,14 +200,14 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 8. A2A Profile Expansion
 
-- [ ] Add deeper lifecycle mapping between A2A tasks/messages and OAPS interactions/messages
-- [ ] Add explicit message threading / state propagation notes
-- [ ] Add examples for approval interposition on A2A task boundaries
-- [ ] Add examples for delegation carryover through A2A tasks
-- [ ] Add examples for evidence carryover and task replay notes
-- [ ] Add fixture scenarios for partial completion / long-running task updates
-- [ ] Add fixture scenarios for task cancellation/revocation mapping
-- [ ] Add compatibility declaration examples for partial A2A implementations
+- [x] Add deeper lifecycle mapping between A2A tasks/messages and OAPS interactions/messages
+- [x] Add explicit message threading / state propagation notes
+- [x] Add examples for approval interposition on A2A task boundaries
+- [x] Add examples for delegation carryover through A2A tasks
+- [x] Add examples for evidence carryover and task replay notes
+- [x] Add fixture scenarios for partial completion / long-running task updates
+- [x] Add fixture scenarios for task cancellation/revocation mapping
+- [x] Add compatibility declaration examples for partial A2A implementations
 
 ### 9. Auth-Web Profile Hardening
 

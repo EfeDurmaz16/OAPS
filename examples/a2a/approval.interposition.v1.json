@@ -1,0 +1,20 @@
+{
+  "profile": "oaps-a2a-v1",
+  "a2a_task": {
+    "task_id": "a2a-task-approve-001",
+    "status": "blocked_on_human_review",
+    "agent_id": "https://agents.example/fulfillment-router",
+    "thread_id": "thread-approval-1"
+  },
+  "oaps_mapping": {
+    "interaction_id": "int-a2a-approve-001",
+    "state": "pending_approval",
+    "approval_request_id": "apr-001",
+    "blocking_transition": "execute_provisioning_step",
+    "resume_transition": "executing"
+  },
+  "notes": [
+    "Approval interposition pauses the portable task lifecycle without creating a detached review object.",
+    "The same interaction identifier is reused after approval."
+  ]
+}
