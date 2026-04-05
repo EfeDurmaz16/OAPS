@@ -265,11 +265,11 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 15. OSP / Provisioning Track Expansion
 
-- [ ] Deepen provisioning lifecycle mapping notes
-- [ ] Add examples for estimate / provision / credential delivery / rotate / suspend / deprovision
-- [ ] Add fixture scenarios for provisioning lifecycle transitions
-- [ ] Add examples for approval-gated provisioning
-- [ ] Add examples for payment-linked provisioning handoff
+- [x] Deepen provisioning lifecycle mapping notes
+- [x] Add examples for estimate / provision / credential delivery / rotate / suspend / deprovision
+- [x] Add fixture scenarios for provisioning lifecycle transitions
+- [x] Add examples for approval-gated provisioning
+- [x] Add examples for payment-linked provisioning handoff
 
 ### 16. Core + Binding + Profile Schema Growth
 

@@ -1,0 +1,11 @@
+{
+  "profile": "oaps-osp-v1",
+  "interaction_id": "osp-paid-001",
+  "provisioning_state": "pending_approval",
+  "payment_handoff": {
+    "profile": "oaps-mpp-v1",
+    "payment_session_id": "mpp_sess_002",
+    "required_before": "credential_delivery"
+  },
+  "resume_state_after_payment": "executing"
+}

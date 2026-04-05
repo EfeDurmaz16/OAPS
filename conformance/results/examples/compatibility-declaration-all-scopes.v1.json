@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T17:04:58.855994Z",
+  "generated_at": "2026-04-05T17:07:54.973363Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -584,18 +584,26 @@
       "error": 0,
       "evaluated_scenario_ids": [
         "osp.provisioning.actor-card",
-        "osp.provisioning.approval-request",
-        "osp.lifecycle.execution-result"
+        "osp.lifecycle.estimate-to-provision",
+        "osp.provisioning.approval-gated",
+        "osp.credential.delivery",
+        "osp.credential.rotate",
+        "osp.lifecycle.suspend-deprovision",
+        "osp.payment-linked.handoff"
       ],
-      "evaluated_scenarios": 3,
+      "evaluated_scenarios": 7,
       "fail": 0,
       "known_scenario_ids": [
         "osp.provisioning.actor-card",
-        "osp.provisioning.approval-request",
-        "osp.lifecycle.execution-result"
+        "osp.lifecycle.estimate-to-provision",
+        "osp.provisioning.approval-gated",
+        "osp.credential.delivery",
+        "osp.credential.rotate",
+        "osp.lifecycle.suspend-deprovision",
+        "osp.payment-linked.handoff"
       ],
-      "known_scenarios": 3,
-      "pass": 3,
+      "known_scenarios": 7,
+      "pass": 7,
       "scope": "profile:osp",
       "selected_in_result": true,
       "skip": 0,
@@ -684,7 +692,7 @@
     "profile:x402"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T17:04:58.813267Z",
+    "executed_at": "2026-04-05T17:07:54.928925Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/example-result.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },

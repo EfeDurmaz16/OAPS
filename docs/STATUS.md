@@ -55,6 +55,36 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: OSP / provisioning track expansion
+- tranche status:
+  - drafted:
+    - expanded `profiles/osp-draft.md` with deeper estimate/provision/credential/rotate/suspend/deprovision lifecycle notes, explicit approval-gated provisioning guidance, and payment-linked handoff semantics
+    - added the first focused OSP example pack under `examples/osp/` for estimate requests, approval-gated provision flows, credential delivery, credential rotation, suspension/deprovision mapping, and payment-linked handoff
+  - implemented:
+    - rewired the OSP conformance pack to distinguish estimate, approval-gated provisioning, credential delivery, rotate, suspend/deprovision, and payment-linked handoff anchors while reusing only honest shared runtime seams
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/osp/index.v1.json` with explicit lifecycle-transition and payment-handoff scenarios
+    - regenerated suite result and compatibility examples after the provisioning-scope expansion and validated `profile:osp` through the suite conformance validator, Python manifest tests, and Python fixture-check/result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - made the provisioning profile more concrete without pretending the repo already ships a live OSP backend or vendor-specific catalog runtime
+  - added reader-facing provisioning examples for estimate, approval-gated provisioning, credential delivery, rotation, suspension/deprovision, and payment-linked resumption
+  - tightened the OSP conformance pack so lifecycle transitions and payment-linked provisioning are now explicit fixture anchors
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/osp ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:osp --output /tmp/oaps-osp-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-osp-fixture-check-v2.json --json`
+- commits:
+  - `osp: deepen provisioning lifecycle profile`
+- next unfinished work:
+  - start V2 tranche 16 by extending schema coverage and schema/index pointers across the newer draft scopes
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: MPP profile draft
 - tranche status:
   - drafted:

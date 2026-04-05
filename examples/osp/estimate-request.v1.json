@@ -1,0 +1,7 @@
+{
+  "profile": "oaps-osp-v1",
+  "interaction_id": "osp-estimate-001",
+  "requested_service": "cloud-database",
+  "requested_outcome": "Estimate production database cluster",
+  "portable_state": "intent_received"
+}

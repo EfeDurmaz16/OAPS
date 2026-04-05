@@ -1,0 +1,15 @@
+{
+  "profile": "oaps-osp-v1",
+  "cases": [
+    {
+      "operation": "suspend",
+      "preferred_state": "challenged",
+      "reason": "Billing or trust issue temporarily blocks service use."
+    },
+    {
+      "operation": "deprovision",
+      "preferred_state": "revoked",
+      "reason": "The service is permanently withdrawn."
+    }
+  ]
+}

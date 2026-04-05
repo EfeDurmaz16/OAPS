@@ -27,9 +27,22 @@
       ]
     },
     {
-      "scenario_id": "osp.provisioning.approval-request",
+      "scenario_id": "osp.lifecycle.estimate-to-provision",
+      "dimension": "provisioning",
+      "example": "examples/osp/estimate-request.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors the bounded estimate-before-provisioning phase without claiming a live catalog or quote runtime.",
+      "related_examples": [
+        "examples/osp/estimate-request.v1.json",
+        "examples/foundation/task.json"
+      ]
+    },
+    {
+      "scenario_id": "osp.provisioning.approval-gated",
       "dimension": "approval",
-      "example": "examples/approval-request.json",
+      "example": "examples/osp/provision.approval-gated.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "fixture",
@@ -41,15 +54,15 @@
         "http.approval.not-pending"
       ],
       "related_examples": [
+        "examples/osp/provision.approval-gated.v1.json",
         "examples/approval-request.json",
-        "examples/approval-decision.json",
-        "examples/approval-decision-modify.json"
+        "examples/approval-decision.json"
       ]
     },
     {
-      "scenario_id": "osp.lifecycle.execution-result",
+      "scenario_id": "osp.credential.delivery",
       "dimension": "credential-delivery",
-      "example": "examples/execution-result.json",
+      "example": "examples/osp/credential-delivery.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
         "fixture",
@@ -62,9 +75,49 @@
         "http.interaction.updated"
       ],
       "related_examples": [
+        "examples/osp/credential-delivery.v1.json",
         "examples/execution-result.json",
-        "examples/evidence-event.json",
-        "examples/error-object.json"
+        "examples/evidence-event.json"
+      ]
+    },
+    {
+      "scenario_id": "osp.credential.rotate",
+      "dimension": "credential-delivery",
+      "example": "examples/osp/credential-rotate.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors follow-on credential rotation without pretending the reference runtime already performs key rotation.",
+      "related_examples": [
+        "examples/osp/credential-rotate.v1.json",
+        "examples/osp/credential-delivery.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "osp.lifecycle.suspend-deprovision",
+      "dimension": "evidence",
+      "example": "examples/osp/suspend-deprovision.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture distinguishes temporary suspension from permanent deprovisioning or teardown.",
+      "related_examples": [
+        "examples/osp/suspend-deprovision.v1.json",
+        "examples/evidence-event.json"
+      ]
+    },
+    {
+      "scenario_id": "osp.payment-linked.handoff",
+      "dimension": "provisioning",
+      "example": "examples/osp/payment-linked-handoff.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture keeps the payment handoff explicit when provisioning must wait on a payment-session or payment-challenge profile.",
+      "related_examples": [
+        "examples/osp/payment-linked-handoff.v1.json",
+        "examples/mpp/mandate-linked-session.v1.json",
+        "examples/x402/payment-requirement.challenge.v1.json"
       ]
     }
   ]

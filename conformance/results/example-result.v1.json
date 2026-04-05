@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T17:04:58.813267Z",
+  "executed_at": "2026-04-05T17:07:54.928925Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -2075,7 +2075,20 @@
     {
       "artifacts": [
         "conformance/fixtures/profiles/osp/index.v1.json",
-        "examples/approval-request.json",
+        "examples/osp/estimate-request.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "osp.lifecycle.estimate-to-provision",
+      "scope": "profile:osp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/osp/index.v1.json",
+        "examples/osp/provision.approval-gated.v1.json",
         "reference/oaps-monorepo/packages/http/src/index.test.ts"
       ],
       "coverage": [
@@ -2084,13 +2097,13 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "osp.provisioning.approval-request",
+      "scenario_id": "osp.provisioning.approval-gated",
       "scope": "profile:osp"
     },
     {
       "artifacts": [
         "conformance/fixtures/profiles/osp/index.v1.json",
-        "examples/execution-result.json",
+        "examples/osp/credential-delivery.v1.json",
         "reference/oaps-monorepo/packages/core/src/index.test.ts"
       ],
       "coverage": [
@@ -2099,7 +2112,46 @@
       ],
       "notes": "static fixture check; no runtime execution was performed",
       "outcome": "pass",
-      "scenario_id": "osp.lifecycle.execution-result",
+      "scenario_id": "osp.credential.delivery",
+      "scope": "profile:osp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/osp/index.v1.json",
+        "examples/osp/credential-rotate.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "osp.credential.rotate",
+      "scope": "profile:osp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/osp/index.v1.json",
+        "examples/osp/suspend-deprovision.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "osp.lifecycle.suspend-deprovision",
+      "scope": "profile:osp"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/osp/index.v1.json",
+        "examples/osp/payment-linked-handoff.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "osp.payment-linked.handoff",
       "scope": "profile:osp"
     },
     {
@@ -2295,8 +2347,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 163,
+    "pass": 167,
     "skip": 0,
-    "total": 163
+    "total": 167
   }
 }

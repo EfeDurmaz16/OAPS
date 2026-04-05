@@ -1,0 +1,8 @@
+{
+  "profile": "oaps-osp-v1",
+  "interaction_id": "osp-provision-001",
+  "resource_type": "cloud-database",
+  "state": "pending_approval",
+  "approval_request_id": "apr-osp-001",
+  "resume_state": "executing"
+}
