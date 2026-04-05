@@ -59,13 +59,13 @@ The current draft should be read as a semantic mapping matrix rather than as a c
 | --- | --- | --- | --- |
 | payment discovery | discovery metadata advertising a payable surface | `x402.payment.discovery` via shared HTTP discovery runtime | runtime-backed through shared HTTP discovery only |
 | payment authorization challenge | pre-execution gate before side effects | `x402.payment.authorization.intent` via shared MCP policy/approval runtime | runtime-backed through shared MCP gating only |
-| retry after challenge | same interaction lineage plus idempotent replay semantics | shared HTTP idempotency and message/evidence continuity | partial; no dedicated payment challenge round-trip yet |
+| retry after challenge | same interaction lineage plus idempotent replay semantics | shared HTTP idempotency across create/message/approve/reject/revoke mutations plus message/evidence continuity | partial; no dedicated payment challenge round-trip yet |
 | settlement or paid completion | `ExecutionResult` plus canonical terminal state | `x402.settlement.execution-result` via shared HTTP completion runtime | runtime-backed through shared completion surfaces only |
 | payment failure mapping | stable OAPS error category instead of rail-specific failure text | shared MCP/HTTP error translation surfaces | partial; no rail-specific error catalog yet |
 
 The current reference slice therefore proves that OAPS can carry payment-gating semantics across challenge, retry, and completion boundaries without claiming a real payment rail or x402 facilitator implementation.
 
-The key rule is that x402 challenge/retry behavior should preserve one OAPS-governed authorization story, not split the payment step from the governed action that it unlocks. In practice, the interaction identifier, idempotent intent, payment authorization reference, and evidence continuity must remain stable across challenge/retry loops even though the current suite does not yet expose a dedicated x402 round-trip runtime.
+The key rule is that x402 challenge/retry behavior should preserve one OAPS-governed authorization story, not split the payment step from the governed action that it unlocks. In practice, the interaction identifier, idempotent intent, payment authorization reference, and evidence continuity must remain stable across challenge/retry loops. The shared HTTP binding slice now treats idempotent replay as a full mutation-surface rule, so later x402-specific retries can build on the same message, approval, rejection, and revoke retry semantics rather than special-casing only initial interaction creation.
 
 ## Conformance
 
@@ -78,7 +78,7 @@ A conforming `oaps-x402-v1` implementation:
 - SHOULD remain rail-neutral at the OAPS semantic layer
 
 The current conformance pack groups this profile as static payment discovery, authorization intent, settlement, and evidence anchors.
-The runtime references are adjacent HTTP and MCP surfaces that already exist in the reference suite; they are not a claim of full x402 facilitator coverage.
+The runtime references are adjacent HTTP and MCP surfaces that already exist in the reference suite, including binding-level idempotent retry behavior on the shared HTTP mutation surface; they are not a claim of full x402 facilitator coverage.
 
 ## Implementation Notes
 

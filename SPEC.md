@@ -293,6 +293,8 @@ A receiver MUST return the original result when the same authenticated actor sen
 
 If the same key is reused with a different payload, the receiver MUST return `IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD`.
 
+This rule applies to the canonical follow-on HTTP mutations as well as initial interaction creation. In particular, repeated `POST /interactions/{id}/messages`, `/approve`, `/reject`, and `/revoke` requests by the same authenticated actor SHOULD replay the original result rather than duplicating lifecycle transitions or evidence.
+
 ## 16. Version negotiation
 
 ### 16.1 Envelope fields

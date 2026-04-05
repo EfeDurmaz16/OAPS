@@ -139,6 +139,51 @@
       ]
     },
     {
+      "scenario_id": "http.idempotency.messages.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises idempotent replay for POST /interactions/{id}/messages so repeated retries do not append duplicate messages or evidence."
+    },
+    {
+      "scenario_id": "http.idempotency.messages.conflict",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises deterministic conflict handling when POST /interactions/{id}/messages reuses an idempotency key with a different payload."
+    },
+    {
+      "scenario_id": "http.idempotency.approval.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises idempotent replay for POST /interactions/{id}/approve after a high-risk call has been approved once."
+    },
+    {
+      "scenario_id": "http.idempotency.rejection.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises idempotent replay for POST /interactions/{id}/reject so repeated retries do not duplicate approval.rejected evidence."
+    },
+    {
+      "scenario_id": "http.idempotency.revocation.reuse",
+      "dimension": "idempotency",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises idempotent replay for POST /interactions/{id}/revoke so repeated retries do not duplicate interaction.revoked evidence."
+    },
+    {
       "scenario_id": "http.version.negotiation",
       "dimension": "version-negotiation",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",

@@ -133,6 +133,16 @@ must yield the original result.
 
 If the same key is reused with a different payload, the binding must surface a deterministic conflict error.
 
+For the current draft, this rule applies to the full canonical mutation surface, not only initial interaction creation. In particular:
+
+- `POST /interactions`
+- `POST /interactions/{id}/messages`
+- `POST /interactions/{id}/approve`
+- `POST /interactions/{id}/reject`
+- `POST /interactions/{id}/revoke`
+
+should all preserve idempotent replay for identical retries by the same authenticated actor. That keeps approval, rejection, revocation, and follow-on message flows safe to retry without duplicating lifecycle transitions or evidence events.
+
 ## Authentication
 
 The HTTP binding must support at least one authentication family.
@@ -210,7 +220,7 @@ A conforming HTTP binding implementation should:
 - honor version negotiation
 - preserve OAPS error semantics
 
-The current reference conformance pack exercises discovery, interaction creation, message append, message interaction-id mismatch rejection, approval completion, approval rejection, revocation, evidence retrieval, event retrieval, idempotent replay, idempotency conflict, authentication failure, version negotiation failure, missing interactions, and approval-not-pending behavior against the reference runtime.
+The current reference conformance pack exercises discovery, interaction creation, message append, message interaction-id mismatch rejection, approval completion, approval rejection, revocation, evidence retrieval, event retrieval, idempotent replay for create/message/approve/reject/revoke mutations, idempotency conflict handling for create and message-append retries, authentication failure, version negotiation failure, missing interactions, and approval-not-pending behavior against the reference runtime.
 
 ## Open Questions
 

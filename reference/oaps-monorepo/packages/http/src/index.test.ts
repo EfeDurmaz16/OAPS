@@ -143,6 +143,56 @@ test('approval flow moves interaction from pending_approval to completed', async
   assert.equal(approved.payload.state, 'completed');
 });
 
+test('POST /interactions/:id/approve respects idempotency keys', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-approve' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_approve_idem',
+      message_id: 'msg_approve_idem',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_approve_idem',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+  assert.equal(createResponse.status, 202);
+
+  const first = await app.request('/interactions/ix_approve_idem/approve', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'approved for test' }),
+  });
+  assert.equal(first.status, 200);
+  const firstBody = await first.json();
+  assert.equal(firstBody.payload.state, 'completed');
+  assert.equal(typeof firstBody.payload.metadata.execution_id, 'string');
+
+  const replayed = await app.request('/interactions/ix_approve_idem/approve', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'approved for test' }),
+  });
+  assert.equal(replayed.status, 200);
+  const replayedBody = await replayed.json();
+  assert.equal(replayedBody.payload.metadata.execution_id, firstBody.payload.metadata.execution_id);
+
+  const conflict = await app.request('/interactions/ix_approve_idem/approve', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'different reason' }),
+  });
+  assert.equal(conflict.status, 409);
+  const conflictBody = await conflict.json();
+  assert.equal(conflictBody.code, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD');
+  assert.equal(conflictBody.category, 'validation');
+});
+
 test('idempotency returns the original response for repeated requests', async () => {
   const app = createTestApp();
   const headers = jsonHeaders({ 'idempotency-key': 'idem-1' });
@@ -193,6 +243,101 @@ test('POST /interactions/:id/messages appends envelopes to interaction history',
   assert.equal(interaction.messages[1].message_id, 'msg_2');
 });
 
+test('POST /interactions/:id/messages rejects authenticated subject mismatches', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const response = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...messageEnvelope,
+      from: { actor_id: 'urn:oaps:actor:agent:other' },
+    }),
+  });
+
+  assert.equal(response.status, 401);
+  const body = await response.json();
+  assert.equal(body.code, 'AUTHENTICATED_SUBJECT_MISMATCH');
+  assert.equal(body.category, 'authentication');
+});
+
+test('POST /interactions/:id/messages replays the original response for idempotent retries', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-message-1' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const first = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(messageEnvelope),
+  });
+  const firstBody = await first.json();
+
+  const second = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(messageEnvelope),
+  });
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.deepEqual(await second.json(), firstBody);
+
+  const interactionResponse = await app.request('/interactions/ix_1');
+  const interaction = await interactionResponse.json();
+  assert.equal(interaction.messages.length, 2);
+
+  const eventsResponse = await app.request('/interactions/ix_1/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.message.appended').length, 1);
+});
+
+test('POST /interactions/:id/messages rejects idempotency key reuse with a different payload', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-message-conflict' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify(requestEnvelope),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const first = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(messageEnvelope),
+  });
+  assert.equal(first.status, 200);
+
+  const second = await app.request('/interactions/ix_1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      ...messageEnvelope,
+      message_id: 'msg_2_conflict',
+    }),
+  });
+
+  assert.equal(second.status, 409);
+  const body = await second.json();
+  assert.equal(body.code, 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD');
+  assert.equal(body.category, 'validation');
+});
+
 test('GET /interactions/:id/evidence returns the hash-linked evidence chain', async () => {
   const app = createTestApp();
 
@@ -211,9 +356,12 @@ test('GET /interactions/:id/evidence returns the hash-linked evidence chain', as
 
   assert.equal(response.status, 200);
   const body = await response.json();
+  assert.equal(body.interaction_id, 'ix_evidence');
   assert.equal(body.events.length, 4);
   assert.equal(body.events[0].event_type, 'interaction.received');
   assert.equal(body.events.at(-1).event_type, 'interaction.completed');
+  assert.equal(body.replay.has_more, false);
+  assert.equal(body.replay.total_events, 4);
 });
 
 test('GET /interactions/:id/events returns the flattened event stream', async () => {
@@ -234,9 +382,91 @@ test('GET /interactions/:id/events returns the flattened event stream', async ()
 
   assert.equal(response.status, 200);
   const body = await response.json();
-  assert.equal(body.length, 4);
-  assert.equal(body[0].event_type, 'interaction.received');
-  assert.equal(body.at(-1).event_type, 'interaction.completed');
+  assert.equal(body.interaction_id, 'ix_events');
+  assert.equal(body.events.length, 4);
+  assert.equal(body.events[0].event_type, 'interaction.received');
+  assert.equal(body.events.at(-1).event_type, 'interaction.completed');
+  assert.equal(body.replay.has_more, false);
+});
+
+test('GET replay endpoints support after/limit windows for incremental event retrieval', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_window',
+      message_id: 'msg_window_create',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const messageResponse = await app.request('/interactions/ix_window/messages', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...messageEnvelope,
+      interaction_id: 'ix_window',
+      message_id: 'msg_window_append',
+    }),
+  });
+  assert.equal(messageResponse.status, 200);
+
+  const firstEventsResponse = await app.request('/interactions/ix_window/events?limit=2');
+  assert.equal(firstEventsResponse.status, 200);
+  const firstEventsBody = await firstEventsResponse.json();
+  assert.equal(firstEventsBody.events.length, 2);
+  assert.equal(firstEventsBody.events[0].event_type, 'interaction.received');
+  assert.equal(firstEventsBody.replay.has_more, true);
+
+  const nextCursor = firstEventsBody.replay.next_after;
+  assert.equal(typeof nextCursor, 'string');
+
+  const secondEventsResponse = await app.request(`/interactions/ix_window/events?after=${nextCursor}&limit=10`);
+  assert.equal(secondEventsResponse.status, 200);
+  const secondEventsBody = await secondEventsResponse.json();
+  assert.equal(secondEventsBody.events.length, 3);
+  assert.equal(secondEventsBody.events[0].event_type, 'mcp.tool_call.completed');
+  assert.equal(secondEventsBody.events.at(-1).event_type, 'interaction.message.appended');
+  assert.equal(secondEventsBody.replay.after, nextCursor);
+  assert.equal(secondEventsBody.replay.has_more, false);
+
+  const evidenceResponse = await app.request(`/interactions/ix_window/evidence?after=${nextCursor}&limit=2`);
+  assert.equal(evidenceResponse.status, 200);
+  const evidenceBody = await evidenceResponse.json();
+  assert.equal(evidenceBody.events.length, 2);
+  assert.equal(evidenceBody.events[0].event_type, 'mcp.tool_call.completed');
+  assert.equal(evidenceBody.replay.after, nextCursor);
+  assert.equal(evidenceBody.replay.has_more, true);
+});
+
+test('GET replay endpoints reject unknown replay cursors and invalid limits', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_bad_cursor',
+      message_id: 'msg_bad_cursor',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const missingCursorResponse = await app.request('/interactions/ix_bad_cursor/events?after=evt_missing');
+  assert.equal(missingCursorResponse.status, 400);
+  const missingCursorBody = await missingCursorResponse.json();
+  assert.equal(missingCursorBody.code, 'REPLAY_CURSOR_NOT_FOUND');
+  assert.equal(missingCursorBody.category, 'validation');
+
+  const invalidLimitResponse = await app.request('/interactions/ix_bad_cursor/evidence?limit=zero');
+  assert.equal(invalidLimitResponse.status, 400);
+  const invalidLimitBody = await invalidLimitResponse.json();
+  assert.equal(invalidLimitBody.code, 'VALIDATION_FAILED');
+  assert.equal(invalidLimitBody.category, 'validation');
 });
 
 test('POST /interactions/:id/messages rejects mismatched interaction ids', async () => {
@@ -454,7 +684,90 @@ test('POST /interactions/:id/reject records approval rejection and fails the int
 
   const eventsResponse = await app.request('/interactions/ix_reject/events');
   const events = await eventsResponse.json();
-  assert.equal(events.at(-1).event_type, 'approval.rejected');
+  assert.equal(events.events.at(-1).event_type, 'approval.rejected');
+});
+
+test('POST /interactions/:id/approve replays the original response for idempotent retries', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-approve-1' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_approve_idem',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_approve_idem',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+  assert.equal(createResponse.status, 202);
+
+  const first = await app.request('/interactions/ix_approve_idem/approve', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'approved for idempotency test' }),
+  });
+  const firstBody = await first.json();
+
+  const second = await app.request('/interactions/ix_approve_idem/approve', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'approved for idempotency test' }),
+  });
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.deepEqual(await second.json(), firstBody);
+
+  const eventsResponse = await app.request('/interactions/ix_approve_idem/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.completed').length, 1);
+});
+
+test('POST /interactions/:id/reject replays the original response for idempotent retries', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-reject-1' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_reject_idem',
+      message_id: 'msg_reject_idem',
+      payload: {
+        ...requestEnvelope.payload,
+        intent_id: 'int_reject_idem',
+        object: 'tool:pay_invoice',
+      },
+    }),
+  });
+  assert.equal(createResponse.status, 202);
+
+  const first = await app.request('/interactions/ix_reject_idem/reject', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'denied for idempotency test' }),
+  });
+  const firstBody = await first.json();
+
+  const second = await app.request('/interactions/ix_reject_idem/reject', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ reason: 'denied for idempotency test' }),
+  });
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.deepEqual(await second.json(), firstBody);
+
+  const eventsResponse = await app.request('/interactions/ix_reject_idem/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'approval.rejected').length, 1);
 });
 
 test('POST /interactions/:id/revoke moves the interaction into revoked state', async () => {
@@ -487,7 +800,42 @@ test('POST /interactions/:id/revoke moves the interaction into revoked state', a
 
   const eventsResponse = await app.request('/interactions/ix_revoke/events');
   const events = await eventsResponse.json();
-  assert.equal(events.at(-1).event_type, 'interaction.revoked');
+  assert.equal(events.events.at(-1).event_type, 'interaction.revoked');
+});
+
+test('POST /interactions/:id/revoke replays the original response for idempotent retries', async () => {
+  const app = createTestApp();
+  const headers = jsonHeaders({ 'idempotency-key': 'idem-revoke-1' });
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_revoke_idem',
+      message_id: 'msg_revoke_idem',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const first = await app.request('/interactions/ix_revoke_idem/revoke', {
+    method: 'POST',
+    headers,
+  });
+  const firstBody = await first.json();
+
+  const second = await app.request('/interactions/ix_revoke_idem/revoke', {
+    method: 'POST',
+    headers,
+  });
+
+  assert.equal(first.status, 200);
+  assert.equal(second.status, 200);
+  assert.deepEqual(await second.json(), firstBody);
+
+  const eventsResponse = await app.request('/interactions/ix_revoke_idem/events');
+  const events = await eventsResponse.json();
+  assert.equal(events.filter((event: { event_type: string }) => event.event_type === 'interaction.revoked').length, 1);
 });
 
 test('file-backed store persists interactions across app instances', async () => {

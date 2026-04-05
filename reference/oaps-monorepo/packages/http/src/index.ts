@@ -15,6 +15,7 @@ import {
   OAPS_MIN_SUPPORTED_VERSION,
   OAPS_SPEC_VERSION,
   OapsError,
+  assertAuthenticatedActor,
   buildEnvelope,
   generateId,
   negotiateVersion,
@@ -55,6 +56,134 @@ export interface ReferenceServerOptions {
 
 function jsonError(c: any, error: ErrorObject, status = 400) {
   return c.json(error, status as any);
+}
+
+interface ReplayWindow {
+  after?: string;
+  limit?: number;
+}
+
+interface ReplaySlice {
+  interaction_id: string;
+  events: EvidenceChain['events'];
+  replay: {
+    after: string | null;
+    returned: number;
+    total_events: number;
+    has_more: boolean;
+    next_after: string | null;
+  };
+}
+
+function parseReplayWindow(c: any): ReplayWindow | Response {
+  const after = c.req.query('after')?.trim() || undefined;
+  const limitRaw = c.req.query('limit');
+  if (limitRaw === undefined) {
+    return { after };
+  }
+
+  if (!/^[1-9][0-9]*$/.test(limitRaw)) {
+    return c.json({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Replay limit must be a positive integer',
+      retryable: false,
+    } satisfies ErrorObject, 400);
+  }
+
+  return {
+    after,
+    limit: Number.parseInt(limitRaw, 10),
+  };
+}
+
+function sliceReplayEvents(
+  interactionId: string,
+  events: EvidenceChain['events'],
+  window: ReplayWindow,
+): ReplaySlice | ErrorObject {
+  let startIndex = 0;
+
+  if (window.after) {
+    const afterIndex = events.findIndex((event) => event.event_id === window.after);
+    if (afterIndex === -1) {
+      return {
+        code: 'REPLAY_CURSOR_NOT_FOUND',
+        category: 'validation',
+        message: 'Replay cursor does not match any event in this interaction',
+        retryable: false,
+        details: {
+          after: window.after,
+        },
+      };
+    }
+    startIndex = afterIndex + 1;
+  }
+
+  const remainingEvents = events.slice(startIndex);
+  const slicedEvents = window.limit === undefined ? remainingEvents : remainingEvents.slice(0, window.limit);
+
+  return {
+    interaction_id: interactionId,
+    events: slicedEvents,
+    replay: {
+      after: window.after ?? null,
+      returned: slicedEvents.length,
+      total_events: events.length,
+      has_more: remainingEvents.length > slicedEvents.length,
+      next_after: slicedEvents.at(-1)?.event_id ?? window.after ?? null,
+    },
+  };
+}
+
+function buildIdempotencyFingerprint(c: any, actorId: string, key: string): string {
+  return `${actorId}:${c.req.method}:${c.req.path}:${key}`;
+}
+
+async function replayIdempotentResponse(
+  c: any,
+  stateStore: ReferenceStateStore,
+  actorId: string,
+  requestHash: string,
+): Promise<Response | null> {
+  const idempotencyKey = c.req.header('idempotency-key');
+  if (!idempotencyKey) return null;
+
+  const idempotencyFingerprint = buildIdempotencyFingerprint(c, actorId, idempotencyKey);
+  const existing = await stateStore.getIdempotency(idempotencyFingerprint);
+  if (!existing) return null;
+
+  if (existing.request_hash !== requestHash) {
+    return jsonError(c, {
+      code: 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD',
+      category: 'validation',
+      message: 'Idempotency key cannot be reused with a different payload',
+      retryable: false,
+    }, 409);
+  }
+
+  return c.newResponse(JSON.stringify(existing.body), existing.status as any, {
+    'content-type': 'application/json',
+  });
+}
+
+async function persistIdempotentResponse(
+  c: any,
+  stateStore: ReferenceStateStore,
+  actorId: string,
+  requestHash: string,
+  status: number,
+  body: unknown,
+): Promise<void> {
+  const idempotencyKey = c.req.header('idempotency-key');
+  if (!idempotencyKey) return;
+
+  const idempotencyFingerprint = buildIdempotencyFingerprint(c, actorId, idempotencyKey);
+  await stateStore.putIdempotency(idempotencyFingerprint, {
+    request_hash: requestHash,
+    status,
+    body,
+  });
 }
 
 function extractAuthenticatedActor(c: any, tokens: Record<string, string>): string | Response {
@@ -195,24 +324,10 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       return jsonError(c, version.error!, 400);
     }
 
-    const idempotencyKey = c.req.header('idempotency-key');
-    const idempotencyFingerprint = idempotencyKey ? `${authenticatedActor}:POST:/interactions:${idempotencyKey}` : null;
     const requestHash = sha256Prefixed(requestEnvelope);
-    if (idempotencyFingerprint) {
-      const existing = await stateStore.getIdempotency(idempotencyFingerprint);
-      if (existing) {
-        if (existing.request_hash !== requestHash) {
-          return jsonError(c, {
-            code: 'IDEMPOTENCY_KEY_REUSED_WITH_DIFFERENT_PAYLOAD',
-            category: 'validation',
-            message: 'Idempotency key cannot be reused with a different payload',
-            retryable: false,
-          }, 409);
-        }
-        return c.newResponse(JSON.stringify(existing.body), existing.status as any, {
-          'content-type': 'application/json',
-        });
-      }
+    const replayedResponse = await replayIdempotentResponse(c, stateStore, authenticatedActor, requestHash);
+    if (replayedResponse) {
+      return replayedResponse;
     }
 
     if (requestEnvelope.message_type !== 'intent.request') {
@@ -282,9 +397,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       const responseBody = buildCreatedEnvelope(interactionId, requestEnvelope.from, 'completed', {
         execution_id: invokeResult.execution.execution_id,
       });
-      if (idempotencyFingerprint) {
-        await stateStore.putIdempotency(idempotencyFingerprint, { request_hash: requestHash, status: 201, body: responseBody });
-      }
+      await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 201, responseBody);
       await stateStore.putInteraction(record);
       return c.json(responseBody, 201);
     } catch (error) {
@@ -296,9 +409,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         const responseBody = buildCreatedEnvelope(interactionId, requestEnvelope.from, 'pending_approval', {
           approval_request_id: error.approvalRequest.approval_request_id,
         });
-        if (idempotencyFingerprint) {
-          await stateStore.putIdempotency(idempotencyFingerprint, { request_hash: requestHash, status: 202, body: responseBody });
-        }
+        await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 202, responseBody);
         await stateStore.putInteraction(record);
         return c.json(responseBody, 202);
       }
@@ -349,7 +460,16 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
-    return c.json(interaction.evidence);
+
+    const replayWindow = parseReplayWindow(c);
+    if (replayWindow instanceof Response) return replayWindow;
+
+    const replaySlice = sliceReplayEvents(interaction.interaction_id, interaction.evidence.events, replayWindow);
+    if ('code' in replaySlice) {
+      return jsonError(c, replaySlice, 400);
+    }
+
+    return c.json(replaySlice);
   });
 
   app.get('/interactions/:id/events', async (c) => {
@@ -362,12 +482,42 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
-    return c.json(interaction.evidence.events);
+
+    const replayWindow = parseReplayWindow(c);
+    if (replayWindow instanceof Response) return replayWindow;
+
+    const replaySlice = sliceReplayEvents(interaction.interaction_id, interaction.evidence.events, replayWindow);
+    if ('code' in replaySlice) {
+      return jsonError(c, replaySlice, 400);
+    }
+
+    return c.json(replaySlice);
   });
 
   app.post('/interactions/:id/messages', async (c) => {
     const authenticatedActor = extractAuthenticatedActor(c, bearerTokens);
     if (authenticatedActor instanceof Response) return authenticatedActor;
+
+    const messageEnvelope = await c.req.json<Envelope>();
+    try {
+      assertAuthenticatedActor(authenticatedActor, messageEnvelope.from);
+    } catch (error) {
+      const oapsError = error instanceof OapsError
+        ? error.error
+        : {
+            code: 'AUTHENTICATED_SUBJECT_MISMATCH',
+            category: 'authentication',
+            message: error instanceof Error ? error.message : 'Authenticated subject does not match the envelope sender',
+            retryable: false,
+          } satisfies ErrorObject;
+      return jsonError(c, oapsError, 401);
+    }
+
+    const requestHash = sha256Prefixed(messageEnvelope);
+    const replayedResponse = await replayIdempotentResponse(c, stateStore, authenticatedActor, requestHash);
+    if (replayedResponse) {
+      return replayedResponse;
+    }
 
     const interaction = await stateStore.getInteraction(c.req.param('id'));
     if (!interaction) {
@@ -378,8 +528,6 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
-
-    const messageEnvelope = await c.req.json<Envelope>();
     if (messageEnvelope.interaction_id !== interaction.interaction_id) {
       return jsonError(c, {
         code: 'VALIDATION_FAILED',
@@ -398,7 +546,7 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       interaction_id: interaction.interaction_id,
       event_type: 'interaction.message.appended',
       actor: authenticatedActor,
-      input_hash: sha256Prefixed(messageEnvelope),
+      input_hash: requestHash,
       metadata: {
         message_id: messageEnvelope.message_id,
         message_type: messageEnvelope.message_type,
@@ -408,11 +556,14 @@ export function createReferenceApp(options: ReferenceServerOptions) {
     });
     await stateStore.putInteraction(interaction);
 
-    return c.json(buildStateEnvelope(interaction.interaction_id, interaction.request.from, interaction.state, {
+    const responseBody = buildStateEnvelope(interaction.interaction_id, interaction.request.from, interaction.state, {
       message_id: messageEnvelope.message_id,
       message_type: messageEnvelope.message_type,
       message_count: messages.length,
-    }));
+    });
+    await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
+
+    return c.json(responseBody);
   });
 
   app.post('/interactions/:id/approve', async (c) => {
@@ -428,6 +579,12 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
+    const body = (await c.req.json().catch(() => ({}))) as { modified_action?: ApprovalDecision['modified_action']; reason?: string };
+    const requestHash = sha256Prefixed(body);
+    const replayedResponse = await replayIdempotentResponse(c, stateStore, authenticatedActor, requestHash);
+    if (replayedResponse) {
+      return replayedResponse;
+    }
     if (interaction.state !== 'pending_approval' || !interaction.approval_request) {
       return jsonError(c, {
         code: 'APPROVAL_NOT_PENDING',
@@ -437,7 +594,6 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       }, 409);
     }
 
-    const body = (await c.req.json().catch(() => ({}))) as { modified_action?: ApprovalDecision['modified_action']; reason?: string };
     const approvalDecision: ApprovalDecision = {
       approval_request_id: interaction.approval_request.approval_request_id,
       interaction_id: interaction.interaction_id,
@@ -485,10 +641,12 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       });
       await stateStore.putInteraction(interaction);
 
-      return c.json(buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'completed', {
+      const responseBody = buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'completed', {
         execution_id: invokeResult.execution.execution_id,
         approval_request_id: approvalDecision.approval_request_id,
-      }));
+      });
+      await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
+      return c.json(responseBody);
     } catch (error) {
       const oapsError = error instanceof OapsError
         ? error.error
@@ -526,6 +684,12 @@ export function createReferenceApp(options: ReferenceServerOptions) {
         retryable: false,
       }, 404);
     }
+    const body = (await c.req.json().catch(() => ({}))) as { reason?: string };
+    const requestHash = sha256Prefixed(body);
+    const replayedResponse = await replayIdempotentResponse(c, stateStore, authenticatedActor, requestHash);
+    if (replayedResponse) {
+      return replayedResponse;
+    }
     if (interaction.state !== 'pending_approval' || !interaction.approval_request) {
       return jsonError(c, {
         code: 'APPROVAL_NOT_PENDING',
@@ -535,7 +699,6 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       }, 409);
     }
 
-    const body = (await c.req.json().catch(() => ({}))) as { reason?: string };
     const approvalDecision: ApprovalDecision = {
       approval_request_id: interaction.approval_request.approval_request_id,
       interaction_id: interaction.interaction_id,
@@ -569,9 +732,11 @@ export function createReferenceApp(options: ReferenceServerOptions) {
     });
     await stateStore.putInteraction(interaction);
 
-    return c.json(buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'failed', {
+    const responseBody = buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'failed', {
       approval_request_id: approvalDecision.approval_request_id,
-    }));
+    });
+    await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
+    return c.json(responseBody);
   });
 
   app.post('/interactions/:id/revoke', async (c) => {
@@ -588,6 +753,12 @@ export function createReferenceApp(options: ReferenceServerOptions) {
       }, 404);
     }
 
+    const requestHash = sha256Prefixed({});
+    const replayedResponse = await replayIdempotentResponse(c, stateStore, authenticatedActor, requestHash);
+    if (replayedResponse) {
+      return replayedResponse;
+    }
+
     interaction.state = 'revoked';
     interaction.updated_at = new Date().toISOString();
     appendEvidenceEvent(interaction.evidence, {
@@ -597,7 +768,9 @@ export function createReferenceApp(options: ReferenceServerOptions) {
     });
     await stateStore.putInteraction(interaction);
 
-    return c.json(buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'revoked'));
+    const responseBody = buildStateEnvelope(interaction.interaction_id, interaction.request.from, 'revoked');
+    await persistIdempotentResponse(c, stateStore, authenticatedActor, requestHash, 200, responseBody);
+    return c.json(responseBody);
   });
 
   return app;
