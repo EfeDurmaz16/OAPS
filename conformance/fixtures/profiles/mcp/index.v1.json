@@ -28,7 +28,32 @@
         "schema",
         "fixture",
         "reference-runtime"
+      ],
+      "related_examples": [
+        "examples/mcp/capability-metadata-fidelity.v1.json"
       ]
+    },
+    {
+      "scenario_id": "mcp.tool-metadata.missing-input-schema",
+      "dimension": "capability-mapping",
+      "example": "examples/mcp/invalid-tool-missing-input-schema.v1.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "Covers fail-closed rejection when upstream MCP tool metadata omits the required input schema."
+    },
+    {
+      "scenario_id": "mcp.tool-metadata.malformed",
+      "dimension": "capability-mapping",
+      "example": "examples/mcp/invalid-tool-malformed-metadata.v1.json",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "Covers fail-closed rejection when upstream MCP tool metadata is malformed."
     },
     {
       "scenario_id": "mcp.intent.execution",
@@ -49,7 +74,16 @@
       "coverage": [
         "reference-runtime"
       ],
-      "notes": "Covers runtime-backed policy denial before tool execution, including high-risk evaluated policy-context hashes on denied calls.",
+      "notes": "Covers runtime-backed policy evaluation before MCP tool execution, including deny-before-call behavior."
+    },
+    {
+      "scenario_id": "mcp.policy.denial",
+      "dimension": "policy-gating",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Covers explicit runtime-backed policy denial plus high-risk evaluated policy-context hashes on denied calls.",
       "runtime_cases": [
         "policy.denial",
         "policy.denial.context_hash"
@@ -62,9 +96,20 @@
       "coverage": [
         "reference-runtime"
       ],
-      "notes": "Covers runtime-backed approval-required and approval-rejected adapter paths for high-risk MCP calls.",
+      "notes": "Covers runtime-backed approval-required adapter paths for high-risk MCP calls.",
       "runtime_cases": [
-        "approval.requested",
+        "approval.requested"
+      ]
+    },
+    {
+      "scenario_id": "mcp.approval.rejection",
+      "dimension": "approval-insertion",
+      "reference_test": "reference/oaps-monorepo/packages/mcp-adapter/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Covers runtime-backed approval rejection as a distinct OAPS authorization outcome.",
+      "runtime_cases": [
         "approval.rejected"
       ]
     },
@@ -75,7 +120,7 @@
       "coverage": [
         "reference-runtime"
       ],
-      "notes": "Covers runtime-backed capability lookup failure, authenticated-subject mismatch, approval modification mismatch, timeout translation, upstream auth translation, and validation translation."
+      "notes": "Covers runtime-backed capability lookup failure, authenticated-subject mismatch, approval modification mismatch, timeout translation, upstream auth translation, validation translation, and malformed tool metadata rejection."
     },
     {
       "scenario_id": "mcp.evidence.emission",
@@ -88,7 +133,7 @@
         "fixture",
         "reference-runtime"
       ],
-      "notes": "Runtime evidence includes start/completion/denial events, approval request/rejection events, and evaluated policy-context hashes on high-risk denial/request paths.",
+      "notes": "Runtime evidence includes start/completion/denial events, approval request/rejection events, and explicit policy-context-hash expectations on high-risk denial/requested/start boundaries.",
       "runtime_cases": [
         "mcp.tool_call.started",
         "mcp.tool_call.completed",
@@ -101,7 +146,10 @@
         "examples/evidence-event.json",
         "examples/error-object.json",
         "examples/approval-request.json",
-        "examples/approval-decision.json"
+        "examples/approval-decision.json",
+        "examples/mcp/resources-prompts.mapping.md",
+        "examples/mcp/profile-support.partial.v1.json",
+        "examples/mcp/profile-support.compatible.v1.json"
       ]
     }
   ]

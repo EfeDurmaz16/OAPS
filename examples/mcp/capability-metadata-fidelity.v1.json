@@ -1,0 +1,41 @@
+{
+  "profile": "oaps-mcp-v1",
+  "fidelity_matrix": [
+    {
+      "mcp_surface": "tool.name",
+      "oaps_anchor": "Capability.name",
+      "current_handling": "preserved exactly",
+      "limit": "none in the current runtime-backed slice"
+    },
+    {
+      "mcp_surface": "tool.description",
+      "oaps_anchor": "Capability.description",
+      "current_handling": "preserved when present and string-typed",
+      "limit": "missing descriptions remain absent rather than synthesized"
+    },
+    {
+      "mcp_surface": "tool.inputSchema",
+      "oaps_anchor": "Capability.input_schema",
+      "current_handling": "required and preserved as the capability input schema",
+      "limit": "missing or non-object schemas are treated as invalid upstream tool metadata"
+    },
+    {
+      "mcp_surface": "tool.outputSchema",
+      "oaps_anchor": "Capability.output_schema",
+      "current_handling": "preserved when present and object-typed",
+      "limit": "the current runtime does not claim output-schema enforcement beyond passthrough preservation"
+    },
+    {
+      "mcp_surface": "tool annotations or vendor metadata",
+      "oaps_anchor": "Capability.metadata",
+      "current_handling": "draft-track only",
+      "limit": "no stable interoperable mapping is claimed yet"
+    },
+    {
+      "mcp_surface": "tool risk semantics",
+      "oaps_anchor": "Capability.risk_class",
+      "current_handling": "derived or assigned by the adapter",
+      "limit": "risk class is not recovered from MCP natively today"
+    }
+  ]
+}

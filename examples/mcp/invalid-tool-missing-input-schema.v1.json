@@ -1,0 +1,4 @@
+{
+  "name": "broken_tool",
+  "description": "Missing input schema should fail closed"
+}

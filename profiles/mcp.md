@@ -25,13 +25,16 @@ This profile is normative for:
 - mapping MCP tools to OAPS capabilities
 - mapping OAPS intents to MCP tool calls
 - policy gating before execution
+- approval insertion and rejection handling for high-risk calls
 - evidence emission for MCP-driven execution
+- stable translation of common MCP failures into portable OAPS errors
 
 This profile remains informative for:
 
 - resource mappings
 - prompt mappings
 - subscription-like surfaces
+- MCP-native transport bindings outside the existing adapter path
 
 ## Relationship To The Suite
 
@@ -62,11 +65,24 @@ A conforming adapter MUST:
 
 1. discover MCP tools
 2. map each tool to an OAPS `Capability`
-3. preserve the MCP input schema fidelity
+3. preserve tool metadata only as faithfully as the current runtime can honestly support
 4. derive or assign a risk class
 5. expose capabilities through the OAPS-facing surface
 
-The profile should keep capability mapping stable enough for conformance tests to compare tool identity, schema fidelity, and risk assignment.
+### Capability Metadata Fidelity Limits
+
+The current capability metadata fidelity matrix is captured in `examples/mcp/capability-metadata-fidelity.v1.json`.
+
+| MCP surface | OAPS anchor | Current claim | Fidelity limit now |
+| --- | --- | --- | --- |
+| `tool.name` | `Capability.name` | preserved exactly | none in the current runtime-backed slice |
+| `tool.description` | `Capability.description` | preserved when present | absent descriptions remain absent |
+| `tool.inputSchema` | `Capability.input_schema` | required and preserved | missing or non-object schemas fail closed as invalid upstream metadata |
+| `tool.outputSchema` | `Capability.output_schema` | preserved when present | no runtime-backed output validation guarantee is claimed |
+| annotations / vendor metadata | `Capability.metadata` | draft-track only | no stable interoperable mapping claim yet |
+| risk semantics | `Capability.risk_class` | derived or assigned by adapter | MCP does not define a native portable risk class |
+
+The current reference line now treats missing required schema metadata or malformed tool metadata as explicit validation failures rather than silently projecting malformed capabilities.
 
 ## Invocation Mapping
 
@@ -77,10 +93,10 @@ For invoke flows:
 - the target tool name must resolve from the OAPS object reference
 - arguments must be carried through without lossy schema translation
 - the adapter must reject malformed invoke intents before tool execution
+- policy denial must happen before the MCP tool call executes
+- approval rejection must remain visible as a distinct authorization outcome rather than collapsing into generic failure
 
-The profile should allow implementation-specific routing, but not implementation-specific semantic drift.
-
-## Policy And Authority
+## Policy, Approval, And Authority
 
 A conforming `oaps-mcp-v1` adapter MUST evaluate OAPS policy before execution.
 
@@ -90,35 +106,62 @@ The adapter MUST:
 2. construct the canonical policy context
 3. evaluate policy
 4. halt on denial
-5. proceed only when allowed or explicitly approved
+5. insert approval when risk policy requires it
+6. halt on approval rejection
+7. proceed only when allowed or explicitly approved
 
 If authenticated subject binding is available through `oaps-auth-web-v1` or a stronger trust profile, it MUST be checked before the tool call proceeds.
 
-## Evidence Requirements
+### Evidence Notes For Policy-Context-Hash Expectations
 
-Every MCP tool call under `oaps-mcp-v1` MUST produce hash-linked evidence events.
+The current runtime-backed slice now makes the policy-context-hash expectations explicit:
 
-At minimum, the profile should preserve:
+- high-risk policy denial emits `mcp.tool_call.denied` evidence with `evaluated_context_hash`
+- high-risk approval-required paths emit `approval.requested` evidence with `evaluated_context_hash`
+- started execution for the accepted call path carries `evaluated_context_hash` on `mcp.tool_call.started`
+- the current runtime does **not** yet claim that every later evidence event (`approval.rejected`, `mcp.tool_call.completed`, or `mcp.tool_call.failed`) always repeats that hash
 
-- start and completion events
-- input and output hashes
-- policy decision metadata
-- approval references when relevant
-- delegation references when relevant
-- authenticated subject binding outcome
+That boundary is intentional: the profile claims the hash where policy or approval context must be reconstructed, not as a blanket guarantee on every downstream event yet.
 
-For higher-risk actions, the evidence chain SHOULD be rich enough to support replay and audit without requiring the original MCP exchange to be re-created manually.
+## Resources And Prompts Mapping Notes
 
-## Current Reference Slice Compatibility Notes
+Resources and prompts remain informative only in the current draft.
 
-The current reference-backed slice supports the following profile-specific compatibility claims:
+The current mapping posture is:
 
-- policy denial happens before MCP tool execution and is surfaced as an OAPS authorization failure
-- high-risk denial and approval-request paths carry an evaluated policy-context hash in emitted evidence
-- approval rejection is preserved as an explicit OAPS authorization failure plus `approval.rejected` evidence
-- capability lookup failure, authenticated-subject mismatch, approval-modification mismatch, upstream timeout, upstream auth failure, and validation failure are translated into stable OAPS error categories
+- MCP tools are normative and runtime-backed
+- MCP resources are informative only and may later map to OAPS context/resource descriptors
+- MCP prompts are informative only and may later map to intent templates or profile metadata
 
-The current slice does **not** yet claim runtime-backed interop for MCP resources, prompts, subscriptions, or MCP-native transport bindings outside the existing adapter path.
+See `examples/mcp/resources-prompts.mapping.md` for the current draft-only mapping notes.
+
+## Current Runtime-Backed Slice Versus Draft-Track Surface
+
+The current reference-backed slice supports the following runtime-backed profile-specific claims:
+
+- tool capability mapping with schema preservation for valid input/output schema objects
+- policy denial before tool execution
+- approval insertion for high-risk calls
+- approval rejection as an explicit OAPS authorization outcome
+- evidence emission with high-risk policy-context hashes on denial/requested/start boundaries
+- translation of capability lookup failure, upstream timeout, upstream auth failure, validation failure, and authenticated-subject mismatch into stable OAPS errors
+- fail-closed handling for missing required tool schema or malformed tool metadata
+
+The current slice does **not** yet claim runtime-backed interop for:
+
+- MCP resources
+- MCP prompts
+- subscription-like surfaces
+- MCP-native transport bindings outside the existing adapter path
+
+## Compatibility Declaration Examples
+
+Illustrative profile-support declarations now exist under `examples/mcp/`:
+
+- `profile-support.partial.v1.json` — partial `oaps-mcp-v1` support where only a subset of the current known surfaces is claimed
+- `profile-support.compatible.v1.json` — compatible support for the current runtime-backed MCP scope
+
+These are reader-facing examples. The machine-derived compatibility declarations remain under `conformance/results/examples/`.
 
 ## Error Mapping
 
@@ -127,41 +170,33 @@ The current slice does **not** yet claim runtime-backed interop for MCP resource
 Expected mappings include:
 
 - missing tool -> capability error
-- invalid arguments -> validation error
+- invalid arguments or malformed tool metadata -> validation error
 - upstream unavailable -> transport error
 - upstream timeout -> timeout error
 - upstream auth failure -> authentication error
 
 Implementations may carry upstream details in error metadata, but the portable error category must remain stable.
 
-## Informative Extensions
-
-The following are informative in the current draft:
-
-- resource mapping
-- prompt mapping
-- subscription-like surfaces
-
-They should be documented for future profiles, but they are not normative requirements of this draft.
-
 ## Conformance
 
 A conforming `oaps-mcp-v1` implementation:
 
 - MUST map MCP tools to OAPS capabilities
-- MUST preserve input schema fidelity
+- MUST preserve required input schema fidelity for valid tool metadata
 - MUST derive or assign a risk class
 - MUST enforce OAPS policy before execution
+- MUST surface approval rejection distinctly when approval is denied
 - MUST emit evidence events
 - MUST map common MCP failures to OAPS errors
 - SHOULD support sidecar, gateway, or embedded deployment
 
-The current fixture pack now makes the runtime-backed high-risk paths more explicit without overclaiming unsupported MCP interop. In particular, the reference runtime exercises policy denial before tool execution, approval insertion for high-risk calls, approval rejection handling, explicit error translation for capability lookup failure, authenticated-subject mismatch, approval-modification mismatch, upstream timeout, upstream auth failure, and validation failure, plus evidence emission that carries evaluated policy-context hashes on high-risk denial/request paths.
+The current conformance pack makes the runtime-backed high-risk paths more explicit via dedicated policy-denial, approval-rejection, and invalid-upstream-metadata scenarios without overclaiming unsupported MCP interop.
 
 ## Open Questions
 
 The draft still needs formal answers for:
 
-- how much of MCP resource/prompt semantics should eventually be normative
+- how much of MCP resource semantics should eventually be normative
+- how much of MCP prompt semantics should eventually be normative
 - how deeply MCP auth should be bridged into the OAPS identity profiles
 - whether an MCP-native JSON-RPC binding should be a first-class binding draft or remain profile-specific

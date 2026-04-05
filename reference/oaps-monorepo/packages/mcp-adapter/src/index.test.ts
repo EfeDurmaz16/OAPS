@@ -5,6 +5,7 @@ import { createEvidenceChain } from '@oaps/evidence';
 import { PolicyBundle } from '@oaps/policy';
 
 import { ApprovalRequiredError, OapsMcpAdapter } from './index.js';
+import type { McpClient } from './index.js';
 
 const policy: PolicyBundle = {
   policy_id: 'policy_allow',
@@ -56,6 +57,55 @@ test('listCapabilities maps MCP tools into OAPS capability cards', async () => {
   assert.equal(capabilities[0]?.kind, 'tool');
   assert.equal(capabilities[0]?.name, 'read_repo');
   assert.equal(capabilities[0]?.risk_class, 'R1');
+});
+
+test('listCapabilities rejects tools missing an input schema', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: 'broken_tool',
+          description: 'Broken tool metadata',
+        } as unknown as Awaited<ReturnType<McpClient['listTools']>>[number],
+      ];
+    },
+    async callTool() {
+      return {};
+    },
+  });
+
+  await assert.rejects(
+    adapter.listCapabilities(),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string; details?: { field?: string } } }).error?.code === 'VALIDATION_FAILED' &&
+      (error as { error?: { details?: { field?: string } } }).error?.details?.field === 'inputSchema',
+  );
+});
+
+test('listCapabilities rejects malformed tool metadata', async () => {
+  const adapter = new OapsMcpAdapter({
+    async listTools() {
+      return [
+        {
+          name: '',
+          description: 42,
+          inputSchema: { type: 'object' },
+        } as unknown as Awaited<ReturnType<McpClient['listTools']>>[number],
+      ];
+    },
+    async callTool() {
+      return {};
+    },
+  });
+
+  await assert.rejects(
+    adapter.listCapabilities(),
+    (error: unknown) =>
+      error instanceof Error &&
+      (error as { error?: { code?: string; details?: { field?: string } } }).error?.code === 'VALIDATION_FAILED' &&
+      (error as { error?: { details?: { field?: string } } }).error?.details?.field === 'name',
+  );
 });
 
 test('invoke succeeds for allowed low-risk tool calls', async () => {

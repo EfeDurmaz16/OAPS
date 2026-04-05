@@ -1,0 +1,7 @@
+{
+  "name": "",
+  "description": 42,
+  "inputSchema": {
+    "type": "object"
+  }
+}

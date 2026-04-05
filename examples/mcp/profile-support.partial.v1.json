@@ -1,0 +1,15 @@
+{
+  "profile": "oaps-mcp-v1",
+  "declared_status": "partial",
+  "supported_surfaces": [
+    "tool capability mapping",
+    "invoke intent to tools/call",
+    "policy gating before execution"
+  ],
+  "unsupported_surfaces": [
+    "resources mapping",
+    "prompts mapping",
+    "subscription-like MCP surfaces"
+  ],
+  "evidence_basis": "subset conformance result or draft-track implementation"
+}

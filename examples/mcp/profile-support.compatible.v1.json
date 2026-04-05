@@ -1,0 +1,17 @@
+{
+  "profile": "oaps-mcp-v1",
+  "declared_status": "compatible",
+  "supported_surfaces": [
+    "tool capability mapping",
+    "invoke intent to tools/call",
+    "policy denial",
+    "approval insertion and rejection handling",
+    "evidence emission"
+  ],
+  "unsupported_surfaces": [
+    "resources mapping",
+    "prompts mapping",
+    "subscription-like MCP surfaces"
+  ],
+  "evidence_basis": "full known scenario coverage for the current runtime-backed MCP scope"
+}

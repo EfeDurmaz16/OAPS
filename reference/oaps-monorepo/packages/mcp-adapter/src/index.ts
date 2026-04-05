@@ -100,6 +100,50 @@ function defaultRiskClassResolver(tool: McpTool): RiskClass {
   return 'R2';
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function invalidToolMetadataError(message: string, details?: Record<string, unknown>): ErrorObject {
+  return {
+    code: 'VALIDATION_FAILED',
+    category: 'validation',
+    message,
+    retryable: false,
+    details,
+  };
+}
+
+function assertValidToolMetadata(tool: McpTool, index: number): void {
+  if (typeof tool.name !== 'string' || tool.name.trim().length === 0) {
+    throw new OapsError(invalidToolMetadataError('MCP tool metadata must include a non-empty name', {
+      tool_index: index,
+      field: 'name',
+    }));
+  }
+  if (!isRecord(tool.inputSchema)) {
+    throw new OapsError(invalidToolMetadataError('MCP tool metadata must include an object inputSchema', {
+      tool_index: index,
+      tool_name: tool.name,
+      field: 'inputSchema',
+    }));
+  }
+  if (tool.description !== undefined && typeof tool.description !== 'string') {
+    throw new OapsError(invalidToolMetadataError('MCP tool description must be a string when present', {
+      tool_index: index,
+      tool_name: tool.name,
+      field: 'description',
+    }));
+  }
+  if (tool.outputSchema !== undefined && !isRecord(tool.outputSchema)) {
+    throw new OapsError(invalidToolMetadataError('MCP tool outputSchema must be an object when present', {
+      tool_index: index,
+      tool_name: tool.name,
+      field: 'outputSchema',
+    }));
+  }
+}
+
 function mapToolToCapability(tool: McpTool, riskClassResolver: (tool: McpTool) => RiskClass): CapabilityCard {
   return {
     capability_id: capabilityIdFromName(tool.name),
@@ -236,6 +280,9 @@ export class OapsMcpAdapter {
 
   async listCapabilities(riskClassResolver: (tool: McpTool) => RiskClass = defaultRiskClassResolver): Promise<CapabilityCard[]> {
     const tools = await this.client.listTools();
+    tools.forEach((tool, index) => {
+      assertValidToolMetadata(tool, index);
+    });
     return tools.map((tool) => mapToolToCapability(tool, riskClassResolver));
   }
 
