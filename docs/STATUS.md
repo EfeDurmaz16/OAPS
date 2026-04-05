@@ -238,3 +238,22 @@ Append one entry per tranche:
   - add a public-facing how-to-review packet
   - decide whether to formalize event replay semantics further in the HTTP binding draft
 - status: `DONE`
+
+
+### 2026-04-05
+
+- tranche: HTTP event replay semantics decision
+- changes:
+  - formalized the current HTTP binding posture as replay-first and pull-based for event/evidence retrieval
+  - clarified that `GET /interactions/{id}/events` and `GET /interactions/{id}/evidence` are the canonical replay surfaces for the current draft
+  - replaced the older open question with a narrower follow-up on future pagination/cursor semantics and marked the replay-semantics plan item complete in `PLANS.md`
+- validation:
+  - `pnpm --dir reference/oaps-monorepo validate:spec-pack`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `git diff --check`
+- commits:
+  - `docs: formalize http event replay semantics`
+- next unfinished work:
+  - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
+  - add a public-facing how-to-review packet
+- status: `DONE`

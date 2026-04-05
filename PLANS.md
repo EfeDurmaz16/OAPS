@@ -42,7 +42,7 @@ Execution rule:
 - [x] Add HTTP negative-path coverage for auth, versioning, idempotency, and approval-not-pending
 - [x] Expand HTTP conformance metadata
 - [x] Add stronger binding-level compatibility declarations and example result payloads
-- [ ] Decide whether to formalize event replay semantics further in the binding draft
+- [x] Decide whether to formalize event replay semantics further in the binding draft
 
 ### 3. MCP Profile
 

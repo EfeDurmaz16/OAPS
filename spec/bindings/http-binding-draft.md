@@ -157,6 +157,19 @@ It should support:
 
 The binding should remain compatible with replayable cryptographic lineage requirements in the core foundation draft.
 
+## Event Replay Semantics
+
+For the current HTTP draft, event replay is **replay-first and pull-based**.
+
+That means:
+
+- `GET /interactions/{id}/events` is the canonical replay surface for ordered lifecycle events
+- `GET /interactions/{id}/evidence` is the canonical replay surface for the hash-linked evidence chain
+- the event order returned by replay endpoints should match the append order preserved by the interaction's evidence lineage
+- repeated replay of the same interaction should return a stable ordered prefix plus any newer appended events
+
+Push delivery, webhooks, or streaming subscriptions may be added later, but they are not required for the current draft and must not replace the pull-based replay semantics that the reference slice already implements.
+
 ## Error Handling
 
 The HTTP binding should preserve stable OAPS error objects.
@@ -204,6 +217,6 @@ The current reference conformance pack exercises discovery, interaction creation
 The next binding revision should decide:
 
 - whether gRPC is intended as normative or optional binding family
-- whether event/webhook delivery is push-first or replay-first
 - how much transport-specific metadata can appear in binding envelopes before it becomes profile-specific
 - whether the canonical HTTP media type should be required for all responses or only normative endpoints
+- whether replay endpoints should eventually define pagination, cursors, or resumption tokens
