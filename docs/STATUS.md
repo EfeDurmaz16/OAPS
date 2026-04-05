@@ -55,6 +55,35 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: FIDES / TAP trust profile hardening
+- tranche status:
+  - drafted:
+    - expanded `profiles/auth-fides-tap-draft.md` with trust-tier semantics, attestation semantics, a clearer auth-web-upgrade matrix, high-assurance approval-boundary guidance, and an explicit current-runtime non-claim section
+    - added the first focused FIDES/TAP example pack under `examples/auth-fides-tap/` for attested actors, trust-tier escalation, attested delegation chains, high-assurance approval boundaries, and attestation-required refusal paths
+  - implemented:
+    - rewired the trust-profile conformance pack to separate attested identity, trust-tier escalation, delegation-upgrade, approval-boundary, and attestation-required scenarios while reusing only the honest shared runtime seams
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/auth-fides-tap/index.v1.json` with explicit trust-tier and attestation-required-path coverage
+    - validated `profile:auth-fides-tap` through the suite conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - made the higher-assurance trust upgrade story concrete without pretending the repo already ships a dedicated FIDES/TAP verifier or trust-tier policy engine
+  - added reader-facing trust examples for attested actors, delegated attestation chains, trust-tier escalation, and fail-closed attestation-required paths
+  - tightened the trust-profile conformance pack so approval-boundary and attestation-required scenarios now have explicit fixture anchors
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/auth-fides-tap ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:auth-fides-tap --output /tmp/oaps-auth-fides-tap-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-auth-fides-tap-fixture-check-v2.json --json`
+- commits:
+  - `trust: harden fides tap profile draft`
+- next unfinished work:
+  - start V2 tranche 11 by deepening x402 challenge/retry notes, payment examples, and invalid authorization-context coverage
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: auth-web profile hardening
 - tranche status:
   - drafted:

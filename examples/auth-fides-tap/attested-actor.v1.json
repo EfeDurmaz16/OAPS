@@ -1,0 +1,11 @@
+{
+  "profile": "oaps-auth-fides-tap-v1",
+  "actor_id": "https://merchant.example/actors/settlement",
+  "trust_tier": "T2",
+  "attestation": {
+    "format": "fides-attestation",
+    "subject": "https://merchant.example/actors/settlement",
+    "issuer": "https://trust.example/issuers/fides-primary",
+    "valid_until": "2026-06-01T00:00:00Z"
+  }
+}

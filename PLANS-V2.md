@@ -220,13 +220,13 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 10. FIDES / TAP Trust Profile Hardening
 
-- [ ] Add `trust-tier` and attestation semantics draft text
-- [ ] Add mapping notes from generic auth-web to higher-assurance trust profile
-- [ ] Add attested-actor examples
-- [ ] Add delegation + attestation combined examples
-- [ ] Add approval-boundary examples for high-assurance actions
-- [ ] Add conformance fixture scenarios for attestation-required paths
-- [ ] Add explicit notes about what remains outside the current runtime
+- [x] Add `trust-tier` and attestation semantics draft text
+- [x] Add mapping notes from generic auth-web to higher-assurance trust profile
+- [x] Add attested-actor examples
+- [x] Add delegation + attestation combined examples
+- [x] Add approval-boundary examples for high-assurance actions
+- [x] Add conformance fixture scenarios for attestation-required paths
+- [x] Add explicit notes about what remains outside the current runtime
 
 ### 11. x402 Profile Expansion
 

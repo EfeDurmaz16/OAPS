@@ -9,37 +9,54 @@
     {
       "scenario_id": "auth-fides-tap.attestation.actor-card",
       "dimension": "attestation",
-      "example": "examples/actor-card-mcp.json",
-      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "example": "examples/auth-fides-tap/attested-actor.v1.json",
       "coverage": [
         "fixture"
       ],
-      "notes": "High-assurance attestation begins with the same actor-card shape, but the trust meaning is stronger than the baseline web profile. This is a static fixture anchor, not a dedicated FIDES/TAP verifier.",
+      "notes": "High-assurance attestation begins with an attested actor identity anchor. This is a static fixture anchor, not a dedicated FIDES/TAP verifier.",
       "related_examples": [
+        "examples/auth-fides-tap/attested-actor.v1.json",
         "examples/actor-card-mcp.json",
-        "examples/evidence-event.json",
-        "examples/delegation-token.json"
+        "examples/evidence-event.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-fides-tap.trust-tier.required",
+      "dimension": "trust-upgrade",
+      "example": "examples/auth-fides-tap/trust-tier.required.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture makes the trust-tier escalation explicit without claiming a runtime policy engine.",
+      "related_examples": [
+        "examples/auth-fides-tap/trust-tier.required.v1.json",
+        "examples/approval-request.json",
+        "examples/evidence-event.json"
       ]
     },
     {
       "scenario_id": "auth-fides-tap.trust-upgrade.delegation",
-      "dimension": "trust-upgrade",
-      "example": "examples/delegation-token.json",
+      "dimension": "delegation",
+      "example": "examples/auth-fides-tap/delegation.attested-chain.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
       "coverage": [
-        "fixture"
+        "fixture",
+        "reference-runtime"
       ],
-      "notes": "This fixture groups stronger trust semantics around delegation and authority chaining. The suite does not yet claim a dedicated trust-verifier runtime for the FIDES/TAP path.",
+      "notes": "This fixture groups stronger trust semantics around delegation and authority chaining. The runtime link is the shared expired-delegation fail-closed path, not a FIDES/TAP-specific signature verifier.",
+      "runtime_cases": [
+        "delegation.expired"
+      ],
       "related_examples": [
+        "examples/auth-fides-tap/delegation.attested-chain.v1.json",
         "examples/delegation-token.json",
-        "examples/approval-request.json",
-        "examples/approval-decision.json"
+        "examples/approval-request.json"
       ]
     },
     {
-      "scenario_id": "auth-fides-tap.evidence.approval-boundary",
+      "scenario_id": "auth-fides-tap.approval.high-assurance-boundary",
       "dimension": "evidence",
-      "example": "examples/approval-request.json",
+      "example": "examples/auth-fides-tap/approval.high-assurance-boundary.v1.json",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
       "coverage": [
         "fixture",
@@ -51,10 +68,24 @@
         "http.approval.not-pending"
       ],
       "related_examples": [
+        "examples/auth-fides-tap/approval.high-assurance-boundary.v1.json",
         "examples/approval-request.json",
         "examples/approval-decision.json",
-        "examples/approval-decision-modify.json",
         "examples/evidence-event.json"
+      ]
+    },
+    {
+      "scenario_id": "auth-fides-tap.attestation.required-path",
+      "dimension": "attestation",
+      "example": "examples/auth-fides-tap/attestation.required-path.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors fail-closed behavior for actions that require attested identity or stronger proof material.",
+      "related_examples": [
+        "examples/auth-fides-tap/attestation.required-path.v1.json",
+        "examples/error.json",
+        "examples/auth-fides-tap/trust-tier.required.v1.json"
       ]
     }
   ]

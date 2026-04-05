@@ -1,0 +1,14 @@
+{
+  "profile": "oaps-auth-fides-tap-v1",
+  "interaction_id": "int-trust-approval-1",
+  "trust_tier": "T3",
+  "approval_request": {
+    "request_id": "apr-trust-001",
+    "reason": "High-assurance payout approval",
+    "required_attestation": true
+  },
+  "notes": [
+    "Approval is portable and does not replace the attestation requirement.",
+    "The trust tier explains why the approval boundary was raised."
+  ]
+}

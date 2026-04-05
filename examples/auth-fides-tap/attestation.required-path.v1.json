@@ -1,0 +1,12 @@
+{
+  "profile": "oaps-auth-fides-tap-v1",
+  "interaction_id": "int-trust-required-1",
+  "required_trust_tier": "T2",
+  "provided_attestation": null,
+  "expected_result": "fail-closed",
+  "error": {
+    "code": "attestation_required",
+    "category": "authentication",
+    "retryable": false
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profile": "oaps-auth-fides-tap-v1",
+  "interaction_id": "int-trust-tier-1",
+  "requested_action": "authorize-high-value-payout",
+  "required_trust_tier": "T3",
+  "baseline_profile": "oaps-auth-web-v1",
+  "upgrade_reason": "irreversible economic action"
+}
