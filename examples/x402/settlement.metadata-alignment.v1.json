@@ -1,0 +1,19 @@
+{
+  "profile": "oaps-x402-v1",
+  "interaction_id": "int-x402-001",
+  "authorization_intent": {
+    "authorization_id": "auth-x402-001",
+    "amount": "4.99",
+    "currency": "USD"
+  },
+  "settlement_result": {
+    "settlement_id": "settle-x402-001",
+    "amount": "4.99",
+    "currency": "USD",
+    "status": "settled"
+  },
+  "notes": [
+    "Authorization intent records what the payer agreed to.",
+    "Settlement result records what actually completed."
+  ]
+}

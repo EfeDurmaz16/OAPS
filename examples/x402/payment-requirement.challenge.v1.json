@@ -1,0 +1,12 @@
+{
+  "profile": "oaps-x402-v1",
+  "interaction_id": "int-x402-001",
+  "challenge_type": "payment_required",
+  "http_status": 402,
+  "required_authorization": {
+    "payer": "https://merchant.example/actors/billing-agent",
+    "currency": "USD",
+    "amount": "4.99"
+  },
+  "gated_action": "deliver-premium-report"
+}

@@ -1,0 +1,11 @@
+{
+  "profile": "oaps-x402-v1",
+  "interaction_id": "int-x402-invalid-1",
+  "challenge_type": "payment_required",
+  "authorization_intent": null,
+  "expected_error": {
+    "code": "payment_authorization_context_required",
+    "category": "payment",
+    "retryable": false
+  }
+}

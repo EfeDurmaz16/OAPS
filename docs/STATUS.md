@@ -55,6 +55,35 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: x402 profile expansion
+- tranche status:
+  - drafted:
+    - expanded `profiles/x402-draft.md` with clearer payment requirement versus authorization intent semantics, challenge/retry lineage rules, HTTP 402 alignment notes, partial compatibility guidance, and explicit runtime non-claims
+    - added the first focused x402 example pack under `examples/x402/` for payment requirement challenges, retry lineage, settlement metadata alignment, discovery-only partial support, and invalid challenge-without-authorization-context coverage
+  - implemented:
+    - rewired the x402 conformance pack to separate payment requirement challenge, retry-lineage, settlement metadata, invalid-context, and partial-compatibility anchors while reusing only honest shared runtime seams
+  - conformance-backed:
+    - expanded `conformance/fixtures/profiles/x402/index.v1.json` with explicit challenge/retry, metadata-alignment, invalid-context, and discovery-only partial-support scenarios
+    - validated `profile:x402` through the suite conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - made the draft x402 mapping more concrete without pretending the repo already runs a live x402 facilitator or automatic HTTP 402 challenge emitter
+  - added reader-facing x402 examples for payment requirement challenges, retry continuity, settlement-result alignment, partial support declarations, and invalid authorization-context failures
+  - tightened the x402 conformance pack so challenge/retry and authorization-versus-settlement distinctions now have dedicated fixture anchors
+- validation:
+  - `python3 - <<'PY' ... parse every JSON file under examples/x402 ... PY`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:x402 --output /tmp/oaps-x402-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-x402-fixture-check-v2.json --json`
+- commits:
+  - `x402: deepen payment challenge mappings`
+- next unfinished work:
+  - start V2 tranche 12 by adding MPP draft profile wiring, fixtures, and compatibility scope support
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: FIDES / TAP trust profile hardening
 - tranche status:
   - drafted:

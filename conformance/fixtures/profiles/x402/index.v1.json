@@ -21,8 +21,22 @@
       ],
       "related_examples": [
         "examples/well-known-oaps.json",
-        "examples/actor-card-mcp.json",
-        "examples/envelope-intent-request.json"
+        "examples/x402/profile-support.partial.v1.json",
+        "examples/x402/payment-requirement.challenge.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "x402.payment.requirement.challenge",
+      "dimension": "payment-authorization",
+      "example": "examples/x402/payment-requirement.challenge.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture anchors the portable payment requirement challenge, including the draft HTTP 402 alignment note.",
+      "related_examples": [
+        "examples/x402/payment-requirement.challenge.v1.json",
+        "examples/x402/authorization.retry-lineage.v1.json",
+        "examples/x402/invalid.challenge-without-authorization-context.v1.json"
       ]
     },
     {
@@ -42,9 +56,28 @@
       ],
       "related_examples": [
         "examples/intent-invoke.json",
-        "examples/approval-request.json",
-        "examples/approval-decision.json",
-        "examples/approval-decision-modify.json"
+        "examples/x402/payment-requirement.challenge.v1.json",
+        "examples/x402/authorization.retry-lineage.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "x402.challenge.retry-lineage",
+      "dimension": "evidence",
+      "example": "examples/x402/authorization.retry-lineage.v1.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ],
+      "notes": "Challenge/retry lineage reuses the shared HTTP idempotency seam as the current observable runtime anchor for preserving one payment authorization story.",
+      "runtime_cases": [
+        "http.idempotency.replay",
+        "http.messages.subject-binding"
+      ],
+      "related_examples": [
+        "examples/x402/authorization.retry-lineage.v1.json",
+        "examples/x402/payment-requirement.challenge.v1.json",
+        "examples/evidence-event.json"
       ]
     },
     {
@@ -63,8 +96,49 @@
       ],
       "related_examples": [
         "examples/execution-result.json",
-        "examples/evidence-event.json",
+        "examples/x402/settlement.metadata-alignment.v1.json",
         "examples/error.json"
+      ]
+    },
+    {
+      "scenario_id": "x402.settlement.metadata-alignment",
+      "dimension": "settlement",
+      "example": "examples/x402/settlement.metadata-alignment.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture distinguishes authorization intent metadata from settlement-result metadata so payment coordination does not collapse both concepts.",
+      "related_examples": [
+        "examples/x402/settlement.metadata-alignment.v1.json",
+        "examples/execution-result.json",
+        "examples/evidence-event.json"
+      ]
+    },
+    {
+      "scenario_id": "x402.payment.challenge.invalid-context",
+      "dimension": "payment-authorization",
+      "example": "examples/x402/invalid.challenge-without-authorization-context.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This invalid example anchors fail-closed behavior when a payment challenge is emitted without compatible authorization context.",
+      "related_examples": [
+        "examples/x402/invalid.challenge-without-authorization-context.v1.json",
+        "examples/error.json",
+        "examples/x402/payment-requirement.challenge.v1.json"
+      ]
+    },
+    {
+      "scenario_id": "x402.compatibility.payment-discovery-partial",
+      "dimension": "payment-discovery",
+      "example": "examples/x402/profile-support.partial.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "This fixture gives implementations an honest declaration pattern when only payment discovery is supported.",
+      "related_examples": [
+        "examples/x402/profile-support.partial.v1.json",
+        "examples/well-known-oaps.json"
       ]
     }
   ]

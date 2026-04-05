@@ -230,12 +230,12 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 11. x402 Profile Expansion
 
-- [ ] Add stronger challenge / retry mapping notes
-- [ ] Add payment requirement and authorization examples
-- [ ] Add HTTP 402 alignment notes where the current profile is still only conceptual
-- [ ] Add partial compatibility examples for implementations that only support payment discovery
-- [ ] Add scenario metadata for authorization intent vs settlement result
-- [ ] Add invalid example showing payment challenge without compatible authorization context
+- [x] Add stronger challenge / retry mapping notes
+- [x] Add payment requirement and authorization examples
+- [x] Add HTTP 402 alignment notes where the current profile is still only conceptual
+- [x] Add partial compatibility examples for implementations that only support payment discovery
+- [x] Add scenario metadata for authorization intent vs settlement result
+- [x] Add invalid example showing payment challenge without compatible authorization context
 
 ### 12. MPP Profile Draft
 

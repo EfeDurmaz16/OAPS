@@ -1,0 +1,12 @@
+{
+  "implementation_id": "example-payment-discovery-only",
+  "profile": "oaps-x402-v1",
+  "compatibility": "partial",
+  "supported_surfaces": [
+    "payment-discovery"
+  ],
+  "unsupported_surfaces": [
+    "challenge-retry-lineage",
+    "settlement-result-alignment"
+  ]
+}

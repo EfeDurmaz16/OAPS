@@ -1,0 +1,14 @@
+{
+  "profile": "oaps-x402-v1",
+  "interaction_id": "int-x402-001",
+  "idempotency_key": "idem-x402-001",
+  "authorization_intent": {
+    "authorization_id": "auth-x402-001",
+    "status": "challenged"
+  },
+  "retry_after_challenge": {
+    "uses_same_interaction_id": true,
+    "uses_same_intent_hash": true,
+    "uses_same_idempotency_key": true
+  }
+}
