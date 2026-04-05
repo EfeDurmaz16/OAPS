@@ -102,7 +102,7 @@ Execution rule:
 - [x] Add review target matrix and packet index
 - [x] Add compatibility declaration documentation
 - [x] Add a clearer “what is stable vs draft vs concept” matrix to top-level docs
-- [ ] Add a public-facing “how to review OAPS” short packet
+- [x] Add a public-facing “how to review OAPS” short packet
 
 ## Stop Conditions
 

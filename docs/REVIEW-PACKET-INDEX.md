@@ -6,6 +6,8 @@ This index names the review packet shapes OAPS should use so outreach stays boun
 
 The packet is the unit of external review. The target matrix decides who gets which packet.
 
+For the shortest public-facing entry point before any packet-specific deep dive, start with [`HOW-TO-REVIEW-OAPS.md`](./HOW-TO-REVIEW-OAPS.md).
+
 ## Packet Types
 
 ### MCP Packet

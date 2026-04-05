@@ -158,9 +158,26 @@ Append one entry per tranche:
 - validation:
   - `rg -n "MATURITY-MATRIX" README.md docs/README.md docs/MATURITY-MATRIX.md`
 - commits:
-  - `docs: add top-level maturity matrix`
+  - `docs: add maturity matrix and harness fallback`
 - next unfinished work:
   - add a public-facing how-to-review packet
+  - decide whether to formalize event replay semantics further in the HTTP binding draft
+  - add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
+- status: `DONE`
+
+### 2026-04-05
+
+- tranche: public review entry packet
+- changes:
+  - added `docs/HOW-TO-REVIEW-OAPS.md` as the short public-facing review packet
+  - linked the new entry packet from `README.md`, `docs/README.md`, and `docs/REVIEW-PACKET-INDEX.md`
+  - marked the public review-packet tranche complete in `PLANS.md`
+  - advanced `docs/NEXT-STEPS.md` to the remaining HTTP binding and harness follow-on work
+- validation:
+  - `rg -n "HOW-TO-REVIEW-OAPS" README.md docs/README.md docs/REVIEW-PACKET-INDEX.md docs/HOW-TO-REVIEW-OAPS.md`
+- commits:
+  - `docs: add public OAPS review packet`
+- next unfinished work:
   - decide whether to formalize event replay semantics further in the HTTP binding draft
   - add a cloud-task variant or SDK supervisor variant if local loop usage proves insufficient
 - status: `DONE`
@@ -194,7 +211,7 @@ Append one entry per tranche:
 - validation:
   - `bash -n scripts/codex-harness.sh scripts/codex-tranche-loop.sh`
 - commits:
-  - `fix: align codex harness sandbox flags`
+  - `docs: add maturity matrix and harness fallback`
 - next unfinished work:
   - rerun the harness from a top-level shell once account usage resets or with the documented bypass if the CLI still blocks Git writes
   - add a clearer stable-vs-draft-vs-concept matrix to top-level docs
