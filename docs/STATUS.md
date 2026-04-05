@@ -42,6 +42,14 @@ Append one entry per tranche using this shape:
 - next unfinished work:
 - status: `DONE` or `BLOCKED`
 
+## Harness Checkpointing Behavior
+
+- `docs/STATUS.md` is the semantic tranche log, not the per-minute unattended runner log
+- detached Codex runs should write machine-readable checkpoints under `.codex/supervisor-runs/<run-id>/checkpoints.jsonl`
+- detached Codex runs should write machine-readable final outcomes under `.codex/supervisor-runs/<run-id>/result.json` and mirror the latest one to `.codex/state/last-result.json`
+- transient websocket/upstream failures should be recorded as retry checkpoints before the harness resumes
+- append a `docs/STATUS.md` entry when a tranche reaches an honest atomic completion or blocker boundary
+
 ## Latest Known Baseline
 
 - suite charter, architecture, and roadmap docs exist
@@ -77,6 +85,7 @@ Append one entry per tranche using the V2 template above:
   - `git diff --check`
 - commits:
   - `docs: expand review and navigation surfaces` (`f1ff33b`)
+  - `docs: add coverage map to docs index` (`a588ad0`)
 - next unfinished work:
   - keep the review packets and public-facing maps aligned as the suite grows
 - status: `DONE`
@@ -196,7 +205,7 @@ Append one entry per tranche using the V2 template above:
 - commits:
   - `harness: add supervisor checkpoint artifacts` (`b5979c1`)
 - next unfinished work:
-  - continue with the public docs, review packet, and repository navigation tranches now that the supervisor path is auditable
+  - only external-review, co-signer, and independent-implementation blockers remain after the completed V2 tranches
 - status: `DONE`
 
 - tranche: TypeScript reference line expansion
