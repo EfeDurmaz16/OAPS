@@ -1,0 +1,27 @@
+{
+  "interaction_id": "ix_agent_client_001",
+  "task_id": "task_agent_client_001",
+  "operator": "urn:oaps:actor:human:operator",
+  "agent": "urn:oaps:actor:agent:builder",
+  "remote_host": {
+    "host_ref": "ssh://builder@example-host/internal-buildbox-01",
+    "workspace_ref": "/srv/builds/repo"
+  },
+  "evidence": {
+    "event_id": "evt_agent_client_exec_001",
+    "event_type": "remote.shell.executed",
+    "command_digest": "sha256:cmd-001",
+    "script_digest": "sha256:script-001",
+    "stdout_ref": "artifact://logs/evt_agent_client_exec_001/stdout",
+    "stderr_ref": "artifact://logs/evt_agent_client_exec_001/stderr",
+    "exit_code": 0,
+    "timestamp": "2026-04-05T15:10:00Z"
+  },
+  "execution_result": {
+    "status": "success",
+    "artifacts": [
+      "artifact://logs/evt_agent_client_exec_001/stdout",
+      "artifact://patches/task_agent_client_001.diff"
+    ]
+  }
+}

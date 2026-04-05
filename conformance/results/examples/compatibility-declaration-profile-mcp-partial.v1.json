@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T13:13:43.356028Z",
+  "generated_at": "2026-04-05T13:16:53.426804Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -188,6 +188,26 @@
       "status": "not_evaluated"
     },
     {
+      "coverage_observed": [],
+      "error": 0,
+      "evaluated_scenario_ids": [],
+      "evaluated_scenarios": 0,
+      "fail": 0,
+      "known_scenario_ids": [
+        "agent-client.cli.task-initiation",
+        "agent-client.authority.operator-agent-host",
+        "agent-client.ssh.execution-evidence",
+        "agent-client.ssh.approval-boundary",
+        "agent-client.non-goal.not-ssh-itself"
+      ],
+      "known_scenarios": 5,
+      "pass": 0,
+      "scope": "profile:agent-client",
+      "selected_in_result": false,
+      "skip": 0,
+      "status": "not_evaluated"
+    },
+    {
       "coverage_observed": [
         "schema",
         "fixture",
@@ -312,7 +332,7 @@
     "profile:mcp"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T13:13:43.289403Z",
+    "executed_at": "2026-04-05T13:16:53.358128Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/examples/fixture-check-profile-mcp-partial.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },
@@ -320,8 +340,8 @@
   "summary": {
     "compatible": 0,
     "incompatible": 0,
-    "not_evaluated": 10,
+    "not_evaluated": 11,
     "partial": 1,
-    "total": 11
+    "total": 12
   }
 }

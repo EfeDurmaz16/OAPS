@@ -119,6 +119,14 @@ class ManifestValidationTests(unittest.TestCase):
         self.assertEqual(report.total_scenarios, _fixture_count(repo_root, "binding:events"))
         self.assertEqual(report.scopes, ("binding:events",))
 
+    def test_inventory_can_filter_agent_client_scope(self) -> None:
+        repo_root = Path(__file__).resolve().parents[3]
+        report = inventory_repository(repo_root=repo_root, requested_scopes=("profile:agent-client",))
+        self.assertTrue(report.ok, report.to_dict())
+        self.assertEqual(report.total_packs, 1)
+        self.assertEqual(report.total_scenarios, _fixture_count(repo_root, "profile:agent-client"))
+        self.assertEqual(report.scopes, ("profile:agent-client",))
+
     def test_inventory_reports_missing_requested_scope(self) -> None:
         repo_root = Path(__file__).resolve().parents[3]
         report = inventory_repository(repo_root=repo_root, requested_scopes=("profile:does-not-exist",))

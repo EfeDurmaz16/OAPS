@@ -10,6 +10,7 @@ This is the entry point for the suite-level specification tree.
 - `bindings/jsonrpc-binding-draft.md` - first JSON-RPC binding-track draft
 - `bindings/grpc-binding-draft.md` - first gRPC binding-track draft
 - `bindings/events-binding-draft.md` - first events/webhooks binding-track draft
+- `profiles/agent-client-draft.md` - first agent-client / CLI / SSH profile-track draft
 
 ## Current Reading Order
 
@@ -22,6 +23,7 @@ This is the entry point for the suite-level specification tree.
 7. `bindings/jsonrpc-binding-draft.md`
 8. `bindings/grpc-binding-draft.md`
 9. `bindings/events-binding-draft.md`
+10. `profiles/agent-client-draft.md`
 
 ## Status Notes
 

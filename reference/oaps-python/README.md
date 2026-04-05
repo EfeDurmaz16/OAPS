@@ -28,8 +28,8 @@ python3 -m oaps_python inventory
 Limit inventory output to one or more scopes:
 
 ```bash
-python3 -m oaps_python inventory --scope binding:grpc --scope binding:events --scope profile:mcp
-python3 -m oaps_python inventory --scope binding:events
+python3 -m oaps_python inventory --scope binding:events --scope profile:agent-client --scope profile:mcp
+python3 -m oaps_python inventory --scope profile:agent-client
 ```
 
 Emit a schema-shaped dry-run result:
@@ -48,7 +48,7 @@ Run a static fixture check over selected scopes or scenarios:
 
 ```bash
 python3 -m oaps_python check --scope profile:mcp --scope profile:a2a
-python3 -m oaps_python check --scope binding:events
+python3 -m oaps_python check --scope profile:agent-client
 python3 -m oaps_python check --scenario mcp.intent.execution
 ```
 

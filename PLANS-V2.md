@@ -177,15 +177,15 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 6. Agent-Client / CLI / SSH Communication Track
 
-- [ ] Add `docs/AGENT-CLIENT-LANDSCAPE.md`
-- [ ] Add `spec/profiles/agent-client-draft.md`
-- [ ] Define OAPS mapping for CLI-mediated agent sessions
-- [ ] Define OAPS mapping for SSH-executed agent tasks
-- [ ] Define authenticated operator / agent / remote-host model
-- [ ] Define task, evidence, and approval semantics for remote shell execution
-- [ ] Add fixture pack for `profile:agent-client`
-- [ ] Add examples for CLI-run task initiation and remote execution evidence
-- [ ] Add explicit non-goal note distinguishing this from SSH itself
+- [x] Add `docs/AGENT-CLIENT-LANDSCAPE.md`
+- [x] Add `spec/profiles/agent-client-draft.md`
+- [x] Define OAPS mapping for CLI-mediated agent sessions
+- [x] Define OAPS mapping for SSH-executed agent tasks
+- [x] Define authenticated operator / agent / remote-host model
+- [x] Define task, evidence, and approval semantics for remote shell execution
+- [x] Add fixture pack for `profile:agent-client`
+- [x] Add examples for CLI-run task initiation and remote execution evidence
+- [x] Add explicit non-goal note distinguishing this from SSH itself
 
 ### 7. MCP Profile Expansion
 

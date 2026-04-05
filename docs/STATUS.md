@@ -55,6 +55,38 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: agent-client / CLI / SSH communication track
+- tranche status:
+  - drafted:
+    - added `docs/AGENT-CLIENT-LANDSCAPE.md` to map the emerging agent-client / CLI / SSH surface into OAPS control-plane semantics
+    - added `spec/profiles/agent-client-draft.md` defining CLI-mediated session mapping, SSH task mapping, the operator/agent/remote-host model, approval semantics, evidence expectations, and the explicit non-goal boundary that this track is not SSH itself
+    - added the first agent-client example pack under `examples/agent-client/`
+  - implemented:
+    - wired `profile:agent-client` into the fixture index, manifest, taxonomy, profile navigation docs, and Python inventory/check documentation/tests
+    - regenerated suite result and compatibility examples so the new agent-client profile scope is represented in the Python interoperability line
+  - conformance-backed:
+    - added `conformance/fixtures/profiles/agent-client/index.v1.json` with fixture-backed CLI-session, authority-model, approval-boundary, remote-execution-evidence, and non-goal anchors
+    - validated `profile:agent-client` through the suite conformance validator plus Python fixture-check and result validation flows
+  - externally-blocked:
+    - none
+- changes:
+  - created the first portable OAPS profile draft for CLI-mediated and SSH-executed agent work without overclaiming transport-level SSH standardization
+  - added concrete examples for CLI task initiation, remote execution evidence, and approval-gated remote shell execution
+  - promoted `profile:agent-client` to a first-class draft scope in repo docs, conformance metadata, and compatibility examples
+- validation:
+  - `git diff --check`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `python3 -m unittest reference/oaps-python/tests/test_manifest.py`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope profile:agent-client --output /tmp/oaps-agent-client-fixture-check.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-agent-client-fixture-check.json --json`
+- commits:
+  - `agent-client: add cli ssh profile draft`
+- next unfinished work:
+  - start V2 tranche 7 by expanding the MCP profile with finer-grained conformance scenarios, capability-fidelity notes, and compatibility examples
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: events / webhooks binding draft
 - tranche status:
   - drafted:

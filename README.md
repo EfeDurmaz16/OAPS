@@ -119,7 +119,7 @@ This is the smallest real working system in the repo today, and it should be und
 ## What Is Not Built Yet
 
 - suite-level gRPC or events/webhooks runtime support beyond the current draft-only artifacts
-- hard-normative A2A and payment profiles
+- hard-normative A2A, agent-client, and payment profile runtime support
 - domain protocol families for provisioning, jobs, and commerce
 - registry infrastructure and broader cross-implementation conformance at suite scale
 - broader external governance and cosigner structure

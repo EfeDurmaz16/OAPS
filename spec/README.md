@@ -7,6 +7,7 @@ Current structure:
 - `INDEX.md` - entry point for the spec tree
 - `core/` — hard semantic core drafts
 - `bindings/` — binding drafts
+- `profiles/` — suite-owned profile drafts that currently live inside the spec tree
 
 Current entry points:
 
@@ -19,5 +20,6 @@ Current entry points:
 - `bindings/jsonrpc-binding-draft.md` — first JSON-RPC binding-track draft
 - `bindings/grpc-binding-draft.md` — first gRPC binding-track draft
 - `bindings/events-binding-draft.md` — first events/webhooks binding-track draft
+- `profiles/agent-client-draft.md` — first agent-client / CLI / SSH profile-track draft
 
 The older consolidated `../SPEC.md` still exists because it backs the current MCP-oriented reference slice, but it should no longer be treated as the entire future shape of OAPS.

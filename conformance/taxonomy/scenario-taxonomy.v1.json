@@ -75,6 +75,16 @@
       ]
     },
     {
+      "id": "profile:agent-client",
+      "dimensions": [
+        "cli-session-mapping",
+        "authority-model",
+        "remote-execution-evidence",
+        "approval-semantics",
+        "non-goal-boundary"
+      ]
+    },
+    {
       "id": "profile:mcp",
       "dimensions": [
         "capability-mapping",

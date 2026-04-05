@@ -1,5 +1,5 @@
 {
-  "executed_at": "2026-04-05T13:13:43.212668Z",
+  "executed_at": "2026-04-05T13:16:53.279493Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -1285,6 +1285,71 @@
     },
     {
       "artifacts": [
+        "conformance/fixtures/profiles/agent-client/index.v1.json",
+        "examples/agent-client/cli.task-initiation.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "agent-client.cli.task-initiation",
+      "scope": "profile:agent-client"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/agent-client/index.v1.json",
+        "examples/agent-client/cli.task-initiation.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "agent-client.authority.operator-agent-host",
+      "scope": "profile:agent-client"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/agent-client/index.v1.json",
+        "examples/agent-client/ssh.execution-evidence.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "agent-client.ssh.execution-evidence",
+      "scope": "profile:agent-client"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/agent-client/index.v1.json",
+        "examples/agent-client/ssh.approval-boundary.v1.json"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "agent-client.ssh.approval-boundary",
+      "scope": "profile:agent-client"
+    },
+    {
+      "artifacts": [
+        "conformance/fixtures/profiles/agent-client/index.v1.json",
+        "docs/AGENT-CLIENT-LANDSCAPE.md"
+      ],
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "static fixture check; no runtime execution was performed",
+      "outcome": "pass",
+      "scenario_id": "agent-client.non-goal.not-ssh-itself",
+      "scope": "profile:agent-client"
+    },
+    {
+      "artifacts": [
         "conformance/fixtures/profiles/mcp/index.v1.json",
         "schemas/actor-card.json",
         "examples/actor-card-mcp.json",
@@ -1650,6 +1715,7 @@
     "binding:jsonrpc",
     "binding:grpc",
     "binding:events",
+    "profile:agent-client",
     "profile:mcp",
     "profile:a2a",
     "profile:auth-web",
@@ -1660,8 +1726,8 @@
   "summary": {
     "error": 0,
     "fail": 0,
-    "pass": 117,
+    "pass": 122,
     "skip": 0,
-    "total": 117
+    "total": 122
   }
 }

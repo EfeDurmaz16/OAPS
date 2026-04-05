@@ -1,0 +1,21 @@
+{
+  "interaction_id": "ix_agent_client_002",
+  "task_id": "task_agent_client_002",
+  "operator": "urn:oaps:actor:human:operator",
+  "agent": "urn:oaps:actor:agent:builder",
+  "remote_host": {
+    "host_ref": "ssh://prod@example-host/app-01"
+  },
+  "proposed_action": {
+    "command": "sudo systemctl restart app.service",
+    "risk_class": "R4"
+  },
+  "approval_request": {
+    "approval_request_id": "apr_agent_client_001",
+    "reason": "production_restart_requires_operator_approval"
+  },
+  "expected_behavior": {
+    "before_approval": "execution_blocked",
+    "after_approval": "command_may_execute_if_authorized"
+  }
+}

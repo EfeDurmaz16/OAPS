@@ -22,6 +22,10 @@
       "path": "conformance/fixtures/bindings/events/index.v1.json"
     },
     {
+      "scope": "profile:agent-client",
+      "path": "conformance/fixtures/profiles/agent-client/index.v1.json"
+    },
+    {
       "scope": "profile:mcp",
       "path": "conformance/fixtures/profiles/mcp/index.v1.json"
     },

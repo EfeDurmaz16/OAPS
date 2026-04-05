@@ -1,0 +1,31 @@
+{
+  "interaction_id": "ix_agent_client_001",
+  "session": {
+    "session_type": "cli-mediated",
+    "client": "agent-cli",
+    "working_directory": "/workspace/repo"
+  },
+  "operator": {
+    "actor_id": "urn:oaps:actor:human:operator"
+  },
+  "agent": {
+    "actor_id": "urn:oaps:actor:agent:builder"
+  },
+  "intent": {
+    "intent_id": "int_agent_client_001",
+    "verb": "invoke",
+    "object": "task:remote-code-change",
+    "constraints": {
+      "arguments": {
+        "goal": "patch failing tests and report result"
+      }
+    }
+  },
+  "task": {
+    "task_id": "task_agent_client_001",
+    "state": "intent_received",
+    "metadata": {
+      "profile": "oaps-agent-client-v1"
+    }
+  }
+}

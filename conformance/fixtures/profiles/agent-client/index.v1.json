@@ -1,0 +1,51 @@
+{
+  "pack_version": "1.0",
+  "scope": "profile:agent-client",
+  "status": "draft",
+  "normative_sources": [
+    "spec/profiles/agent-client-draft.md",
+    "docs/AGENT-CLIENT-LANDSCAPE.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "agent-client.cli.task-initiation",
+      "dimension": "cli-session-mapping",
+      "example": "examples/agent-client/cli.task-initiation.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "agent-client.authority.operator-agent-host",
+      "dimension": "authority-model",
+      "example": "examples/agent-client/cli.task-initiation.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "agent-client.ssh.execution-evidence",
+      "dimension": "remote-execution-evidence",
+      "example": "examples/agent-client/ssh.execution-evidence.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "agent-client.ssh.approval-boundary",
+      "dimension": "approval-semantics",
+      "example": "examples/agent-client/ssh.approval-boundary.v1.json",
+      "coverage": [
+        "fixture"
+      ]
+    },
+    {
+      "scenario_id": "agent-client.non-goal.not-ssh-itself",
+      "dimension": "non-goal-boundary",
+      "example": "docs/AGENT-CLIENT-LANDSCAPE.md",
+      "coverage": [
+        "fixture"
+      ]
+    }
+  ]
+}

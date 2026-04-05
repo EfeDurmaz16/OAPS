@@ -1,6 +1,6 @@
 {
   "declaration_schema_version": "1.0",
-  "generated_at": "2026-04-05T13:13:43.322467Z",
+  "generated_at": "2026-04-05T13:16:53.392575Z",
   "implementation": {
     "implementation_id": "oaps-python",
     "implementation_version": "0.1.0",
@@ -297,6 +297,34 @@
     },
     {
       "coverage_observed": [
+        "fixture"
+      ],
+      "error": 0,
+      "evaluated_scenario_ids": [
+        "agent-client.cli.task-initiation",
+        "agent-client.authority.operator-agent-host",
+        "agent-client.ssh.execution-evidence",
+        "agent-client.ssh.approval-boundary",
+        "agent-client.non-goal.not-ssh-itself"
+      ],
+      "evaluated_scenarios": 5,
+      "fail": 0,
+      "known_scenario_ids": [
+        "agent-client.cli.task-initiation",
+        "agent-client.authority.operator-agent-host",
+        "agent-client.ssh.execution-evidence",
+        "agent-client.ssh.approval-boundary",
+        "agent-client.non-goal.not-ssh-itself"
+      ],
+      "known_scenarios": 5,
+      "pass": 5,
+      "scope": "profile:agent-client",
+      "selected_in_result": true,
+      "skip": 0,
+      "status": "compatible"
+    },
+    {
+      "coverage_observed": [
         "schema",
         "fixture",
         "reference-runtime"
@@ -465,6 +493,7 @@
     "binding:jsonrpc",
     "binding:grpc",
     "binding:events",
+    "profile:agent-client",
     "profile:mcp",
     "profile:a2a",
     "profile:auth-web",
@@ -473,16 +502,16 @@
     "profile:osp"
   ],
   "source_result": {
-    "executed_at": "2026-04-05T13:13:43.212668Z",
+    "executed_at": "2026-04-05T13:16:53.279493Z",
     "result_path": "/Users/efebarandurmaz/OAPS/conformance/results/example-result.v1.json",
     "runner_id": "oaps-python-fixture-check"
   },
   "suite_version": "foundation-draft",
   "summary": {
-    "compatible": 11,
+    "compatible": 12,
     "incompatible": 0,
     "not_evaluated": 0,
     "partial": 0,
-    "total": 11
+    "total": 12
   }
 }

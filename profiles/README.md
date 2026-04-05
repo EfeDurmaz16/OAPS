@@ -12,6 +12,7 @@ Current profile set:
 - `a2a-draft.md` — draft A2A profile
 - `x402-draft.md` — draft payment coordination profile
 - `osp-draft.md` — draft provisioning profile
+- `../spec/profiles/agent-client-draft.md` — draft agent-client / CLI / SSH execution profile
 
 Planned profile families include:
 
