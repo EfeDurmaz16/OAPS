@@ -99,6 +99,36 @@ test('GET /.well-known/oaps.json exposes the canonical discovery document', asyn
   assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
 });
 
+test('GET /actor-card exposes the canonical actor metadata surface', async () => {
+  const app = createTestApp();
+
+  const response = await app.request('/actor-card');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.actor_id, 'urn:oaps:actor:server:reference');
+  assert.equal(body.actor_type, 'service');
+  assert.deepEqual(body.auth_schemes, ['bearer']);
+  assert.equal(body.capabilities.length, 2);
+  assert.equal(body.endpoints[0].kind, 'discovery');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
+});
+
+test('GET /capabilities exposes the mapped capability list', async () => {
+  const app = createTestApp();
+
+  const response = await app.request('/capabilities');
+
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.length, 2);
+  assert.equal(body[0].capability_id, 'cap_read_repo');
+  assert.equal(body[0].risk_class, 'R1');
+  assert.equal(body[1].capability_id, 'cap_pay_invoice');
+  assert.equal(body[1].risk_class, 'R4');
+  assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
+});
+
 test('POST /interactions completes low-risk invocations', async () => {
   const app = createTestApp();
 
@@ -112,6 +142,11 @@ test('POST /interactions completes low-risk invocations', async () => {
   const body = await response.json();
   assert.equal(body.payload.state, 'completed');
   assert.match(response.headers.get('content-type') ?? '', /^application\/oaps\+json\b/);
+
+  const interactionResponse = await app.request('/interactions/ix_1');
+  assert.equal(interactionResponse.status, 200);
+  const interaction = await interactionResponse.json();
+  assert.equal(interaction.state, 'completed');
 });
 
 test('POST /interactions accepts the canonical OAPS media type', async () => {
@@ -165,6 +200,12 @@ test('approval flow moves interaction from pending_approval to completed', async
   assert.equal(approveResponse.status, 200);
   const approved = await approveResponse.json();
   assert.equal(approved.payload.state, 'completed');
+
+  const interactionResponse = await app.request('/interactions/ix_2');
+  assert.equal(interactionResponse.status, 200);
+  const interaction = await interactionResponse.json();
+  assert.equal(interaction.state, 'completed');
+  assert.equal(interaction.approval_decision.decision, 'approve');
 });
 
 test('POST /interactions/:id/approve respects idempotency keys', async () => {
@@ -466,6 +507,41 @@ test('GET replay endpoints support after/limit windows for incremental event ret
   assert.equal(evidenceBody.replay.has_more, true);
 });
 
+test('GET replay endpoints preserve append order on edge-case windows', async () => {
+  const app = createTestApp();
+
+  const createResponse = await app.request('/interactions', {
+    method: 'POST',
+    headers: jsonHeaders(),
+    body: JSON.stringify({
+      ...requestEnvelope,
+      interaction_id: 'ix_window_edge',
+      message_id: 'msg_window_edge_create',
+    }),
+  });
+  assert.equal(createResponse.status, 201);
+
+  const fullEventsResponse = await app.request('/interactions/ix_window_edge/events');
+  assert.equal(fullEventsResponse.status, 200);
+  const fullEventsBody = await fullEventsResponse.json();
+  const lastEventId = fullEventsBody.events.at(-1).event_id;
+
+  const firstPageResponse = await app.request('/interactions/ix_window_edge/events?limit=1');
+  assert.equal(firstPageResponse.status, 200);
+  const firstPageBody = await firstPageResponse.json();
+  assert.equal(firstPageBody.events.length, 1);
+  assert.equal(firstPageBody.events[0].event_type, 'interaction.received');
+  assert.equal(firstPageBody.replay.has_more, true);
+
+  const afterLastResponse = await app.request(`/interactions/ix_window_edge/events?after=${lastEventId}&limit=1`);
+  assert.equal(afterLastResponse.status, 200);
+  const afterLastBody = await afterLastResponse.json();
+  assert.equal(afterLastBody.events.length, 0);
+  assert.equal(afterLastBody.replay.after, lastEventId);
+  assert.equal(afterLastBody.replay.has_more, false);
+  assert.equal(afterLastBody.replay.next_after, lastEventId);
+});
+
 test('GET replay endpoints reject unknown replay cursors and invalid limits', async () => {
   const app = createTestApp();
 
@@ -752,6 +828,12 @@ test('POST /interactions/:id/approve replays the original response for idempoten
   const eventsResponse = await app.request('/interactions/ix_approve_idem/events');
   const events = await eventsResponse.json();
   assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'interaction.completed').length, 1);
+
+  const replayedTerminalEventResponse = await app.request(`/interactions/ix_approve_idem/events?after=${events.events.at(-2).event_id}&limit=1`);
+  assert.equal(replayedTerminalEventResponse.status, 200);
+  const replayedTerminalEventBody = await replayedTerminalEventResponse.json();
+  assert.equal(replayedTerminalEventBody.events.length, 1);
+  assert.equal(replayedTerminalEventBody.events[0].event_type, 'interaction.completed');
 });
 
 test('POST /interactions/:id/reject replays the original response for idempotent retries', async () => {
@@ -794,6 +876,12 @@ test('POST /interactions/:id/reject replays the original response for idempotent
   const eventsResponse = await app.request('/interactions/ix_reject_idem/events');
   const events = await eventsResponse.json();
   assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'approval.rejected').length, 1);
+
+  const rejectionReplayResponse = await app.request(`/interactions/ix_reject_idem/events?after=${events.events.at(-2).event_id}&limit=1`);
+  assert.equal(rejectionReplayResponse.status, 200);
+  const rejectionReplayBody = await rejectionReplayResponse.json();
+  assert.equal(rejectionReplayBody.events.length, 1);
+  assert.equal(rejectionReplayBody.events[0].event_type, 'approval.rejected');
 });
 
 test('POST /interactions/:id/revoke moves the interaction into revoked state', async () => {
@@ -862,6 +950,12 @@ test('POST /interactions/:id/revoke replays the original response for idempotent
   const eventsResponse = await app.request('/interactions/ix_revoke_idem/events');
   const events = await eventsResponse.json();
   assert.equal(events.events.filter((event: { event_type: string }) => event.event_type === 'interaction.revoked').length, 1);
+
+  const revocationReplayResponse = await app.request(`/interactions/ix_revoke_idem/events?after=${events.events.at(-2).event_id}&limit=1`);
+  assert.equal(revocationReplayResponse.status, 200);
+  const revocationReplayBody = await revocationReplayResponse.json();
+  assert.equal(revocationReplayBody.events.length, 1);
+  assert.equal(revocationReplayBody.events[0].event_type, 'interaction.revoked');
 });
 
 test('file-backed store persists interactions across app instances', async () => {

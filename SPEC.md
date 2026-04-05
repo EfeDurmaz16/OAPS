@@ -355,6 +355,7 @@ When supported:
 - `limit` MUST be a positive integer when present
 - invalid `after` or `limit` inputs MUST fail with a stable validation error
 - returned order MUST preserve the append order of the interaction's event lineage
+- append order means oldest-to-newest within the addressed interaction
 
 ## 18. Money encoding
 

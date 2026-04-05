@@ -55,6 +55,37 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: HTTP conformance and ordering hardening
+- tranche status:
+  - drafted:
+    - documented default oldest-to-newest replay ordering in both `SPEC.md` and the HTTP binding draft
+    - tightened `profiles/auth-web.md` with a stronger note about follow-on message subject binding on `POST /interactions/{id}/messages`
+  - implemented:
+    - expanded the HTTP reference tests to cover `GET /actor-card`, `GET /capabilities`, replay-window edge cases, and explicit interaction-state assertions after create/approve/reject/revoke flows
+  - conformance-backed:
+    - added HTTP fixture-backed error-shape examples for authentication-required, interaction-not-found, approval-not-pending, idempotency-conflict, and replay-cursor-not-found payloads
+    - added conformance scenarios for reject/revoke retrieval after mutation, replay-window edge cases, and replay after approve/reject/revoke terminal events
+    - marked the remaining HTTP Binding Candidate Hardening items complete in `PLANS-V2.md`
+  - externally-blocked:
+    - none
+- changes:
+  - expanded the HTTP binding conformance pack with new discovery, error-mapping, retrieval, replay, and terminal-event scenarios
+  - strengthened the HTTP reference tests to match the documented normative endpoint surface and lifecycle expectations more explicitly
+  - aligned binding/profile prose with the now-explicit replay ordering and follow-on message authentication semantics
+- validation:
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http build`
+  - `pnpm --dir reference/oaps-monorepo --filter @oaps/http test`
+  - `pnpm --dir reference/oaps-monorepo validate:conformance-pack`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python check --repo-root . --json --scope binding:http --output /tmp/oaps-http-fixture-check-v2.json`
+  - `PYTHONPATH=reference/oaps-python/src python3 -m oaps_python validate-result --repo-root . --result /tmp/oaps-http-fixture-check-v2.json --json`
+- commits:
+  - `http: tighten endpoint and replay coverage`
+- next unfinished work:
+  - start V2 tranche 3 by adding the JSON-RPC binding draft and its first fixture stubs
+- status: `DONE`
+
+### 2026-04-05
+
 - tranche: HTTP contract and response example pack
 - tranche status:
   - drafted:

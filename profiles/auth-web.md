@@ -111,6 +111,20 @@ The current suite only claims the following baseline auth-web mappings from the 
 
 This profile does **not** yet claim a full web-native verifier matrix across bearer, signatures, OIDC, or JWKS discovery combinations. The current reference line proves direct subject binding on interaction creation and message append flows plus fail-closed delegation semantics first.
 
+### Follow-On Message Authentication Note
+
+For the current HTTP reference slice, follow-on message authentication remains
+explicitly subject-bound:
+
+- `POST /interactions/{id}/messages` is the append-only mutation where the
+  authenticated caller is compared directly with `Envelope.from.actor_id`
+- implementations SHOULD fail closed if a caller attempts to append a message
+  for a different actor without a valid delegation chain
+- approval, rejection, and revocation mutations are still bearer-authenticated
+  in the reference slice, but they do not currently carry a follow-on envelope
+  sender field that could relax or replace the message-append subject-binding
+  rule
+
 ## Conformance
 
 A conforming `oaps-auth-web-v1` implementation:

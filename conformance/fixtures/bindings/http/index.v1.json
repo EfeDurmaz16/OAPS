@@ -35,6 +35,26 @@
       ]
     },
     {
+      "scenario_id": "http.discovery.actor-card",
+      "dimension": "discovery",
+      "example": "examples/http/actor-card.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.discovery.capabilities",
+      "dimension": "discovery",
+      "example": "examples/http/capabilities.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.interaction.created",
       "dimension": "interaction-lifecycle",
       "schema": "schemas/interaction-created.json",
@@ -129,6 +149,15 @@
       "notes": "Exercises incremental GET /interactions/{id}/events retrieval using after/limit replay-window parameters."
     },
     {
+      "scenario_id": "http.events.replay-window.edge-cases",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises append-order replay semantics for limit=1 and after-the-last-event edge cases."
+    },
+    {
       "scenario_id": "http.events.replay-cursor-invalid",
       "dimension": "event-stream",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
@@ -165,6 +194,15 @@
         "reference-runtime"
       ],
       "notes": "Exercises POST /interactions/{id}/reject and the resulting approval.rejected evidence."
+    },
+    {
+      "scenario_id": "http.approval.rejection.retrieval",
+      "dimension": "approval-flow",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises retrieval of the failed interaction snapshot after approval rejection."
     },
     {
       "scenario_id": "http.idempotency.reuse",
@@ -228,6 +266,56 @@
       ]
     },
     {
+      "scenario_id": "http.error.authentication-required",
+      "dimension": "error-mapping",
+      "example": "examples/http/errors/authentication-required.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.error.interaction-not-found",
+      "dimension": "error-mapping",
+      "example": "examples/http/errors/interaction-not-found.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.error.approval-not-pending",
+      "dimension": "error-mapping",
+      "example": "examples/http/errors/approval-not-pending.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.error.idempotency-conflict",
+      "dimension": "error-mapping",
+      "example": "examples/http/errors/idempotency-conflict.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
+      "scenario_id": "http.error.replay-cursor-not-found",
+      "dimension": "error-mapping",
+      "example": "examples/http/errors/replay-cursor-not-found.response.json",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "fixture",
+        "reference-runtime"
+      ]
+    },
+    {
       "scenario_id": "http.revocation.request",
       "dimension": "revocation",
       "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
@@ -235,6 +323,42 @@
         "reference-runtime"
       ],
       "notes": "Exercises POST /interactions/{id}/revoke and the resulting interaction.revoked evidence."
+    },
+    {
+      "scenario_id": "http.revocation.retrieval",
+      "dimension": "revocation",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises retrieval of the revoked interaction snapshot after revocation."
+    },
+    {
+      "scenario_id": "http.events.replay.after-approve",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises replay-window retrieval of the terminal interaction.completed event after approval."
+    },
+    {
+      "scenario_id": "http.events.replay.after-reject",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises replay-window retrieval of the terminal approval.rejected event after rejection."
+    },
+    {
+      "scenario_id": "http.events.replay.after-revoke",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/http/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises replay-window retrieval of the terminal interaction.revoked event after revocation."
     }
   ]
 }

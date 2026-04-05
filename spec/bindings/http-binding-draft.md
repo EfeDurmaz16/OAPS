@@ -221,6 +221,21 @@ A conforming implementation that supports replay windows MUST:
 
 Repeated replay with the same `after` and `limit` inputs SHOULD return the same ordered window unless newer events have been appended ahead of the requested suffix. Clients can resume incremental replay by using the last returned `event_id` as the next `after` cursor.
 
+## Default Ordering Semantics
+
+Unless a future binding revision explicitly negotiates otherwise, both replay
+endpoints use the same default ordering rule:
+
+- results are returned in append order
+- append order means oldest-to-newest within the addressed interaction lineage
+- replay windows preserve that same oldest-to-newest order after applying the
+  `after` cursor and `limit` bound
+
+This rule applies equally to:
+
+- `GET /interactions/{id}/events`
+- `GET /interactions/{id}/evidence`
+
 ## Error Handling
 
 The HTTP binding should preserve stable OAPS error objects.

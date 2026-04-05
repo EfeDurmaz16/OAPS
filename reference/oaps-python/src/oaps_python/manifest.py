@@ -499,12 +499,9 @@ def discover_repo_root(start: Path | None = None) -> Path:
     )
 
 
-def load_json_file(path: Path) -> dict[str, Any]:
+def load_json_file(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
-        data = json.load(handle)
-    if not isinstance(data, dict):
-        raise ValueError(f"{path} must contain a JSON object")
-    return data
+        return json.load(handle)
 
 
 def _resolve_repo_path(repo_root: Path, relative_path: str) -> Path:

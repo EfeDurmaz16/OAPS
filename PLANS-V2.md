@@ -129,17 +129,17 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 - [x] Add explicit HTTP discovery contract examples for every normative endpoint
 - [x] Add endpoint-level canonical response examples under `examples/`
-- [ ] Add explicit response-shape fixtures for error objects
-- [ ] Add conformance scenarios for reject / revoke retrieval after mutation
-- [ ] Add conformance scenarios for replay-window pagination edge cases
-- [ ] Decide and document default ordering semantics for events and evidence retrieval
+- [x] Add explicit response-shape fixtures for error objects
+- [x] Add conformance scenarios for reject / revoke retrieval after mutation
+- [x] Add conformance scenarios for replay-window pagination edge cases
+- [x] Decide and document default ordering semantics for events and evidence retrieval
 - [x] Add HTTP compatibility notes for content negotiation and compatibility fallback behavior
-- [ ] Add stronger auth-web notes for follow-on message authentication semantics
+- [x] Add stronger auth-web notes for follow-on message authentication semantics
 - [x] Add examples showing canonical `application/oaps+json` responses
 - [x] Add examples showing compatibility `application/json` fallback where currently permitted
-- [ ] Expand HTTP reference tests to cover every documented normative endpoint path
-- [ ] Add explicit state-transition assertions into HTTP reference tests
-- [ ] Add fixture-backed scenarios for event replay after revoke / reject / approve
+- [x] Expand HTTP reference tests to cover every documented normative endpoint path
+- [x] Add explicit state-transition assertions into HTTP reference tests
+- [x] Add fixture-backed scenarios for event replay after revoke / reject / approve
 
 ### 3. JSON-RPC Binding Draft
 
