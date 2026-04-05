@@ -21,6 +21,7 @@ The goal is to reduce interactive check-ins and move repeat execution into non-i
 - `scripts/codex-harness.sh` — single non-interactive tranche runner
 - `scripts/codex-tranche-loop.sh` — auto-resume tranche loop
 - `scripts/codex-supervisor.sh` — detached top-level supervisor for host-shell tranche runs
+- `scripts/codex-cloud-task.sh` — provider-neutral cloud-task wrapper around the detached supervisor
 - `scripts/claude-design-worker.sh` — optional design-only Claude worker
 
 ## Recommended Usage
@@ -41,6 +42,12 @@ Detached top-level supervisor:
 
 ```bash
 scripts/codex-supervisor.sh
+```
+
+Cloud-task wrapper:
+
+```bash
+scripts/codex-cloud-task.sh
 ```
 
 If the local Codex CLI still denies `.git/index.lock` writes even under `danger-full-access`, rerun with an explicit bypass in this externally sandboxed repo:
@@ -76,3 +83,5 @@ scripts/claude-design-worker.sh "Design and implement a landing page for OAPS."
 - The default prompt and execution contract now target `PLANS-V2.md` as the active queue.
 - When the harness is invoked from inside another Codex session, the nested `codex exec` process may still be unable to create `.git/index.lock` even though the outer run has full write access. If that happens, re-run the harness from a top-level shell or supervisor process that grants the nested Codex process direct Git write access.
 - `scripts/codex-supervisor.sh` is the repo-local workaround for that limitation: it launches the tranche loop as a detached host-shell process, writes run metadata under `.codex/supervisor-runs/`, and refuses to start when it detects an existing `CODEX_THREAD_ID`.
+- Each detached run now records a JSON metadata file, a task manifest, per-run checkpoints, and a result artifact so unattended runs can be audited without grepping shell logs.
+- The cloud-task wrapper exists so an external scheduler can capture a stable task artifact while still delegating execution to the same detached supervisor path.

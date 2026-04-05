@@ -55,6 +55,30 @@ Append one entry per tranche using the V2 template above:
 
 ### 2026-04-05
 
+- tranche: Detached Supervisor / Long-Run Harness Expansion
+- tranche status:
+  - drafted:
+    - added a provider-neutral cloud-task wrapper around the detached supervisor so external schedulers can capture a stable task artifact before launching the same run path
+    - documented when to prefer the Claude design lane versus the Codex protocol lane for long-horizon work
+  - implemented:
+    - hardened the detached supervisor and tranche loop to write per-run metadata, checkpoints, task manifests, and result artifacts under `.codex/supervisor-runs/`
+    - added explicit retry classification for transient Codex execution failures so harness runs can distinguish blocked states from infrastructure noise
+  - conformance-backed:
+    - validated the updated shell scripts with `bash -n`
+  - externally-blocked:
+    - none
+- changes:
+  - moved the unattended harness one step closer to auditability by capturing structured run metadata instead of only shell logs
+  - made the auto-resume loop record checkpoint events and result files so future operational debugging can be driven from artifacts
+  - documented a simple lane split: Codex for protocol/scheme/conformance work, Claude for landing pages and presentation-heavy docs
+- validation:
+  - `bash -n scripts/codex-supervisor.sh scripts/codex-tranche-loop.sh scripts/codex-cloud-task.sh`
+- commits:
+  - pending
+- next unfinished work:
+  - continue with the public docs, review packet, and repository navigation tranches now that the supervisor path is auditable
+- status: `DONE`
+
 - tranche: TypeScript reference line expansion
 - tranche status:
   - drafted:

@@ -307,12 +307,12 @@ Everything below is in-scope now unless explicitly marked as an external blocker
 
 ### 20. Detached Supervisor / Long-Run Harness Expansion
 
-- [ ] Add cloud-task wrapper variant
-- [ ] Add more explicit checkpointing behavior in `docs/STATUS.md`
-- [ ] Add per-run metadata logs under `.codex/state/` or `.codex/supervisor-runs/`
-- [ ] Add result capture from unattended runs into structured files
-- [ ] Add clearer fallback behavior when Codex websocket / upstream runtime errors occur
-- [ ] Add a supervisor note on when to switch to Claude design lane vs Codex protocol lane
+- [x] Add cloud-task wrapper variant
+- [x] Add more explicit checkpointing behavior in `docs/STATUS.md`
+- [x] Add per-run metadata logs under `.codex/state/` or `.codex/supervisor-runs/`
+- [x] Add result capture from unattended runs into structured files
+- [x] Add clearer fallback behavior when Codex websocket / upstream runtime errors occur
+- [x] Add a supervisor note on when to switch to Claude design lane vs Codex protocol lane
 
 ### 21. Public Docs Surface
 

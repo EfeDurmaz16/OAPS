@@ -37,6 +37,26 @@ The Claude worker reads:
 and follows the repository design-worker prompt in
 [`claude/prompts/frontend-design-worker.txt`](/Users/efebarandurmaz/OAPS/claude/prompts/frontend-design-worker.txt).
 
+## When to switch lanes
+
+Use the Claude design lane when the work is primarily about:
+
+- landing pages
+- narrative pages
+- public docs polish
+- visual hierarchy
+- typography and composition
+
+Stay in the Codex protocol lane when the work is primarily about:
+
+- specs
+- schemas
+- conformance metadata
+- harness behavior
+- implementation-backed protocol semantics
+
+If a task spans both, finish the protocol shape in Codex first and then hand the presentation layer to Claude.
+
 ## Paper MCP
 
 `paper` should be treated as an optional design and asset lane, not part of the default protocol harness. If it is enabled in your global Codex configuration and misconfigured, it can break long-running protocol execution. Keep the default OAPS Codex lane clean and use Paper only in isolated design sessions.
