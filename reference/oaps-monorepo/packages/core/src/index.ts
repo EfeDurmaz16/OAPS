@@ -608,4 +608,100 @@ export function capabilityIdFromName(name: string): string {
   return `cap_${name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '').toLowerCase()}`;
 }
 
+/**
+ * Returns true when the given mandate is expired at the supplied reference time.
+ * Implementations MUST fail closed on expired mandates per FOUNDATION-DRAFT Mandate requirements.
+ */
+export function isMandateExpired(mandate: Mandate, now: Date = new Date()): boolean {
+  const expiresAt = new Date(mandate.expires_at);
+  if (Number.isNaN(expiresAt.getTime())) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: `Mandate ${mandate.mandate_id} has an unparseable expires_at`,
+      retryable: false,
+    });
+  }
+  return now >= expiresAt;
+}
+
+/**
+ * Verifies that a mandate's action covers the attempted action. Returns true when the
+ * mandate's action verb and target match the attempted action. Implementations MUST
+ * emit MANDATE_SCOPE_MISMATCH when this returns false for an otherwise valid mandate.
+ */
+export function mandateCoversAction(mandate: Mandate, attempted: Action): boolean {
+  if (mandate.action.verb !== attempted.verb) return false;
+  if (mandate.action.target !== attempted.target) return false;
+  return true;
+}
+
+/**
+ * Asserts that a mandate is usable for the attempted action at the reference time.
+ * Throws OapsError with the appropriate code and category on failure.
+ * Combines the expiry check (MANDATE_EXPIRED) and the scope check (MANDATE_SCOPE_MISMATCH).
+ */
+export function assertMandateAuthorizes(
+  mandate: Mandate,
+  attempted: Action,
+  now: Date = new Date(),
+): void {
+  if (isMandateExpired(mandate, now)) {
+    throw new OapsError({
+      code: 'MANDATE_EXPIRED',
+      category: 'authorization',
+      message: `Mandate ${mandate.mandate_id} expired at ${mandate.expires_at}`,
+      retryable: false,
+    });
+  }
+  if (!mandateCoversAction(mandate, attempted)) {
+    throw new OapsError({
+      code: 'MANDATE_SCOPE_MISMATCH',
+      category: 'authorization',
+      message: `Mandate ${mandate.mandate_id} does not cover action ${attempted.verb} on ${attempted.target}`,
+      retryable: false,
+    });
+  }
+}
+
+/**
+ * Validates that an approval decision's modification target, if present, matches the
+ * target of the original approval request. Emits APPROVAL_MODIFICATION_TARGET_MISMATCH
+ * when a modified decision points at a different target than the request.
+ */
+export function assertApprovalDecisionTargets(
+  request: ApprovalRequest,
+  decision: ApprovalDecision,
+): void {
+  if (decision.approval_request_id !== request.approval_request_id) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: `ApprovalDecision references request ${decision.approval_request_id} but was paired with ${request.approval_request_id}`,
+      retryable: false,
+    });
+  }
+  if (decision.decision === 'modify') {
+    const modified = decision.modified_action;
+    if (!modified) {
+      throw new OapsError({
+        code: 'VALIDATION_FAILED',
+        category: 'validation',
+        message: `Modified approval decision ${decision.approval_request_id} must include modified_action`,
+        retryable: false,
+      });
+    }
+    // Per FOUNDATION-DRAFT: a modified approval must not silently retarget to a
+    // different action than the original request.
+    if (modified.target !== request.proposed_action.target) {
+      throw new OapsError({
+        code: 'APPROVAL_MODIFICATION_TARGET_MISMATCH',
+        category: 'validation',
+        message: `Approval ${request.approval_request_id} modification retargets from ${request.proposed_action.target} to ${modified.target}`,
+        retryable: false,
+      });
+    }
+  }
+}
+
 export { ISO_CURRENCY_PATTERN, MONEY_VALUE_PATTERN, SCHEMA_VERSION_PATTERN };

@@ -360,6 +360,42 @@
         "fixture"
       ],
       "notes": "Negative fixture: executions exceeding their bound must emit EXECUTION_TIMEOUT."
+    },
+    {
+      "scenario_id": "core.mandate.expiry.runtime",
+      "dimension": "mandate",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: isMandateExpired + assertMandateAuthorizes prove fail-closed behavior on expired mandates with MANDATE_EXPIRED emission."
+    },
+    {
+      "scenario_id": "core.mandate.scope.runtime",
+      "dimension": "mandate",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: mandateCoversAction + assertMandateAuthorizes prove fail-closed behavior on scope mismatch with MANDATE_SCOPE_MISMATCH emission."
+    },
+    {
+      "scenario_id": "core.approval.decision-target.runtime",
+      "dimension": "approval",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertApprovalDecisionTargets proves that modified approval decisions preserving the target pass, and retargeted modifications emit APPROVAL_MODIFICATION_TARGET_MISMATCH."
+    },
+    {
+      "scenario_id": "core.approval.decision-pairing.runtime",
+      "dimension": "approval",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertApprovalDecisionTargets rejects decisions whose approval_request_id does not match the paired request."
     }
   ]
 }

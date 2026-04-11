@@ -14,6 +14,14 @@ import {
   promoteIntentToTask,
   sha256Prefixed,
   riskClassRequiresApproval,
+  isMandateExpired,
+  mandateCoversAction,
+  assertMandateAuthorizes,
+  assertApprovalDecisionTargets,
+  Mandate,
+  Action,
+  ApprovalRequest,
+  ApprovalDecision,
 } from './index.js';
 
 test('canonicalJson sorts object keys deterministically', () => {
@@ -160,5 +168,163 @@ test('task lifecycle rejects illegal terminal-state regressions', () => {
   assert.throws(
     () => assertTaskTransition('completed', 'running'),
     (error: unknown) => error instanceof OapsError && error.error.code === 'ILLEGAL_STATE_TRANSITION',
+  );
+});
+
+const exampleMandate: Mandate = {
+  mandate_id: 'mdt_test_1',
+  principal: { actor_id: 'urn:oaps:actor:principal:cfo' },
+  delegatee: { actor_id: 'urn:oaps:actor:agent:buyer' },
+  action: {
+    verb: 'purchase',
+    target: 'service:cloud-compute',
+    arguments: { max_amount: '250.00', currency: 'USD' },
+  },
+  expires_at: '2026-12-31T23:59:59Z',
+};
+
+const matchingAction: Action = {
+  verb: 'purchase',
+  target: 'service:cloud-compute',
+  arguments: { amount: '100.00', currency: 'USD' },
+};
+
+const mismatchedAction: Action = {
+  verb: 'purchase',
+  target: 'service:external-payment',
+  arguments: { amount: '100.00', currency: 'USD' },
+};
+
+test('isMandateExpired returns false for a future expiry', () => {
+  assert.equal(isMandateExpired(exampleMandate, new Date('2026-06-01T00:00:00Z')), false);
+});
+
+test('isMandateExpired returns true at or after the expiry instant', () => {
+  assert.equal(isMandateExpired(exampleMandate, new Date('2027-01-01T00:00:00Z')), true);
+  assert.equal(isMandateExpired(exampleMandate, new Date('2026-12-31T23:59:59Z')), true);
+});
+
+test('isMandateExpired throws VALIDATION_FAILED on unparseable expiry', () => {
+  const bad: Mandate = { ...exampleMandate, expires_at: 'not-a-date' };
+  assert.throws(
+    () => isMandateExpired(bad),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('mandateCoversAction matches on verb and target', () => {
+  assert.equal(mandateCoversAction(exampleMandate, matchingAction), true);
+  assert.equal(mandateCoversAction(exampleMandate, mismatchedAction), false);
+});
+
+test('assertMandateAuthorizes passes a valid mandate against a matching action', () => {
+  assert.doesNotThrow(() =>
+    assertMandateAuthorizes(exampleMandate, matchingAction, new Date('2026-06-01T00:00:00Z')),
+  );
+});
+
+test('assertMandateAuthorizes emits MANDATE_EXPIRED on expired mandates', () => {
+  assert.throws(
+    () => assertMandateAuthorizes(exampleMandate, matchingAction, new Date('2027-01-01T00:00:00Z')),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'MANDATE_EXPIRED' && err.error.category === 'authorization',
+  );
+});
+
+test('assertMandateAuthorizes emits MANDATE_SCOPE_MISMATCH on scope mismatch', () => {
+  assert.throws(
+    () => assertMandateAuthorizes(exampleMandate, mismatchedAction, new Date('2026-06-01T00:00:00Z')),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'MANDATE_SCOPE_MISMATCH' && err.error.category === 'authorization',
+  );
+});
+
+const baseApprovalRequest: ApprovalRequest = {
+  approval_request_id: 'apr_test_1',
+  interaction_id: 'int_test_1',
+  requested_by: { actor_id: 'urn:oaps:actor:agent:planner' },
+  requested_from: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+  reason: 'R4 risk class threshold',
+  risk_class: 'R4',
+  proposed_action: {
+    verb: 'purchase',
+    target: 'service:cloud-compute',
+    arguments: { amount: '250.00' },
+  },
+  expires_at: '2026-12-31T23:59:59Z',
+};
+
+test('assertApprovalDecisionTargets accepts approve and reject decisions', () => {
+  const approve: ApprovalDecision = {
+    approval_request_id: 'apr_test_1',
+    interaction_id: 'int_test_1',
+    decided_by: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+    decision: 'approve',
+    timestamp: '2026-04-11T10:00:00Z',
+  };
+  const reject: ApprovalDecision = { ...approve, decision: 'reject', reason: 'Policy violation' };
+  assert.doesNotThrow(() => assertApprovalDecisionTargets(baseApprovalRequest, approve));
+  assert.doesNotThrow(() => assertApprovalDecisionTargets(baseApprovalRequest, reject));
+});
+
+test('assertApprovalDecisionTargets accepts modify decisions that preserve the target', () => {
+  const modify: ApprovalDecision = {
+    approval_request_id: 'apr_test_1',
+    interaction_id: 'int_test_1',
+    decided_by: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+    decision: 'modify',
+    modified_action: {
+      verb: 'purchase',
+      target: 'service:cloud-compute',
+      arguments: { amount: '200.00' },
+    },
+    timestamp: '2026-04-11T10:00:00Z',
+  };
+  assert.doesNotThrow(() => assertApprovalDecisionTargets(baseApprovalRequest, modify));
+});
+
+test('assertApprovalDecisionTargets emits APPROVAL_MODIFICATION_TARGET_MISMATCH when modify retargets', () => {
+  const badModify: ApprovalDecision = {
+    approval_request_id: 'apr_test_1',
+    interaction_id: 'int_test_1',
+    decided_by: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+    decision: 'modify',
+    modified_action: {
+      verb: 'purchase',
+      target: 'service:DIFFERENT-TARGET',
+      arguments: { amount: '250.00' },
+    },
+    timestamp: '2026-04-11T10:00:00Z',
+  };
+  assert.throws(
+    () => assertApprovalDecisionTargets(baseApprovalRequest, badModify),
+    (err: unknown) =>
+      err instanceof OapsError && err.error.code === 'APPROVAL_MODIFICATION_TARGET_MISMATCH',
+  );
+});
+
+test('assertApprovalDecisionTargets rejects mismatched request/decision pairing', () => {
+  const wrongPair: ApprovalDecision = {
+    approval_request_id: 'apr_DIFFERENT',
+    interaction_id: 'int_test_1',
+    decided_by: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+    decision: 'approve',
+    timestamp: '2026-04-11T10:00:00Z',
+  };
+  assert.throws(
+    () => assertApprovalDecisionTargets(baseApprovalRequest, wrongPair),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertApprovalDecisionTargets rejects modify decisions without modified_action', () => {
+  const badModify: ApprovalDecision = {
+    approval_request_id: 'apr_test_1',
+    interaction_id: 'int_test_1',
+    decided_by: { actor_id: 'urn:oaps:actor:human:ops-lead' },
+    decision: 'modify',
+    timestamp: '2026-04-11T10:00:00Z',
+  };
+  assert.throws(
+    () => assertApprovalDecisionTargets(baseApprovalRequest, badModify),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
   );
 });
