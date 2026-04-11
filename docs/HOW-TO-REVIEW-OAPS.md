@@ -1,8 +1,8 @@
-# How To Review OAPS
+# How To Review AICP
 
 ## Purpose
 
-This is the shortest public-facing review packet for OAPS.
+This is the shortest public-facing review packet for AICP (Agent Interaction Control Protocol), hosted in the OAPS repository.
 
 Use it when someone asks:
 
@@ -10,7 +10,11 @@ Use it when someone asks:
 
 ## In One Paragraph
 
-OAPS is an open protocol suite for agentic control-plane primitives: identity references, delegation, intents, tasks, approvals, execution outcomes, evidence, and attached payment/provisioning semantics. It is designed to sit **above** protocols such as MCP, A2A, x402, and OSP rather than replace them. The current repo already includes a real TypeScript reference slice, a Python interoperability line, machine-readable conformance artifacts, and several draft profile tracks.
+AICP is an open protocol suite for agentic control-plane primitives: identity references, delegation, mandates, intents, tasks, approvals, execution outcomes, evidence, and payment coordination. It is designed to sit **above** protocols such as MCP, A2A, x402, and OSP rather than replace them. The current repo already includes a real TypeScript reference slice, a Python interoperability line, machine-readable conformance artifacts, and several draft profile tracks.
+
+## Feedback Channel
+
+The primary feedback surface is **GitHub Discussions** on this repository (pending enablement). Until Discussions is live, use [GitHub Issues](https://github.com/EfeDurmaz16/OAPS/issues) with the `review-feedback` label. For bounded review packets, see `docs/REVIEW-PACKET-INDEX.md`.
 
 ## What Is Real Today
 
@@ -24,20 +28,23 @@ The short version is:
 
 ## Recommended Reading Order
 
-### If you only have 10 minutes
+Estimated reading times are based on the actual document lengths and assume careful reading, not skimming.
+
+### If you only have 10 minutes (quick positioning)
 
 1. [README.md](../README.md)
 2. [docs/MATURITY-MATRIX.md](./MATURITY-MATRIX.md)
 3. [CHARTER.md](../CHARTER.md)
 4. [docs/PROTOCOL-POSITIONING.md](./PROTOCOL-POSITIONING.md)
 
-### If you are reviewing protocol shape
+### If you are reviewing protocol shape (45-60 minutes)
 
 1. [docs/SUITE-ARCHITECTURE.md](./SUITE-ARCHITECTURE.md)
-2. [spec/core/FOUNDATION-DRAFT.md](../spec/core/FOUNDATION-DRAFT.md)
-3. [spec/bindings/http-binding-draft.md](../spec/bindings/http-binding-draft.md)
-4. the relevant profile draft under [profiles/](../profiles/)
-5. [conformance/README.md](../conformance/README.md)
+2. [spec/core/FOUNDATION-DRAFT.md](../spec/core/FOUNDATION-DRAFT.md) (~15 min for the normative core)
+3. [spec/core/STATE-MACHINE-DRAFT.md](../spec/core/STATE-MACHINE-DRAFT.md) (~10 min for the lifecycle model)
+4. [spec/bindings/http-binding-draft.md](../spec/bindings/http-binding-draft.md)
+5. the relevant profile draft under [profiles/](../profiles/)
+6. [conformance/README.md](../conformance/README.md)
 
 ### If you are reviewing one ecosystem mapping
 

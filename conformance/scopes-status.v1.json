@@ -13,23 +13,23 @@
     },
     {
       "scope": "binding:jsonrpc",
-      "status": "fixture-backed",
-      "notes": "Draft binding pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: draft spec and fixture-only stubs exist, no runtime implementation. Honestly pre-draft."
     },
     {
       "scope": "binding:grpc",
-      "status": "fixture-backed",
-      "notes": "Draft binding pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: draft spec, proto layout, and fixture-only stubs exist, no runtime implementation. Honestly pre-draft."
     },
     {
       "scope": "binding:events",
-      "status": "fixture-backed",
-      "notes": "Draft binding pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: draft spec and fixture-only stubs exist, no runtime implementation. Honestly pre-draft."
     },
     {
       "scope": "profile:agent-client",
-      "status": "fixture-backed",
-      "notes": "Draft profile pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: 2.5 KB stub profile with minimal substance. No runtime backing."
     },
     {
       "scope": "profile:mcp",
@@ -63,23 +63,23 @@
     },
     {
       "scope": "profile:mpp",
-      "status": "fixture-backed",
-      "notes": "Draft machine-payment pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: 3.2 KB stub profile. No runtime backing."
     },
     {
       "scope": "profile:ap2",
-      "status": "fixture-backed",
-      "notes": "Draft mandate and payment authorization pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: 2.8 KB stub profile. No runtime backing."
     },
     {
       "scope": "profile:acp",
-      "status": "fixture-backed",
-      "notes": "Draft commerce alignment pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: 2.4 KB stub profile. No runtime backing."
     },
     {
       "scope": "profile:ucp",
-      "status": "fixture-backed",
-      "notes": "Draft commerce alignment pack exists in the conformance registry"
+      "status": "concept",
+      "notes": "Downgraded 2026-04-11: 2.5 KB stub profile. No runtime backing."
     },
     {
       "scope": "domain:commerce",
