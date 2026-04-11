@@ -1,10 +1,21 @@
-# OAPS Review Calendar
+# AICP Review Cadence (Planned)
 
 ## Purpose
 
-This calendar makes review cadence explicit so the suite can move in parallel without losing decision trail.
+This document describes the **intended** review cadence for when AICP has more than one active maintainer. No cadence is currently in effect — see the Current State section below.
 
-## Standing Cadence
+Formerly titled "Review Calendar." Renamed 2026-04-11 to stop implying a scheduled calendar that does not exist.
+
+## Current State (2026-04-11)
+
+- **Zero active working groups.** See `governance/WORKING_GROUPS.md`.
+- **Zero scheduled review meetings.** No calendar, no notes, no cadence notes to point to.
+- **One active maintainer.** Efe Baran Durmaz (see `MAINTAINERS.md`).
+- **Review happens asynchronously via GitHub.** Issues, Discussions (pending enablement), and OEPs are the current review surface.
+
+The planned cadence below will become effective when co-stewards join and working groups become live (see `governance/WORKING_GROUPS.md` §"Planned Areas of Work").
+
+## Planned Standing Cadence (Not Yet Active)
 
 - Weekly Core Semantics review
 - Weekly Bindings review
@@ -40,12 +51,14 @@ This calendar makes review cadence explicit so the suite can move in parallel wi
 - update roadmap and public positioning if the program boundary changed
 - close or defer any outgoing review packets with explicit follow-up owners
 
-## Quarterly Milestones
+## Planned Quarterly Milestones (No Dates)
 
-- Q1: suite framing, core foundation, HTTP binding, MCP/A2A profile scaffolding
-- Q2: conformance runner contract, first profile hardening, second implementation line
-- Q3: trust/payment profile drafts, external review packets, interoperability demos
-- Q4: candidate stable profiles, external review cycle, neutrality/governance refinement
+These milestones describe the *order* of program work, not a calendar. Specific dates will be added when the project has the stakeholder commitments that make date-level commitments credible.
+
+- **Phase Q1:** suite framing, core foundation, HTTP binding, MCP/A2A profile scaffolding (largely done, see STATUS.md)
+- **Phase Q2:** conformance runner contract, first profile hardening, second implementation line
+- **Phase Q3:** trust/payment profile drafts, external review packets, interoperability demos
+- **Phase Q4:** candidate stable profiles, external review cycle, neutrality/governance refinement
 
 ## Review Packet Rule
 
