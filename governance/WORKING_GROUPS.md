@@ -1,14 +1,16 @@
-# Working Groups
+# Planned Areas of Work
 
 ## Purpose
 
-OAPS moves too broadly for a single linear review queue. Working groups are the default parallel execution unit for governance, review, and external coordination.
+AICP moves too broadly for a single linear review queue. This document describes **planned areas of work** that will eventually become formal working groups once the project has more than one active maintainer.
 
-They are not separate projects. They are disciplined review lanes with explicit outputs.
+**Current status (2026-04-11):** None of the groups below are active. There are no working-group maintainers, no meeting notes, no issue labels, and no cadenced reviews. The project currently operates under a single founding steward (see `MAINTAINERS.md`). When co-stewards join, the areas below will become live working groups with the operating model described in the following section.
 
-## Operating Model
+Treat this document as a forward-looking organizational map, not a description of current state.
 
-Each working group should have:
+## Intended Operating Model (When Active)
+
+When a working group becomes active, it will have:
 
 - a clear charter
 - one or more maintainers
@@ -16,11 +18,11 @@ Each working group should have:
 - a predictable review cadence
 - explicit artifact ownership
 
-Working groups may draft, review, and recommend changes. They do not silently finalize normative changes outside the OEP process.
+Working groups will draft, review, and recommend changes. They will not silently finalize normative changes outside the OEP process.
 
-## Initial Working Groups
+## Planned Areas of Work
 
-### Core Semantics WG
+### Core Semantics (planned)
 
 Owns:
 
@@ -36,7 +38,7 @@ Typical outputs:
 - semantic clarifications
 - core OEPs
 
-### Bindings WG
+### Bindings (planned)
 
 Owns:
 
@@ -51,7 +53,7 @@ Typical outputs:
 - transport mapping notes
 - compatibility matrices
 
-### Profiles WG
+### Profiles (planned)
 
 Owns:
 
@@ -66,7 +68,7 @@ Typical outputs:
 - adapter guidance
 - ecosystem mapping notes
 
-### Conformance WG
+### Conformance (planned)
 
 Owns:
 
@@ -82,7 +84,7 @@ Typical outputs:
 - test vectors
 - implementation checklists
 
-### Governance and Outreach WG
+### Governance and Outreach (planned)
 
 Owns:
 
@@ -101,13 +103,13 @@ Typical outputs:
 
 ## Review Cadence
 
-Recommended cadence:
+No cadence is currently in effect — no working group is active. When working groups become active, the intended initial cadences are:
 
-- Core Semantics WG: weekly
-- Bindings WG: weekly or biweekly
-- Profiles WG: weekly or biweekly
-- Conformance WG: weekly
-- Governance and Outreach WG: biweekly
+- Core Semantics: weekly
+- Bindings: weekly or biweekly
+- Profiles: weekly or biweekly
+- Conformance: weekly
+- Governance and Outreach: biweekly
 
 The cadence matters less than whether decisions are written down and linked to a durable artifact.
 

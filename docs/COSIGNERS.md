@@ -1,8 +1,8 @@
-# OAPS Cosigners
+# AICP Cosigners
 
 ## Purpose
 
-This page describes the kind of outside review OAPS is looking for when it asks for cosigner-style feedback.
+This page describes **how to become a cosigner** of AICP (Agent Interaction Control Protocol). No cosigners are currently signed on — this page exists to make the role and process visible so that potential cosigners can understand what is being asked before committing.
 
 A cosigner is not a blanket endorsement for the whole suite.
 It is a bounded review of one artifact family with enough confidence to keep the work moving.

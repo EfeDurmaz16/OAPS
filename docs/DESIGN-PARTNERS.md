@@ -1,8 +1,8 @@
-# OAPS Design Partners
+# AICP Design Partners
 
 ## Purpose
 
-Design partners are review participants who help test whether OAPS is useful to real adopters.
+Design partners are review participants who help test whether AICP is useful to real adopters.
 
 They are not asked to sign off on every normative detail.
 They are asked to comment on fit, friction, and the adoption path.
@@ -18,13 +18,15 @@ A design partner can tell us:
 
 ## Good Design Partner Categories
 
-| Category | Example targets | What to ask |
+The categories below describe the *types* of organizations that would make strong design partners. No specific company has been approached or agreed to participate — these are the target categories the project intends to pursue once a bounded review packet is ready. Named companies are deliberately avoided to prevent implying relationships that do not exist.
+
+| Category | Target organization shape | What to ask |
 | --- | --- | --- |
-| Payments and infra | Stripe, Visa, Cloudflare | whether the payment and authorization boundary is adoption-friendly |
-| Commerce and checkout | Shopify and adjacent ecosystem participants | whether order/authorization/fulfillment mapping stays above product-specific checkout logic |
-| Trust and identity | FIDES-adjacent reviewers, signing and verification teams | whether the trust model is usable and upgradeable |
-| Platform and devtools | Supabase, Vercel, agent-platform teams | whether the execution model and docs are understandable to implementers |
-| Provenance and replay | lineage, audit, and workflow teams | whether evidence and replay semantics are sufficient for durable review |
+| Payments and infra | Payment processors, authorization networks, edge infrastructure providers | whether the payment and authorization boundary is adoption-friendly |
+| Commerce and checkout | Commerce platforms and checkout-adjacent ecosystem participants | whether order/authorization/fulfillment mapping stays above product-specific checkout logic |
+| Trust and identity | Trust framework implementers, signing and verification teams, DID-adjacent projects | whether the trust model is usable and upgradeable |
+| Platform and devtools | Agent platform teams, developer-tooling vendors, serverless/edge compute platforms | whether the execution model and docs are understandable to implementers |
+| Provenance and replay | Lineage, audit, workflow, and observability teams | whether evidence and replay semantics are sufficient for durable review |
 
 ## Design Partner Packet Shape
 

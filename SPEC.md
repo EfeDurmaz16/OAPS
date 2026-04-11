@@ -1,9 +1,18 @@
-# OAPS Specification
+# OAPS Specification (Legacy)
 
-**Version:** v0.4-draft  
-**Status:** consolidated draft for implementation
+**Version:** v0.4-draft
+**Status:** ⚠️ SUPERSEDED — retained for historical reference only
 
-> Note: this document remains the original consolidated draft spec pack that backs the current MCP-oriented reference slice. The suite-level direction now lives alongside it in [CHARTER.md](/Users/efebarandurmaz/OAPS/CHARTER.md), [docs/SUITE-ARCHITECTURE.md](/Users/efebarandurmaz/OAPS/docs/SUITE-ARCHITECTURE.md), and [spec/core/FOUNDATION-DRAFT.md](/Users/efebarandurmaz/OAPS/spec/core/FOUNDATION-DRAFT.md).
+> **Deprecation notice (2026-04-11):** This document is the original consolidated draft spec pack that backed the early MCP-oriented reference slice. It has been **superseded** by the normative `spec/` directory tree, where the foundation draft, state machine draft, bindings, and profiles now live as independently versioned documents.
+>
+> **Where to read the current spec instead:**
+> - `spec/core/FOUNDATION-DRAFT.md` — RFC 2119 normative foundation (v0.1.0-draft)
+> - `spec/core/STATE-MACHINE-DRAFT.md` — interaction and task lifecycle
+> - `spec/bindings/http-binding-draft.md` — HTTP binding
+> - `profiles/mcp.md` — MCP profile
+> - `VERSIONING.md` — versioning policy
+>
+> This file is retained only because the early reference slice under `reference/oaps-monorepo/packages/` was originally written against this document. Do not cite `SPEC.md` as a normative source. Any contradiction between `SPEC.md` and the `spec/` tree is resolved in favor of the `spec/` tree.
 
 ## 1. Scope
 
