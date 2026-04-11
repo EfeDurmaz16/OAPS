@@ -1,0 +1,21 @@
+{
+  "order_intent_id": "oi_example_1",
+  "customer": {
+    "actor_id": "https://agents.example.com/actors/buyer"
+  },
+  "merchant": {
+    "actor_id": "https://merchants.example.com/actors/store-42"
+  },
+  "cart": {
+    "items": [
+      {
+        "sku": "widget-v2",
+        "quantity": 3,
+        "unit_price": "14.17",
+        "currency": "USD"
+      }
+    ]
+  },
+  "requested_outcome": "fulfill-standard-shipping",
+  "state": "intent_received"
+}

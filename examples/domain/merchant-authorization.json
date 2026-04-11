@@ -1,0 +1,10 @@
+{
+  "merchant_authorization_id": "ma_example_1",
+  "merchant": {
+    "actor_id": "https://merchants.example.com/actors/store-42"
+  },
+  "order_intent_id": "oi_example_1",
+  "decision": "approved",
+  "reason": "Order passes policy checks and sufficient inventory confirmed.",
+  "decided_at": "2026-04-11T10:15:30Z"
+}

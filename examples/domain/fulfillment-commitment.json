@@ -1,0 +1,6 @@
+{
+  "fulfillment_id": "ff_example_1",
+  "status": "committed",
+  "resource_ref": "urn:resource:cloud-instance:i-abc123",
+  "delivered_at": "2026-04-11T10:20:00Z"
+}

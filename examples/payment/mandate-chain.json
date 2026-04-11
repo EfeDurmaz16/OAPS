@@ -1,0 +1,22 @@
+{
+  "mandate_chain_id": "mc_example_1",
+  "principal": {
+    "actor_id": "https://company.example.com/actors/cfo"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/purchasing-agent"
+  },
+  "action": {
+    "verb": "purchase",
+    "target": "service:cloud-compute",
+    "arguments": {
+      "max_amount": "500.00",
+      "currency": "USD",
+      "period": "monthly"
+    }
+  },
+  "payment_authorization": {
+    "mandate_ref": "mdt_chain_root_1"
+  },
+  "expires_at": "2026-12-31T23:59:59Z"
+}

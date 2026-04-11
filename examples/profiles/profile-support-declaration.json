@@ -1,0 +1,18 @@
+{
+  "implementation_id": "aicp-ts-reference-v0.1",
+  "profile": "aicp-mcp-v1",
+  "support": "partial",
+  "compatibility": "partial",
+  "supported_surfaces": [
+    "capability-mapping",
+    "intent-to-tool-call",
+    "policy-gating",
+    "approval-insertion",
+    "evidence-emission",
+    "error-translation"
+  ],
+  "unsupported_surfaces": [
+    "streaming-tool-results"
+  ],
+  "notes": "TypeScript reference implementation. Runtime-backed for all non-streaming MCP tool invocations. Streaming support is planned."
+}

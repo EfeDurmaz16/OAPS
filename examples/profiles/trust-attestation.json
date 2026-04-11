@@ -1,0 +1,14 @@
+{
+  "profile": "aicp-auth-fides-tap-v1",
+  "actor_id": "https://agents.example.com/actors/planner",
+  "trust_tier": "verified",
+  "attestation": {
+    "issuer": "https://fides.example.com/trust-framework",
+    "attestation_id": "att_example_1",
+    "issued_at": "2026-04-11T09:00:00Z",
+    "expires_at": "2026-04-18T09:00:00Z"
+  },
+  "required_trust_tier": "verified",
+  "provided_attestation": "att_example_1",
+  "expected_result": "accept"
+}

@@ -1,0 +1,17 @@
+{
+  "profile": "aicp-x402-v1",
+  "interaction_id": "int_payment_challenge_1",
+  "challenge_type": "payment_authorization_required",
+  "http_status": 402,
+  "required_authorization": {
+    "amount": {
+      "value": "5.00",
+      "currency": "USD"
+    },
+    "payee": "https://providers.example.com/actors/api-gateway"
+  },
+  "authorization_intent": {
+    "intent_id": "int_pay_2",
+    "capability_ref": "urn:aicp:capability:payment:authorize"
+  }
+}

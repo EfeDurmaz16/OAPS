@@ -1,0 +1,13 @@
+{
+  "profile": "aicp-osp-v1",
+  "interaction_id": "int_provision_1",
+  "state": "executing",
+  "resource_type": "cloud-instance",
+  "delivery": {
+    "method": "api-push",
+    "target": "https://providers.example.com/api/instances"
+  },
+  "payment_handoff": {
+    "payment_session_ref": "ps_example_1"
+  }
+}

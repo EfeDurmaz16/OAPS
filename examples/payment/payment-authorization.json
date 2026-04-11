@@ -1,0 +1,10 @@
+{
+  "payment_authorization_id": "pa_example_1",
+  "mandate_ref": "mdt_chain_root_1",
+  "authorized_by": {
+    "actor_id": "https://company.example.com/actors/cfo"
+  },
+  "status": "authorized",
+  "settlement_ref": null,
+  "evidence_ref": "evt_payment_auth_1"
+}

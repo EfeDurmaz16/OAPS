@@ -40,6 +40,18 @@ const exampleSchemaMap = new Map([
   ['foundation/interaction.json', 'foundation/interaction.json'],
   ['foundation/message.json', 'foundation/message.json'],
   ['foundation/version-negotiation.json', 'foundation/version-negotiation.json'],
+  ['domain/commercial-evidence.json', 'domain/commercial-evidence.json'],
+  ['domain/fulfillment-commitment.json', 'domain/fulfillment-commitment.json'],
+  ['domain/merchant-authorization.json', 'domain/merchant-authorization.json'],
+  ['domain/order-intent.json', 'domain/order-intent.json'],
+  ['payment/mandate-chain.json', 'payment/mandate-chain.json'],
+  ['payment/payment-authorization.json', 'payment/payment-authorization.json'],
+  ['payment/payment-session.json', 'payment/payment-session.json'],
+  ['profiles/payment-challenge.json', 'profiles/payment-challenge.json'],
+  ['profiles/provisioning-operation.json', 'profiles/provisioning-operation.json'],
+  ['profiles/subject-binding-assertion.json', 'profiles/subject-binding-assertion.json'],
+  ['profiles/trust-attestation.json', 'profiles/trust-attestation.json'],
+  ['profiles/profile-support-declaration.json', 'profiles/profile-support-declaration.json'],
 ]);
 
 const invalidExampleSchemaMap = new Map([
@@ -100,7 +112,10 @@ class SchemaValidator {
 
   resolveSchema(baseSchemaName, ref) {
     const [refFile, fragment = ''] = ref.split('#');
-    const schemaName = refFile || baseSchemaName;
+    let schemaName = refFile || baseSchemaName;
+    // Strip leading ../ segments so domain/payment/profiles schemas that
+    // reference foundation/ via relative paths resolve to the flat map keys.
+    schemaName = schemaName.replace(/^(?:\.\.\/)+/, '');
     const rootSchema = this.schemaMap.get(schemaName);
     if (!rootSchema) {
       throw new Error(`Unknown schema reference: ${ref}`);
@@ -168,13 +183,15 @@ class SchemaValidator {
 
     if (schema.type) {
       const actualType = typeOfJson(value);
-      if (schema.type === 'integer') {
-        if (!(typeof value === 'number' && Number.isInteger(value))) {
-          errors.push(`${valuePath}: expected integer, got ${actualType}`);
-          return errors;
+      const allowedTypes = Array.isArray(schema.type) ? schema.type : [schema.type];
+      const matchesAny = allowedTypes.some((t) => {
+        if (t === 'integer') {
+          return typeof value === 'number' && Number.isInteger(value);
         }
-      } else if (actualType !== schema.type) {
-        errors.push(`${valuePath}: expected ${schema.type}, got ${actualType}`);
+        return actualType === t;
+      });
+      if (!matchesAny) {
+        errors.push(`${valuePath}: expected ${allowedTypes.join('|')}, got ${actualType}`);
         return errors;
       }
     }

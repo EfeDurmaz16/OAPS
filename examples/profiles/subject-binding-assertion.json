@@ -1,0 +1,9 @@
+{
+  "surface": "https://auth.example.com/session",
+  "authenticated_subject": "https://agents.example.com/actors/planner",
+  "envelope_from_actor_id": "https://agents.example.com/actors/planner",
+  "interaction_actor_id": "https://agents.example.com/actors/planner",
+  "delegation_required": false,
+  "result": "bound",
+  "claim_boundary": "web-session"
+}

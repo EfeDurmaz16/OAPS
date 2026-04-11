@@ -1,0 +1,21 @@
+{
+  "payment_session_id": "ps_example_1",
+  "payer": {
+    "actor_id": "https://company.example.com/actors/purchasing-agent"
+  },
+  "payee": {
+    "actor_id": "https://providers.example.com/actors/cloud-compute"
+  },
+  "status": "pending_authorization",
+  "requested_amount": {
+    "value": "250.00",
+    "currency": "USD"
+  },
+  "authorization_intent": {
+    "intent_id": "int_pay_1",
+    "capability_ref": "urn:aicp:capability:payment:authorize"
+  },
+  "mandate_ref": "mdt_chain_root_1",
+  "settlement_ref": null,
+  "expires_at": "2026-04-11T11:00:00Z"
+}
