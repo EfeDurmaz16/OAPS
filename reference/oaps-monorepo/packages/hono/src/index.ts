@@ -7,7 +7,11 @@ export interface ResponseOrInit<TStatus extends number = number> extends Respons
 }
 
 export class HonoRequest {
-  constructor(private readonly request: Request, private readonly paramsMap: Record<string, string>) {}
+  private readonly queryMap: URLSearchParams;
+
+  constructor(private readonly request: Request, private readonly paramsMap: Record<string, string>) {
+    this.queryMap = new URL(request.url).searchParams;
+  }
 
   header(name: string): string | undefined {
     return this.request.headers.get(name) ?? undefined;
@@ -15,6 +19,10 @@ export class HonoRequest {
 
   param(name: string): string {
     return this.paramsMap[name] ?? '';
+  }
+
+  query(name: string): string | undefined {
+    return this.queryMap.get(name) ?? undefined;
   }
 
   async json<T>(): Promise<T> {
