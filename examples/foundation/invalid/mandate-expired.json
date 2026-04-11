@@ -1,0 +1,19 @@
+{
+  "mandate_id": "mdt_invalid_expired_1",
+  "principal": {
+    "actor_id": "https://company.example.com/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/buyer"
+  },
+  "action": {
+    "verb": "purchase",
+    "target": "service:cloud-compute",
+    "arguments": {
+      "max_amount": "250.00",
+      "currency": "USD"
+    }
+  },
+  "expires_at": "2025-01-01T00:00:00Z",
+  "_invalid_reason": "Mandate expired well before the current evaluation time. Implementations MUST fail closed on expired mandates per FOUNDATION-DRAFT Mandate requirements, emitting MANDATE_EXPIRED."
+}

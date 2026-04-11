@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0",
   "tck_id": "oaps-tck",
-  "suite_version": "foundation-draft",
+  "suite_version": "0.1.0-draft",
   "status": "draft",
   "entrypoints": [
     {

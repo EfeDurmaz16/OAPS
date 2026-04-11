@@ -1,0 +1,16 @@
+{
+  "mandate_id": "mdt_invalid_empty_1",
+  "principal": {
+    "actor_id": "https://company.example.com/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/buyer"
+  },
+  "action": {
+    "verb": "purchase",
+    "target": "service:cloud-compute",
+    "arguments": {}
+  },
+  "expires_at": "2026-12-31T23:59:59Z",
+  "_invalid_reason": "Mandate with empty authorization arguments cannot bound the action. A non-empty action constraint (e.g. max_amount) is required for a usable mandate."
+}

@@ -1,0 +1,63 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/interaction.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICP Foundation Interaction",
+  "description": "The durable protocol envelope for exchange, approval, replay, and evidence. See spec/core/FOUNDATION-DRAFT.md and spec/core/STATE-MACHINE-DRAFT.md.",
+  "type": "object",
+  "required": [
+    "interaction_id",
+    "state",
+    "created_at"
+  ],
+  "properties": {
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "$ref": "foundation/common.json#/$defs/interactionState"
+    },
+    "actor": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "peer": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "capability_ref": {
+      "type": "string"
+    },
+    "intent_ref": {
+      "type": "string"
+    },
+    "task_ref": {
+      "type": "string"
+    },
+    "parent_interaction_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "description": "Negotiated protocol version in semver."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_transition_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence_head": {
+      "type": "string",
+      "description": "Hash of the most recent EvidenceEvent anchoring this interaction."
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

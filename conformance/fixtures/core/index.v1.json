@@ -246,6 +246,120 @@
         "reference-runtime"
       ],
       "notes": "Confirms the core lifecycle helper distinguishes approval rejection from revocation and fails closed on illegal regressions."
+    },
+    {
+      "scenario_id": "core.interaction.valid",
+      "dimension": "lifecycle",
+      "schema": "schemas/foundation/interaction.json",
+      "example": "examples/foundation/interaction.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Interaction primitive. The central protocol envelope referenced by every binding and profile."
+    },
+    {
+      "scenario_id": "core.message.valid",
+      "dimension": "lifecycle",
+      "schema": "schemas/foundation/message.json",
+      "example": "examples/foundation/message.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Message primitive. First-class binding operation for message append across HTTP, JSON-RPC, gRPC, and events."
+    },
+    {
+      "scenario_id": "core.version-negotiation.valid",
+      "dimension": "versioning",
+      "schema": "schemas/foundation/version-negotiation.json",
+      "example": "examples/foundation/version-negotiation.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level version negotiation shape. Bindings MUST preserve these semantics per FOUNDATION-DRAFT CC6."
+    },
+    {
+      "scenario_id": "core.delegation.invalid.empty-scope",
+      "dimension": "delegation",
+      "example": "examples/foundation/invalid/delegation-empty-scope.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: delegations with empty scope must be rejected per FOUNDATION-DRAFT Delegation MUST requirements."
+    },
+    {
+      "scenario_id": "core.task.invalid.missing-created-at",
+      "dimension": "task",
+      "example": "examples/foundation/invalid/task-missing-created-at.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: tasks without created_at must fail schema validation per FOUNDATION-DRAFT CC3."
+    },
+    {
+      "scenario_id": "core.interaction-transition.invalid.pending-approval-to-completed",
+      "dimension": "lifecycle",
+      "example": "examples/foundation/invalid/interaction-transition-pending-approval-to-completed.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: pending_approval must not transition directly to completed without an approval decision."
+    },
+    {
+      "scenario_id": "core.mandate.invalid.expired",
+      "dimension": "mandate",
+      "example": "examples/foundation/invalid/mandate-expired.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: expired mandates must fail closed and emit MANDATE_EXPIRED per FOUNDATION-DRAFT Mandate requirements."
+    },
+    {
+      "scenario_id": "core.mandate.invalid.empty-action-arguments",
+      "dimension": "mandate",
+      "example": "examples/foundation/invalid/mandate-empty-action-arguments.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: a mandate with empty action arguments cannot bound the authorized action."
+    },
+    {
+      "scenario_id": "core.mandate.invalid.scope-mismatch",
+      "dimension": "mandate",
+      "example": "examples/foundation/invalid/mandate-scope-mismatch.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: a mandate whose action target does not cover the attempted action must fail scope check and emit MANDATE_SCOPE_MISMATCH."
+    },
+    {
+      "scenario_id": "core.error.approval-modification-target-mismatch",
+      "dimension": "error",
+      "example": "conformance/fixtures/core/invalid/error-approval-modification-target-mismatch.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: modified approval decisions referencing a different target than the original request must emit APPROVAL_MODIFICATION_TARGET_MISMATCH."
+    },
+    {
+      "scenario_id": "core.error.capability-not-found",
+      "dimension": "error",
+      "example": "conformance/fixtures/core/invalid/error-capability-not-found.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: intents referencing an unknown capability must emit CAPABILITY_NOT_FOUND."
+    },
+    {
+      "scenario_id": "core.error.execution-timeout",
+      "dimension": "error",
+      "example": "conformance/fixtures/core/invalid/error-execution-timeout.v1.json",
+      "coverage": [
+        "fixture"
+      ],
+      "notes": "Negative fixture: executions exceeding their bound must emit EXECUTION_TIMEOUT."
     }
   ]
 }

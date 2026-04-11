@@ -37,6 +37,9 @@ const exampleSchemaMap = new Map([
   ['foundation/extension-descriptor.json', 'foundation/extension-descriptor.json'],
   ['foundation/interaction-transition.json', 'foundation/interaction-transition.json'],
   ['foundation/task-transition.json', 'foundation/task-transition.json'],
+  ['foundation/interaction.json', 'foundation/interaction.json'],
+  ['foundation/message.json', 'foundation/message.json'],
+  ['foundation/version-negotiation.json', 'foundation/version-negotiation.json'],
 ]);
 
 const invalidExampleSchemaMap = new Map([
@@ -45,6 +48,9 @@ const invalidExampleSchemaMap = new Map([
   ['foundation/invalid/task-missing-created-at.json', 'foundation/task.json'],
   ['foundation/invalid/interaction-transition-pending-approval-to-completed.json', 'foundation/interaction-transition.json'],
   ['foundation/invalid/task-transition-completed-to-running.json', 'foundation/task-transition.json'],
+  ['foundation/invalid/mandate-expired.json', 'foundation/mandate.json'],
+  ['foundation/invalid/mandate-empty-action-arguments.json', 'foundation/mandate.json'],
+  ['foundation/invalid/mandate-scope-mismatch.json', 'foundation/mandate.json'],
 ]);
 
 const wellKnownRequiredKeys = [

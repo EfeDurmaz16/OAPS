@@ -1,0 +1,9 @@
+{
+  "supported_versions": [
+    "0.1.0-draft"
+  ],
+  "min_version": "0.1.0-draft",
+  "max_version": "0.1.0-draft",
+  "selected_version": "0.1.0-draft",
+  "negotiated_at": "2026-04-11T09:00:00Z"
+}

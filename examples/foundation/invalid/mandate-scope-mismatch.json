@@ -1,0 +1,19 @@
+{
+  "mandate_id": "mdt_invalid_scope_1",
+  "principal": {
+    "actor_id": "https://company.example.com/actors/owner"
+  },
+  "delegatee": {
+    "actor_id": "https://agents.example.com/actors/buyer"
+  },
+  "action": {
+    "verb": "purchase",
+    "target": "service:cloud-compute",
+    "arguments": {
+      "max_amount": "250.00",
+      "currency": "USD"
+    }
+  },
+  "expires_at": "2026-12-31T23:59:59Z",
+  "_invalid_reason": "When used to authorize an action against target='service:external-payment-processor', this mandate must fail scope check because its target is 'service:cloud-compute'. Implementations MUST emit MANDATE_SCOPE_MISMATCH."
+}

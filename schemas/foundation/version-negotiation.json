@@ -1,0 +1,80 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/version-negotiation.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICP Foundation Version Negotiation",
+  "description": "Canonical shape for protocol version negotiation at binding edges. Bindings may expose negotiation through binding-native mechanisms but MUST preserve these semantics.",
+  "type": "object",
+  "oneOf": [
+    {
+      "required": [
+        "supported_versions",
+        "min_version",
+        "max_version",
+        "selected_version"
+      ],
+      "properties": {
+        "supported_versions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Semver versions the responder supports."
+        },
+        "min_version": {
+          "type": "string",
+          "description": "Lowest semver version the responder supports."
+        },
+        "max_version": {
+          "type": "string",
+          "description": "Highest semver version the responder supports."
+        },
+        "selected_version": {
+          "type": "string",
+          "description": "Version chosen for this exchange."
+        },
+        "negotiated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": [
+            "code",
+            "category"
+          ],
+          "properties": {
+            "code": {
+              "const": "VERSION_NEGOTIATION_FAILED"
+            },
+            "category": {
+              "const": "versioning"
+            },
+            "requested": {
+              "type": "string"
+            },
+            "supported_versions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "detail": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

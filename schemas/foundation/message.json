@@ -1,0 +1,59 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/message.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICP Foundation Message",
+  "description": "A message appended to an interaction. Foundation-level object used by HTTP, JSON-RPC, gRPC, and event bindings for message append operations.",
+  "type": "object",
+  "required": [
+    "message_id",
+    "interaction_id",
+    "role",
+    "created_at"
+  ],
+  "properties": {
+    "message_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "actor",
+        "peer",
+        "system",
+        "approver",
+        "tool"
+      ]
+    },
+    "actor_ref": {
+      "$ref": "foundation/common.json#/$defs/actorRef"
+    },
+    "content": {
+      "type": "object",
+      "description": "Message payload. Shape is profile- or binding-defined; foundation requires only that it be a structured object."
+    },
+    "content_type": {
+      "type": "string",
+      "description": "Media type describing the content payload (e.g. text/plain, application/json)."
+    },
+    "in_reply_to": {
+      "type": "string"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "description": "Reference to the EvidenceEvent that records this message."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}
