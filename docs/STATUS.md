@@ -61,6 +61,78 @@ Append one entry per tranche using this shape:
 
 Append one entry per tranche using the V2 template above:
 
+### 2026-04-12
+
+- tranche: Audit Remediation Sprint (6 tiers, 13 atomic commits direct to main)
+- tranche status:
+  - drafted:
+    - rewrote `spec/core/FOUNDATION-DRAFT.md` with full RFC 2119 normative language (147 keywords: 104 MUST, 22 SHOULD, 21 MAY; was 7 total)
+    - added new PaymentCoordination primitive, 7 cross-cutting requirements (CC1-CC7), and Appendix B conformance checklist
+    - created `schemas/foundation/interaction.json`, `message.json`, `version-negotiation.json` with matching examples
+    - created `VERSIONING.md` and bumped `suite_version` to `0.1.0-draft`
+    - rebranded public name from Pact to AICP (Agent Interaction Control Protocol) across site, README, CHARTER, and all docs with pact.io disambiguation
+    - created `MAINTAINERS.md`, `.github/CODEOWNERS`, added "Current Stewardship" to CHARTER
+    - created `oeps/` directory with README, TEMPLATE.md, and OEP-0001 (bootstrap OEP that ratifies the OEP process)
+    - substantive rewrites: `docs/NEUTRAL-BY-DESIGN.md`, `docs/REVIEW-PACKET-MCP.md`, `docs/GLOSSARY.md`
+    - reframed `governance/WORKING_GROUPS.md` and `docs/REVIEW-CALENDAR.md` as planned-not-active
+    - de-namedropped `docs/DESIGN-PARTNERS.md` and `docs/COSIGNERS.md`
+    - added deprecation header to `SPEC.md`
+  - implemented:
+    - added `isMandateExpired`, `mandateCoversAction`, `assertMandateAuthorizes`, `assertApprovalDecisionTargets` to `@oaps/core` with 12 new tests
+    - added 9 Hono shim tests + 4 hono-node-server tests
+    - added 7 FileReferenceStateStore crash recovery tests (corrupt JSON, atomic rename, concurrent writes, missing parent dir)
+    - added `query()` method to Hono shim HonoRequest (was missing, exposed by fixed test discovery)
+    - fixed critical test discovery bug: all packages had `node --test dist` which silently picked up only 1 placeholder test; changed to `node --test 'dist/*.test.js'` which runs real test files
+    - fixed validator resolver to handle `../foundation/common.json` relative refs
+    - fixed validator type-check to handle union types (e.g. `string|null`)
+    - created 12 valid example instances for previously unmapped domain/payment/profiles schemas
+    - maturity downgrades: 5 stub profiles and 3 non-HTTP bindings moved from Draft to Concept
+    - gRPC proto filename corrected; pnpm packageManager pinned
+  - conformance-backed:
+    - 3 mandate negative fixtures (expired, empty-action-arguments, scope-mismatch)
+    - 3 error-code negative fixtures (APPROVAL_MODIFICATION_TARGET_MISMATCH, CAPABILITY_NOT_FOUND, EXECUTION_TIMEOUT)
+    - 3 orphan invalid examples now registered
+    - 4 new runtime-backed scenarios for Mandate and Approval
+    - conformance pack: 17 packs / 183 scenarios (was 167)
+    - spec pack validates 45 positive + 8 invalid examples (was 30 + 5) with zero warnings
+    - 96 total tests passing across 7 reference packages (was 64 actually running)
+  - externally-blocked:
+    - patent pledge legal review (requires counsel)
+    - legal entity formation
+    - external review outreach (repo is now ready)
+    - second independent implementation
+    - non-HTTP binding runtimes (correctly downgraded to Concept)
+    - GitHub Discussions enablement (repo setting)
+- changes:
+  - closed every tier of AUDIT-FIX-LIST except items explicitly requiring external action
+  - transformed the foundation draft from prose narrative into an RFC 2119 implementable specification
+  - made every maturity claim in the repo match its actual implementation backing
+  - gave external reviewers a complete entry path: README → MATURITY-MATRIX → FOUNDATION-DRAFT → MCP review packet → conformance
+- validation:
+  - `pnpm -C reference/oaps-monorepo test` — all 96 tests pass; spec-pack + conformance-pack validation green
+  - `pnpm -C site build` — AICP-rebranded landing site builds
+  - `grep -c '\bMUST\b\|\bSHOULD\b\|\bMAY\b' spec/core/FOUNDATION-DRAFT.md` — 147 RFC 2119 keywords
+- commits:
+  - `docs: add external-readiness audit deliverables` (`686ed1f`)
+  - `site: rebrand Pact to AICP (Agent Interaction Control Protocol)` (`c05bbf3`)
+  - `docs: name steward, add IP posture, rename charter to AICP` (`c4bc6bc`)
+  - `spec: rewrite foundation draft with RFC 2119 normative language` (`14e91b4`)
+  - `schemas+conformance: foundation Interaction/Message/VersionNegotiation, mandate negatives, error-code fixtures, semver adoption` (`3da84ef`)
+  - `docs+conformance: downgrade overrated maturity claims, add feedback channel` (`1868b9d`)
+  - `governance: bootstrap OEP process via OEP-0001, expand glossary` (`823cb96`)
+  - `docs+governance: deprecate SPEC.md, reframe WGs, de-namedrop partner docs, fix proto filename, pin pnpm` (`ba3734d`)
+  - `docs: substantive NEUTRAL-BY-DESIGN, fill MCP review packet, reframe review calendar` (`d5173cd`)
+  - `schemas: examples for all 12 unmapped schema files + validator fixes` (`964a14e`)
+  - `reference: Hono shim tests + fix silently-skipped test discovery across all packages` (`479ae1d`)
+  - `reference: crash recovery tests for FileReferenceStateStore` (`0989a0a`)
+  - `core+conformance: runtime-backed mandate and approval helpers` (`097e980`)
+- next unfinished work:
+  - external review outreach (repo ready, the ask is the next step)
+  - legal counsel engagement for patent pledge finalization
+  - GitHub Discussions enablement (repo setting)
+  - path to co-stewards (waiting on external interest)
+- status: `DONE`
+
 ### 2026-04-05
 
 - tranche: Repository Structure and Navigation Hardening
