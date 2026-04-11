@@ -1,0 +1,35 @@
+# AICP (Agent Interaction Control Protocol) — Code Owners
+#
+# This file designates the founding steward as the owner of all spec, schema,
+# conformance, reference implementation, and governance surfaces. As the
+# project grows toward multi-stakeholder governance, this file should be
+# updated to reflect per-area co-maintainers.
+#
+# See MAINTAINERS.md for the full stewardship posture and governance/OEP_PROCESS.md
+# for the enhancement proposal process.
+
+* @EfeDurmaz16
+
+# Spec tree — foundation, state machine, bindings, profiles
+/spec/ @EfeDurmaz16
+/schemas/ @EfeDurmaz16
+/examples/ @EfeDurmaz16
+/profiles/ @EfeDurmaz16
+
+# Conformance suite
+/conformance/ @EfeDurmaz16
+
+# Reference implementation
+/reference/ @EfeDurmaz16
+
+# Governance
+/governance/ @EfeDurmaz16
+/MAINTAINERS.md @EfeDurmaz16
+/CHARTER.md @EfeDurmaz16
+/ROADMAP.md @EfeDurmaz16
+
+# Enhancement proposals
+/oeps/ @EfeDurmaz16
+
+# Site
+/site/ @EfeDurmaz16

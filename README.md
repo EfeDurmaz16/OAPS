@@ -1,8 +1,17 @@
 # OAPS
 
-**Open Agentic Primitive Standard**
+**Protocol name:** AICP — Agent Interaction Control Protocol
+**Repository name:** OAPS — Open Agentic Primitive Standard (historical)
 
-OAPS is an open protocol suite for agentic primitives and control-plane semantics across protocol boundaries.
+This repository (`EfeDurmaz16/OAPS`) hosts the AICP protocol specification, schemas, conformance suite, and reference implementation. The public-facing brand is **AICP**; the repo slug remains `OAPS` to preserve history. Earlier drafts of the landing site used the name "Pact," which has been retired to avoid confusion with [pact.io](https://pact.io), the unrelated SmartBear-backed contract-testing framework.
+
+## Current IP Posture
+
+This project is currently authored by a single individual (see `MAINTAINERS.md`). The royalty-free patent pledge in `governance/RF_PATENT_PLEDGE.md` is a statement of intent pending legal review. No Contributor License Agreement is in place yet. Contributions are welcomed under the repository license; corporate contributors should treat the IP posture as **draft** until the pledge is finalized with counsel.
+
+## About
+
+AICP is an open protocol suite for agentic primitives and control-plane semantics across protocol boundaries.
 
 It is designed to compose with systems such as MCP, A2A, ACP, UCP, AP2, x402, MPP, OSP, and higher-assurance trust systems rather than replace them. OAPS focuses on the horizontal primitive layer that these ecosystems do not standardize consistently today: **identity references, delegation, mandates, intents, tasks, approvals, execution outcomes, evidence, and payment coordination**.
 
