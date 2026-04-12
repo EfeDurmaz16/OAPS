@@ -582,6 +582,125 @@
         "reference-runtime"
       ],
       "notes": "Runtime-backed: failed handshake evaluation produces no interaction_id, proving atomicity of the handshake protocol."
+    },
+    {
+      "scenario_id": "core.interaction-context.valid",
+      "dimension": "shared-context",
+      "schema": "schemas/foundation/interaction-context.json",
+      "example": "examples/foundation/interaction-context.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Interaction Context primitive. Portable state bundle for shared agent interactions per SHARED-CONTEXT-DRAFT."
+    },
+    {
+      "scenario_id": "core.shared-context.create.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: InteractionContext.create initializes a context with two participants and default state."
+    },
+    {
+      "scenario_id": "core.shared-context.message-append.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: appendMessage adds message to context and emits evidence event per SC2/SC3."
+    },
+    {
+      "scenario_id": "core.shared-context.transition.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: appendTransition changes interaction state and emits evidence per SC3."
+    },
+    {
+      "scenario_id": "core.shared-context.snapshot.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: snapshot returns the complete InteractionContextSnapshot per SC4."
+    },
+    {
+      "scenario_id": "core.shared-context.incremental-replay.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: replaySince returns only items after cursor per SC5/CR3."
+    },
+    {
+      "scenario_id": "core.shared-context.evidence-verifiable.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evidence chain produced by context operations is hash-verifiable per CR1."
+    },
+    {
+      "scenario_id": "core.shared-context.tamper-detected.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: tampered evidence detected on verifyIntegrity per CR2."
+    },
+    {
+      "scenario_id": "core.shared-context.transfer.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: context transfer preserves evidence chain and includes delegation per CT1/CT2."
+    },
+    {
+      "scenario_id": "core.shared-context.delegation-visible.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: delegation boundaries visible in transferred context per CT3."
+    },
+    {
+      "scenario_id": "core.shared-context.multi-agent.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: multi-agent (3+ participants) works with evidence emission per MA1/MA2."
+    },
+    {
+      "scenario_id": "core.shared-context.out-of-order-evidence.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: out-of-order evidence fails closed per CR2/CC7."
+    },
+    {
+      "scenario_id": "core.shared-context.full-lifecycle.runtime",
+      "dimension": "shared-context",
+      "reference_test": "reference/oaps-monorepo/packages/context/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: full lifecycle create -> messages -> transition -> transfer -> verify."
     }
   ]
 }

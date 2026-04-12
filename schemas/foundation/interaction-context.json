@@ -1,0 +1,93 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/interaction-context.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICP Foundation Interaction Context",
+  "description": "The portable state bundle that participants in an interaction read and contribute to. See spec/core/SHARED-CONTEXT-DRAFT.md.",
+  "type": "object",
+  "required": [
+    "context_id",
+    "interaction_id",
+    "participants",
+    "messages",
+    "transitions",
+    "evidence_chain",
+    "delegations",
+    "current_state",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "context_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/common.json#/$defs/actorRef"
+      },
+      "minItems": 2
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/message.json"
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/interaction-transition.json"
+      }
+    },
+    "evidence_chain": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/evidence-event.json"
+      }
+    },
+    "delegations": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/delegation.json"
+      }
+    },
+    "current_state": {
+      "$ref": "foundation/common.json#/$defs/interactionState"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/task.json"
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "challenges": {
+      "type": "array",
+      "items": {
+        "$ref": "foundation/challenge.json"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

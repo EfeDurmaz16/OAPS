@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@oaps/context':
+        specifier: workspace:*
+        version: link:packages/context
       '@oaps/core':
         specifier: workspace:*
         version: link:packages/core
@@ -26,6 +29,9 @@ importers:
       '@oaps/policy':
         specifier: workspace:*
         version: link:packages/policy
+      '@oaps/websocket-binding':
+        specifier: workspace:*
+        version: link:packages/websocket-binding
     devDependencies:
       '@types/node':
         specifier: ^22.15.3
@@ -44,6 +50,15 @@ importers:
         version: link:../evidence
 
   packages/auth-web-adapter:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+
+  packages/context:
     dependencies:
       '@oaps/core':
         specifier: workspace:*
@@ -108,6 +123,15 @@ importers:
       '@oaps/core':
         specifier: workspace:*
         version: link:../core
+
+  packages/webhook-binding:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
 
   packages/websocket-binding:
     dependencies:
