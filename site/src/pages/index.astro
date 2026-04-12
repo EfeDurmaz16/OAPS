@@ -119,6 +119,20 @@ import Base from '../layouts/Base.astro';
     ))}
   </div>
 
+  <!-- Current Metrics -->
+  <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    {[
+      ['108', 'tests across 8 packages'],
+      ['183', 'conformance scenarios'],
+      ['2', 'runtime-backed profiles (MCP & A2A)'],
+    ].map(([num, label]) => (
+      <div class="rounded-md border border-border px-5 py-4 text-center">
+        <span class="block text-2xl font-extrabold text-foreground">{num}</span>
+        <span class="mt-1 block text-[13px] text-muted-foreground">{label}</span>
+      </div>
+    ))}
+  </div>
+
   <!-- Architecture Layers -->
   <span class="mt-12 block font-mono text-[11px] uppercase tracking-[2px] text-muted-foreground">Suite Architecture</span>
   <div class="mt-4 flex flex-col gap-2">
