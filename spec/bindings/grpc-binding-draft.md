@@ -6,6 +6,8 @@ Draft binding specification for transporting OAPS semantics over gRPC.
 
 This is the third binding-track draft after HTTP and JSON-RPC.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 The gRPC binding defines how OAPS discovery, interaction lifecycle,

@@ -6,6 +6,8 @@ Draft domain-family specification for commerce alignment in the OAPS suite.
 
 This is a domain draft, not the full normative suite core.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 OAPS Commerce defines the shared semantics needed to represent order,

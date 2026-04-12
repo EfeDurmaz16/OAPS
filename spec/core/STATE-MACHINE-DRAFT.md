@@ -7,6 +7,8 @@ Draft normative companion to the core foundation draft.
 This document sharpens lifecycle behavior that was previously spread across
 `SPEC.md`, the foundation draft, and the current HTTP reference slice.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 The OAPS core needs a shared lifecycle model so bindings and profiles can:

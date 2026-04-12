@@ -6,6 +6,8 @@ Draft binding specification for transporting OAPS lifecycle and evidence updates
 
 This is the fourth binding-track draft after HTTP, JSON-RPC, and gRPC.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 The events binding defines how OAPS lifecycle events, approval notices, and

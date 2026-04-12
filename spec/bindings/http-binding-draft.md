@@ -6,6 +6,8 @@ Draft binding specification for transporting OAPS semantics over HTTP.
 
 This document is the first binding-track draft for the OAPS suite.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 The HTTP binding defines how OAPS semantics are carried over HTTP without baking transport details into the core semantic model.

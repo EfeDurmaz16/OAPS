@@ -4,6 +4,8 @@
 
 Draft profile for OAPS composition with agent-client, CLI-mediated, and SSH-executed task surfaces.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 `oaps-agent-client-v1` defines how OAPS semantics attach to practical

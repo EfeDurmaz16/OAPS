@@ -6,6 +6,8 @@ Draft binding specification for transporting OAPS semantics over JSON-RPC 2.0.
 
 This is the second binding-track draft after HTTP.
 
+**Version:** `0.1.0-draft`
+
 ## Purpose
 
 The JSON-RPC binding defines how the same OAPS discovery, interaction,
