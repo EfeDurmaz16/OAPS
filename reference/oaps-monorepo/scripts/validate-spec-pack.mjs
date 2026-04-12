@@ -40,6 +40,8 @@ const exampleSchemaMap = new Map([
   ['foundation/interaction.json', 'foundation/interaction.json'],
   ['foundation/message.json', 'foundation/message.json'],
   ['foundation/version-negotiation.json', 'foundation/version-negotiation.json'],
+  ['foundation/actor-card-discovery.json', 'foundation/actor-card-discovery.json'],
+  ['foundation/interaction-context.json', 'foundation/interaction-context.json'],
   ['domain/commercial-evidence.json', 'domain/commercial-evidence.json'],
   ['domain/fulfillment-commitment.json', 'domain/fulfillment-commitment.json'],
   ['domain/merchant-authorization.json', 'domain/merchant-authorization.json'],

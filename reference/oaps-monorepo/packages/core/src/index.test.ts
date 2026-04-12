@@ -547,3 +547,172 @@ test('assertChallenge rejects challenge masquerading as ApprovalRequest', () => 
     (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
   );
 });
+
+// ---------------------------------------------------------------------------
+// Agent Handshake Protocol
+// ---------------------------------------------------------------------------
+
+import {
+  validateHandshakeProposal,
+  evaluateHandshakeProposal,
+  buildHandshakeEvidence,
+  HandshakeProposal,
+  HandshakeAcceptance,
+  HandshakeRejection,
+  ActorCard,
+} from './index.js';
+
+const initiatorCard: ActorCard = {
+  actor_id: 'urn:oaps:actor:agent:planner',
+  actor_type: 'agent',
+  display_name: 'Planning Agent',
+  endpoints: [{ kind: 'interaction', url: 'https://agents.example.com/planner/interact' }],
+  capabilities: ['urn:oaps:cap:task-planning'],
+};
+
+const responderCard: ActorCard = {
+  actor_id: 'urn:oaps:actor:agent:executor',
+  actor_type: 'agent',
+  display_name: 'Executor Agent',
+  endpoints: [{ kind: 'interaction', url: 'https://agents.example.com/executor/interact' }],
+  capabilities: ['urn:oaps:cap:code-execution', 'urn:oaps:cap:sandbox'],
+};
+
+const validProposal: HandshakeProposal = {
+  type: 'handshake.propose',
+  actor_card: initiatorCard,
+  spec_version: '0.4-draft',
+  min_supported_version: '0.4',
+  max_supported_version: '0.4',
+  required_capabilities: ['urn:oaps:cap:code-execution'],
+  proposed_binding: 'http',
+};
+
+test('validateHandshakeProposal accepts a valid proposal', () => {
+  assert.doesNotThrow(() => validateHandshakeProposal(validProposal));
+});
+
+test('evaluateHandshakeProposal accepts a valid proposal', () => {
+  const result = evaluateHandshakeProposal(validProposal, responderCard);
+  assert.equal(result.type, 'handshake.accept');
+  const accept = result as HandshakeAcceptance;
+  assert.ok(accept.interaction_id.startsWith('ix_'));
+  assert.equal(accept.selected_version, '0.4-draft');
+  assert.deepEqual(accept.matched_capabilities, ['urn:oaps:cap:code-execution']);
+  assert.equal(accept.actor_card.actor_id, responderCard.actor_id);
+  assert.ok(accept.evidence_chain_root.startsWith('sha256:'));
+});
+
+test('evaluateHandshakeProposal rejects missing capabilities with CAPABILITY_NOT_FOUND', () => {
+  const proposal: HandshakeProposal = {
+    ...validProposal,
+    required_capabilities: ['urn:oaps:cap:nonexistent-capability'],
+  };
+  const result = evaluateHandshakeProposal(proposal, responderCard);
+  assert.equal(result.type, 'handshake.reject');
+  const reject = result as HandshakeRejection;
+  assert.equal(reject.error.code, 'CAPABILITY_NOT_FOUND');
+  assert.equal(reject.error.category, 'capability');
+});
+
+test('evaluateHandshakeProposal rejects expired delegation with DELEGATION_EXPIRED', () => {
+  const proposal: HandshakeProposal = {
+    ...validProposal,
+    delegation_chain: [{
+      delegation_id: 'del_expired',
+      delegator: { actor_id: 'urn:oaps:actor:human:dev' },
+      delegatee: { actor_id: initiatorCard.actor_id },
+      scope: ['urn:oaps:cap:code-execution'],
+      expires_at: new Date(Date.now() - 60_000).toISOString(),
+    }],
+  };
+  const result = evaluateHandshakeProposal(proposal, responderCard);
+  assert.equal(result.type, 'handshake.reject');
+  const reject = result as HandshakeRejection;
+  assert.equal(reject.error.code, 'DELEGATION_EXPIRED');
+  assert.equal(reject.error.category, 'authorization');
+});
+
+test('evaluateHandshakeProposal rejects version mismatch with VERSION_NEGOTIATION_FAILED', () => {
+  const proposal: HandshakeProposal = {
+    ...validProposal,
+    spec_version: '9.0',
+    min_supported_version: '9.0',
+    max_supported_version: '9.0',
+  };
+  const result = evaluateHandshakeProposal(proposal, responderCard);
+  assert.equal(result.type, 'handshake.reject');
+  const reject = result as HandshakeRejection;
+  assert.equal(reject.error.code, 'VERSION_NEGOTIATION_FAILED');
+  assert.equal(reject.error.category, 'versioning');
+});
+
+test('evaluateHandshakeProposal rejects subject mismatch with AUTHENTICATED_SUBJECT_MISMATCH', () => {
+  const proposal: HandshakeProposal = {
+    ...validProposal,
+    delegation_chain: [{
+      delegation_id: 'del_mismatch',
+      delegator: { actor_id: 'urn:oaps:actor:human:dev' },
+      delegatee: { actor_id: 'urn:oaps:actor:agent:WRONG_AGENT' },
+      scope: ['urn:oaps:cap:code-execution'],
+      expires_at: new Date(Date.now() + 60_000).toISOString(),
+    }],
+  };
+  const result = evaluateHandshakeProposal(proposal, responderCard);
+  assert.equal(result.type, 'handshake.reject');
+  const reject = result as HandshakeRejection;
+  assert.equal(reject.error.code, 'AUTHENTICATED_SUBJECT_MISMATCH');
+  assert.equal(reject.error.category, 'authentication');
+});
+
+test('buildHandshakeEvidence emits EvidenceEvent for each handshake step', () => {
+  const steps = ['propose', 'accept', 'confirm', 'ready'] as const;
+  let prevHash = 'sha256:genesis';
+  const events = steps.map((step) => {
+    const ev = buildHandshakeEvidence(step, 'ix_test_hs', [initiatorCard.actor_id, responderCard.actor_id], prevHash);
+    prevHash = ev.event_hash!;
+    return ev;
+  });
+
+  assert.equal(events.length, 4);
+  for (const [i, ev] of events.entries()) {
+    assert.equal(ev.event_type, `handshake.${steps[i]}`);
+    assert.equal(ev.interaction_id, 'ix_test_hs');
+    assert.ok(ev.event_hash!.startsWith('sha256:'));
+    assert.ok(ev.event_id.startsWith('evt_'));
+  }
+  assert.equal(events[0].prev_event_hash, 'sha256:genesis');
+  assert.equal(events[1].prev_event_hash, events[0].event_hash);
+  assert.equal(events[2].prev_event_hash, events[1].event_hash);
+  assert.equal(events[3].prev_event_hash, events[2].event_hash);
+});
+
+test('handshake atomicity: failed step 2 means no interaction created', () => {
+  const badProposal: HandshakeProposal = {
+    ...validProposal,
+    required_capabilities: ['urn:oaps:cap:nonexistent'],
+  };
+  const result = evaluateHandshakeProposal(badProposal, responderCard);
+  assert.equal(result.type, 'handshake.reject');
+  assert.equal((result as unknown as HandshakeAcceptance).interaction_id, undefined);
+});
+
+test('full 4-step handshake produces valid evidence chain', () => {
+  const acceptance = evaluateHandshakeProposal(validProposal, responderCard) as HandshakeAcceptance;
+  assert.equal(acceptance.type, 'handshake.accept');
+
+  const proposeEv = buildHandshakeEvidence('propose', acceptance.interaction_id, [initiatorCard.actor_id, responderCard.actor_id]);
+  const acceptEv = buildHandshakeEvidence('accept', acceptance.interaction_id, [responderCard.actor_id, initiatorCard.actor_id], proposeEv.event_hash!);
+  const confirmEv = buildHandshakeEvidence('confirm', acceptance.interaction_id, [initiatorCard.actor_id, responderCard.actor_id], acceptEv.event_hash!);
+  const readyEv = buildHandshakeEvidence('ready', acceptance.interaction_id, [responderCard.actor_id, initiatorCard.actor_id], confirmEv.event_hash!);
+
+  const chain = [proposeEv, acceptEv, confirmEv, readyEv];
+  assert.equal(chain[0].prev_event_hash, 'sha256:genesis');
+  for (let i = 1; i < chain.length; i++) {
+    assert.equal(chain[i].prev_event_hash, chain[i - 1].event_hash);
+  }
+  for (const ev of chain) {
+    assert.ok(ev.event_hash!.startsWith('sha256:'));
+    assert.equal(ev.interaction_id, acceptance.interaction_id);
+  }
+});

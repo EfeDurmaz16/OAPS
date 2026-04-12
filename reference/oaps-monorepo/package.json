@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@oaps/core": "workspace:*",
+    "@oaps/discovery": "workspace:*",
     "@oaps/evidence": "workspace:*",
     "@oaps/http": "workspace:*",
     "@oaps/mcp-adapter": "workspace:*",

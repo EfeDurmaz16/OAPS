@@ -1,0 +1,79 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/actor-card-discovery.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Actor Card Discovery Document",
+  "type": "object",
+  "required": [
+    "actor_id",
+    "actor_type",
+    "aicp_version",
+    "interaction_endpoint",
+    "capabilities"
+  ],
+  "properties": {
+    "actor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "service",
+        "human",
+        "approver",
+        "provider",
+        "merchant",
+        "facilitator",
+        "system"
+      ]
+    },
+    "aicp_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interaction_endpoint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      },
+      "minItems": 1
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "supported_bindings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["http", "websocket", "jsonrpc"]
+      }
+    },
+    "supported_profiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "delegation_endpoint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "evidence_endpoint": {
+      "type": "string",
+      "format": "uri"
+    },
+    "public_key": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

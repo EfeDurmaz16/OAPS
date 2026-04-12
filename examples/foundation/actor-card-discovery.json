@@ -1,0 +1,25 @@
+{
+  "actor_id": "https://agents.example.com/actors/weather-agent",
+  "actor_type": "agent",
+  "aicp_version": "0.4-draft",
+  "interaction_endpoint": "https://agents.example.com/oaps/interactions",
+  "capabilities": [
+    "https://agents.example.com/capabilities/weather-forecast",
+    "https://agents.example.com/capabilities/weather-alerts"
+  ],
+  "display_name": "Weather Forecast Agent",
+  "supported_bindings": ["http", "websocket"],
+  "supported_profiles": ["mcp", "a2a"],
+  "delegation_endpoint": "https://agents.example.com/oaps/delegations",
+  "evidence_endpoint": "https://agents.example.com/oaps/evidence",
+  "public_key": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+    "y": "x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"
+  },
+  "metadata": {
+    "rate_limit_rps": 100,
+    "region": "us-east-1"
+  }
+}

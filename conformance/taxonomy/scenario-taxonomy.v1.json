@@ -72,7 +72,8 @@
         "evidence",
         "error",
         "extension",
-        "versioning"
+        "versioning",
+        "discovery"
       ]
     },
     {

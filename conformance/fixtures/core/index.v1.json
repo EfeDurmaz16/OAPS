@@ -450,6 +450,53 @@
         "reference-runtime"
       ],
       "notes": "Runtime-backed: assertChallenge validates challenge_id, interaction_ref, challenge_type, and rejects confusion with ApprovalRequest."
+    },
+    {
+      "scenario_id": "core.actor-card-discovery.valid",
+      "dimension": "discovery",
+      "schema": "schemas/foundation/actor-card-discovery.json",
+      "example": "examples/foundation/actor-card-discovery.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Actor Card Discovery document. Agents publish this at .well-known/aicp.json for peer discovery."
+    },
+    {
+      "scenario_id": "core.discovery.validate-actor-card.runtime",
+      "dimension": "discovery",
+      "reference_test": "reference/oaps-monorepo/packages/discovery/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: validateActorCard validates required fields, actor_type from canonical set, URI formats, and binding constraints."
+    },
+    {
+      "scenario_id": "core.discovery.fetch-actor-card.runtime",
+      "dimension": "discovery",
+      "reference_test": "reference/oaps-monorepo/packages/discovery/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: fetchActorCard enforces HTTPS-only, fails closed on transport errors and invalid responses."
+    },
+    {
+      "scenario_id": "core.discovery.resolve-actor-card.runtime",
+      "dimension": "discovery",
+      "reference_test": "reference/oaps-monorepo/packages/discovery/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: resolveActorCard tries well-known URI first, falls back to DNS TXT, and fails closed when both methods fail."
+    },
+    {
+      "scenario_id": "core.discovery.match-capabilities.runtime",
+      "dimension": "discovery",
+      "reference_test": "reference/oaps-monorepo/packages/discovery/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: matchCapabilities checks whether an actor card offers all required capability URIs."
     }
   ]
 }

@@ -11,6 +11,9 @@ importers:
       '@oaps/core':
         specifier: workspace:*
         version: link:packages/core
+      '@oaps/discovery':
+        specifier: workspace:*
+        version: link:packages/discovery
       '@oaps/evidence':
         specifier: workspace:*
         version: link:packages/evidence
@@ -50,6 +53,12 @@ importers:
         version: link:../evidence
 
   packages/core: {}
+
+  packages/discovery:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/evidence:
     dependencies:
@@ -99,6 +108,15 @@ importers:
       '@oaps/core':
         specifier: workspace:*
         version: link:../core
+
+  packages/websocket-binding:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
 
   packages/x402-adapter:
     dependencies:
