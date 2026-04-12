@@ -31,6 +31,15 @@ importers:
         specifier: ^5.8.3
         version: 5.9.3
 
+  packages/a2a-adapter:
+    dependencies:
+      '@oaps/core':
+        specifier: workspace:*
+        version: link:../core
+      '@oaps/evidence':
+        specifier: workspace:*
+        version: link:../evidence
+
   packages/core: {}
 
   packages/evidence:

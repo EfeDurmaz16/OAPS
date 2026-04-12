@@ -1,6 +1,8 @@
 {
 	"compatibility_date": "2026-04-05",
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": [
+		"global_fetch_strictly_public"
+	],
 	"name": "site",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
