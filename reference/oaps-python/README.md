@@ -146,3 +146,47 @@ The `validate-result` command checks a conformance result file against the suite
 The `validate-declaration` command validates a derived compatibility declaration directly against the suite's pragmatic declaration shape.
 The `compatibility` command derives a scope-level declaration from a result file so compatibility statements stay machine-derived rather than handwritten.
 The compare commands help review scope-level changes between result files or between already-derived declaration files.
+
+## AICP Core Runtime
+
+The `aicp/` package provides a stdlib-only Python implementation of the OAPS foundation primitives defined in `spec/core/FOUNDATION-DRAFT.md`.
+
+### Modules
+
+- **`aicp.types`** — Dataclasses for core primitives: `Actor`, `Capability`, `Intent`, `Task`, `Delegation`, `Mandate`, `ApprovalRequest`, `ApprovalDecision`, `ExecutionResult`, `EvidenceEvent`, `ErrorObject`
+- **`aicp.evidence`** — Hash-chained evidence construction (`build_evidence_event`) and chain verification (`verify_chain`) using SHA-256
+- **`aicp.validation`** — Assertion helpers for actors, mandates, and canonical state machine transitions
+
+### Usage
+
+```python
+from aicp.types import Actor, Mandate
+from aicp.evidence import build_evidence_event, verify_chain
+from aicp.validation import assert_actor, assert_mandate_authorizes, assert_interaction_transition
+
+# Validate an actor
+actor = Actor(actor_id="agent_1", actor_type="agent", display_name="Bot")
+assert_actor(actor)
+
+# Build an evidence chain
+ev1 = build_evidence_event("intent_received", "agent_1", {"intent": "pay"})
+ev2 = build_evidence_event("executing", "agent_1", {"task": "t1"}, prev_hash=ev1.hash)
+assert verify_chain([ev1, ev2])
+
+# Check mandate authorization
+mandate = Mandate(
+    mandate_id="m1", principal="owner", authorized_actor="agent_1",
+    scope=["pay"], action="transfer", expiry="2099-12-31T23:59:59Z",
+)
+assert_mandate_authorizes(mandate, "transfer")
+
+# Validate state transitions
+assert_interaction_transition("executing", "completed")  # OK
+assert_interaction_transition("completed", "executing")   # raises ValidationError
+```
+
+### Running AICP tests
+
+```bash
+cd reference/oaps-python && python3 -m unittest discover -s tests
+```
