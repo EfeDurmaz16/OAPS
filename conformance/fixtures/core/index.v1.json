@@ -497,6 +497,91 @@
         "reference-runtime"
       ],
       "notes": "Runtime-backed: matchCapabilities checks whether an actor card offers all required capability URIs."
+    },
+    {
+      "scenario_id": "core.handshake.propose.valid",
+      "dimension": "handshake",
+      "schema": "schemas/foundation/handshake.json",
+      "example": "examples/foundation/handshake-propose.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Handshake PROPOSE message. Initiator sends actor card, version range, required capabilities, and proposed binding."
+    },
+    {
+      "scenario_id": "core.handshake.accept.valid",
+      "dimension": "handshake",
+      "schema": "schemas/foundation/handshake.json",
+      "example": "examples/foundation/handshake-accept.json",
+      "coverage": [
+        "schema",
+        "fixture"
+      ],
+      "notes": "Foundation-level Handshake ACCEPT message. Responder confirms version, matched capabilities, interaction_id, and evidence chain root."
+    },
+    {
+      "scenario_id": "core.handshake.evaluate.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evaluateHandshakeProposal validates version negotiation, capability matching, delegation chain, and identity binding."
+    },
+    {
+      "scenario_id": "core.handshake.capability-not-found.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evaluateHandshakeProposal rejects proposals with missing capabilities via CAPABILITY_NOT_FOUND."
+    },
+    {
+      "scenario_id": "core.handshake.delegation-expired.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evaluateHandshakeProposal rejects proposals with expired delegation tokens via DELEGATION_EXPIRED."
+    },
+    {
+      "scenario_id": "core.handshake.version-mismatch.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evaluateHandshakeProposal rejects proposals with incompatible AICP versions via VERSION_NEGOTIATION_FAILED."
+    },
+    {
+      "scenario_id": "core.handshake.subject-mismatch.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: evaluateHandshakeProposal rejects proposals where delegation delegatee does not match proposal actor via AUTHENTICATED_SUBJECT_MISMATCH."
+    },
+    {
+      "scenario_id": "core.handshake.evidence-chain.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: buildHandshakeEvidence emits EvidenceEvent for each handshake step with correct hash chaining from genesis."
+    },
+    {
+      "scenario_id": "core.handshake.atomicity.runtime",
+      "dimension": "handshake",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: failed handshake evaluation produces no interaction_id, proving atomicity of the handshake protocol."
     }
   ]
 }

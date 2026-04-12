@@ -899,3 +899,205 @@ export function assertChallenge(challenge: unknown): asserts challenge is Challe
 }
 
 export { ISO_CURRENCY_PATTERN, MONEY_VALUE_PATTERN, SCHEMA_VERSION_PATTERN };
+
+// ---------------------------------------------------------------------------
+// Agent Handshake Protocol
+// ---------------------------------------------------------------------------
+
+export type HandshakeBinding = 'http' | 'websocket' | 'grpc';
+
+export type HandshakeStep = 'propose' | 'accept' | 'reject' | 'confirm' | 'ready';
+
+export interface HandshakeProposal {
+  type: 'handshake.propose';
+  actor_card: ActorCard;
+  spec_version: string;
+  min_supported_version: string;
+  max_supported_version: string;
+  required_capabilities: string[];
+  proposed_binding: HandshakeBinding;
+  delegation_chain?: DelegationToken[];
+  mandate_ref?: string;
+  nonce?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface HandshakeAcceptance {
+  type: 'handshake.accept';
+  interaction_id: string;
+  selected_version: string;
+  matched_capabilities: string[];
+  actor_card: ActorCard;
+  evidence_chain_root: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface HandshakeRejection {
+  type: 'handshake.reject';
+  error: ErrorObject;
+  metadata?: Record<string, unknown>;
+}
+
+export function validateHandshakeProposal(proposal: unknown): asserts proposal is HandshakeProposal {
+  const rec = ensureRecord(proposal, 'HandshakeProposal must be a non-null object');
+
+  if (rec.type !== 'handshake.propose') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal type must be "handshake.propose"',
+      retryable: false,
+    });
+  }
+
+  assertActor(rec.actor_card);
+
+  if (typeof rec.spec_version !== 'string' || rec.spec_version === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal must include a non-empty spec_version',
+      retryable: false,
+    });
+  }
+
+  if (typeof rec.min_supported_version !== 'string' || rec.min_supported_version === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal must include a non-empty min_supported_version',
+      retryable: false,
+    });
+  }
+
+  if (typeof rec.max_supported_version !== 'string' || rec.max_supported_version === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal must include a non-empty max_supported_version',
+      retryable: false,
+    });
+  }
+
+  if (!Array.isArray(rec.required_capabilities)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal must include required_capabilities array',
+      retryable: false,
+    });
+  }
+
+  if (typeof rec.proposed_binding !== 'string' || !['http', 'websocket', 'grpc'].includes(rec.proposed_binding as string)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'HandshakeProposal proposed_binding must be one of http, websocket, grpc',
+      retryable: false,
+    });
+  }
+}
+
+export function evaluateHandshakeProposal(
+  proposal: HandshakeProposal,
+  responderCard: ActorCard,
+  now: Date = new Date(),
+): HandshakeAcceptance | HandshakeRejection {
+  const versionResult = negotiateVersion({
+    spec_version: proposal.spec_version,
+    min_supported_version: proposal.min_supported_version,
+    max_supported_version: proposal.max_supported_version,
+  });
+
+  if (!versionResult.ok) {
+    return {
+      type: 'handshake.reject',
+      error: versionResult.error!,
+    };
+  }
+
+  const missing = proposal.required_capabilities.filter(
+    (cap) => !responderCard.capabilities.includes(cap),
+  );
+  if (missing.length > 0) {
+    return {
+      type: 'handshake.reject',
+      error: {
+        code: 'CAPABILITY_NOT_FOUND',
+        category: 'capability',
+        message: `Required capabilities not found: ${missing.join(', ')}`,
+        retryable: false,
+        details: { missing_capabilities: missing },
+      },
+    };
+  }
+
+  if (proposal.delegation_chain && proposal.delegation_chain.length > 0) {
+    for (const token of proposal.delegation_chain) {
+      if (new Date(token.expires_at).getTime() <= now.getTime()) {
+        return {
+          type: 'handshake.reject',
+          error: {
+            code: 'DELEGATION_EXPIRED',
+            category: 'authorization',
+            message: `Delegation ${token.delegation_id} has expired`,
+            retryable: false,
+            details: { delegation_id: token.delegation_id, expires_at: token.expires_at },
+          },
+        };
+      }
+
+      if (token.delegatee.actor_id !== proposal.actor_card.actor_id) {
+        return {
+          type: 'handshake.reject',
+          error: {
+            code: 'AUTHENTICATED_SUBJECT_MISMATCH',
+            category: 'authentication',
+            message: 'Delegation delegatee does not match proposal actor',
+            retryable: false,
+            details: {
+              delegation_id: token.delegation_id,
+              delegatee_actor_id: token.delegatee.actor_id,
+              proposal_actor_id: proposal.actor_card.actor_id,
+            },
+          },
+        };
+      }
+    }
+  }
+
+  const interactionId = generateId('ix');
+  const evidenceRoot = buildHandshakeEvidence('propose', interactionId, [
+    proposal.actor_card.actor_id,
+    responderCard.actor_id,
+  ]);
+
+  return {
+    type: 'handshake.accept',
+    interaction_id: interactionId,
+    selected_version: versionResult.selected!,
+    matched_capabilities: proposal.required_capabilities,
+    actor_card: responderCard,
+    evidence_chain_root: evidenceRoot.event_hash!,
+  };
+}
+
+export function buildHandshakeEvidence(
+  step: HandshakeStep,
+  interactionId: string,
+  actors: string[],
+  prevEventHash: string = 'sha256:genesis',
+): EvidenceEvent {
+  const event: Omit<EvidenceEvent, 'event_hash'> = {
+    event_id: generateId('evt'),
+    interaction_id: interactionId,
+    event_type: `handshake.${step}`,
+    actor: actors[0] ?? 'unknown',
+    timestamp: new Date().toISOString(),
+    prev_event_hash: prevEventHash,
+    metadata: { handshake_step: step, participants: actors },
+  };
+
+  const eventHash = sha256Prefixed(event);
+  return { ...event, event_hash: eventHash };
+}

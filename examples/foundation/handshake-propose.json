@@ -1,0 +1,41 @@
+{
+  "type": "handshake.propose",
+  "actor_card": {
+    "actor_id": "urn:oaps:actor:agent:planner",
+    "actor_type": "agent",
+    "display_name": "Planning Agent",
+    "endpoints": [
+      {
+        "kind": "interaction",
+        "url": "https://agents.example.com/planner/interact"
+      }
+    ],
+    "capabilities": [
+      "urn:oaps:cap:task-planning",
+      "urn:oaps:cap:code-review"
+    ]
+  },
+  "spec_version": "0.4-draft",
+  "min_supported_version": "0.4",
+  "max_supported_version": "0.4",
+  "required_capabilities": [
+    "urn:oaps:cap:code-execution"
+  ],
+  "proposed_binding": "http",
+  "delegation_chain": [
+    {
+      "delegation_id": "del_handshake_1",
+      "delegator": {
+        "actor_id": "urn:oaps:actor:human:developer"
+      },
+      "delegatee": {
+        "actor_id": "urn:oaps:actor:agent:planner"
+      },
+      "scope": [
+        "urn:oaps:cap:code-execution"
+      ],
+      "expires_at": "2026-12-31T23:59:59Z"
+    }
+  ],
+  "nonce": "n_abc123def456"
+}

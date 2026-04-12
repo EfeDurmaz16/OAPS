@@ -73,7 +73,8 @@
         "error",
         "extension",
         "versioning",
-        "discovery"
+        "discovery",
+        "handshake"
       ]
     },
     {

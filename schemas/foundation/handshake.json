@@ -1,0 +1,125 @@
+{
+  "$id": "https://oaps.dev/schemas/foundation/handshake.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OAPS Foundation Handshake Messages",
+  "description": "JSON Schema for the AICP Agent Handshake protocol messages.",
+  "$defs": {
+    "actor_card_ref": {
+      "type": "object",
+      "required": ["actor_id", "actor_type", "display_name", "endpoints", "capabilities"],
+      "properties": {
+        "actor_id": { "type": "string" },
+        "actor_type": { "type": "string" },
+        "display_name": { "type": "string" },
+        "identity_profile": { "type": "string" },
+        "auth_schemes": { "type": "array", "items": { "type": "string" } },
+        "endpoints": { "type": "array", "items": { "type": "object" } },
+        "capabilities": { "type": "array", "items": { "type": "string" } },
+        "supported_profiles": { "type": "array", "items": { "type": "string" } },
+        "trust_credentials": { "type": "array", "items": { "type": "string" } },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "delegation_token": {
+      "type": "object",
+      "required": ["delegation_id", "delegator", "delegatee", "scope", "expires_at"],
+      "properties": {
+        "delegation_id": { "type": "string" },
+        "delegator": { "type": "object", "required": ["actor_id"], "properties": { "actor_id": { "type": "string" } } },
+        "delegatee": { "type": "object", "required": ["actor_id"], "properties": { "actor_id": { "type": "string" } } },
+        "scope": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "limits": { "type": "object" },
+        "approval_policy_id": { "type": "string" },
+        "issued_at": { "type": "string", "format": "date-time" },
+        "expires_at": { "type": "string", "format": "date-time" },
+        "revocation_endpoint": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    },
+    "error_object": {
+      "type": "object",
+      "required": ["code", "category", "message", "retryable"],
+      "properties": {
+        "code": { "type": "string" },
+        "category": { "type": "string" },
+        "message": { "type": "string" },
+        "retryable": { "type": "boolean" },
+        "details": { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "title": "HandshakeProposal",
+      "type": "object",
+      "required": ["type", "actor_card", "spec_version", "min_supported_version", "max_supported_version", "required_capabilities", "proposed_binding"],
+      "properties": {
+        "type": { "const": "handshake.propose" },
+        "actor_card": { "$ref": "#/$defs/actor_card_ref" },
+        "spec_version": { "type": "string" },
+        "min_supported_version": { "type": "string" },
+        "max_supported_version": { "type": "string" },
+        "required_capabilities": { "type": "array", "items": { "type": "string" } },
+        "proposed_binding": { "type": "string", "enum": ["http", "websocket", "grpc"] },
+        "delegation_chain": { "type": "array", "items": { "$ref": "#/$defs/delegation_token" } },
+        "mandate_ref": { "type": "string" },
+        "nonce": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "HandshakeAcceptance",
+      "type": "object",
+      "required": ["type", "interaction_id", "selected_version", "matched_capabilities", "actor_card", "evidence_chain_root"],
+      "properties": {
+        "type": { "const": "handshake.accept" },
+        "interaction_id": { "type": "string" },
+        "selected_version": { "type": "string" },
+        "matched_capabilities": { "type": "array", "items": { "type": "string" } },
+        "actor_card": { "$ref": "#/$defs/actor_card_ref" },
+        "evidence_chain_root": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "HandshakeRejection",
+      "type": "object",
+      "required": ["type", "error"],
+      "properties": {
+        "type": { "const": "handshake.reject" },
+        "error": { "$ref": "#/$defs/error_object" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "HandshakeConfirm",
+      "type": "object",
+      "required": ["type", "interaction_id", "evidence_ack"],
+      "properties": {
+        "type": { "const": "handshake.confirm" },
+        "interaction_id": { "type": "string" },
+        "evidence_ack": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    {
+      "title": "HandshakeReady",
+      "type": "object",
+      "required": ["type", "interaction_id", "binding_endpoint"],
+      "properties": {
+        "type": { "const": "handshake.ready" },
+        "interaction_id": { "type": "string" },
+        "binding_endpoint": { "type": "string", "format": "uri" },
+        "session_token": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
