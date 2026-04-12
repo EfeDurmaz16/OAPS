@@ -1,4 +1,4 @@
-# OAPS Compatibility Declarations
+# AICP Compatibility Declarations
 
 ## Purpose
 

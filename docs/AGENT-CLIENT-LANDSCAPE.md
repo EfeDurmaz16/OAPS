@@ -1,9 +1,9 @@
-# OAPS Agent-Client Landscape
+# AICP Agent-Client Landscape
 
 ## Purpose
 
 This document maps the emerging agent-client / CLI / SSH execution surface to
-OAPS without pretending that terminal tooling, SSH itself, or remote shell
+AICP without pretending that terminal tooling, SSH itself, or remote shell
 products all use one transport shape today.
 
 The goal is to capture the shared control-plane semantics that repeatedly show
@@ -16,10 +16,10 @@ up across:
 
 ## Strategic Rule
 
-OAPS should standardize the portable task, authority, approval, and evidence
+AICP should standardize the portable task, authority, approval, and evidence
 semantics around agent-client execution.
 
-OAPS should **not** try to standardize:
+AICP should **not** try to standardize:
 
 - SSH itself
 - shell syntax
@@ -38,7 +38,7 @@ Across current agent-client systems, the recurring concerns are:
 5. when approval is required before a side-effecting shell step
 6. how command results and artifacts become replayable evidence
 
-Those are the surfaces OAPS can normalize.
+Those are the surfaces AICP can normalize.
 
 ## Three-Party Model
 
@@ -48,7 +48,7 @@ The most reusable model is a three-party graph:
 - **Agent** — the actor planning, invoking tools, or driving shell actions
 - **Remote host** — the execution target, workspace host, or SSH-reachable machine
 
-The operator and agent are usually OAPS actors.
+The operator and agent are usually AICP actors.
 The remote host may be represented as:
 
 - an actor when it exposes a durable execution identity
@@ -60,7 +60,7 @@ The remote host may be represented as:
 
 A CLI launches or resumes an agent session on the operator's current machine.
 
-Useful OAPS anchors:
+Useful AICP anchors:
 
 - session start -> interaction creation
 - operator request -> intent or task seed
@@ -73,7 +73,7 @@ Useful OAPS anchors:
 An agent or orchestrator opens a remote shell session over SSH and runs one or
 more commands on a remote host.
 
-Useful OAPS anchors:
+Useful AICP anchors:
 
 - remote command bundle -> task or execution step
 - host reference -> target metadata on the task
@@ -86,7 +86,7 @@ Useful OAPS anchors:
 A controller starts a durable remote coding-agent run that may execute many shell
 steps, gather evidence, and require approvals over time.
 
-Useful OAPS anchors:
+Useful AICP anchors:
 
 - durable run id -> interaction/task continuity
 - incremental shell/file steps -> message append plus evidence emission
@@ -95,7 +95,7 @@ Useful OAPS anchors:
 
 ## Non-Goals
 
-OAPS should be explicit that this track is:
+AICP should be explicit that this track is:
 
 - **not** an SSH replacement
 - **not** a command-language standard
@@ -109,5 +109,5 @@ It is the portable semantic layer above those systems.
 Agent-client systems are converging on real remote-action semantics faster than
 shared standards for authority, approvals, and evidence.
 
-This track gives OAPS a place to normalize those semantics without forcing every
+This track gives AICP a place to normalize those semantics without forcing every
 CLI or remote-shell product into the same transport envelope.

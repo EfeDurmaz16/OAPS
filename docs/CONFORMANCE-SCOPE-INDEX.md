@@ -1,4 +1,4 @@
-# OAPS Conformance Scope Index
+# AICP Conformance Scope Index
 
 ## Purpose
 

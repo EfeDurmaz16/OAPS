@@ -1,8 +1,8 @@
-# OAPS Commerce Landscape
+# AICP Commerce Landscape
 
 ## Purpose
 
-This document maps the commerce side of the OAPS suite into a bounded
+This document maps the commerce side of the AICP suite into a bounded
 draft surface.
 
 Commerce is intentionally treated as a domain family, not as a checkout
@@ -11,7 +11,7 @@ flows.
 
 ## What Commerce Means Here
 
-In OAPS terms, commerce is the semantic plane for:
+In AICP terms, commerce is the semantic plane for:
 
 - order intent
 - cart or quote state
@@ -26,7 +26,7 @@ commerce ecosystems such as ACP and UCP.
 
 ## What Commerce Is Not
 
-OAPS commerce is not:
+AICP commerce is not:
 
 - a merchant UI design system
 - a hosted checkout product
@@ -40,7 +40,7 @@ OAPS commerce is not:
 
 ACP is best treated as an agentic commerce workflow target.
 
-OAPS should map:
+AICP should map:
 
 - order intent to agent-facing commerce tasks
 - merchant authorization to approval or mandate gates
@@ -50,9 +50,9 @@ OAPS should map:
 
 UCP is best treated as a universal commerce or checkout alignment target.
 
-OAPS should map:
+AICP should map:
 
-- checkout-like user journeys to OAPS interactions
+- checkout-like user journeys to AICP interactions
 - payment or authorization handoff to explicit approval or mandate objects
 - order confirmation and fulfillment to portable execution outcomes
 
@@ -85,8 +85,8 @@ for commerce mapping.
 
 That means:
 
-- examples may show how a commercial flow could be represented in OAPS
-- profile drafts may map ACP or UCP semantics into OAPS primitives
+- examples may show how a commercial flow could be represented in AICP
+- profile drafts may map ACP or UCP semantics into AICP primitives
 - no runtime-backed commerce implementation is claimed yet
 - no conformance pack is claimed yet
 

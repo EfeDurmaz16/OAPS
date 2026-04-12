@@ -1,8 +1,8 @@
-# OAPS Profile Map
+# AICP Profile Map
 
 ## Purpose
 
-Profiles map OAPS semantics into existing ecosystems without replacing those ecosystems outright.
+Profiles map AICP semantics into existing ecosystems without replacing those ecosystems outright.
 
 This page names the profile families the suite is actively growing.
 
@@ -27,7 +27,7 @@ This page names the profile families the suite is actively growing.
 Every profile should say:
 
 - which ecosystem it maps
-- which OAPS primitives it touches
+- which AICP primitives it touches
 - what remains informative rather than normative
 - what conformance evidence exists today
 - what is still externally reviewable

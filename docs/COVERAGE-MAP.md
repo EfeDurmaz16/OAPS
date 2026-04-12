@@ -1,4 +1,4 @@
-# OAPS Coverage Map
+# AICP Coverage Map
 
 ## Purpose
 

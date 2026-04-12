@@ -28,9 +28,9 @@ The missing layer is not “yet another product protocol.” It is a shared prim
 - economic authorization
 - evidence and audit
 
-## What OAPS is
+## What AICP is
 
-OAPS is an open protocol suite for agentic primitives and control-plane semantics.
+AICP is an open protocol suite for agentic primitives and control-plane semantics.
 
 It is deliberately designed as a **composing semantic layer**. It does not attempt to replace MCP, A2A, ACP, AP2, x402, MPP, OSP, or trust systems such as FIDES/TAP-family approaches. Instead, it provides the common governance, accountability, and continuity layer they can share.
 
@@ -42,7 +42,7 @@ If autonomous systems become real economic and operational actors, open primitiv
 
 ## Long-term scope
 
-The long-term scope of OAPS is broad. It is intended to become a foundational open protocol suite for agentic primitives across systems.
+The long-term scope of AICP is broad. It is intended to become a foundational open protocol suite for agentic primitives across systems.
 
 The suite shape is:
 

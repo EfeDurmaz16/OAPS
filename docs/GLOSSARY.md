@@ -53,5 +53,5 @@ If a reader sees two terms that appear similar, prefer the narrower one:
 
 - use *binding* for transport
 - use *profile* for ecosystem mapping
-- use *domain protocol* for OAPS-native larger families
+- use *domain protocol* for AICP-native larger families
 - use *companion system* for external aligned systems

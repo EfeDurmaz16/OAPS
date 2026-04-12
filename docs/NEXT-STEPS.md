@@ -1,4 +1,4 @@
-# OAPS Next Steps
+# AICP Next Steps
 
 This file is the short operational queue for the next long-running Codex tranche.
 

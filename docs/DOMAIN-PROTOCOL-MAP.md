@@ -1,10 +1,10 @@
-# OAPS Domain Protocol Map
+# AICP Domain Protocol Map
 
 ## Purpose
 
-Domain protocols are larger OAPS-native families that deserve their own semantic space.
+Domain protocols are larger AICP-native families that deserve their own semantic space.
 
-They are not wrappers around one adjacent ecosystem. They are OAPS-owned families that can align to adjacent ecosystems where useful.
+They are not wrappers around one adjacent ecosystem. They are AICP-owned families that can align to adjacent ecosystems where useful.
 
 ## Current Domain Families
 
@@ -18,7 +18,7 @@ They are not wrappers around one adjacent ecosystem. They are OAPS-owned familie
 
 A domain protocol may define its own richer vocabulary, but it should still:
 
-- reuse core OAPS semantics where possible
+- reuse core AICP semantics where possible
 - map to existing ecosystems when they already solve the narrow problem well
 - keep evidence and approval behavior explicit
 - avoid smuggling product-specific workflow into the core

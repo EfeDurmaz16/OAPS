@@ -12,7 +12,7 @@ Does the commerce semantics stay above checkout-specific behavior while still ma
 
 ## Why This Reviewer
 
-ACP/UCP-adjacent reviewers and commerce design partners can tell whether OAPS is staying abstract enough to align across ecosystems without recreating a checkout spec.
+ACP/UCP-adjacent reviewers and commerce design partners can tell whether AICP is staying abstract enough to align across ecosystems without recreating a checkout spec.
 
 ## What Is Already True
 
@@ -24,7 +24,7 @@ ACP/UCP-adjacent reviewers and commerce design partners can tell whether OAPS is
 ## What Is Still Open
 
 - how much commerce vocabulary should be domain-family versus ecosystem-alignment language
-- whether the commerce family should remain a concept-level alignment or become a normative OAPS domain later
+- whether the commerce family should remain a concept-level alignment or become a normative AICP domain later
 
 ## Decision Requested
 

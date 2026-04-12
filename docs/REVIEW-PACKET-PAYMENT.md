@@ -12,7 +12,7 @@ Are the payment coordination semantics narrow enough to interop and broad enough
 
 ## Why This Reviewer
 
-x402, MPP, AP2, and payment-infrastructure reviewers can tell whether OAPS is keeping the payment boundary abstract rather than turning into a rail-specific product spec.
+x402, MPP, AP2, and payment-infrastructure reviewers can tell whether AICP is keeping the payment boundary abstract rather than turning into a rail-specific product spec.
 
 ## What Is Already True
 

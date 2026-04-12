@@ -10,7 +10,7 @@ Use the Codex harness for protocol work:
 ./scripts/codex-tranche-loop.sh
 ```
 
-That lane is intentionally isolated from global MCP and app configuration so long-running OAPS implementation work is stable.
+That lane is intentionally isolated from global MCP and app configuration so long-running AICP implementation work is stable.
 
 ## Claude design worker
 
@@ -59,4 +59,4 @@ If a task spans both, finish the protocol shape in Codex first and then hand the
 
 ## Paper MCP
 
-`paper` should be treated as an optional design and asset lane, not part of the default protocol harness. If it is enabled in your global Codex configuration and misconfigured, it can break long-running protocol execution. Keep the default OAPS Codex lane clean and use Paper only in isolated design sessions.
+`paper` should be treated as an optional design and asset lane, not part of the default protocol harness. If it is enabled in your global Codex configuration and misconfigured, it can break long-running protocol execution. Keep the default AICP Codex lane clean and use Paper only in isolated design sessions.

@@ -1,4 +1,4 @@
-# OAPS Docs
+# AICP Docs
 
 This directory holds suite-level explanatory and architecture documents.
 

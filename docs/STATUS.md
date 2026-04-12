@@ -1,8 +1,8 @@
-# OAPS Status
+# AICP Status
 
 ## Current Objective
 
-Implement the OAPS protocol suite as far as the current repo, tooling, and specifications can credibly support.
+Implement the AICP protocol suite as far as the current repo, tooling, and specifications can credibly support.
 
 ## Active Tranche
 

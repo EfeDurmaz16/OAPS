@@ -1,4 +1,4 @@
-# OAPS Suite Map
+# AICP Suite Map
 
 ## Purpose
 
@@ -22,7 +22,7 @@ It is intended to help readers decide where to start without pretending that eve
 | Core semantics | shared actor, capability, intent, task, approval, execution, evidence, and error primitives | Draft |
 | Bindings | HTTP, JSON-RPC, gRPC, and events/webhooks transport surfaces | Draft / concept depending on binding |
 | Profiles | MCP, A2A, auth/trust, payment, provisioning, and commerce mappings | Draft |
-| Domain protocols | larger OAPS-native families such as commerce and provisioning | Draft |
+| Domain protocols | larger AICP-native families such as commerce and provisioning | Draft |
 | Companion systems | aligned systems such as Sardis, FIDES, agit, and OSP | Reference relationships only |
 
 ## Where To Go Next

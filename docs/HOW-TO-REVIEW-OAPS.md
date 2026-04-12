@@ -58,15 +58,15 @@ Estimated reading times are based on the actual document lengths and assume care
 
 Useful review feedback is:
 
-- whether OAPS is drawing the right boundary between **core**, **binding**, **profile**, and **domain family**
-- whether a mapping preserves the adjacent protocol's strengths without turning OAPS into a wrapper
+- whether AICP is drawing the right boundary between **core**, **binding**, **profile**, and **domain family**
+- whether a mapping preserves the adjacent protocol's strengths without turning AICP into a wrapper
 - whether approval, delegation, and evidence semantics are explicit enough to be interoperable
 - whether current conformance claims match what the repo actually proves
 - whether the current non-claim boundaries are honest
 
-## What OAPS Is Not Asking For Yet
+## What AICP Is Not Asking For Yet
 
-OAPS is **not** asking reviewers to:
+AICP is **not** asking reviewers to:
 
 - approve the whole suite at once
 - bless unfinished transport families that are still conceptual
@@ -96,7 +96,7 @@ A good review response can be as small as:
 Today the most useful external questions are:
 
 - does the MCP mapping preserve MCP utility while adding portable governance semantics?
-- does the A2A draft preserve task lifecycle meaning without forcing an OAPS transport rewrite?
+- does the A2A draft preserve task lifecycle meaning without forcing an AICP transport rewrite?
 - are the trust/payment/provisioning drafts honest about what is runtime-backed versus still fixture-backed?
 - does the conformance surface match the actual implementation evidence in the repo?
 

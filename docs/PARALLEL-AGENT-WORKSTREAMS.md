@@ -2,7 +2,7 @@
 
 ## Purpose
 
-OAPS is too broad to move as a single linear stream.
+AICP is too broad to move as a single linear stream.
 
 The intended operating model is founder-led and agent-amplified, with parallel workstreams acting like a founding team.
 

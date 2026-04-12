@@ -12,7 +12,7 @@ Does the A2A profile preserve task and message meaning while adding delegation, 
 
 ## Why This Reviewer
 
-A2A maintainers and task/workflow reviewers can tell whether OAPS is aligning to A2A semantics or drifting into a separate task system.
+A2A maintainers and task/workflow reviewers can tell whether AICP is aligning to A2A semantics or drifting into a separate task system.
 
 ## What Is Already True
 
@@ -23,7 +23,7 @@ A2A maintainers and task/workflow reviewers can tell whether OAPS is aligning to
 
 ## What Is Still Open
 
-- how much task lifecycle detail should be inherited from A2A versus defined by OAPS
+- how much task lifecycle detail should be inherited from A2A versus defined by AICP
 - whether approval and evidence overlays remain sufficiently portable
 
 ## Decision Requested

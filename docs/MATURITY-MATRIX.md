@@ -41,7 +41,7 @@ The matrix was most recently re-audited on 2026-04-11 against actual file conten
 
 ## Practical Reading Rule
 
-If you need the **most defensible current OAPS surface**, start with:
+If you need the **most defensible current AICP surface**, start with:
 
 1. `README.md`
 2. this matrix

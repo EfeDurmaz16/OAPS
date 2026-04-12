@@ -1,13 +1,13 @@
-# OAPS Ecosystem Map
+# AICP Ecosystem Map
 
 ## Purpose
 
-This document explains how OAPS relates to internal aligned projects and adjacent external protocols.
+This document explains how AICP relates to internal aligned projects and adjacent external protocols.
 
 The goal is to prevent two common mistakes:
 
-- treating OAPS as a wrapper around a single existing protocol
-- treating OAPS as if it must replace every adjacent standard
+- treating AICP as a wrapper around a single existing protocol
+- treating AICP as if it must replace every adjacent standard
 
 For a compact reader-facing summary, see [PROTOCOL-POSITIONING.md](./PROTOCOL-POSITIONING.md).
 
@@ -23,7 +23,7 @@ Sardis is the strongest current proving ground for:
 - evidence and auditability for economic actions
 - multi-rail coordination
 
-OAPS should treat Sardis as:
+AICP should treat Sardis as:
 
 - an aligned payment governance system
 - a proving ground for payment-related profiles
@@ -42,16 +42,16 @@ It contributes:
 - attestations
 - trust and reputation semantics
 
-OAPS should treat FIDES as:
+AICP should treat FIDES as:
 
 - an aligned trust profile family
 - one strong answer to higher-assurance identity
 
-It should not force all OAPS users into FIDES-only identity.
+It should not force all AICP users into FIDES-only identity.
 
 ### agit
 
-agit is most relevant to OAPS as a lineage and replay companion.
+agit is most relevant to AICP as a lineage and replay companion.
 
 It contributes:
 
@@ -60,7 +60,7 @@ It contributes:
 - execution provenance
 - diffable and auditable state evolution
 
-OAPS should treat agit as:
+AICP should treat agit as:
 
 - a companion system for replayable lineage and execution history
 
@@ -77,10 +77,10 @@ It contributes:
 - credential delivery
 - billing and lifecycle semantics
 
-OAPS should treat OSP as:
+AICP should treat OSP as:
 
 - a closely aligned domain protocol
-- a likely proving ground for OAPS Provisioning semantics
+- a likely proving ground for AICP Provisioning semantics
 
 ## External Protocol Families
 
@@ -88,7 +88,7 @@ OAPS should treat OSP as:
 
 MCP solves tool and context access well.
 
-OAPS should build above it by adding:
+AICP should build above it by adding:
 
 - portable capability semantics
 - approval and delegation semantics
@@ -97,9 +97,9 @@ OAPS should build above it by adding:
 
 ### A2A
 
-A2A is closest to OAPS on task and workflow concerns.
+A2A is closest to AICP on task and workflow concerns.
 
-OAPS should align strongly here by offering:
+AICP should align strongly here by offering:
 
 - dual intent and task semantics
 - approval, delegation, and evidence overlays
@@ -109,7 +109,7 @@ OAPS should align strongly here by offering:
 
 These are payment-side protocols and rails.
 
-OAPS should not replace them.
+AICP should not replace them.
 
 It should define:
 
@@ -121,7 +121,7 @@ It should define:
 
 These are commerce and payment-adjacent ecosystems with their own native concerns.
 
-OAPS should engage them as:
+AICP should engage them as:
 
 - profile targets
 - domain alignment inputs
@@ -129,13 +129,13 @@ OAPS should engage them as:
 
 ## Strategic Rule
 
-If an adjacent protocol already solves a narrow problem well, OAPS should:
+If an adjacent protocol already solves a narrow problem well, AICP should:
 
 - reuse it
 - align to it
 - map to it
 
-OAPS should only define new semantics when:
+AICP should only define new semantics when:
 
 - the gap is genuinely cross-ecosystem
 - the semantics are missing or inconsistent elsewhere

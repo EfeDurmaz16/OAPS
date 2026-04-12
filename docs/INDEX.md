@@ -1,4 +1,4 @@
-# OAPS Docs Index
+# AICP Docs Index
 
 This file is a directory index for the `docs/` tree.
 

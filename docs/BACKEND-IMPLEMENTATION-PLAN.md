@@ -41,7 +41,7 @@
 
 - 3.1: Package scaffold (package.json, tsconfig, workspace wiring)
 - 3.2: A2A client interface and core types (~100 lines)
-- 3.3: Status-to-OAPS lifecycle mapper (~60 lines)
+- 3.3: Status-to-AICP lifecycle mapper (~60 lines)
 - 3.4: OapsA2aAdapter class — createTask, getTaskStatus, updateTask, cancelTask, sendMessage, insertApproval (~350 lines)
 - 3.5: Delegation carryover (~60 lines)
 - 3.6: Fixture-aligned tests for all 8 A2A fixture scenarios (~400 lines)

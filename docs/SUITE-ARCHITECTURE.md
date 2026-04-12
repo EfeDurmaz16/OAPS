@@ -1,8 +1,8 @@
-# OAPS Suite Architecture
+# AICP Suite Architecture
 
 ## Purpose
 
-This document defines the intended long-term shape of OAPS as a protocol suite.
+This document defines the intended long-term shape of AICP as a protocol suite.
 
 It is an architecture document, not the full normative spec.
 
@@ -31,7 +31,7 @@ The initial hard-normative subset is smaller and is documented separately in the
 
 ### 2. Bindings
 
-Bindings define how OAPS semantics are carried over transport or RPC surfaces.
+Bindings define how AICP semantics are carried over transport or RPC surfaces.
 
 Planned binding families:
 
@@ -44,7 +44,7 @@ Initial hard standardization should start with HTTP. The remaining bindings can 
 
 ### 3. Profiles
 
-Profiles map OAPS semantics into external ecosystems.
+Profiles map AICP semantics into external ecosystems.
 
 Planned profile families:
 
@@ -66,13 +66,13 @@ Profiles define:
 
 ### 4. Domain Protocols
 
-Domain protocols are larger OAPS-family specifications built on top of the core.
+Domain protocols are larger AICP-family specifications built on top of the core.
 
 Planned domain families:
 
-- OAPS Commerce
-- OAPS Provisioning
-- OAPS Jobs
+- AICP Commerce
+- AICP Provisioning
+- AICP Jobs
 
 These should not be collapsed into the core.
 
@@ -91,7 +91,7 @@ Companion systems can be first-class reference integrations without becoming man
 
 ## Default Positioning
 
-OAPS should be described as:
+AICP should be described as:
 
 - a protocol suite
 - a semantic super-protocol

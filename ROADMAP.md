@@ -2,7 +2,7 @@
 
 ## Program shape
 
-OAPS is now planned as a protocol suite, not just a single MCP-oriented draft or reference server.
+AICP is now planned as a protocol suite, not just a single MCP-oriented draft or reference server.
 
 The roadmap is split into:
 
@@ -15,10 +15,10 @@ The roadmap is split into:
 
 ## Phase A: Reframing
 
-- publish the OAPS charter
+- publish the AICP charter
 - publish the suite architecture
 - position the current monorepo as a reference slice, not the entire protocol
-- define the OAPS Enhancement Proposal process
+- define the AICP Enhancement Proposal process
 - establish neutrality and RF patent posture drafts
 
 ## Phase B: Foundation Draft
@@ -43,9 +43,9 @@ The roadmap is split into:
 
 ## Phase E: Domain Families
 
-- define provisioning as an OAPS-aligned domain family alongside OSP
-- define commerce as an OAPS-aligned domain family alongside ACP and UCP style systems
-- define jobs as an OAPS-aligned domain family for long-running delegated work
+- define provisioning as an AICP-aligned domain family alongside OSP
+- define commerce as an AICP-aligned domain family alongside ACP and UCP style systems
+- define jobs as an AICP-aligned domain family for long-running delegated work
 
 ## Phase F: Conformance
 
@@ -56,7 +56,7 @@ The roadmap is split into:
 
 ## Phase G: Ecosystem and Cosigners
 
-- incubate OAPS publicly but neutrally
+- incubate AICP publicly but neutrally
 - use existing aligned systems such as Sardis, FIDES, agit, and OSP as proving grounds
 - prepare profile-specific review asks for external protocol and infrastructure companies
 - grow toward a neutral consortium and stronger external governance

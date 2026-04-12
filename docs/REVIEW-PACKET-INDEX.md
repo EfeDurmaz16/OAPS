@@ -1,8 +1,8 @@
-# OAPS Review Packet Index
+# AICP Review Packet Index
 
 ## Purpose
 
-This index names the review packet shapes OAPS should use so outreach stays bounded and repeatable.
+This index names the review packet shapes AICP should use so outreach stays bounded and repeatable.
 
 The packet is the unit of external review. The target matrix decides who gets which packet.
 
@@ -33,7 +33,7 @@ Includes:
 
 Requested decision:
 
-- whether the mapping preserves MCP utility while adding OAPS governance semantics
+- whether the mapping preserves MCP utility while adding AICP governance semantics
 
 ### A2A Packet
 
@@ -50,7 +50,7 @@ Includes:
 
 Requested decision:
 
-- whether OAPS task semantics align cleanly with A2A workflow semantics
+- whether AICP task semantics align cleanly with A2A workflow semantics
 
 ### Trust Packet
 
@@ -110,13 +110,13 @@ Use for ACP/UCP-adjacent reviewers and commerce design partners.
 Includes:
 
 - [`docs/REVIEW-PACKET-COMMERCE.md`](./REVIEW-PACKET-COMMERCE.md)
-- OAPS Commerce concept note
+- AICP Commerce concept note
 - order/authorization/fulfillment boundary note
 - merchant and checkout mapping notes
 
 Requested decision:
 
-- whether OAPS commerce semantics stay abstract enough to map across ecosystems without recreating a checkout spec
+- whether AICP commerce semantics stay abstract enough to map across ecosystems without recreating a checkout spec
 
 ## Packet Index Rule
 
