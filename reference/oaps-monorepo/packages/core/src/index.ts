@@ -704,4 +704,198 @@ export function assertApprovalDecisionTargets(
   }
 }
 
+const RFC3339_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
+
+const ERROR_CATEGORIES: readonly ErrorCategory[] = [
+  'authentication',
+  'authorization',
+  'validation',
+  'capability',
+  'discovery',
+  'transport',
+  'execution',
+  'economic',
+  'settlement',
+  'timeout',
+  'versioning',
+  'internal',
+];
+
+export function assertActor(actor: unknown): asserts actor is ActorCard {
+  const rec = ensureRecord(actor, 'Actor must be a non-null object');
+  if (typeof rec.actor_id !== 'string' || rec.actor_id === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Actor must include a non-empty actor_id',
+      retryable: false,
+    });
+  }
+  if (!ACTOR_TYPES.includes(rec.actor_type as ActorType)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: `Actor actor_type must be one of ${ACTOR_TYPES.join(', ')}`,
+      retryable: false,
+    });
+  }
+}
+
+export function assertCapability(capability: unknown): asserts capability is CapabilityCard {
+  const rec = ensureRecord(capability, 'Capability must be a non-null object');
+  if (typeof rec.capability_id !== 'string' || rec.capability_id === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Capability must include a non-empty capability_id',
+      retryable: false,
+    });
+  }
+  try {
+    new URL(rec.capability_id as string);
+  } catch {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Capability capability_id must be a valid URI',
+      retryable: false,
+    });
+  }
+  if (typeof rec.name !== 'string' || rec.name === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Capability must include a non-empty name (action surface)',
+      retryable: false,
+    });
+  }
+}
+
+export function assertTask(task: unknown): asserts task is Task {
+  const rec = ensureRecord(task, 'Task must be a non-null object');
+  if (typeof rec.task_id !== 'string' || rec.task_id === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Task must include a non-empty task_id',
+      retryable: false,
+    });
+  }
+  if (!TASK_STATES.includes(rec.state as TaskState)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: `Task state must be one of ${TASK_STATES.join(', ')}`,
+      retryable: false,
+    });
+  }
+  if (typeof rec.created_at !== 'string' || !RFC3339_RE.test(rec.created_at as string)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Task created_at must be a valid RFC 3339 date-time',
+      retryable: false,
+    });
+  }
+}
+
+export function assertErrorObject(error: unknown): asserts error is ErrorObject {
+  const rec = ensureRecord(error, 'ErrorObject must be a non-null object');
+  if (typeof rec.code !== 'string' || rec.code === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'ErrorObject must include a non-empty error_code',
+      retryable: false,
+    });
+  }
+  if (!ERROR_CATEGORIES.includes(rec.category as ErrorCategory)) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: `ErrorObject category must be one of ${ERROR_CATEGORIES.join(', ')}`,
+      retryable: false,
+    });
+  }
+  if (typeof rec.retryable !== 'boolean') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'ErrorObject retryable must be a boolean',
+      retryable: false,
+    });
+  }
+}
+
+export function assertExtensionDescriptor(ext: unknown): asserts ext is ExtensionDescriptor {
+  const rec = ensureRecord(ext, 'ExtensionDescriptor must be a non-null object');
+  if (typeof rec.extension_id !== 'string' || rec.extension_id === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'ExtensionDescriptor must include a non-empty extension_id',
+      retryable: false,
+    });
+  }
+  if (typeof rec.kind !== 'string' || rec.kind === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'ExtensionDescriptor must include a non-empty namespace (kind)',
+      retryable: false,
+    });
+  }
+  if (rec.status === 'experimental' || rec.status === 'draft') {
+    // advisory extensions — unknown ones MAY be safely ignored
+  } else if (rec.status === 'stable' || rec.status === 'deprecated') {
+    // required extensions — unknown required extensions MUST NOT be silently dropped
+  } else if (rec.status !== undefined) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'ExtensionDescriptor status must be one of experimental, draft, stable, deprecated',
+      retryable: false,
+    });
+  }
+}
+
+export function assertChallenge(challenge: unknown): asserts challenge is Challenge {
+  const rec = ensureRecord(challenge, 'Challenge must be a non-null object');
+  if (typeof rec.challenge_id !== 'string' || rec.challenge_id === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Challenge must include a non-empty challenge_id',
+      retryable: false,
+    });
+  }
+  if (
+    (typeof rec.interaction_id !== 'string' || rec.interaction_id === '')
+    && (typeof rec.task_id !== 'string' || rec.task_id === '')
+  ) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Challenge must include an interaction_ref (interaction_id or task_id)',
+      retryable: false,
+    });
+  }
+  if (typeof rec.challenge_type !== 'string' || rec.challenge_type === '') {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'Challenge must include a non-empty challenge_type',
+      retryable: false,
+    });
+  }
+  if (rec.approval_request_id !== undefined) {
+    throw new OapsError({
+      code: 'VALIDATION_FAILED',
+      category: 'validation',
+      message: 'A Challenge MUST NOT be represented as an ApprovalRequest',
+      retryable: false,
+    });
+  }
+}
+
 export { ISO_CURRENCY_PATTERN, MONEY_VALUE_PATTERN, SCHEMA_VERSION_PATTERN };

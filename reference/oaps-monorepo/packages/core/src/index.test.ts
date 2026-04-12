@@ -7,6 +7,12 @@ import {
   assertTaskTransition,
   assertAuthenticatedActor,
   assertInvokeIntent,
+  assertActor,
+  assertCapability,
+  assertTask,
+  assertErrorObject,
+  assertExtensionDescriptor,
+  assertChallenge,
   canonicalJson,
   canTransitionInteractionState,
   canTransitionTaskState,
@@ -325,6 +331,219 @@ test('assertApprovalDecisionTargets rejects modify decisions without modified_ac
   };
   assert.throws(
     () => assertApprovalDecisionTargets(baseApprovalRequest, badModify),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertActor
+// ---------------------------------------------------------------------------
+
+test('assertActor accepts a valid actor', () => {
+  assert.doesNotThrow(() => assertActor({
+    actor_id: 'urn:oaps:actor:agent:planner',
+    actor_type: 'agent',
+    display_name: 'Planner',
+    endpoints: [],
+    capabilities: [],
+  }));
+});
+
+test('assertActor rejects missing actor_id', () => {
+  assert.throws(
+    () => assertActor({ actor_type: 'agent', display_name: 'X', endpoints: [], capabilities: [] }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertActor rejects invalid actor_type', () => {
+  assert.throws(
+    () => assertActor({ actor_id: 'a1', actor_type: 'robot', display_name: 'X', endpoints: [], capabilities: [] }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertCapability
+// ---------------------------------------------------------------------------
+
+test('assertCapability accepts a valid capability with URI id', () => {
+  assert.doesNotThrow(() => assertCapability({
+    capability_id: 'https://example.com/cap/read',
+    kind: 'tool',
+    name: 'read_repo',
+    input_schema: {},
+    risk_class: 'R1',
+  }));
+});
+
+test('assertCapability rejects non-URI capability_id', () => {
+  assert.throws(
+    () => assertCapability({ capability_id: 'not-a-uri', kind: 'tool', name: 'x', input_schema: {}, risk_class: 'R1' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertCapability rejects missing name (action surface)', () => {
+  assert.throws(
+    () => assertCapability({ capability_id: 'https://example.com/cap/x', kind: 'tool', input_schema: {}, risk_class: 'R1' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertTask (standalone validation)
+// ---------------------------------------------------------------------------
+
+test('assertTask accepts a valid task', () => {
+  assert.doesNotThrow(() => assertTask({
+    task_id: 'task_1',
+    state: 'created',
+    created_at: '2026-04-11T10:00:00Z',
+  }));
+});
+
+test('assertTask rejects missing task_id', () => {
+  assert.throws(
+    () => assertTask({ state: 'created', created_at: '2026-04-11T10:00:00Z' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertTask rejects invalid state', () => {
+  assert.throws(
+    () => assertTask({ task_id: 't1', state: 'unknown_state', created_at: '2026-04-11T10:00:00Z' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertTask rejects non-RFC3339 created_at', () => {
+  assert.throws(
+    () => assertTask({ task_id: 't1', state: 'created', created_at: 'April 11 2026' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertErrorObject
+// ---------------------------------------------------------------------------
+
+test('assertErrorObject accepts a valid error object', () => {
+  assert.doesNotThrow(() => assertErrorObject({
+    code: 'VALIDATION_FAILED',
+    category: 'validation',
+    message: 'bad input',
+    retryable: false,
+  }));
+});
+
+test('assertErrorObject rejects missing error_code', () => {
+  assert.throws(
+    () => assertErrorObject({ category: 'validation', message: 'x', retryable: false }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertErrorObject rejects invalid category', () => {
+  assert.throws(
+    () => assertErrorObject({ code: 'X', category: 'made_up', message: 'x', retryable: false }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertErrorObject rejects non-boolean retryable', () => {
+  assert.throws(
+    () => assertErrorObject({ code: 'X', category: 'validation', message: 'x', retryable: 'yes' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertExtensionDescriptor
+// ---------------------------------------------------------------------------
+
+test('assertExtensionDescriptor accepts a valid extension', () => {
+  assert.doesNotThrow(() => assertExtensionDescriptor({
+    extension_id: 'ext_payment_stripe',
+    kind: 'domain',
+    title: 'Stripe Payment',
+    summary: 'Stripe rail adapter',
+    status: 'stable',
+  }));
+});
+
+test('assertExtensionDescriptor rejects missing extension_id', () => {
+  assert.throws(
+    () => assertExtensionDescriptor({ kind: 'domain', title: 'X', summary: 'X', status: 'stable' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertExtensionDescriptor rejects missing namespace (kind)', () => {
+  assert.throws(
+    () => assertExtensionDescriptor({ extension_id: 'ext_1', title: 'X', summary: 'X', status: 'stable' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertExtensionDescriptor rejects invalid status', () => {
+  assert.throws(
+    () => assertExtensionDescriptor({ extension_id: 'ext_1', kind: 'domain', title: 'X', summary: 'X', status: 'alpha' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+// ---------------------------------------------------------------------------
+// assertChallenge
+// ---------------------------------------------------------------------------
+
+test('assertChallenge accepts a valid challenge with interaction_id', () => {
+  assert.doesNotThrow(() => assertChallenge({
+    challenge_id: 'ch_1',
+    interaction_id: 'ix_1',
+    challenge_type: 'payment_authorization',
+    status: 'open',
+    challenged_by: { actor_id: 'urn:oaps:actor:service:gateway' },
+    created_at: '2026-04-11T10:00:00Z',
+  }));
+});
+
+test('assertChallenge accepts a valid challenge with task_id', () => {
+  assert.doesNotThrow(() => assertChallenge({
+    challenge_id: 'ch_2',
+    task_id: 'task_1',
+    challenge_type: 'mfa_required',
+    status: 'open',
+    challenged_by: { actor_id: 'urn:oaps:actor:service:auth' },
+    created_at: '2026-04-11T10:00:00Z',
+  }));
+});
+
+test('assertChallenge rejects missing challenge_id', () => {
+  assert.throws(
+    () => assertChallenge({ interaction_id: 'ix_1', challenge_type: 'x', status: 'open', challenged_by: { actor_id: 'a' }, created_at: '2026-04-11T10:00:00Z' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertChallenge rejects missing interaction_ref', () => {
+  assert.throws(
+    () => assertChallenge({ challenge_id: 'ch_3', challenge_type: 'x', status: 'open', challenged_by: { actor_id: 'a' }, created_at: '2026-04-11T10:00:00Z' }),
+    (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
+  );
+});
+
+test('assertChallenge rejects challenge masquerading as ApprovalRequest', () => {
+  assert.throws(
+    () => assertChallenge({
+      challenge_id: 'ch_4',
+      interaction_id: 'ix_1',
+      challenge_type: 'x',
+      status: 'open',
+      challenged_by: { actor_id: 'a' },
+      created_at: '2026-04-11T10:00:00Z',
+      approval_request_id: 'apr_sneaky',
+    }),
     (err: unknown) => err instanceof OapsError && err.error.code === 'VALIDATION_FAILED',
   );
 });

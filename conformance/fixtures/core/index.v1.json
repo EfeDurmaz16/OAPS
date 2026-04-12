@@ -396,6 +396,60 @@
         "reference-runtime"
       ],
       "notes": "Runtime-backed: assertApprovalDecisionTargets rejects decisions whose approval_request_id does not match the paired request."
+    },
+    {
+      "scenario_id": "core.actor.validation.runtime",
+      "dimension": "identity",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertActor validates actor_id presence and actor_type from canonical set."
+    },
+    {
+      "scenario_id": "core.capability.validation.runtime",
+      "dimension": "intent",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertCapability validates capability_id is a URI and action surface (name) is present."
+    },
+    {
+      "scenario_id": "core.task.validation.runtime",
+      "dimension": "task",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertTask validates task_id, state from canonical task states, and created_at as RFC 3339."
+    },
+    {
+      "scenario_id": "core.error-object.validation.runtime",
+      "dimension": "error",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertErrorObject validates error_code, category from canonical vocabulary, and retryable is boolean."
+    },
+    {
+      "scenario_id": "core.extension-descriptor.validation.runtime",
+      "dimension": "extension",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertExtensionDescriptor validates extension_id, namespace (kind), and required vs advisory status flag."
+    },
+    {
+      "scenario_id": "core.challenge.validation.runtime",
+      "dimension": "challenge",
+      "reference_test": "reference/oaps-monorepo/packages/core/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Runtime-backed: assertChallenge validates challenge_id, interaction_ref, challenge_type, and rejects confusion with ApprovalRequest."
     }
   ]
 }
