@@ -27,6 +27,11 @@
       "notes": "Downgraded 2026-04-11: draft spec and fixture-only stubs exist, no runtime implementation. Honestly pre-draft."
     },
     {
+      "scope": "binding:webhook",
+      "status": "runtime-backed",
+      "notes": "Draft spec, JSON schemas, examples, and TypeScript reference runtime with full test coverage"
+    },
+    {
       "scope": "profile:agent-client",
       "status": "concept",
       "notes": "Downgraded 2026-04-11: 2.5 KB stub profile with minimal substance. No runtime backing."

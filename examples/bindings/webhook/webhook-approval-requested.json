@@ -1,0 +1,32 @@
+{
+  "webhook_id": "whd_a9b8c7d6e5f4",
+  "interaction_id": "int_9f8e7d6c5b4a",
+  "event_type": "approval.requested",
+  "actor_ref": {
+    "actor_id": "agent-a.example.com"
+  },
+  "payload": {
+    "approval_request_id": "apr_3m4n5o6p7q8r",
+    "interaction_id": "int_9f8e7d6c5b4a",
+    "requested_by": {
+      "actor_id": "agent-a.example.com"
+    },
+    "requested_from": {
+      "actor_id": "human-operator.example.com"
+    },
+    "reason": "Task requires payment authorization exceeding delegated limit",
+    "risk_class": "high",
+    "proposed_action": {
+      "verb": "authorize_payment",
+      "target": "payment_session_xyz",
+      "amount": {
+        "value": "500.00",
+        "currency": "USD"
+      }
+    },
+    "expires_at": "2026-04-11T15:00:00Z"
+  },
+  "timestamp": "2026-04-11T14:32:00Z",
+  "evidence_hash": "sha256:b4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4",
+  "signature": "1b2a3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2"
+}

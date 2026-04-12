@@ -1,0 +1,17 @@
+{
+  "registration_id": "whreg_a1b2c3d4e5f6",
+  "interaction_id": "int_9f8e7d6c5b4a",
+  "callback_url": "https://agent-b.example.com/webhooks/oaps",
+  "events": [
+    "task.transition",
+    "approval.requested",
+    "interaction.completed",
+    "interaction.failed"
+  ],
+  "secret": "whsec_k7m9p2q4r6t8v0w1x3y5z7a9b1c3d5e7",
+  "retry_policy": {
+    "max_attempts": 3,
+    "backoff_seconds": [1, 5, 30]
+  },
+  "expiry": "2026-04-18T00:00:00Z"
+}

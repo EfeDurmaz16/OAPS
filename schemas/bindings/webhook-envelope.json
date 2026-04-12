@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oaps.dev/schemas/bindings/webhook-envelope.json",
+  "title": "AICP Webhook Delivery Envelope",
+  "description": "The canonical envelope shape for webhook deliveries in the AICP webhook binding.",
+  "type": "object",
+  "required": [
+    "webhook_id",
+    "interaction_id",
+    "event_type",
+    "actor_ref",
+    "payload",
+    "timestamp",
+    "evidence_hash",
+    "signature"
+  ],
+  "properties": {
+    "webhook_id": {
+      "type": "string",
+      "description": "Unique identifier for this delivery attempt. Used for idempotency/deduplication."
+    },
+    "interaction_id": {
+      "type": "string",
+      "description": "The interaction this event belongs to."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "task.transition",
+        "message.appended",
+        "approval.requested",
+        "approval.decided",
+        "challenge.raised",
+        "evidence.emitted",
+        "interaction.completed",
+        "interaction.failed"
+      ],
+      "description": "The type of event that triggered this webhook delivery."
+    },
+    "actor_ref": {
+      "type": "object",
+      "required": ["actor_id"],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "description": "The actor that caused the state change."
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "endpoint_hint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "payload": {
+      "description": "The event-specific payload. Shape depends on event_type."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp of the event occurrence."
+    },
+    "evidence_hash": {
+      "type": "string",
+      "description": "Hash of the EvidenceEvent that triggered this delivery. Must match event_hash in the evidence chain."
+    },
+    "signature": {
+      "type": "string",
+      "description": "HMAC-SHA256 hex digest of the raw JSON body using the registered secret."
+    }
+  },
+  "additionalProperties": false
+}

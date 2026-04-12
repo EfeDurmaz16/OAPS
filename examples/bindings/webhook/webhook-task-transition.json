@@ -1,0 +1,21 @@
+{
+  "webhook_id": "whd_f1e2d3c4b5a6",
+  "interaction_id": "int_9f8e7d6c5b4a",
+  "event_type": "task.transition",
+  "actor_ref": {
+    "actor_id": "agent-a.example.com"
+  },
+  "payload": {
+    "transition_id": "tr_1a2b3c4d5e6f",
+    "task_id": "task_7g8h9i0j1k2l",
+    "from_state": "running",
+    "to_state": "completed",
+    "triggered_by": {
+      "actor_id": "agent-a.example.com"
+    },
+    "timestamp": "2026-04-11T14:30:00Z"
+  },
+  "timestamp": "2026-04-11T14:30:00Z",
+  "evidence_hash": "sha256:a3f2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3",
+  "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

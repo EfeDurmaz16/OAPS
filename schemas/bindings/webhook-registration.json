@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oaps.dev/schemas/bindings/webhook-registration.json",
+  "title": "AICP Webhook Registration",
+  "description": "Schema for registering a webhook callback for AICP interaction events.",
+  "type": "object",
+  "required": [
+    "callback_url",
+    "events",
+    "secret"
+  ],
+  "properties": {
+    "registration_id": {
+      "type": "string",
+      "description": "Unique identifier for this registration, assigned by the sender."
+    },
+    "interaction_id": {
+      "type": "string",
+      "description": "Optional interaction scope. When present, only events for this interaction are delivered."
+    },
+    "callback_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "HTTPS URL to receive webhook deliveries."
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "task.transition",
+          "message.appended",
+          "approval.requested",
+          "approval.decided",
+          "challenge.raised",
+          "evidence.emitted",
+          "interaction.completed",
+          "interaction.failed"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Event types the receiver wants to subscribe to."
+    },
+    "secret": {
+      "type": "string",
+      "minLength": 32,
+      "description": "Shared secret for HMAC-SHA256 signature verification. At least 32 characters."
+    },
+    "retry_policy": {
+      "type": "object",
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of delivery attempts."
+        },
+        "backoff_seconds": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          },
+          "description": "Backoff intervals in seconds between retries."
+        }
+      },
+      "additionalProperties": false
+    },
+    "expiry": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp after which the registration expires."
+    }
+  },
+  "additionalProperties": false
+}

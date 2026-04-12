@@ -13,6 +13,19 @@
       ]
     },
     {
+      "id": "binding:webhook",
+      "dimensions": [
+        "registration",
+        "delivery-envelope",
+        "hmac-signature",
+        "retry-backoff",
+        "deduplication",
+        "evidence-linkage",
+        "expiry-enforcement",
+        "event-type-filtering"
+      ]
+    },
+    {
       "id": "binding:grpc",
       "dimensions": [
         "discovery",
@@ -74,7 +87,8 @@
         "extension",
         "versioning",
         "discovery",
-        "handshake"
+        "handshake",
+        "shared-context"
       ]
     },
     {
