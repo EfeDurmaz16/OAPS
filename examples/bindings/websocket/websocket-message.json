@@ -1,0 +1,29 @@
+{
+  "type": "message",
+  "interaction_id": "ix_abc123",
+  "message_id": "wsmsg_001",
+  "actor_ref": {
+    "actor_id": "urn:oaps:actor:agent:builder"
+  },
+  "payload": {
+    "spec_version": "0.4-draft",
+    "min_supported_version": "0.4",
+    "max_supported_version": "0.4",
+    "message_id": "msg_inner_001",
+    "interaction_id": "ix_abc123",
+    "from": { "actor_id": "urn:oaps:actor:agent:builder" },
+    "to": { "actor_id": "urn:oaps:actor:server:reference" },
+    "channel": "oaps-ws",
+    "message_type": "intent.request",
+    "timestamp": "2026-04-11T10:00:00Z",
+    "payload": {
+      "intent_id": "int_ws_001",
+      "verb": "invoke",
+      "object": "tool:read_repo",
+      "constraints": {
+        "arguments": { "path": "README.md" }
+      }
+    }
+  },
+  "timestamp": "2026-04-11T10:00:00Z"
+}

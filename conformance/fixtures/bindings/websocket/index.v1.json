@@ -1,0 +1,119 @@
+{
+  "pack_version": "1.0",
+  "scope": "binding:websocket",
+  "status": "active",
+  "normative_sources": [
+    "spec/bindings/websocket-binding-draft.md",
+    "SPEC.md"
+  ],
+  "fixtures": [
+    {
+      "scenario_id": "websocket.serialization.round-trip",
+      "dimension": "message-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises serialization and deserialization of WebSocket frames."
+    },
+    {
+      "scenario_id": "websocket.validation.invalid-frame",
+      "dimension": "validation",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises rejection of malformed frames with appropriate ErrorObject codes."
+    },
+    {
+      "scenario_id": "websocket.evidence.per-message",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises evidence emission for every message received on the server."
+    },
+    {
+      "scenario_id": "websocket.interaction.binding",
+      "dimension": "interaction-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises rejection of frames with mismatched interaction_id."
+    },
+    {
+      "scenario_id": "websocket.version.negotiation",
+      "dimension": "version-negotiation",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises AICP version negotiation during WebSocket handshake."
+    },
+    {
+      "scenario_id": "websocket.approval.flow",
+      "dimension": "approval-flow",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises real-time approval request and decision over the WebSocket channel."
+    },
+    {
+      "scenario_id": "websocket.evidence.hash-chain",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises hash chain integrity across multiple messages via verifyEvidenceChain."
+    },
+    {
+      "scenario_id": "websocket.keepalive.ping-pong",
+      "dimension": "transport",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises ping/pong keepalive mechanism with token echo."
+    },
+    {
+      "scenario_id": "websocket.client.send-receive",
+      "dimension": "message-lifecycle",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises client-side message sending and evidence chain integrity."
+    },
+    {
+      "scenario_id": "websocket.authentication.required",
+      "dimension": "authentication",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises rejection of unauthenticated connections."
+    },
+    {
+      "scenario_id": "websocket.error.invalid-json",
+      "dimension": "error-mapping",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises graceful handling of invalid JSON on the wire."
+    },
+    {
+      "scenario_id": "websocket.evidence.replay",
+      "dimension": "event-stream",
+      "reference_test": "reference/oaps-monorepo/packages/websocket-binding/src/index.test.ts",
+      "coverage": [
+        "reference-runtime"
+      ],
+      "notes": "Exercises evidence replay via the replay message type."
+    }
+  ]
+}

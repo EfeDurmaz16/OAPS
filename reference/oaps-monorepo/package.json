@@ -16,12 +16,14 @@
     "typecheck": "pnpm build && pnpm -r typecheck"
   },
   "dependencies": {
+    "@oaps/context": "workspace:*",
     "@oaps/core": "workspace:*",
     "@oaps/discovery": "workspace:*",
     "@oaps/evidence": "workspace:*",
     "@oaps/http": "workspace:*",
     "@oaps/mcp-adapter": "workspace:*",
-    "@oaps/policy": "workspace:*"
+    "@oaps/policy": "workspace:*",
+    "@oaps/websocket-binding": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.15.3",

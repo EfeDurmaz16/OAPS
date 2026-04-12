@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oaps.org/schemas/bindings/websocket-message.json",
+  "title": "OAPS WebSocket Frame Message",
+  "description": "Schema for messages exchanged over the OAPS WebSocket binding.",
+  "type": "object",
+  "required": ["type", "interaction_id", "message_id", "actor_ref", "timestamp"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "handshake",
+        "message",
+        "transition",
+        "approval_request",
+        "approval_decision",
+        "evidence",
+        "challenge",
+        "replay",
+        "error",
+        "ping",
+        "pong"
+      ],
+      "description": "The type of WebSocket frame message."
+    },
+    "interaction_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The interaction this frame belongs to. MUST match the connection-bound interaction."
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this frame message."
+    },
+    "actor_ref": {
+      "type": "object",
+      "required": ["actor_id"],
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The actor sending this frame."
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "endpoint_hint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "payload": {
+      "description": "Frame-type-specific payload. Structure varies by message type."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp of when the frame was created."
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "type": { "const": "handshake" } }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": ["spec_version", "min_supported_version", "max_supported_version", "role"],
+            "properties": {
+              "spec_version": { "type": "string" },
+              "min_supported_version": { "type": "string" },
+              "max_supported_version": { "type": "string" },
+              "role": { "type": "string", "enum": ["server", "client"] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "replay" } }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "properties": {
+              "after": { "type": "string" },
+              "limit": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "type": { "const": "error" } }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "required": ["code", "category", "message", "retryable"],
+            "properties": {
+              "code": { "type": "string" },
+              "category": { "type": "string" },
+              "message": { "type": "string" },
+              "retryable": { "type": "boolean" },
+              "details": { "type": "object" }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "approval_request",
+  "interaction_id": "ix_abc123",
+  "message_id": "wsmsg_003",
+  "actor_ref": {
+    "actor_id": "urn:oaps:actor:server:reference"
+  },
+  "payload": {
+    "approval_request_id": "ar_ws_001",
+    "interaction_id": "ix_abc123",
+    "requested_by": { "actor_id": "urn:oaps:actor:server:reference" },
+    "requested_from": { "actor_id": "urn:oaps:actor:human:cosigner" },
+    "reason": "High-risk action requires human approval before execution",
+    "risk_class": "R4",
+    "proposed_action": {
+      "verb": "invoke",
+      "target": "tool:deploy_production",
+      "arguments": { "environment": "production" }
+    },
+    "expires_at": "2026-04-11T10:10:00Z"
+  },
+  "timestamp": "2026-04-11T10:00:02Z"
+}

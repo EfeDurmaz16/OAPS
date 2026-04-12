@@ -1,0 +1,18 @@
+{
+  "type": "transition",
+  "interaction_id": "ix_abc123",
+  "message_id": "wsmsg_002",
+  "actor_ref": {
+    "actor_id": "urn:oaps:actor:server:reference"
+  },
+  "payload": {
+    "transition_id": "txn_ws_001",
+    "interaction_id": "ix_abc123",
+    "from_state": "intent_received",
+    "to_state": "executing",
+    "triggered_by": { "actor_id": "urn:oaps:actor:server:reference" },
+    "reason": "Intent accepted, execution started",
+    "timestamp": "2026-04-11T10:00:01Z"
+  },
+  "timestamp": "2026-04-11T10:00:01Z"
+}
