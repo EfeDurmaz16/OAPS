@@ -1,0 +1,20 @@
+{
+  "name": "stripe-aicp-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AICP governance over Stripe payment authorization — standalone demo",
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "test": "tsx --test src/demo.test.ts"
+  },
+  "dependencies": {
+    "@oaps/core": "file:../../../reference/oaps-monorepo/packages/core",
+    "@oaps/evidence": "file:../../../reference/oaps-monorepo/packages/evidence",
+    "stripe": "^17.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
