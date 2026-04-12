@@ -1,0 +1,21 @@
+{
+  "name": "mcp-governance-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AICP governance over MCP tool invocations — standalone demo",
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "test": "tsx --test src/demo.test.ts"
+  },
+  "dependencies": {
+    "@oaps/core": "workspace:*",
+    "@oaps/evidence": "workspace:*",
+    "@oaps/policy": "workspace:*",
+    "@oaps/mcp-adapter": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
