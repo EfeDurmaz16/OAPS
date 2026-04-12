@@ -1,0 +1,19 @@
+{
+  "name": "multi-agent-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A2A-style multi-agent delegation chain with AICP governance — standalone demo",
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "test": "tsx --test src/demo.test.ts"
+  },
+  "dependencies": {
+    "@oaps/core": "workspace:*",
+    "@oaps/evidence": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
