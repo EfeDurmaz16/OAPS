@@ -30,6 +30,7 @@ Current entry points:
 - `bindings/grpc-binding-draft.md` — first gRPC binding-track draft
 - `bindings/events-binding-draft.md` — first events/webhooks binding-track draft
 - `profiles/agent-client-draft.md` — first agent-client / CLI / SSH profile-track draft
+- `profiles/aosl-runtime-draft.md` — draft AOSL execution language and runtime profile
 - `domain/commerce-draft.md` — first commerce domain-family draft
 - `../profiles/mpp-draft.md` — draft MPP payment-session profile
 - `../profiles/ap2-draft.md` — draft AP2 payment authorization profile

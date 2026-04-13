@@ -11,6 +11,7 @@ This is the entry point for the suite-level specification tree.
 - `bindings/grpc-binding-draft.md` - first gRPC binding-track draft
 - `bindings/events-binding-draft.md` - first events/webhooks binding-track draft
 - `profiles/agent-client-draft.md` - first agent-client / CLI / SSH profile-track draft
+- `profiles/aosl-runtime-draft.md` - draft AOSL execution language and runtime profile
 - `domain/commerce-draft.md` - first commerce domain-family draft
 - `../profiles/mpp-draft.md` - draft MPP payment-session profile
 - `../profiles/ap2-draft.md` - draft AP2 payment authorization profile
@@ -29,11 +30,12 @@ This is the entry point for the suite-level specification tree.
 8. `bindings/grpc-binding-draft.md`
 9. `bindings/events-binding-draft.md`
 10. `profiles/agent-client-draft.md`
-11. `domain/commerce-draft.md`
-12. `../profiles/mpp-draft.md`
-13. `../profiles/ap2-draft.md`
-14. `../profiles/acp-draft.md`
-15. `../profiles/ucp-draft.md`
+11. `profiles/aosl-runtime-draft.md`
+12. `domain/commerce-draft.md`
+13. `../profiles/mpp-draft.md`
+14. `../profiles/ap2-draft.md`
+15. `../profiles/acp-draft.md`
+16. `../profiles/ucp-draft.md`
 
 ## Status Notes
 

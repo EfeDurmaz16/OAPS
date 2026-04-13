@@ -17,6 +17,7 @@ Use this page when you want a compact list of the ecosystem-mapping profiles wit
 - [`acp-draft.md`](./acp-draft.md)
 - [`ucp-draft.md`](./ucp-draft.md)
 - [`osp-draft.md`](./osp-draft.md)
+- [`../spec/profiles/aosl-runtime-draft.md`](../spec/profiles/aosl-runtime-draft.md)
 
 ## Status Labels
 

@@ -1,0 +1,22 @@
+{
+  "name": "@aosl/runtime",
+  "version": "0.1.0-draft",
+  "type": "module",
+  "main": "dist/runtime/src/index.js",
+  "types": "dist/runtime/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/runtime/src/index.d.ts",
+      "default": "./dist/runtime/src/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@aosl/core": "workspace:*",
+    "@aosl/ir": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

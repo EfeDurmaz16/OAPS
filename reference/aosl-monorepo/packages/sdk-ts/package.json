@@ -1,0 +1,22 @@
+{
+  "name": "@aosl/sdk-ts",
+  "version": "0.1.0-draft",
+  "type": "module",
+  "main": "dist/sdk-ts/src/index.js",
+  "types": "dist/sdk-ts/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/sdk-ts/src/index.d.ts",
+      "default": "./dist/sdk-ts/src/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@aosl/core": "workspace:*",
+    "@aosl/ir": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

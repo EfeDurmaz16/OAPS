@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@aosl/core": ["packages/core/src/index.ts"],
+      "@aosl/ir": ["packages/ir/src/index.ts"],
+      "@aosl/sdk-ts": ["packages/sdk-ts/src/index.ts"],
+      "@aosl/runtime": ["packages/runtime/src/index.ts"],
+      "@aosl/linter": ["packages/linter/src/index.ts"],
+      "@aosl/cli": ["packages/cli/src/index.ts"]
+    },
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["ES2022"],
+    "types": ["node"]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@aosl/linter",
+  "version": "0.1.0-draft",
+  "type": "module",
+  "main": "dist/linter/src/index.js",
+  "types": "dist/linter/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/linter/src/index.d.ts",
+      "default": "./dist/linter/src/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@aosl/ir": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

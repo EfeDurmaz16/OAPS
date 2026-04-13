@@ -1171,3 +1171,38 @@ Append one entry per tranche using the V2 template above:
 - next unfinished work:
   - none currently queued in `PLANS.md`
 - status: `DONE`
+
+### 2026-04-13
+
+- tranche: AOSL boundary, execution-profile draft, and reference scaffold
+- tranche status:
+  - drafted:
+    - added `docs/AICP-AOSL-BOUNDARY.md` to separate AICP semantic ownership from the AOSL language/runtime layer
+    - added `spec/profiles/aosl-runtime-draft.md` as the first dedicated AOSL execution-profile draft
+    - updated `spec/INDEX.md`, `spec/README.md`, `profiles/README.md`, and `profiles/INDEX.md` to surface the new AOSL profile-track material
+    - updated `reference/INDEX.md` to register the new `reference/aosl-monorepo/` scaffold line
+  - implemented:
+    - scaffolded `reference/aosl-monorepo/` with a pnpm workspace, TypeScript base config, package layout, starter example, and initial package skeletons for `core`, `ir`, `sdk-ts`, `runtime`, `linter`, and `cli`
+    - added initial AOSL-aligned shared types, IR types, plan/evidence helpers, lint rules, and a bootable CLI stub
+    - added a monorepo-local `.gitignore` so install/build validation does not pollute the tracked tree with generated artifacts
+  - conformance-backed:
+    - locally validated the scaffold with workspace install, typecheck, build, and CLI execution
+  - externally-blocked:
+    - none
+- changes:
+  - captured the AICP ↔ AOSL boundary in-repo so the protocol suite and language/runtime work can evolve without semantic drift
+  - established a concrete place in the spec tree for the AOSL execution-profile track
+  - created a draft implementation line that can host future runtime, simulation, adapter, and DSL work without destabilizing the existing reference slice
+- validation:
+  - `pnpm -C reference/aosl-monorepo install`
+  - `pnpm -C reference/aosl-monorepo typecheck`
+  - `pnpm -C reference/aosl-monorepo build`
+  - `node reference/aosl-monorepo/packages/cli/dist/cli/src/index.js`
+  - `git diff --check`
+- commits:
+  - `docs+reference: add AOSL boundary, runtime draft, and scaffold`
+- next unfinished work:
+  - decide whether AOSL remains a profile-track execution surface or grows into a larger jobs-domain family draft
+  - add adapter contracts, task loading, and `aosl plan` source ingestion on top of the current scaffold
+  - add dedicated conformance fixtures if AOSL becomes an active implementation track
+- status: `DONE`

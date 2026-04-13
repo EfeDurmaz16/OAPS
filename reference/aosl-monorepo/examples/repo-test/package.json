@@ -1,0 +1,12 @@
+{
+  "name": "@aosl/example-repo-test",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@aosl/sdk-ts": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

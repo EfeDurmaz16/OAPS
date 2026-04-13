@@ -1,0 +1,21 @@
+{
+  "name": "@aosl/ir",
+  "version": "0.1.0-draft",
+  "type": "module",
+  "main": "dist/ir/src/index.js",
+  "types": "dist/ir/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/ir/src/index.d.ts",
+      "default": "./dist/ir/src/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@aosl/core": "workspace:*"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

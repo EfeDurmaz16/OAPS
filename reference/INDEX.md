@@ -6,10 +6,12 @@ This file is a directory index for the `reference/` tree.
 
 - [`oaps-monorepo/`](./oaps-monorepo/) — TypeScript reference implementation line
 - [`oaps-python/`](./oaps-python/) — Python interoperability implementation line
+- [`aosl-monorepo/`](./aosl-monorepo/) — draft AOSL execution language/runtime scaffold
 - [`proto/`](./proto/) — reference protocol artifacts and supporting docs
 
 ## Status Labels
 
 - stable: `oaps-monorepo`
 - stable: `oaps-python`
+- draft: `aosl-monorepo`
 - draft or support-only: everything else in this tree should be treated as implementation support rather than a suite guarantee

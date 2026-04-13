@@ -21,6 +21,7 @@ Current profile set:
 - `x402-draft.md` — draft payment coordination profile
 - `osp-draft.md` — draft provisioning profile
 - `../spec/profiles/agent-client-draft.md` — draft agent-client / CLI / SSH execution profile
+- `../spec/profiles/aosl-runtime-draft.md` — draft AOSL execution language/runtime profile
 
 Planned profile families include:
 
